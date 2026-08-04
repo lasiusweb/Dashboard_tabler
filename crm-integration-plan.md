@@ -2,11 +2,10 @@
 
 ## Context
 
-Integrating `trycompai/crm` (agentic-first CRM) into the FirstCrop agriculture ecommerce platform. Three propositions:
+Integrating `trycompai/crm` (agentic-first CRM) into the FirstCrop agriculture ecommerce platform. Two propositions:
 
 1. **Farmer CRM + Advisory** — AI-driven crop advisory, pest alerts, market prices
 2. **B2B Agri-Input Marketplace** — Distributor/retailer network, product catalog, order pipeline
-3. **Crop Insurance + Finance** — Loan applications, PMFBY claims, risk assessment
 
 The CRM provides the agent architecture (eve), evidence scoring, task queue, and auth pattern. FirstCrop adds agriculture domain models, Indian identity systems, and WhatsApp-first communication.
 
@@ -32,12 +31,10 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
 
 ### What FirstCrop Adds
 
-- Agriculture domain models (Farmer, CropCycle, Product, Order, Loan, Insurance)
+- Agriculture domain models (Farmer, CropCycle, Product, Order)
 - Indian identity (Aadhaar, PAN, GST, pincodes)
 - WhatsApp Business API integration
 - Weather (IMD) and market price (mandi) data feeds
-- PMFBY insurance scheme support
-- Land record verification
 
 ---
 
@@ -64,15 +61,15 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
 
 | CRM Model | FirstCrop Adaptation | Domain |
 |-----------|---------------------|--------|
-| Company | Farmer, Supplier, Retailer | All 3 propositions |
+| Company | Farmer, Supplier, Retailer | Both propositions |
 | Contact | FarmerProfile, BuyerContact | Prop A + B |
-| Deal | CropCycle, Order, LoanApplication, InsuranceClaim | All 3 |
-| DealStage | CropStage, OrderStatus, LoanStatus, ClaimStatus | All 3 |
-| Activity | FarmActivity, OrderActivity, ComplianceActivity | All 3 |
-| ContactFact | FarmerFact, SupplierFact, RiskFact | All 3 |
-| ContactBrief | FarmerBrief, SupplierBrief, LoanBrief | All 3 |
-| AgentTask | RecheckTask, ReorderTask, ComplianceTask | All 3 |
-| AgentConversation | FarmerConversation, RetailerConversation | All 3 |
+| Deal | CropCycle, Order | Both propositions |
+| DealStage | CropStage, OrderStatus | Both propositions |
+| Activity | FarmActivity, OrderActivity | Both propositions |
+| ContactFact | FarmerFact, SupplierFact | Both propositions |
+| ContactBrief | FarmerBrief, SupplierBrief | Both propositions |
+| AgentTask | RecheckTask, ReorderTask | Both propositions |
+| AgentConversation | FarmerConversation, RetailerConversation | Both propositions |
 
 ### New Agriculture Models
 
@@ -90,10 +87,6 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
 | Supplier | Manufacturers and distributors | B |
 | Retailer | Local agri-input shops | B |
 | Order / OrderItem | B2B wholesale orders | B |
-| LoanApplication | Kisan credit, crop loans | C |
-| InsurancePolicy / InsuranceClaim | PMFBY and private insurance | C |
-| LandRecord | Government land records | C |
-| CreditScore | Farmer credit assessment | C |
 
 ---
 
@@ -120,8 +113,8 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
 - `schedule_recheck` → season-aware (Kharif/Rabi/Zaid cycles)
 - `search_crm` → farmers, products, pincodes, suppliers
 - `read_crm_history` → farmer profile + crop cycles + purchases
-- `read_deal_history` → order/loan/insurance claim history
-- `write_brief` → farmer profile, supplier capability, loan risk
+- `read_deal_history` → order history with timeline
+- `write_brief` → farmer profile, supplier capability
 - `list_outstanding_work` → same queue, new task kinds
 
 **Reworked (replace LinkedIn with Indian systems):**
@@ -135,9 +128,7 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
 - `check_mandi_prices` — query MarketPrice by crop, mandi, pincode
 - `get_weather_forecast` — IMD data for farmer's pincode
 - `verify_gst_number` — validate GST against government API
-- `check_insurance_eligibility` — PMFBY scheme eligibility
 - `calculate_crop_risk` — risk scoring from weather + soil + history
-- `verify_land_records` — government land record verification
 - `check_delivery_status` — logistics tracking for input orders
 
 ---
@@ -150,7 +141,7 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
 
 1. **Extend Prisma schema**
    - Add all agriculture models to `packages/db/prisma/schema.prisma`
-   - Add new enums: `CropSeason`, `CropStage`, `OrderStatus`, `LoanStatus`, `ClaimStatus`
+   - Add new enums: `CropSeason`, `CropStage`, `OrderStatus`
    - Create initial migration
 
 2. **Wire auth**
@@ -160,7 +151,7 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
    - Add farmer-facing auth (separate from admin auth)
 
 3. **Set up API skeleton**
-   - NestJS modules: Farmers, Products, Orders, CropCycles, Loans, Insurance
+   - NestJS modules: Farmers, Products, Orders, CropCycles
    - tRPC routers for each module
    - Prisma client injection
 
@@ -238,40 +229,7 @@ The CRM provides the agent architecture (eve), evidence scoring, task queue, and
 - GST-verified supplier database
 - Agent tracking orders and alerting on issues
 
-### Phase 4: Insurance + Finance (Weeks 10-12)
-
-**Goal**: Loan applications and crop insurance
-
-1. **Loan module**
-   - Application workflow (APPLIED → DISBURSED)
-   - Document upload (Aadhaar, PAN, land records)
-   - Risk scoring model
-   - EMI tracking
-
-2. **Insurance module**
-   - PMFBY scheme integration
-   - Policy management
-   - Claim filing and tracking
-   - Survey scheduling
-
-3. **Admin UI pages**
-   - Loan application pipeline
-   - Insurance claim dashboard
-   - Risk assessment reports
-   - Document verification queue
-
-4. **Agent tools**
-   - `verify_land_records`
-   - `calculate_crop_risk`
-   - `check_insurance_eligibility`
-   - `estimate_crop_loss`
-
-**Deliverables**:
-- Loan application flow
-- Insurance claim processing
-- Agent automating document verification and risk scoring
-
-### Phase 5: Production Hardening (Weeks 13-16)
+### Phase 4: Production Hardening (Weeks 10-12)
 
 **Goal**: Security, performance, deployment
 
@@ -314,8 +272,6 @@ FirstCrop/
           suppliers/         Supplier management
           retailers/         Retailer management
           orders/            B2B order pipeline
-          loans/             Loan applications
-          insurance/         Insurance policies + claims
           activities/        Activity timeline
           conversations/     Agent chat
           dashboard/         Summary/stats
@@ -372,13 +328,6 @@ WHATSAPP_PHONE_NUMBER_ID=
 GST_API_URL=
 GST_API_KEY=
 
-# Insurance (PMFBY)
-PMFBY_API_URL=
-PMFBY_API_KEY=
-
-# Land Records
-LAND_RECORD_API_URL=          # DILRMP or state-specific
-
 # Redis (optional)
 REDIS_URL=
 
@@ -407,6 +356,4 @@ SENTRY_DSN=
 | eve framework locked to Vercel | Agent can't self-host | Replace with LangGraph or custom agent |
 | Phone OTP costs | High SMS volume | Use WhatsApp for OTP (free within 24h window) |
 | Mandi price data availability | Agent can't give market advice | Multiple data sources, fallback to static MSP |
-| PMFBY API access | Insurance proposition blocked | Government API sandbox first, production later |
-| Land record digitization varies by state | Some states have good APIs, others don't | Start with digitized states (MH, KA, TN) |
-| Prisma schema complexity (40+ models) | Migration conflicts | Strict branching, migration review process |
+| Prisma schema complexity (30+ models) | Migration conflicts | Strict branching, migration review process |
