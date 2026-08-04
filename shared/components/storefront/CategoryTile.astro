@@ -1,0 +1,31 @@
+---
+// Category card: icon avatar + name + product count + caption, links to the
+// category page.
+import Icon from '@ui/Icon.astro';
+import type { Category } from '@shared/lib/storefront-data';
+
+interface Props {
+	category: Category;
+	/** product count shown under the name */
+	count: number;
+	/** short caption under the name (from home.json categoryTiles) */
+	caption?: string;
+	class?: string;
+}
+
+const { category, count, caption, class: className } = Astro.props;
+---
+
+<a href={`store-category.html?category=${category.slug}`} class:list={['card card-sm h-100 text-decoration-none', className]}>
+	<div class="card-body p-3">
+		<div class="d-flex align-items-center gap-3">
+			<span class="avatar avatar-lg bg-green-lt text-green">
+				<Icon name={category.icon} />
+			</span>
+			<div class="ms-1">
+				<div class="h4 m-0">{category.name}</div>
+				<div class="text-secondary">{caption ?? `${count} products`}</div>
+			</div>
+		</div>
+	</div>
+</a>

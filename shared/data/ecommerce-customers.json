@@ -1,0 +1,58 @@
+{
+  "kpis": [
+    { "title": "Active customers", "value": "31,408", "change": "+5.6%", "up": true, "color": "primary", "icon": "users" },
+    { "title": "New customers (30d)", "value": "6,120", "change": "+7.2%", "up": true, "color": "cyan", "icon": "user-plus" },
+    { "title": "Repeat purchase rate", "value": "43.6%", "change": "+1.2%", "up": true, "color": "green", "icon": "refresh" },
+    { "title": "Avg customer LTV", "value": "₹4,860", "change": "+3.4%", "up": true, "color": "purple", "icon": "coins" },
+    { "title": "Monthly churn", "value": "4.1%", "change": "-0.3%", "up": true, "color": "red", "icon": "user-off" }
+  ],
+  "cohorts": [
+    ["Cohort", "M1", "M2", "M3", "M4", "M5", "M6"],
+    ["Mar 2026", 100, 42, 36, 31, 28, 26],
+    ["Apr 2026", 100, 44, 38, 34, 30, null],
+    ["May 2026", 100, 46, 40, 35, null, null],
+    ["Jun 2026", 100, 48, 41, null, null, null],
+    ["Jul 2026", 100, 45, null, null, null, null]
+  ],
+  "segments": [
+    { "name": "Champions", "count": 4280, "share": 14, "color": "green", "description": "High recency, high frequency, high spend" },
+    { "name": "Loyal", "count": 6140, "share": 20, "color": "azure", "description": "Repeat buyers, above-average spend" },
+    { "name": "At risk", "count": 5360, "share": 17, "color": "orange", "description": "High past value, no purchase in 60d" },
+    { "name": "New", "count": 6120, "share": 19, "color": "purple", "description": "First purchase within 30d" },
+    { "name": "Lost", "count": 9508, "share": 30, "color": "gray-500", "description": "No purchase in 180d" }
+  ],
+  "topCustomers": [
+    { "name": "Kisan Agro Services", "type": "Dealer", "state": "Uttar Pradesh", "orders": 86, "aov": "₹12,400", "ltv": "₹9.8L", "last": "02 Aug", "segment": "Champion", "color": "green" },
+    { "name": "VillageMart, Mandsaur", "type": "Dealer", "state": "Madhya Pradesh", "orders": 74, "aov": "₹9,800", "ltv": "₹8.4L", "last": "31 Jul", "segment": "Champion", "color": "green" },
+    { "name": "Bharat Agri Traders", "type": "Wholesale", "state": "Punjab", "orders": 61, "aov": "₹14,200", "ltv": "₹7.9L", "last": "30 Jul", "segment": "Loyal", "color": "azure" },
+    { "name": "Farmers Collective, Nashik", "type": "FPO", "state": "Maharashtra", "orders": 58, "aov": "₹18,600", "ltv": "₹7.2L", "last": "02 Aug", "segment": "Champion", "color": "green" },
+    { "name": "Ramesh Patil", "type": "Farmer", "state": "Maharashtra", "orders": 12, "aov": "₹2,100", "ltv": "₹41K", "last": "02 Aug", "segment": "Loyal", "color": "azure" },
+    { "name": "Sunita Devi", "type": "Farmer", "state": "Bihar", "orders": 9, "aov": "₹1,480", "ltv": "₹23K", "last": "02 Aug", "segment": "At risk", "color": "orange" }
+  ],
+  "buyerSplit": [
+    { "type": "Retail farmers", "count": 24480, "share": 78, "aov": "₹2,240" },
+    { "type": "Dealers & wholesalers", "count": 3760, "share": 12, "aov": "₹11,800" },
+    { "type": "FPOs & collectives", "count": 2140, "share": 7, "aov": "₹16,400" },
+    { "type": "Institutions (agri colleges)", "count": 1028, "share": 3, "aov": "₹8,900" }
+  ],
+  "cacLtv": [
+    { "segment": "WhatsApp", "cac": 124, "ltv": 6120 },
+    { "segment": "Organic", "cac": 86, "ltv": 4680 },
+    { "segment": "Paid Google", "cac": 210, "ltv": 5240 },
+    { "segment": "Paid Meta", "cac": 178, "ltv": 4860 },
+    { "segment": "Dealer referrals", "cac": 64, "ltv": 7840 },
+    { "segment": "FPO tie-ups", "cac": 92, "ltv": 9220 }
+  ],
+  "byState": [
+    { "state": "Maharashtra", "customers": 5280 },
+    { "state": "Uttar Pradesh", "customers": 4610 },
+    { "state": "Punjab", "customers": 3980 },
+    { "state": "Madhya Pradesh", "customers": 3440 },
+    { "state": "Bihar", "customers": 3180 },
+    { "state": "Tamil Nadu", "customers": 2840 },
+    { "state": "Rajasthan", "customers": 2480 },
+    { "state": "Gujarat", "customers": 2160 },
+    { "state": "Karnataka", "customers": 1960 },
+    { "state": "Haryana", "customers": 1820 }
+  ]
+}

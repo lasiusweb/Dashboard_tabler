@@ -1,0 +1,82 @@
+---
+// Order confirmation — shown after a successful demo checkout. Reads the last
+// order id from sessionStorage (set by store-checkout) with a fallback so the
+// page always renders.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Icon from '@ui/Icon.astro';
+import Card from '@ui/Card.astro';
+import CardBody from '@ui/CardBody.astro';
+import { formatINR } from '@shared/lib/storefront';
+import { getCollection } from '@shared/lib/storefront-data';
+import type { Order } from '@shared/lib/storefront-data';
+
+const orders = await getCollection<Order>('orders');
+const fallback = orders[0];
+const orderId = 'FC-DEMO-0001';
+const total = fallback?.total ?? 0;
+---
+
+<StoreLayout title="Order confirmed" currentNav="shop">
+	<div class="text-center py-4 mb-4">
+		<div class="store-tile mx-auto mb-3" style="width: 5rem; height: 5rem; font-size: 2.5rem">
+			<Icon name="check" />
+		</div>
+		<h1 class="h2 mb-2">Order confirmed</h1>
+		<p class="text-secondary mb-1">Thank you! Your order is being prepared.</p>
+		<p class="text-secondary mb-0">
+			Order ID <strong class="text-body" data-order-id>{orderId}</strong> · Total <strong class="text-body">{formatINR(total)}</strong>
+		</p>
+	</div>
+
+	<Card class="card-sm mb-4">
+		<CardBody>
+			<div class="d-flex flex-wrap align-items-center gap-3">
+				<span class="text-secondary small mb-0">We've sent a confirmation to your phone and email.</span>
+				<div class="ms-auto d-flex gap-2">
+					<a href="store-orders.html" class="btn btn-outline-primary btn-sm">Track your orders</a>
+					<a href="store-shop.html" class="btn btn-primary btn-sm">Continue shopping</a>
+				</div>
+			</div>
+		</CardBody>
+	</Card>
+
+	<div class="row g-4">
+		<div class="col-lg-6">
+			<Card>
+				<CardBody>
+					<h3 class="h4 mb-3"><Icon name="calendar" class="me-1" />What happens next</h3>
+					<ol class="list-unstyled store-steps mb-0">
+						<li class="mb-2"><span class="badge bg-green-lt text-green me-2">1</span>We confirm your order and pack it within 24 hours.</li>
+						<li class="mb-2"><span class="badge bg-green-lt text-green me-2">2</span>Courier picks up and you get a tracking link on SMS.</li>
+						<li class="mb-2"><span class="badge bg-green-lt text-green me-2">3</span>Delivery in 3–6 working days, doorstep to most pincodes.</li>
+						<li><span class="badge bg-green-lt text-green me-2">4</span>Pay on delivery (COD) if you chose it — no prepayment needed.</li>
+					</ol>
+				</CardBody>
+			</Card>
+		</div>
+		<div class="col-lg-6">
+			<Card>
+				<CardBody>
+					<h3 class="h4 mb-3"><Icon name="headset" class="me-1" />Need help?</h3>
+					<p class="text-secondary">
+						Keep your order ID ready. Our farmer support line is open Mon–Sat, 7 AM – 8 PM.
+					</p>
+					<div class="d-flex flex-wrap gap-2">
+						<a href="store-support.html" class="btn btn-outline-primary btn-sm"><Icon name="headset" class="me-1" />Support centre</a>
+						<a href="store-orders.html" class="btn btn-outline-secondary btn-sm"><Icon name="truck" class="me-1" />Track orders</a>
+					</div>
+				</CardBody>
+			</Card>
+		</div>
+	</div>
+</StoreLayout>
+
+<script>
+	// The checkout page stores the last order id in sessionStorage; read it for
+	// the "Order ID" line when present (pure enhancement, non-breaking).
+	const stored = window.sessionStorage?.getItem('firstcrop-last-order');
+	if (stored) {
+		const el = document.querySelector('[data-order-id]');
+		if (el) el.textContent = stored;
+	}
+</script>

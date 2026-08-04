@@ -1,0 +1,172 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import DropdownDays from '@ui/DropdownDays.astro';
+import Pagination from '@ui/Pagination.astro';
+import orders from '@data/ecommerce-orders.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Orders"
+	pageHeader="Ecommerce Orders"
+	description="Order pipeline, RTO and cancellations for firstcrop.in."
+	pageMenu="ecommerce.orders"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(orders as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-2">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Status pipeline</div>
+							<div class="card-subtitle">GMV at each stage (₹Cr), 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-orders-pipeline" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Payment mix</div>
+							<div class="card-subtitle">Share of order value by method</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-orders-payment-mix" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Delivery SLA by zone</div>
+							<div class="card-subtitle">Target vs actual days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-orders-sla-zone" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">RTO trend & reasons</div>
+							<div class="card-subtitle">Return-to-origin rate, 30 days</div>
+							<DropdownDays />
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-orders-rto-trend" height={12} />
+							<ul class="list-unstyled space-y-3 mt-3 mb-0">
+								{
+									(orders as { rtoReasons: { reason: string; orders: number; share: number }[] }).rtoReasons.map((r) => (
+										<li>
+											<div class="d-flex justify-content-between">
+												<span class="text-secondary">{r.reason}</span>
+												<strong>{r.orders.toLocaleString('en-IN')} orders</strong>
+											</div>
+											<Progress value={r.share} color="red" class="mt-2" />
+										</li>
+									))
+								}
+							</ul>
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Cancellations</div>
+							<div class="card-subtitle">By reason, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-orders-cancellations" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Order value distribution</div>
+							<div class="card-subtitle">Share of orders by basket size</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-orders-value-dist" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Recent orders</div>
+					<div class="card-subtitle">Last 10 orders across states</div>
+					<div class="ms-auto">
+						<DropdownDays label="Filter" value="All statuses" />
+					</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Order</th>
+								<th>Date</th>
+								<th>Customer</th>
+								<th>Items</th>
+								<th class="text-end">Amount</th>
+								<th>Payment</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(orders as { recentOrders: { id: string; customer: string; date: string; items: string; amount: string; payment: string; payColor: string; status: string; color: string }[] }).recentOrders.map(
+									(o) => (
+										<tr>
+											<td class="text-secondary">{o.id}</td>
+											<td class="text-secondary">{o.date}</td>
+											<td class="fw-medium">{o.customer}</td>
+											<td>{o.items}</td>
+											<td class="text-end fw-medium">{o.amount}</td>
+											<td><Badge color={o.payColor} light>{o.payment}</Badge></td>
+											<td><Badge color={o.color} light>{o.status}</Badge></td>
+										</tr>
+									)
+								)
+							}
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer d-flex align-items-center">
+					<Pagination />
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

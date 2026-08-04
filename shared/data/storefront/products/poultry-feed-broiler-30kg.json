@@ -1,0 +1,32 @@
+{
+  "slug": "poultry-feed-broiler-30kg",
+  "id": "FC-3112",
+  "name": "Poultry feed — broiler (30 kg)",
+  "categoryId": "animal-feed",
+  "brand": "FarmFresh",
+  "image": null,
+  "rating": 4.2,
+  "ratingCount": 412,
+  "reviewIds": [],
+  "shortDescription": "Balanced broiler finisher ration with protein, energy and mineral premix.",
+  "longDescription": "Complete broiler feed for the finisher stage with consistent pellet size and low dust. Nutrition label on every bag for protein, fat and fibre.",
+  "highlights": ["22% protein", "Low dust pellet", "Mineral premix added", "Nutrition label on bag"],
+  "specifications": {
+    "Protein": "22%",
+    "Stage": "Broiler finisher",
+    "Fat": "5%",
+    "Packing": "30 kg bag"
+  },
+  "packSizes": [{ "label": "30 kg", "mrp": 1299, "price": 1150, "unit": "bag" }],
+  "stock": 210,
+  "tags": ["feed", "poultry", "broiler", "animal"],
+  "season": ["rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 1210 },
+    { "date": "2026-03-01", "price": 1180 },
+    { "date": "2026-04-01", "price": 1160 },
+    { "date": "2026-05-01", "price": 1150 },
+    { "date": "2026-06-01", "price": 1150 },
+    { "date": "2026-07-01", "price": 1150 }
+  ]
+}

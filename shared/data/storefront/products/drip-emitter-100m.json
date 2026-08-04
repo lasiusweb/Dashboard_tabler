@@ -1,0 +1,36 @@
+{
+  "slug": "drip-emitter-100m",
+  "id": "FC-3106",
+  "name": "Drip emitter set (100 m)",
+  "categoryId": "irrigation",
+  "brand": "AquaFlow",
+  "image": null,
+  "rating": 4.0,
+  "ratingCount": 138,
+  "reviewIds": ["rev-drip-1"],
+  "shortDescription": "100 m lateral line with in-line emitters — up to 40% water saving on row crops.",
+  "longDescription": "Ready-to-lay 100 m drip lateral with 30 cm emitter spacing, 4 L/h output. Includes connectors and end caps. Works with any 1.5 HP filter pump set.",
+  "highlights": ["100 m lateral", "30 cm emitter spacing", "4 L/h output", "Connectors included"],
+  "specifications": {
+    "Length": "100 m",
+    "Emitter spacing": "30 cm",
+    "Output": "4 L/h",
+    "Recommended": "1.5 HP pump + filter"
+  },
+  "packSizes": [
+    { "label": "100 m", "mrp": 1499, "price": 1299, "unit": "roll" },
+    { "label": "500 m", "mrp": 6999, "price": 6199, "unit": "roll" }
+  ],
+  "stock": 88,
+  "tags": ["irrigation", "drip", "water saving"],
+  "badge": "Save 40% water",
+  "season": ["zaid", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 1349 },
+    { "date": "2026-03-01", "price": 1329 },
+    { "date": "2026-04-01", "price": 1310 },
+    { "date": "2026-05-01", "price": 1299 },
+    { "date": "2026-06-01", "price": 1299 },
+    { "date": "2026-07-01", "price": 1299 }
+  ]
+}

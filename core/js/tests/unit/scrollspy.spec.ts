@@ -613,9 +613,9 @@ describe('ScrollSpy', () => {
     })
   })
 
-  describe('data-tblr-spy', () => {
-    it('should create scrollspy on window load with data-tblr-spy="scroll"', () => {
-      fixtureEl.innerHTML = ['<div id="nav"></div>', '<div id="wrapper" data-tblr-spy="scroll" data-bs-target="#nav" style="overflow-y: auto"></div>'].join('')
+  describe('data-fc-spy', () => {
+    it('should create scrollspy on window load with data-fc-spy="scroll"', () => {
+      fixtureEl.innerHTML = ['<div id="nav"></div>', '<div id="wrapper" data-fc-spy="scroll" data-bs-target="#nav" style="overflow-y: auto"></div>'].join('')
 
       const scrollSpyEl = fixtureEl.querySelector('#wrapper')!
 

@@ -39,11 +39,11 @@ function normalizeDataKey(key: string): string {
   return key.replace(/[A-Z]/g, (chr) => `-${chr.toLowerCase()}`)
 }
 
-const PREFIXES = ['tblr', 'bs'] as const
+const PREFIXES = ['fc', 'bs'] as const
 
 const Manipulator = {
   setDataAttribute(element: HTMLElement, key: string, value: string): void {
-    element.setAttribute(`data-tblr-${normalizeDataKey(key)}`, value)
+    element.setAttribute(`data-fc-${normalizeDataKey(key)}`, value)
   },
 
   removeDataAttribute(element: HTMLElement, key: string): void {

@@ -1,0 +1,12 @@
+{
+  "slug": "wheat",
+  "name": "Wheat",
+  "season": "rabi",
+  "sowStart": "October",
+  "sowEnd": "December",
+  "harvestStart": "March",
+  "harvestEnd": "April",
+  "states": ["Punjab", "Haryana", "Uttar Pradesh", "Madhya Pradesh", "Bihar"],
+  "productIds": ["FC-2014", "FC-1042", "FC-0771", "FC-3105", "FC-3103"],
+  "tip": "Sow within the first fortnight of November; give the first irrigation at crown-root initiation for strong tillering."
+}

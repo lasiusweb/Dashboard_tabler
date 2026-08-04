@@ -1,6 +1,7 @@
-$prefix: 'tblr-';
+$prefix: 'fc-';
 
 @use 'highlight';
+@use 'storefront';
 
 .dropdown-menu-demo {
   display: inline-block;

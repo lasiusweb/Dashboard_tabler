@@ -2,7 +2,7 @@
 
 @use '../config' as *;
 
-@property --tblr-card-gradient-direction {
+@property --fc-card-gradient-direction {
   syntax: '<angle>';
   inherits: true;
   initial-value: 180deg;
@@ -693,7 +693,7 @@ Card gradient
 .card-gradient {
   --#{$prefix}card-gradient-direction: 180deg;
   --#{$prefix}card-gradient-opacity: 86%;
-  --#{$prefix}card-gradient: var(--tblr-primary), var(--tblr-primary);
+  --#{$prefix}card-gradient: var(--fc-primary), var(--fc-primary);
 
   background:
     radial-gradient(ellipse at center, var(--#{$prefix}card-bg) 0%, color-mix(in srgb, var(--#{$prefix}card-bg) 0%, transparent) 80%) border-box,
@@ -703,7 +703,7 @@ Card gradient
 
 @each $name, $color in map.merge($colors, $theme-colors) {
   .card-gradient-#{$name} {
-    --#{$prefix}card-gradient: var(--tblr-#{$name}), var(--tblr-#{$name});
+    --#{$prefix}card-gradient: var(--fc-#{$name}), var(--fc-#{$name});
   }
 }
 

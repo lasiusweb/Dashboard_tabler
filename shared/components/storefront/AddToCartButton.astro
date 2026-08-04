@@ -1,0 +1,75 @@
+---
+// Add-to-cart button backed by the localStorage cart. Handles idle → adding →
+// added (transient) → stays "added" while the line is in the cart; swaps to
+// "Out of stock" when stock is 0 and stock is tracked.
+import Icon from '@ui/Icon.astro';
+
+interface Props {
+	productId: string;
+	packSize: string;
+	/** tracked stock; 0 → out-of-stock (null/undefined stock means in stock) */
+	stock?: number | null;
+	compact?: boolean;
+	block?: boolean;
+	iconOnly?: boolean;
+	quantity?: number;
+}
+
+const { productId, packSize, stock = null, compact, block, iconOnly, quantity = 1 } = Astro.props;
+
+const outOfStock = stock !== null && stock <= 0;
+const label = outOfStock ? 'Out of stock' : 'Add to cart';
+---
+
+<button
+	class:list={['btn', outOfStock ? 'btn-secondary' : 'btn-primary', compact && 'btn-sm', block && 'btn-block w-100', 'store-add-btn']}
+	type="button"
+	data-product-id={productId}
+	data-pack-size={packSize}
+	data-stock={String(stock ?? -1)}
+	data-qty={quantity}
+	disabled={outOfStock}
+	aria-label={iconOnly ? label : undefined}
+>
+	{iconOnly ? (
+		<Icon name="shopping-cart" />
+	) : (
+		<Fragment>
+			<Icon name="shopping-cart" class="me-1" />
+			<span class="store-add-label">{label}</span>
+		</Fragment>
+	)}
+</button>
+
+<script>
+	import { getCart, addToCart, subscribe, showToast } from '@shared/lib/storefront-client';
+
+	function mountButton(root) {
+		const btn = root.querySelector('.store-add-btn');
+		if (!btn) return;
+		const productId = btn.dataset.productId;
+		const packSize = btn.dataset.packSize;
+		const stock = Number(btn.dataset.stock ?? -1);
+		const qty = Number(btn.dataset.qty ?? 1);
+		const labelEl = root.querySelector('.store-add-label');
+
+		let isAdding = false;
+
+		const render = () => {
+			const inCart = getCart().some((l) => l.productId === productId && l.packSize === packSize);
+			if (!btn.hasAttribute('disabled') && labelEl) {
+				labelEl.textContent = inCart ? 'Added ✓' : 'Add to cart';
+			}
+		};
+
+		btn.addEventListener('click', () => {
+			if (btn.hasAttribute('disabled') || isAdding) return;
+			addToCart(productId, packSize, qty);
+			showToast(`${packSize} added to cart`);
+		});
+
+		subscribe(render);
+	}
+
+	document.querySelectorAll('.store-add-btn').forEach((el) => mountButton(el.parentElement ?? el));
+</script>

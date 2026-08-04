@@ -1,0 +1,26 @@
+---
+// Product image that renders a styled placeholder tile (category icon + green
+// gradient) when `image` is null, or a real <img> when photography lands later.
+import Icon from '@ui/Icon.astro';
+
+interface Props {
+	product: { image: string | null; name: string };
+	/** icon shown in the placeholder (category icon) */
+	icon?: string;
+	/** square tile (default) or 4/3 landscape */
+	tile?: 'square' | 'sm';
+	class?: string;
+}
+
+const { product, icon = 'package', tile = 'square', class: className } = Astro.props;
+---
+
+{
+	product.image ? (
+		<img src={product.image} alt={product.name} loading="lazy" class={className} />
+	) : (
+		<div class:list={['store-tile', tile === 'sm' && 'store-tile-sm', 'store-tile-green', className]}>
+			<Icon name={icon} />
+		</div>
+	)
+}

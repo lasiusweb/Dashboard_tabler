@@ -1,0 +1,32 @@
+{
+  "slug": "micronutrient-mix-2kg",
+  "id": "FC-3103",
+  "name": "Micronutrient mix (2 kg)",
+  "categoryId": "fertilizers",
+  "brand": "NutriFarm",
+  "image": null,
+  "rating": 4.1,
+  "ratingCount": 89,
+  "reviewIds": [],
+  "shortDescription": "Zinc, iron, boron and manganese mix for correcting hidden soil deficiencies.",
+  "longDescription": "A foliar-safe blend for the deficiencies that limit yield even when NPK looks fine. Use alongside a soil test at the tillering / flowering stages.",
+  "highlights": ["Zn, Fe, B, Mn blend", "Foliar or soil use", "1 kg/acre dose", "Test-soil-first guidance"],
+  "specifications": {
+    "Composition": "Zn 5%, Fe 3%, B 0.5%, Mn 1%",
+    "Dose": "1 kg/acre foliar",
+    "Crops": "All crops",
+    "Packing": "2 kg pouch"
+  },
+  "packSizes": [{ "label": "2 kg", "mrp": 420, "price": 350, "unit": "pouch" }],
+  "stock": 12,
+  "tags": ["fertilizer", "micronutrient", "zinc", "boron"],
+  "season": ["kharif", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 370 },
+    { "date": "2026-03-01", "price": 360 },
+    { "date": "2026-04-01", "price": 355 },
+    { "date": "2026-05-01", "price": 350 },
+    { "date": "2026-06-01", "price": 350 },
+    { "date": "2026-07-01", "price": 350 }
+  ]
+}

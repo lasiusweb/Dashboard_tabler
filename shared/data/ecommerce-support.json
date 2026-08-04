@@ -1,0 +1,50 @@
+{
+  "kpis": [
+    { "title": "Open tickets", "value": "1,284", "change": "-8%", "up": true, "color": "primary", "icon": "ticket" },
+    { "title": "Avg first response", "value": "14 min", "change": "-3 min", "up": true, "color": "cyan", "icon": "clock" },
+    { "title": "Avg resolution time", "value": "6.4 h", "change": "-0.8 h", "up": true, "color": "green", "icon": "hourglass" },
+    { "title": "CSAT score", "value": "4.42 / 5", "change": "+0.11", "up": true, "color": "purple", "icon": "star" },
+    { "title": "Return rate", "value": "1.9%", "change": "-0.2%", "up": true, "color": "orange", "icon": "rotate" },
+    { "title": "Returns TAT", "value": "3.2 days", "change": "-0.4 d", "up": true, "color": "yellow", "icon": "truck-return" }
+  ],
+  "channels": [
+    { "channel": "WhatsApp", "tickets": 4820, "share": 52, "csat": 4.5 },
+    { "channel": "Phone", "tickets": 2240, "share": 24, "csat": 4.1 },
+    { "channel": "Email", "tickets": 1310, "share": 14, "csat": 4.3 },
+    { "channel": "App / web", "tickets": 930, "share": 10, "csat": 4.2 }
+  ],
+  "categories": [
+    { "category": "Delivery & tracking", "tickets": 3180, "share": 34, "csat": 4.1 },
+    { "category": "Product quality", "tickets": 2410, "share": 26, "csat": 4.0 },
+    { "category": "Refund & payment", "tickets": 2140, "share": 23, "csat": 4.4 },
+    { "category": "Damage in transit", "tickets": 1210, "share": 13, "csat": 4.2 },
+    { "category": "Usage guidance", "tickets": 370, "share": 4, "csat": 4.6 }
+  ],
+  "resolution": [
+    { "category": "Delivery & tracking", "avg": 3.1 },
+    { "category": "Product quality", "avg": 12.4 },
+    { "category": "Refund & payment", "avg": 9.2 },
+    { "category": "Damage in transit", "avg": 14.8 },
+    { "category": "Usage guidance", "avg": 1.2 }
+  ],
+  "returnsWorkflow": [
+    { "stage": "Requested", "orders": 420, "value": "₹12.6L" },
+    { "stage": "Pickup arranged", "orders": 350, "value": "₹10.4L" },
+    { "stage": "Quality check", "orders": 280, "value": "₹8.1L" },
+    { "stage": "Refund issued", "orders": 210, "value": "₹6.2L" },
+    { "stage": "Restocked", "orders": 160, "value": "₹4.7L" }
+  ],
+  "rtoRestock": [
+    { "stage": "Restocked & resold", "orders": 1890, "share": 74 },
+    { "stage": "Write-off", "orders": 380, "share": 15 },
+    { "stage": "Returned to supplier", "orders": 280, "share": 11 }
+  ],
+  "recentTickets": [
+    { "id": "#T-44102", "customer": "Ramesh Patil", "subject": "Seed germination concern", "channel": "WhatsApp", "status": "Open", "color": "yellow", "priority": "High" },
+    { "id": "#T-44101", "customer": "Farmers Collective, Nashik", "subject": "Bulk order delivery delay", "channel": "Phone", "status": "In progress", "color": "azure", "priority": "High" },
+    { "id": "#T-44100", "customer": "Sunita Devi", "subject": "Refund status for FC-284004", "channel": "WhatsApp", "status": "Open", "color": "yellow", "priority": "Medium" },
+    { "id": "#T-44099", "customer": "Gurpreet Singh", "subject": "Drip kit installation guide", "channel": "Email", "status": "Resolved", "color": "green", "priority": "Low" },
+    { "id": "#T-44098", "customer": "Lakshmi Narayanan", "subject": "Feed bag torn in transit", "channel": "WhatsApp", "status": "In progress", "color": "azure", "priority": "Medium" },
+    { "id": "#T-44097", "customer": "Mohd. Irfan", "subject": "Pesticide dosage query", "channel": "WhatsApp", "status": "Resolved", "color": "green", "priority": "Low" }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "kpis": [
+    { "title": "Loyalty members", "value": "18,420", "change": "+8.4%", "up": true, "color": "primary", "icon": "users-group" },
+    { "title": "Redemption rate", "value": "31.2%", "change": "+2.1%", "up": true, "color": "green", "icon": "gift" },
+    { "title": "Member reorder rate", "value": "58.4%", "change": "+1.8%", "up": true, "color": "cyan", "icon": "refresh" },
+    { "title": "WhatsApp orders (30d)", "value": "12,100", "change": "+18%", "up": true, "color": "green", "icon": "brand-whatsapp" },
+    { "title": "WA click-through", "value": "24.6%", "change": "+3.1%", "up": true, "color": "purple", "icon": "cursor-click" }
+  ],
+  "tiers": [
+    { "name": "Gold", "members": 2840, "threshold": "₹25K/yr", "pointsRate": "2×", "benefits": "Free delivery, priority support", "color": "yellow" },
+    { "name": "Silver", "members": 5980, "threshold": "₹10K/yr", "pointsRate": "1.5×", "benefits": "Free delivery over ₹999", "color": "gray-400" },
+    { "name": "Bronze", "members": 9600, "threshold": "Sign-up", "pointsRate": "1×", "benefits": "Points on every order", "color": "orange" }
+  ],
+  "whatsappFunnel": [
+    { "stage": "Messages sent", "count": 482000 },
+    { "stage": "Delivered", "count": 456000 },
+    { "stage": "Read", "count": 318000 },
+    { "stage": "Replied", "count": 62400 },
+    { "stage": "Ordered", "count": 12100 }
+  ],
+  "reminders": [
+    { "campaign": "Wheat reorder reminder", "season": "Rabi", "audience": 18400, "orders": 1920, "conversion": 10.4, "status": "Scheduled", "color": "azure" },
+    { "campaign": "Paddy top-dressing alert", "season": "Kharif", "audience": 22100, "orders": 2460, "conversion": 11.1, "status": "Sent", "color": "green" },
+    { "campaign": "Drip system winter care", "season": "Zaid", "audience": 6200, "orders": 410, "conversion": 6.6, "status": "Sent", "color": "green" },
+    { "campaign": "Soyabean pest window", "season": "Kharif", "audience": 9800, "orders": 760, "conversion": 7.8, "status": "Draft", "color": "yellow" }
+  ]
+}

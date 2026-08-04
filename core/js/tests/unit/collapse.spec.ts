@@ -437,9 +437,9 @@ describe('Collapse', () => {
       })
     })
 
-    it('should show collapse via data-tblr-target', () => {
+    it('should show collapse via data-fc-target', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<a role="button" data-bs-toggle="collapse" class="collapsed" data-tblr-target="#test1"></a>', '<div id="test1" class="collapse"></div>'].join('')
+        fixtureEl.innerHTML = ['<a role="button" data-bs-toggle="collapse" class="collapsed" data-fc-target="#test1"></a>', '<div id="test1" class="collapse"></div>'].join('')
 
         const trigger = fixtureEl.querySelector('a') as HTMLElement
         const collapseEl = fixtureEl.querySelector('#test1')!
@@ -455,9 +455,9 @@ describe('Collapse', () => {
       })
     })
 
-    it('should hide collapse via data-tblr-target', () => {
+    it('should hide collapse via data-fc-target', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<a role="button" data-bs-toggle="collapse" data-tblr-target="#test1"></a>', '<div id="test1" class="collapse show"></div>'].join('')
+        fixtureEl.innerHTML = ['<a role="button" data-bs-toggle="collapse" data-fc-target="#test1"></a>', '<div id="test1" class="collapse show"></div>'].join('')
 
         const trigger = fixtureEl.querySelector('a') as HTMLElement
         const collapseEl = fixtureEl.querySelector('#test1')!
@@ -739,13 +739,13 @@ describe('Collapse', () => {
     })
   })
 
-  describe('data-tblr-toggle', () => {
-    it('should show collapse via data-tblr-toggle="collapse"', () => {
+  describe('data-fc-toggle', () => {
+    it('should show collapse via data-fc-toggle="collapse"', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<button data-tblr-toggle="collapse" data-bs-target="#test1">Toggle</button>', '<div id="test1" class="collapse">Content</div>'].join('')
+        fixtureEl.innerHTML = ['<button data-fc-toggle="collapse" data-bs-target="#test1">Toggle</button>', '<div id="test1" class="collapse">Content</div>'].join('')
 
         const target = fixtureEl.querySelector('#test1')!
-        const btn = fixtureEl.querySelector('[data-tblr-toggle="collapse"]') as HTMLElement
+        const btn = fixtureEl.querySelector('[data-fc-toggle="collapse"]') as HTMLElement
 
         target.addEventListener('shown.bs.collapse', () => {
           expect(target.classList.contains('show')).toBe(true)
@@ -756,12 +756,12 @@ describe('Collapse', () => {
       })
     })
 
-    it('should hide collapse via data-tblr-toggle="collapse"', () => {
+    it('should hide collapse via data-fc-toggle="collapse"', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<button data-tblr-toggle="collapse" data-bs-target="#test1">Toggle</button>', '<div id="test1" class="collapse show">Content</div>'].join('')
+        fixtureEl.innerHTML = ['<button data-fc-toggle="collapse" data-bs-target="#test1">Toggle</button>', '<div id="test1" class="collapse show">Content</div>'].join('')
 
         const target = fixtureEl.querySelector('#test1')!
-        const btn = fixtureEl.querySelector('[data-tblr-toggle="collapse"]') as HTMLElement
+        const btn = fixtureEl.querySelector('[data-fc-toggle="collapse"]') as HTMLElement
 
         target.addEventListener('hidden.bs.collapse', () => {
           expect(target.classList.contains('show')).toBe(false)
@@ -772,12 +772,12 @@ describe('Collapse', () => {
       })
     })
 
-    it('should show collapse via data-tblr-toggle with data-tblr-target', () => {
+    it('should show collapse via data-fc-toggle with data-fc-target', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<button data-tblr-toggle="collapse" data-tblr-target="#test1">Toggle</button>', '<div id="test1" class="collapse">Content</div>'].join('')
+        fixtureEl.innerHTML = ['<button data-fc-toggle="collapse" data-fc-target="#test1">Toggle</button>', '<div id="test1" class="collapse">Content</div>'].join('')
 
         const target = fixtureEl.querySelector('#test1')!
-        const btn = fixtureEl.querySelector('[data-tblr-toggle="collapse"]') as HTMLElement
+        const btn = fixtureEl.querySelector('[data-fc-toggle="collapse"]') as HTMLElement
 
         target.addEventListener('shown.bs.collapse', () => {
           expect(target.classList.contains('show')).toBe(true)

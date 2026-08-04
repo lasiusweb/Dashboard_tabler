@@ -1,0 +1,55 @@
+{
+  "hero": {
+    "title": "Inputs for a strong Kharif, delivered to your farm gate",
+    "subtitle": "Certified seeds, subsidised fertilizers and genuine crop protection — sourced from authorised distributors, priced in rupees, COD available on most pincodes.",
+    "ctas": [
+      { "label": "Shop inputs", "href": "store-shop.html", "primary": true },
+      { "label": "Check the season", "href": "store-season.html" }
+    ]
+  },
+  "trustBadges": [
+    { "icon": "shield-check", "title": "Genuine inputs", "text": "Authorised distributors only" },
+    { "icon": "truck", "title": "Doorstep delivery", "text": "Metro to village pincodes" },
+    { "icon": "cash", "title": "Cash on Delivery", "text": "On most pincodes" },
+    { "icon": "headset", "title": "Farmer support", "text": "WhatsApp, 7 days a week" }
+  ],
+  "categoryTiles": [
+    { "categoryId": "seeds", "caption": "Sow right, from ₹280/bag" },
+    { "categoryId": "fertilizers", "caption": "Subsidies applied at checkout" },
+    { "categoryId": "pesticides", "caption": "Label doses, easy scouting" },
+    { "categoryId": "irrigation", "caption": "Cut water use up to 40%" },
+    { "categoryId": "tools-equipment", "caption": "Built for many seasons" },
+    { "categoryId": "animal-feed", "caption": "Nutrition labels on every bag" }
+  ],
+  "featuredProductIds": ["FC-1208", "FC-1042", "FC-0771", "FC-0554", "FC-3106", "FC-3110"],
+  "bundleIds": ["FC-1208", "FC-1042", "FC-0771", "FC-0554"],
+  "seasonCallout": {
+    "title": "Kharif sowing is on — June to August",
+    "text": "Book paddy seed and subsidised DAP now so you are ready for transplanting. The Season page shows the window for every crop in your state.",
+    "cta": { "label": "See the Kharif calendar", "href": "store-season.html" },
+    "icon": "droplets"
+  },
+  "testimonials": [
+    {
+      "author": "Ramesh Patil",
+      "role": "2 acres, Pune district",
+      "quote": "Paddy seed arrived before the rain and germinated better than the shop lot. I ordered DAP for the whole village this year."
+    },
+    {
+      "author": "Farmers Collective Nashik",
+      "role": "41 member farmers",
+      "quote": "We consolidated 40 bags of DAP in one order. Subsidy on every bag, invoice on point, delivery to our godown."
+    },
+    {
+      "author": "Vijay Patel",
+      "role": "Maize farmer, Gujarat",
+      "quote": "The solar fence paid for itself in one season. Boar stopped entering the field entirely."
+    }
+  ],
+  "stats": [
+    { "value": "1.2L+", "label": "Farmer orders served" },
+    { "value": "1,842", "label": "Live SKUs" },
+    { "value": "8", "label": "States with doorstep delivery" },
+    { "value": "4.6★", "label": "Average product rating" }
+  ]
+}

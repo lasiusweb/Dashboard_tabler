@@ -1,0 +1,257 @@
+---
+// Checkout — Steps bar, 3-column: address form + payment radios + order summary
+// (client-rendered from the cart). Client-side validation from checkout.json;
+// demo-only submit → confirmation.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Icon from '@ui/Icon.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import FormGroup from '@ui/FormGroup.astro';
+import Steps from '@ui/Steps.astro';
+import Badge from '@ui/Badge.astro';
+import { getConfig, getProducts } from '@shared/lib/storefront-data';
+
+const checkout = await getConfig('checkout');
+const products = await getProducts();
+---
+
+<StoreLayout title="Checkout">
+	<div class="mb-4">
+		<h1 class="h2 mb-2">Checkout</h1>
+		<Steps count={4} active={2} numbers showTitle />
+	</div>
+
+	<div class="text-secondary small mb-3">{checkout.supportNote}</div>
+
+	<form
+		data-store-checkout
+		data-validation={JSON.stringify({
+			nameMin: checkout.validation?.nameMin ?? 3,
+			addressMin: checkout.validation?.addressMin ?? 10,
+			phone: checkout.validation?.phone ?? '^[6-9]\\d{9}$',
+			pincode: checkout.validation?.pincode ?? '^\\d{6}$',
+		})}
+		data-checkout={JSON.stringify({
+			deliveryFees: checkout.deliveryFees ?? {},
+			freeShipThreshold: checkout.freeShipThreshold ?? 1500,
+			codFee: checkout.codFee ?? 0,
+		})}
+		data-products={JSON.stringify(
+			products.map((p) => ({
+				slug: p.slug,
+				id: p.id,
+				name: p.name,
+				packSizes: p.packSizes,
+			})),
+		)}
+		class="row g-4"
+		novalidate
+	>
+		<!-- Details -->
+		<div class="col-lg-4">
+			<Card>
+				<CardHeader>
+					<div class="card-title"><Icon name="map-pin" class="me-1" />Delivery address</div>
+				</CardHeader>
+				<CardBody>
+					<div class="space-y-3">
+						<FormGroup label="Full name">
+							<input type="text" class="form-control" name="name" required data-validate-name placeholder={`Min ${checkout.validation?.nameMin ?? 3} characters`} />
+						</FormGroup>
+						<FormGroup label="Phone">
+							<input type="tel" class="form-control" name="phone" required data-validate-phone placeholder="10-digit mobile" />
+						</FormGroup>
+						<FormGroup label="Pincode">
+							<input type="text" class="form-control" name="pincode" required data-validate-pincode placeholder="6-digit pincode" maxlength="6" />
+							<div class="form-hint" data-delivery-hint></div>
+						</FormGroup>
+						<FormGroup label="Address">
+							<textarea class="form-control" name="address" rows="3" required data-validate-address placeholder={`At least ${checkout.validation?.addressMin ?? 10} characters`} />
+						</FormGroup>
+					</div>
+				</CardBody>
+			</Card>
+		</div>
+
+		<!-- Payment -->
+		<div class="col-lg-4">
+			<Card>
+				<CardHeader>
+					<div class="card-title"><Icon name="credit-card" class="me-1" />Payment method</div>
+				</CardHeader>
+				<CardBody>
+					<div class="space-y-2">
+						{(checkout.payMethods ?? []).map((method, index) => (
+							<label class="form-selectgroup w-100">
+								<input type="radio" name="pay" value={method.id} class="form-selectgroup-input" checked={index === 0} disabled={method.disabled} />
+								<span class="form-selectgroup-label d-flex align-items-center gap-2 w-100">
+									<Icon name={method.icon} />
+									<span>{method.name}</span>
+									{method.disabled && <Badge color="secondary">Soon</Badge>}
+								</span>
+							</label>
+						))}
+					</div>
+				</CardBody>
+			</Card>
+		</div>
+
+		<!-- Summary -->
+		<div class="col-lg-4">
+			<Card class="sticky-top" style="top: 5rem">
+				<CardHeader>
+					<div class="card-title">Order summary</div>
+				</CardHeader>
+				<CardBody>
+					<div data-checkout-summary>
+						<div class="space-y-2" data-summary-rows />
+						<hr class="my-3" />
+						<div class="space-y-2">
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">Subtotal</span><span class="fw-medium" data-sum-subtotal>₹0</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">Discount</span><span class="fw-medium text-green" data-sum-discount>− ₹0</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">Delivery</span><span class="fw-medium" data-sum-delivery>₹0</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">COD fee</span><span class="fw-medium" data-sum-cod>₹0</span>
+							</div>
+							<hr class="my-2" />
+							<div class="d-flex justify-content-between fs-4">
+								<span>Total</span><span class="fw-bold" data-sum-total>₹0</span>
+							</div>
+						</div>
+					</div>
+					<div data-checkout-empty>
+						<div class="text-secondary small text-center py-4">Your cart is empty — add products before checking out.</div>
+					</div>
+					<button type="submit" class="btn btn-primary w-100 mt-3" data-place-order>Place order</button>
+				</CardBody>
+			</Card>
+		</div>
+	</form>
+</StoreLayout>
+
+<script>
+	import {
+		getCart,
+		clearCart,
+		subscribe,
+		showToast,
+		readJsonData,
+	} from '@shared/lib/storefront-client';
+	import { cartTotals, formatINR } from '@shared/lib/storefront';
+
+	type CheckoutProduct = { slug: string; id: string; name: string; packSizes: Array<{ label: string; mrp: number; price: number; unit: string; subsidy?: number }> };
+	type CheckoutData = { deliveryFees: Record<string, number>; freeShipThreshold: number; codFee: number };
+	type CheckoutValidation = { nameMin: number; addressMin: number; phone: string; pincode: string };
+	type CheckoutLineView = { product: CheckoutProduct; pack?: CheckoutProduct['packSizes'][number]; price: number; productId: string; packSize: string; qty: number };
+
+	const form = document.querySelector<HTMLFormElement>('[data-store-checkout]');
+	if (form) {
+		const validationRegexes = readJsonData<CheckoutValidation>(form, 'data-validation') ?? { nameMin: 3, addressMin: 10, phone: '^[6-9]\\d{9}$', pincode: '^\\d{6}$' };
+		const checkout = readJsonData<CheckoutData>(form, 'data-checkout') ?? { deliveryFees: {}, freeShipThreshold: 1500, codFee: 0 };
+		const products = readJsonData<CheckoutProduct[]>(form, 'data-products') ?? [];
+		const summaryRows = form.querySelector<HTMLElement>('[data-summary-rows]')!;
+		const emptyBlock = form.querySelector<HTMLElement>('[data-checkout-empty]')!;
+		const sumEls = {
+			subtotal: form.querySelector<HTMLElement>('[data-sum-subtotal]')!,
+			discount: form.querySelector<HTMLElement>('[data-sum-discount]')!,
+			delivery: form.querySelector<HTMLElement>('[data-sum-delivery]')!,
+			cod: form.querySelector<HTMLElement>('[data-sum-cod]')!,
+			total: form.querySelector<HTMLElement>('[data-sum-total]')!,
+		};
+		const deliveryHint = form.querySelector<HTMLElement>('[data-delivery-hint]')!;
+
+		const byId = new Map(products.map((p) => [p.id, p]));
+
+		// Delivery fee uses the metro rate; free above the threshold.
+		const deliveryFee = (subtotal: number) =>
+			subtotal >= (checkout.freeShipThreshold ?? Infinity) ? 0 : (checkout.deliveryFees.metro ?? 49);
+
+		const renderSummary = () => {
+			const lines: CheckoutLineView[] = getCart()
+				.map((line) => {
+					const product = byId.get(line.productId);
+					const pack = product?.packSizes.find((p) => p.label === line.packSize) ?? product?.packSizes[0];
+					return { ...line, product, pack, price: pack?.price ?? 0 } as CheckoutLineView;
+				})
+				.filter((l): l is CheckoutLineView => Boolean(l.product));
+
+			const hasItems = lines.length > 0;
+			const block = form.querySelector<HTMLElement>('[data-checkout-summary]')!;
+			block.style.display = hasItems ? '' : 'none';
+			emptyBlock.style.display = hasItems ? 'none' : '';
+			const placeOrder = form.querySelector<HTMLButtonElement>('[data-place-order]')!;
+			placeOrder.disabled = !hasItems;
+			if (!hasItems) return;
+
+			const subtotal = lines.reduce((s, l) => s + l.price * l.qty, 0);
+			const delivery = deliveryFee(subtotal);
+			const totals = cartTotals(lines, { delivery, codFee: checkout.codFee ?? 0, discount: 0 });
+
+			summaryRows.innerHTML = lines
+				.map(
+					(l) => `
+					<div class="d-flex justify-content-between align-items-start">
+						<div>
+							<div class="fw-medium">${l.product.name}</div>
+							<div class="text-secondary small">${l.pack?.label ?? ''} × ${l.qty}</div>
+						</div>
+						<span class="fw-medium">${formatINR(l.price * l.qty)}</span>
+					</div>`,
+				)
+				.join('');
+
+			sumEls.subtotal.textContent = formatINR(totals.subtotal);
+			sumEls.discount.textContent = `− ${formatINR(totals.discount)}`;
+			sumEls.delivery.textContent = totals.delivery > 0 ? formatINR(totals.delivery) : 'FREE';
+			sumEls.cod.textContent = totals.codFee > 0 ? formatINR(totals.codFee) : 'FREE';
+			sumEls.total.textContent = formatINR(totals.total);
+		};
+		subscribe(renderSummary);
+		renderSummary();
+
+		// pincode → delivery hint
+		const pinInput = form.querySelector<HTMLInputElement>('[name="pincode"]')!;
+		pinInput.addEventListener('input', () => {
+			const value = pinInput.value.trim();
+			if (/^\d{6}$/.test(value)) {
+				deliveryHint.textContent = `Delivery available to this pincode — ${formatINR(checkout.deliveryFees.metro ?? 49)} metro rate applies.`;
+			} else {
+				deliveryHint.textContent = '';
+			}
+		});
+
+		// validation
+		const fieldEls = {
+			name: form.querySelector<HTMLInputElement>('[name="name"]')!,
+			phone: form.querySelector<HTMLInputElement>('[name="phone"]')!,
+			pincode: form.querySelector<HTMLInputElement>('[name="pincode"]')!,
+			address: form.querySelector<HTMLTextAreaElement>('[name="address"]')!,
+		};
+		const validate = () => {
+			let ok = true;
+			if (fieldEls.name.value.trim().length < validationRegexes.nameMin) ok = false;
+			if (!new RegExp(validationRegexes.phone).test(fieldEls.phone.value.trim())) ok = false;
+			if (!new RegExp(validationRegexes.pincode).test(fieldEls.pincode.value.trim())) ok = false;
+			if (fieldEls.address.value.trim().length < validationRegexes.addressMin) ok = false;
+			return ok;
+		};
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			if (!validate()) {
+				showToast('Please complete the delivery details.');
+				return;
+			}
+			window.sessionStorage?.setItem('firstcrop-last-order', 'FC-DEMO-0001');
+			clearCart();
+			window.location.href = 'store-confirmation.html';
+		});
+	}
+</script>

@@ -4,7 +4,7 @@ order: 11
 summary: Set up Tabler in Astro and build a first working page.
 description: Integrate Tabler with Astro.
 icon: brand-astro
-seoDescription: Install `@tabler/core`, import CSS and client-side JS in Astro, and render a minimal page layout with a Tabler card.
+seoDescription: Install `@firstcrop/core`, import CSS and client-side JS in Astro, and render a minimal page layout with a Tabler card.
 layout: '@shared/layouts/DocsMdxLayout.astro'
 ---
 
@@ -14,7 +14,7 @@ import Steps from '@components/Steps.astro'
 
 Astro ships zero JavaScript by default, which suits Tabler well: most components are pure CSS, and the interactive ones need just one script that Astro bundles and runs only in the browser.
 
-You will install `@tabler/core`, import its CSS in a base layout, add the client script, and render a first page with a Tabler card.
+You will install `@firstcrop/core`, import its CSS in a base layout, add the client script, and render a first page with a Tabler card.
 
 ## Setup
 
@@ -22,9 +22,9 @@ You will install `@tabler/core`, import its CSS in a base layout, add the client
 
 ### Install Tabler package
 
-Install `@tabler/core` with your preferred package manager:
+Install `@firstcrop/core` with your preferred package manager:
 
-<TabsPackage name="@tabler/core" />
+<TabsPackage name="@firstcrop/core" />
 
 You can also use CDN files when you need a quick setup:
 
@@ -35,24 +35,24 @@ You can also use CDN files when you need a quick setup:
 Import Tabler CSS once in the frontmatter of your base layout (`src/layouts/Layout.astro`):
 
 ```js
-import '@tabler/core/dist/css/tabler.min.css'
+import '@firstcrop/core/dist/css/firstcrop.min.css'
 ```
 
 For full theme customization, import SCSS sources instead:
 
 ```scss
-@import '@tabler/core/scss/tabler';
+@import '@firstcrop/core/scss/firstcrop';
 ```
 
 ### Import and initialize JavaScript
 
 Tabler JavaScript is required for interactive components such as dropdowns, modals, and tooltips.
 
-Astro-specific note: a plain `<script>` tag in an Astro component is bundled and runs only in the browser, so importing `tabler.min.js` there is safe — it never executes during server-side rendering:
+Astro-specific note: a plain `<script>` tag in an Astro component is bundled and runs only in the browser, so importing `firstcrop.min.js` there is safe â€” it never executes during server-side rendering:
 
 ```astro
 <script>
-  import '@tabler/core/dist/js/tabler.min.js'
+  import '@firstcrop/core/dist/js/firstcrop.min.js'
 </script>
 ```
 
@@ -62,7 +62,7 @@ Create a base layout in `src/layouts/Layout.astro` that loads Tabler CSS and Jav
 
 ```astro
 ---
-import '@tabler/core/dist/css/tabler.min.css'
+import '@firstcrop/core/dist/css/firstcrop.min.css'
 ---
 
 <!doctype html>
@@ -75,7 +75,7 @@ import '@tabler/core/dist/css/tabler.min.css'
   <body>
     <slot />
     <script>
-      import '@tabler/core/dist/js/tabler.min.js'
+      import '@firstcrop/core/dist/js/firstcrop.min.js'
     </script>
   </body>
 </html>

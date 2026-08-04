@@ -8,7 +8,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const repo = join(root, '..')
 const publicDir = join(root, 'public')
 
-// Always start from a clean public/ (mirrors @tabler/docs' and Bootstrap's own docs
+// Always start from a clean public/ (mirrors @firstcrop/docs' and Bootstrap's own docs
 // integration — see astro:config:done in bootstrap/site/src/libs/astro.ts): running
 // this script twice in a row, or running it without a prior `pnpm run clean`, must
 // never be able to accumulate stale/nested content. Without this, a previous run's
@@ -17,9 +17,9 @@ const publicDir = join(root, 'public')
 rmSync(publicDir, { recursive: true, force: true })
 
 const copies = [
-  // @tabler/core dist (css/js/fonts/img/libs) — same as the Eleventy passthrough
+  // @firstcrop/core dist (css/js/fonts/img/libs) — same as the Eleventy passthrough
   {
-    from: join(root, 'node_modules', '@tabler', 'core', 'dist'),
+    from: join(root, 'node_modules', '@firstcrop', 'core', 'dist'),
     to: join(root, 'public', 'dist'),
     required: true,
     allowDestinationFallback: true,
@@ -30,12 +30,12 @@ const copies = [
   // `astro build` re-seeds dist/ from public/, which the next `pnpm run assets`
   // would then copy right back in).
   { from: join(root, 'tmp-assets'), to: join(root, 'public', 'preview'), required: true },
-  // docs.css built by the @tabler/docs sass pipeline (used by docs pages)
+  // docs.css built by the @firstcrop/docs sass pipeline (used by docs pages)
   { from: join(repo, 'docs', 'dist', 'css'), to: join(root, 'public', 'css'), required: false },
   // static assets (photos, avatars, tracks, brand svgs...).
   // Use the real source because preview/static is a symlink that may not survive deployment packaging.
   { from: join(repo, 'shared', 'static'), to: join(root, 'public', 'static'), required: true },
-  // favicons (source assets of @tabler/preview)
+  // favicons (source assets of @firstcrop/preview)
   { from: join(root, 'assets', 'favicon.ico'), to: join(root, 'public', 'favicon.ico'), required: true },
   { from: join(root, 'assets', 'favicon-dev.ico'), to: join(root, 'public', 'favicon-dev.ico'), required: true },
 ]
@@ -48,7 +48,7 @@ for (const { from, to, required, allowDestinationFallback } of copies) {
       continue
     }
     if (required) throw new Error(`${message} — run the build of that package first`)
-    console.warn(`${message} (skipped — build @tabler/preview or @tabler/docs to get it)`)
+    console.warn(`${message} (skipped — build @firstcrop/preview or @firstcrop/docs to get it)`)
     continue
   }
   mkdirSync(dirname(to), { recursive: true })
@@ -75,7 +75,7 @@ for (const { from, to, required, allowDestinationFallback } of copies) {
         filter: (src) => !src.includes('/.vscode') && !src.includes('\\.vscode'),
       })
     } catch (error) {
-      // In turbo dev, @tabler/core can clean dist while we copy it.
+      // In turbo dev, @firstcrop/core can clean dist while we copy it.
       // If fallback is allowed and destination exists, keep current assets.
       if (allowDestinationFallback && error && typeof error === 'object' && error.code === 'ENOENT' && existsSync(to)) {
         console.warn(`copy-assets: source changed during copy ${from} (using existing ${to})`)

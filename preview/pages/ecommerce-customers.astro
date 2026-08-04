@@ -1,0 +1,212 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Avatar from '@ui/Avatar.astro';
+import customers from '@data/ecommerce-customers.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Customers"
+	pageHeader="Ecommerce Customers"
+	description="Segments, retention and LTV for firstcrop.in."
+	pageMenu="ecommerce.customers"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(customers as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">New vs repeat customers</div>
+							<div class="card-subtitle">Daily buyers, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-customers-new-repeat" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">RFM segments</div>
+							<div class="card-subtitle">Share of active customers</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-customers-rfm" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">CAC vs LTV</div>
+							<div class="card-subtitle">By acquisition channel (₹)</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-customers-cac-ltv" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Cohort retention</div>
+							<div class="card-subtitle">Monthly repeat rate by sign-up cohort (%)</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter table-nowrap">
+								<thead>
+									<tr>
+										{
+											(customers as { cohorts: (string | number | null)[][] }).cohorts[0].map((h) => <th>{h}</th>)
+										}
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(customers as { cohorts: (string | number | null)[][] }).cohorts.slice(1).map((row) => (
+											<tr>
+												<td class="fw-medium">{row[0]}</td>
+												{
+													row.slice(1).map((v) =>
+														v === null ? (
+															<td class="text-secondary">&ndash;</td>
+														) : (
+															<td><span class={`fw-medium ${(v as number) > 40 ? 'text-green' : (v as number) > 30 ? 'text-azure' : 'text-secondary'}`}>{v}%</span></td>
+														)
+													)
+												}
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Buyer mix</div>
+							<div class="card-subtitle">Retail vs dealer vs FPO vs institutional</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Buyer type</th>
+										<th class="text-end">Customers</th>
+										<th class="text-end">AOV</th>
+										<th>Share</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(customers as { buyerSplit: { type: string; count: number; share: number; aov: string }[] }).buyerSplit.map((b) => (
+											<tr>
+												<td class="fw-medium">{b.type}</td>
+												<td class="text-end">{b.count.toLocaleString('en-IN')}</td>
+												<td class="text-end">{b.aov}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<div class="flex-grow-1 progress progress-sm"><div class={`progress-bar bg-${b.share > 50 ? 'primary' : 'azure'}`} style={`width: ${b.share}%`} /></div>
+														<span class="text-secondary">{b.share}%</span>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Top customers</div>
+							<div class="card-subtitle">By lifetime value</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Customer</th>
+										<th>Type</th>
+										<th class="text-end">Orders</th>
+										<th class="text-end">AOV</th>
+										<th class="text-end">LTV</th>
+										<th>Segment</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(customers as { topCustomers: { name: string; type: string; state: string; orders: number; aov: string; ltv: string; last: string; segment: string; color: string }[] }).topCustomers.map(
+											(c, i) => (
+												<tr>
+													<td>
+														<div class="d-flex align-items-center">
+															<Avatar personId={i + 1} class="me-3" />
+															<div>
+																<div class="fw-medium">{c.name}</div>
+																<div class="text-secondary">{c.state}</div>
+															</div>
+														</div>
+													</td>
+													<td><Badge light>{c.type}</Badge></td>
+													<td class="text-end">{c.orders}</td>
+													<td class="text-end">{c.aov}</td>
+													<td class="text-end fw-medium">{c.ltv}</td>
+													<td><Badge color={c.color} light>{c.segment}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Customers by state</div>
+							<div class="card-subtitle">Top 10 states</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-customers-state" height={18} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

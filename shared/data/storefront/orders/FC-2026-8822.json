@@ -1,0 +1,22 @@
+{
+  "slug": "FC-2026-8822",
+  "id": "FC-2026-8822",
+  "date": "2026-07-20",
+  "status": "Packed",
+  "items": [
+    { "productId": "FC-0554", "name": "Imidacloprid 17.8 SL (1 L)", "packSize": "1 L", "qty": 5, "price": 980 },
+    { "productId": "FC-3102", "name": "Carbendazim 50 WP (500 g)", "packSize": "500 g", "qty": 4, "price": 365 },
+    { "productId": "FC-3110", "name": "Harvesting sickle (bulk pack)", "packSize": "Pack of 5", "qty": 2, "price": 649 }
+  ],
+  "payment": "UPI",
+  "payColor": "green",
+  "statusColor": "yellow",
+  "total": 7658,
+  "zone": "semi-urban",
+  "timeline": [
+    { "label": "Order placed", "date": "20 Jul, 10:02 AM", "done": true },
+    { "label": "Packed at warehouse", "date": "21 Jul, 5:44 PM", "done": true },
+    { "label": "Shipped", "date": "Expected 22 Jul", "done": false },
+    { "label": "Delivered", "date": "Expected 25 Jul", "done": false }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "watermelon",
+  "name": "Watermelon",
+  "season": "zaid",
+  "sowStart": "February",
+  "sowEnd": "March",
+  "harvestStart": "May",
+  "harvestEnd": "June",
+  "states": ["Uttar Pradesh", "Telangana", "Andhra Pradesh"],
+  "productIds": ["FC-3106", "FC-3103"],
+  "tip": "Drip with mulch cuts water use and keeps fruit clean — worth it for early-summer prices."
+}

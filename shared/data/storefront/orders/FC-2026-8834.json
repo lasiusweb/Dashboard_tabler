@@ -1,0 +1,21 @@
+{
+  "slug": "FC-2026-8834",
+  "id": "FC-2026-8834",
+  "date": "2026-07-25",
+  "status": "Delivered",
+  "items": [
+    { "productId": "FC-0771", "name": "Urea 46% N (50 kg)", "packSize": "50 kg", "qty": 3, "price": 245 },
+    { "productId": "FC-3105", "name": "NPK 12:32:16 (50 kg)", "packSize": "50 kg", "qty": 1, "price": 1290 }
+  ],
+  "payment": "COD",
+  "payColor": "orange",
+  "statusColor": "green",
+  "total": 2025,
+  "zone": "urban",
+  "timeline": [
+    { "label": "Order placed", "date": "25 Jul, 6:48 PM", "done": true },
+    { "label": "Packed at warehouse", "date": "26 Jul, 7:15 AM", "done": true },
+    { "label": "Shipped", "date": "26 Jul, 3:30 PM", "done": true },
+    { "label": "Delivered", "date": "28 Jul, 1:05 PM", "done": true }
+  ]
+}

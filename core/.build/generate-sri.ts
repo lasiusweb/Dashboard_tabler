@@ -14,75 +14,75 @@ interface FileConfig {
 
 const files: FileConfig[] = [
 	{
-		file: 'dist/css/tabler.min.css',
+		file: 'dist/css/firstcrop.min.css',
 		configPropertyName: 'css'
 	},
 	{
-		file: 'dist/css/tabler.rtl.min.css',
+		file: 'dist/css/firstcrop.rtl.min.css',
 		configPropertyName: 'css-rtl'
 	},
 	{
-		file: 'dist/css/tabler-flags.min.css',
+		file: 'dist/css/firstcrop-flags.min.css',
 		configPropertyName: 'css-flags'
 	},
 	{
-		file: 'dist/css/tabler-flags.rtl.min.css',
+		file: 'dist/css/firstcrop-flags.rtl.min.css',
 		configPropertyName: 'css-flags-rtl'
 	},
 	{
-		file: 'dist/css/tabler-marketing.min.css',
+		file: 'dist/css/firstcrop-marketing.min.css',
 		configPropertyName: 'css-marketing'
 	},
 	{
-		file: 'dist/css/tabler-marketing.rtl.min.css',
+		file: 'dist/css/firstcrop-marketing.rtl.min.css',
 		configPropertyName: 'css-marketing-rtl'
 	},
 	{
-		file: 'dist/css/tabler-payments.min.css',
+		file: 'dist/css/firstcrop-payments.min.css',
 		configPropertyName: 'css-payments'
 	},
 	{
-		file: 'dist/css/tabler-payments.rtl.min.css',
+		file: 'dist/css/firstcrop-payments.rtl.min.css',
 		configPropertyName: 'css-payments-rtl'
 	},
 	{
-		file: 'dist/css/tabler-props.min.css',
+		file: 'dist/css/firstcrop-props.min.css',
 		configPropertyName: 'css-props'
 	},
 	{
-		file: 'dist/css/tabler-props.rtl.min.css',
+		file: 'dist/css/firstcrop-props.rtl.min.css',
 		configPropertyName: 'css-props-rtl'
 	},
 	{
-		file: 'dist/css/tabler-themes.min.css',
+		file: 'dist/css/firstcrop-themes.min.css',
 		configPropertyName: 'css-themes'
 	},
 	{
-		file: 'dist/css/tabler-themes.rtl.min.css',
+		file: 'dist/css/firstcrop-themes.rtl.min.css',
 		configPropertyName: 'css-themes-rtl'
 	},
 	{
-		file: 'dist/css/tabler-socials.min.css',
+		file: 'dist/css/firstcrop-socials.min.css',
 		configPropertyName: 'css-socials'
 	},
 	{
-		file: 'dist/css/tabler-socials.rtl.min.css',
+		file: 'dist/css/firstcrop-socials.rtl.min.css',
 		configPropertyName: 'css-socials-rtl'
 	},
 	{
-		file: 'dist/css/tabler-vendors.min.css',
+		file: 'dist/css/firstcrop-vendors.min.css',
 		configPropertyName: 'css-vendors'
 	},
 	{
-		file: 'dist/css/tabler-vendors.rtl.min.css',
+		file: 'dist/css/firstcrop-vendors.rtl.min.css',
 		configPropertyName: 'css-vendors-rtl'
 	},
 	{
-		file: 'dist/js/tabler.min.js',
+		file: 'dist/js/firstcrop.min.js',
 		configPropertyName: 'js'
 	},
 	{
-		file: 'dist/js/tabler-theme.min.js',
+		file: 'dist/js/firstcrop-theme.min.js',
 		configPropertyName: 'js-theme'
 	},
 ]

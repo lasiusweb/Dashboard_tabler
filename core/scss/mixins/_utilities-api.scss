@@ -6,7 +6,7 @@
 
 // Emits the whole utilities API (responsive, RFS and print variants) for a
 // given `$utilities` map. Parameterized so that bundles with their own map
-// (e.g. tabler-marketing) can reuse the loops — with the module system a
+// (e.g. firstcrop-marketing) can reuse the loops — with the module system a
 // bundle can no longer swap the global `$utilities` before loading the API.
 @mixin utilities-api($utilities) {
   // Loop over each breakpoint

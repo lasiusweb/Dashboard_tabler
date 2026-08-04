@@ -1,0 +1,43 @@
+---
+// Coupon chip with copy affordance + optional apply button. Pure markup; the
+// apply logic lives on the cart page.
+import Icon from '@ui/Icon.astro';
+
+interface Props {
+	code: string;
+	/** human label, e.g. "10% off" / "₹250 off" / "Free shipping" */
+	label?: string;
+	/** shown only when the cart page wires up an apply handler */
+	apply?: boolean;
+	class?: string;
+}
+
+const { code, label, apply, class: className } = Astro.props;
+---
+
+<div class:list={['d-flex align-items-center gap-2', className]}>
+	<span class="store-coupon" data-coupon-copy={code} role="button" title="Copy code">
+		{code}
+	</span>
+	{label && <span class="text-secondary small">{label}</span>}
+	{apply && (
+		<button class="btn btn-sm btn-outline-green" type="button" data-coupon-apply={code}>
+			Apply
+		</button>
+	)}
+	<button class="btn btn-sm btn-icon btn-ghost-secondary" type="button" data-coupon-copy-btn={code} aria-label="Copy code">
+		<Icon name="copy" />
+	</button>
+</div>
+
+<script>
+	import { showToast } from '@shared/lib/storefront-client';
+
+	document.querySelectorAll('[data-coupon-copy], [data-coupon-copy-btn]').forEach((el) => {
+		el.addEventListener('click', () => {
+			const code = el.dataset.couponCopy ?? el.dataset.couponCopyBtn;
+			navigator.clipboard?.writeText(code).catch(() => {});
+			showToast(`Coupon ${code} copied`);
+		});
+	});
+</script>

@@ -19,7 +19,7 @@
       ],
       "cache": true
     },
-    "@tabler/preview#build": {
+    "@firstcrop/preview#build": {
       "dependsOn": [
         "^build"
       ],
@@ -34,7 +34,7 @@
       ],
       "cache": true
     },
-    "@tabler/docs#build": {
+    "@firstcrop/docs#build": {
       "dependsOn": [
         "^build"
       ],

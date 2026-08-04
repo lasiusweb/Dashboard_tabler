@@ -1,0 +1,12 @@
+{
+  "slug": "mustard",
+  "name": "Mustard",
+  "season": "rabi",
+  "sowStart": "October",
+  "sowEnd": "November",
+  "harvestStart": "February",
+  "harvestEnd": "March",
+  "states": ["Rajasthan", "Uttar Pradesh", "Madhya Pradesh"],
+  "productIds": ["FC-3105", "FC-3103"],
+  "tip": "Early October sowing escapes aphid build-up; apply boron at flowering on sandy soils."
+}

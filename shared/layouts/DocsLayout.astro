@@ -1,9 +1,9 @@
 ---
-// Docs layout — port of shared/layouts/docs/default.html (the @tabler/docs app).
+// Docs layout — port of shared/layouts/docs/default.html (the @firstcrop/docs app).
 // Standalone layout with its own <head>; does NOT use BaseLayout.astro.
 // Development uses the unminified assets; production additionally emits the SEO metadata.
 import { site } from '@shared/lib/site';
-import libs from '@tabler/core/libs.json';
+import libs from '@firstcrop/core/libs.json';
 import docs from '@data/docs.json';
 import Icon from '@ui/Icon.astro';
 import DocsNavbar from '@components/DocsNavbar.astro';
@@ -77,7 +77,7 @@ const pageSection = docsUrl.startsWith('/ui/')
 				: '';
 const metaTitle = seoTitle ?? title;
 const metaDescription = seoDescription ?? description;
-const siteName = pageSection ? `Tabler ${pageSection} Documentation` : 'Tabler Documentation';
+const siteName = pageSection ? `FirstCrop ${pageSection} Documentation` : 'FirstCrop Documentation';
 const canonicalUrl = new URL(docsUrl, Astro.site ?? site.docsUrl).href;
 
 // Equivalent of `{{ page | relative }}`: for /ui/components/alert/ -> "../../.."
@@ -104,9 +104,9 @@ const docsLibJs = libEntries
 	.flatMap(([, lib]) => (lib.js ?? []).map((file) => libUrl(lib, file)));
 
 // Eventually belongs in src/lib/site.ts (out of scope for this task).
-const opencollectiveUrl = 'https://opencollective.com/tabler';
-const xUrl = 'https://x.com/tabler_io';
-const linkedinUrl = 'https://www.linkedin.com/company/tabler-io';
+const opencollectiveUrl = 'https://opencollective.com/firstcrop';
+const xUrl = 'https://x.com/firstcrop';
+const linkedinUrl = 'https://www.linkedin.com/company/firstcrop';
 
 const year = new Date().getFullYear();
 
@@ -153,11 +153,11 @@ const docsLinks = docs.links as DocsLink[];
 		<!-- END META -->
 
 		<!-- BEGIN GLOBAL MANDATORY STYLES -->
-		<link rel="stylesheet" href="/dist/css/tabler.css" />
+		<link rel="stylesheet" href="/dist/css/firstcrop.css" />
 		<!-- END GLOBAL MANDATORY STYLES -->
 
 		<!-- BEGIN PLUGINS STYLES -->
-		{site.cssPlugins.map((plugin) => <link href={`/dist/css/tabler-${plugin}.css`} rel="stylesheet" />)}
+		{site.cssPlugins.map((plugin) => <link href={`/dist/css/firstcrop-${plugin}.css`} rel="stylesheet" />)}
 		<!-- END PLUGINS STYLES -->
 
 		{
@@ -180,9 +180,9 @@ const docsLinks = docs.links as DocsLink[];
 		<!-- END DOCS STYLES -->
 	</head>
 
-	<body class="d-flex flex-column" style="background: var(--tblr-bg-surface)">
+	<body class="d-flex flex-column" style="background: var(--fc-bg-surface)">
 		<!-- BEGIN GLOBAL THEME SCRIPT -->
-		<script is:inline src="/dist/js/tabler-theme.js"></script>
+		<script is:inline src="/dist/js/firstcrop-theme.js"></script>
 		<!-- END GLOBAL THEME SCRIPT -->
 		<!-- BEGIN NAVBAR  -->
 		<header role="banner">
@@ -261,7 +261,7 @@ const docsLinks = docs.links as DocsLink[];
 										<div class="mt-5">
 											<div class="row">
 												<div class="col text-secondary">
-													© {year} Tabler. All rights reserved.
+													© {year} FirstCrop. All rights reserved.
 												</div>
 
 												<div class="col text-end">
@@ -337,7 +337,7 @@ const docsLinks = docs.links as DocsLink[];
 		<!-- END PAGE SCRIPTS -->
 
 		<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-		<script is:inline src="/dist/js/tabler.js"></script>
+		<script is:inline src="/dist/js/firstcrop.js"></script>
 		<!-- END GLOBAL MANDATORY SCRIPTS -->
 
 		<!-- BEGIN DOCS SCRIPTS -->

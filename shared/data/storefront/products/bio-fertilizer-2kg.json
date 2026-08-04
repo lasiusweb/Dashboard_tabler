@@ -1,0 +1,33 @@
+{
+  "slug": "bio-fertilizer-2kg",
+  "id": "FC-3104",
+  "name": "Bio-fertilizer pack (2 kg)",
+  "categoryId": "fertilizers",
+  "brand": "GreenRoot",
+  "image": null,
+  "rating": 4.3,
+  "ratingCount": 154,
+  "reviewIds": [],
+  "shortDescription": "Rhizobium + PSB culture for legumes and cereals — reduces chemical N use.",
+  "longDescription": "A two-in-one culture pack: Rhizobium for legumes and phosphate-solubilising bacteria for all crops. Mix with seed or apply to the furrow at sowing.",
+  "highlights": ["Rhizobium + PSB", "1 bag/acre seed treatment", "Shelf life 6 months", "Store below 30 °C"],
+  "specifications": {
+    "Culture": "Rhizobium + PSB",
+    "Dose": "1 bag/acre",
+    "Crops": "Legumes, cereals",
+    "Packing": "2 kg pouch"
+  },
+  "packSizes": [{ "label": "2 kg", "mrp": 460, "price": 350, "unit": "pouch", "subsidy": 110 }],
+  "stock": 64,
+  "tags": ["fertilizer", "bio", "rhizobium", "organic"],
+  "badge": "Offer expiring",
+  "season": ["kharif", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 420 },
+    { "date": "2026-03-01", "price": 400 },
+    { "date": "2026-04-01", "price": 380 },
+    { "date": "2026-05-01", "price": 360 },
+    { "date": "2026-06-01", "price": 350 },
+    { "date": "2026-07-01", "price": 350 }
+  ]
+}

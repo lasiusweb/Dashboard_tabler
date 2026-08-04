@@ -1,0 +1,52 @@
+---
+// Accordion over the storefront faqs data (kit Accordion is bound to
+// questions.json). Accepts either a full list (grouped by category) or a
+// pre-filtered subset.
+import Icon from '@ui/Icon.astro';
+import type { Faq } from '@shared/lib/storefront-data';
+
+interface Props {
+	faqs: Faq[];
+	/** show the category label chip on each item */
+	showCategory?: boolean;
+	class?: string;
+}
+
+const { faqs, showCategory = false, class: className } = Astro.props;
+
+const categoryLabel: Record<string, string> = {
+	ordering: 'Ordering',
+	delivery: 'Delivery',
+	payment: 'Payment',
+	returns: 'Returns',
+	product: 'Product',
+};
+---
+
+<div class:list={['accordion', className]}>
+	{faqs.map((faq, index) => (
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button
+					class:list={['accordion-button', index > 0 && 'collapsed']}
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target={`#store-faq-${faq.id}`}
+					aria-expanded={index === 0 ? 'true' : 'false'}
+				>
+					{faq.question}
+					{showCategory && (
+						<span class="badge bg-green-lt text-green ms-auto ms-3">{categoryLabel[faq.category] ?? faq.category}</span>
+					)}
+				</button>
+			</h2>
+			<div
+				id={`store-faq-${faq.id}`}
+				class:list={['accordion-collapse collapse', index === 0 && 'show']}
+				data-bs-parent={faqs.length > 1 ? '#store-faq-group' : undefined}
+			>
+				<div class="accordion-body text-secondary">{faq.answer}</div>
+			</div>
+		</div>
+	))}
+</div>

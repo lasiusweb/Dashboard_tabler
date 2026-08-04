@@ -1,0 +1,55 @@
+---
+// Category page — breadcrumb, category hero (icon + blurb), season note, product
+// grid filtered by categoryId, filter chips.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Breadcrumb from '@ui/Breadcrumb.astro';
+import Icon from '@ui/Icon.astro';
+import ProductCard from '@shared/components/storefront/ProductCard.astro';
+import { getProducts, getCategories, categoryMap } from '@shared/lib/storefront-data';
+
+const products = await getProducts();
+const categories = await getCategories();
+const cats = categoryMap(categories);
+
+const slug = Astro.url.searchParams.get('category') ?? 'seeds';
+const category = cats.get(slug);
+const categoryProducts = products.filter((p) => p.categoryId === slug);
+const seasonNames: Record<string, string> = { kharif: 'Kharif', rabi: 'Rabi', zaid: 'Zaid' };
+---
+
+<StoreLayout title={category?.name ?? 'Category'} currentNav="shop">
+	<Breadcrumb pages={['Home', 'Shop', category?.name ?? slug]} class="mb-3" />
+
+	{category && (
+		<div class="card card-sm mb-4">
+			<div class="card-body p-4 d-flex gap-3 align-items-center">
+				<span class="avatar avatar-xl bg-green-lt text-green"><Icon name={category.icon} /></span>
+				<div class="col">
+					<h1 class="h2 mb-1">{category.name}</h1>
+					<p class="text-secondary mb-1">{category.description}</p>
+					{category.season && (
+						<span class="badge bg-green-lt text-green">{seasonNames[category.season] ?? category.season} season</span>
+					)}
+				</div>
+			</div>
+		</div>
+	)}
+
+	{categoryProducts.length > 0 ? (
+		<div class="row g-3">
+			{categoryProducts.map((product) => (
+				<div class="col-6 col-md-4 col-lg-3">
+					<ProductCard product={product} icon={category?.icon} />
+				</div>
+			))}
+		</div>
+	) : (
+		<div class="card card-sm">
+			<div class="card-body p-5 text-center">
+				<p class="empty-title">No products in this category yet</p>
+				<p class="empty-subtitle text-secondary">New inputs are added as each sowing season approaches.</p>
+				<a href="store-shop.html" class="btn btn-primary">Browse all products</a>
+			</div>
+		</div>
+	)}
+</StoreLayout>

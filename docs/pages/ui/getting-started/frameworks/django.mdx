@@ -4,7 +4,7 @@ order: 8
 summary: Set up Tabler in Django and build a first working page.
 description: Integrate Tabler with Django.
 icon: brand-django
-seoDescription: Install `@tabler/core`, load CSS and optional JS in Django templates, and render a minimal page layout with a Tabler card.
+seoDescription: Install `@firstcrop/core`, load CSS and optional JS in Django templates, and render a minimal page layout with a Tabler card.
 layout: '@shared/layouts/DocsMdxLayout.astro'
 ---
 
@@ -12,9 +12,9 @@ import TabsPackage from '@components/TabsPackage.astro'
 import CdnImportPackage from '@components/CdnImportPackage.astro'
 import Steps from '@components/Steps.astro'
 
-Django templates render server-side HTML, which makes Tabler a drop-in: add Tabler classes to your markup and serve the compiled CSS and JS through Django's static files system — no Node build step required at runtime.
+Django templates render server-side HTML, which makes Tabler a drop-in: add Tabler classes to your markup and serve the compiled CSS and JS through Django's static files system â€” no Node build step required at runtime.
 
-You will install `@tabler/core`, copy its compiled assets into your static directory, and render a first template with a Tabler card.
+You will install `@firstcrop/core`, copy its compiled assets into your static directory, and render a first template with a Tabler card.
 
 ## Setup
 
@@ -22,9 +22,9 @@ You will install `@tabler/core`, copy its compiled assets into your static direc
 
 ### Install Tabler package
 
-Install `@tabler/core` with your preferred package manager:
+Install `@firstcrop/core` with your preferred package manager:
 
-<TabsPackage name="@tabler/core" />
+<TabsPackage name="@firstcrop/core" />
 
 You can also use CDN files when you need a quick setup:
 
@@ -41,21 +41,21 @@ If you use static files directly, copy the compiled files from the installed npm
 
 ```shell
 mkdir -p static/css static/js
-cp node_modules/@tabler/core/dist/css/tabler.min.css static/css/
-cp node_modules/@tabler/core/dist/js/tabler.min.js static/js/
+cp node_modules/@firstcrop/core/dist/css/firstcrop.min.css static/css/
+cp node_modules/@firstcrop/core/dist/js/firstcrop.min.js static/js/
 ```
 
 Then add Tabler CSS to your base template:
 
 ```jinja
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/tabler.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/firstcrop.min.css' %}" />
 ```
 
 For full theme customization, build from SCSS sources:
 
 ```scss
-@import '@tabler/core/scss/tabler';
+@import '@firstcrop/core/scss/firstcrop';
 ```
 
 ### Import and initialize JavaScript
@@ -66,7 +66,7 @@ If you use static files, include Tabler JS in your base template:
 
 ```jinja
 {% load static %}
-<script src="{% static 'js/tabler.min.js' %}"></script>
+<script src="{% static 'js/firstcrop.min.js' %}"></script>
 ```
 
 Django-specific note: when serving local static assets in production, run `collectstatic` so Tabler files are included in your final static output.
@@ -82,11 +82,11 @@ Create a minimal base template in `templates/base.html`:
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/tabler.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/firstcrop.min.css' %}" />
   </head>
   <body>
     {% block content %}{% endblock %}
-    <script src="{% static 'js/tabler.min.js' %}"></script>
+    <script src="{% static 'js/firstcrop.min.js' %}"></script>
   </body>
 </html>
 ```

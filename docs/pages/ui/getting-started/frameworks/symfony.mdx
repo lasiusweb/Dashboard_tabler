@@ -4,7 +4,7 @@ order: 7
 summary: Set up Tabler in Symfony and build a first working page.
 description: Integrate Tabler with Symfony.
 icon: brand-symfony
-seoDescription: Install `@tabler/core`, import CSS and JS with Symfony asset tooling, and render a minimal page layout with a Tabler card.
+seoDescription: Install `@firstcrop/core`, import CSS and JS with Symfony asset tooling, and render a minimal page layout with a Tabler card.
 layout: '@shared/layouts/DocsMdxLayout.astro'
 ---
 
@@ -12,9 +12,9 @@ import TabsPackage from '@components/TabsPackage.astro'
 import CdnImportPackage from '@components/CdnImportPackage.astro'
 import Steps from '@components/Steps.astro'
 
-Symfony's Twig templates render server-side HTML, so Tabler components work without any adapters — you add Tabler classes to your markup and let the asset pipeline deliver the CSS and JS.
+Symfony's Twig templates render server-side HTML, so Tabler components work without any adapters â€” you add Tabler classes to your markup and let the asset pipeline deliver the CSS and JS.
 
-This guide uses Webpack Encore. You will install `@tabler/core`, import its assets in your Encore entries, and render a first Twig template with a Tabler card.
+This guide uses Webpack Encore. You will install `@firstcrop/core`, import its assets in your Encore entries, and render a first Twig template with a Tabler card.
 
 ## Setup
 
@@ -22,9 +22,9 @@ This guide uses Webpack Encore. You will install `@tabler/core`, import its asse
 
 ### Install Tabler package
 
-Install `@tabler/core` with your preferred package manager:
+Install `@firstcrop/core` with your preferred package manager:
 
-<TabsPackage name="@tabler/core" />
+<TabsPackage name="@firstcrop/core" />
 
 You can also use CDN files when you need a quick setup:
 
@@ -35,13 +35,13 @@ You can also use CDN files when you need a quick setup:
 If you use Webpack Encore, import Tabler CSS in `assets/styles/app.scss`:
 
 ```scss
-@import '@tabler/core/dist/css/tabler.min.css';
+@import '@firstcrop/core/dist/css/firstcrop.min.css';
 ```
 
 For full theme customization, import SCSS sources instead:
 
 ```scss
-@import '@tabler/core/scss/tabler';
+@import '@firstcrop/core/scss/firstcrop';
 ```
 
 ### Import and initialize JavaScript
@@ -51,7 +51,7 @@ Tabler JavaScript is required for interactive components such as dropdowns, moda
 If you use Webpack Encore, import Tabler JS in `assets/app.js`:
 
 ```js
-import '@tabler/core/dist/js/tabler.min.js'
+import '@firstcrop/core/dist/js/firstcrop.min.js'
 ```
 
 Symfony-specific note: include generated Encore assets in your base Twig template: `{{ encore_entry_link_tags("app") }}` and `{{ encore_entry_script_tags("app") }}`.

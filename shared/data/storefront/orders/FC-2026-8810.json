@@ -1,0 +1,19 @@
+{
+  "slug": "FC-2026-8810",
+  "id": "FC-2026-8810",
+  "date": "2026-07-15",
+  "status": "Cancelled",
+  "items": [
+    { "productId": "FC-3108", "name": "Power tiller attachment", "packSize": "1 unit", "qty": 1, "price": 16000 }
+  ],
+  "payment": "UPI",
+  "payColor": "green",
+  "statusColor": "red",
+  "total": 16000,
+  "zone": "rural",
+  "timeline": [
+    { "label": "Order placed", "date": "15 Jul, 8:30 AM", "done": true },
+    { "label": "Cancelled", "date": "16 Jul, 2:12 PM", "done": true },
+    { "label": "Refund issued", "date": "18 Jul", "done": true }
+  ]
+}

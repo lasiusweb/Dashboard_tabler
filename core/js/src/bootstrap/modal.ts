@@ -43,7 +43,7 @@ const CLASS_NAME_STATIC = 'modal-static'
 const OPEN_SELECTOR = '.modal.show'
 const SELECTOR_DIALOG = '.modal-dialog'
 const SELECTOR_MODAL_BODY = '.modal-body'
-const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="modal"], [data-tblr-toggle="modal"]'
+const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="modal"], [data-fc-toggle="modal"]'
 
 interface ComponentConfig {
   [key: string]: any

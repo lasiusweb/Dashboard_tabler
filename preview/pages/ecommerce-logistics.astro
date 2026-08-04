@@ -1,0 +1,211 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Progress from '@ui/Progress.astro';
+import logistics from '@data/ecommerce-logistics.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Logistics"
+	pageHeader="Ecommerce Logistics"
+	description="Fulfilment, carriers and last mile for firstcrop.in."
+	pageMenu="ecommerce.logistics"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(logistics as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">On-time delivery</div>
+							<div class="card-subtitle">Last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-logistics-ontime" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Transit timeline</div>
+							<div class="card-subtitle">Median days to delivery</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-logistics-transit" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Last-mile failures</div>
+							<div class="card-subtitle">Share of RTOs by reason</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-logistics-last-mile" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Carrier performance</div>
+							<div class="card-subtitle">Volume, SLA and cost</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Carrier</th>
+										<th class="text-end">Volume</th>
+										<th>On-time</th>
+										<th class="text-end">Transit (d)</th>
+										<th class="text-end">Damage</th>
+										<th class="text-end">Cost / shipment</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(logistics as { carriers: { name: string; volume: number; onTime: number; transit: number; damage: number; cost: string }[] }).carriers.map((c) => (
+											<tr>
+												<td class="fw-medium">{c.name}</td>
+												<td class="text-end">{c.volume.toLocaleString('en-IN')}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={c.onTime} color={c.onTime > 90 ? 'green' : c.onTime > 85 ? 'yellow' : 'danger'} class="flex-grow-1" />
+														<span class="fw-medium">{c.onTime}%</span>
+													</div>
+												</td>
+												<td class="text-end">{c.transit}</td>
+												<td class="text-end">{c.damage}%</td>
+												<td class="text-end">{c.cost}</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Pick queue ageing</div>
+							<div class="card-subtitle">Orders awaiting dispatch</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-logistics-pick-queue" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">SLA zones</div>
+							<div class="card-subtitle">Actual vs target delivery days</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Zone</th>
+										<th class="text-end">Actual</th>
+										<th class="text-end">Target</th>
+										<th>On-time</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(logistics as { slaZones: { zone: string; actualDays: number; targetDays: number; onTime: number }[] }).slaZones.map((z) => (
+											<tr>
+												<td class="fw-medium">{z.zone}</td>
+												<td class="text-end">{z.actualDays}d</td>
+												<td class="text-end text-secondary">{z.targetDays}d</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={z.onTime} color={z.onTime > 90 ? 'green' : 'yellow'} class="flex-grow-1" />
+														<span class="fw-medium">{z.onTime}%</span>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Serviceability by state</div>
+							<div class="card-subtitle">Pincodes, serviceable and COD reach</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>State</th>
+										<th class="text-end">Pincodes</th>
+										<th>Serviceable</th>
+										<th>COD reach</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(logistics as { serviceability: { state: string; pincodes: number; serviceable: number; cod: number }[] }).serviceability.map((s) => (
+											<tr>
+												<td class="fw-medium">{s.state}</td>
+												<td class="text-end">{s.pincodes.toLocaleString('en-IN')}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={s.serviceable} color="azure" class="flex-grow-1" />
+														<span class="fw-medium">{s.serviceable}%</span>
+													</div>
+												</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={s.cod} color="primary" class="flex-grow-1" />
+														<span class="fw-medium">{s.cod}%</span>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

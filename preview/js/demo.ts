@@ -8,10 +8,10 @@ interface SettingsItems {
 }
 
 const items: SettingsItems = {
-  'menu-position': { localStorage: 'tablerMenuPosition', default: 'top' },
-  'menu-behavior': { localStorage: 'tablerMenuBehavior', default: 'sticky' },
+  'menu-position': { localStorage: 'firstcropMenuPosition', default: 'top' },
+  'menu-behavior': { localStorage: 'firstcropMenuBehavior', default: 'sticky' },
   'container-layout': {
-    localStorage: 'tablerContainerLayout',
+    localStorage: 'firstcropContainerLayout',
     default: 'boxed',
   },
 }

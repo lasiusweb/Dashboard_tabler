@@ -88,9 +88,9 @@ describe('Button', () => {
     })
   })
 
-  describe('data-tblr-toggle', () => {
-    it('should toggle active class via data-tblr-toggle', () => {
-      fixtureEl.innerHTML = '<button class="btn" data-tblr-toggle="button">btn</button>'
+  describe('data-fc-toggle', () => {
+    it('should toggle active class via data-fc-toggle', () => {
+      fixtureEl.innerHTML = '<button class="btn" data-fc-toggle="button">btn</button>'
 
       const btn = fixtureEl.querySelector('.btn') as HTMLElement
 
@@ -103,8 +103,8 @@ describe('Button', () => {
       expect(btn.classList.contains('active')).toBe(false)
     })
 
-    it('should toggle active on child click with data-tblr-toggle', () => {
-      fixtureEl.innerHTML = '<button class="btn" data-tblr-toggle="button"><span class="inner">text</span></button>'
+    it('should toggle active on child click with data-fc-toggle', () => {
+      fixtureEl.innerHTML = '<button class="btn" data-fc-toggle="button"><span class="inner">text</span></button>'
 
       const inner = fixtureEl.querySelector('.inner') as HTMLElement
       const btn = fixtureEl.querySelector('.btn') as HTMLElement

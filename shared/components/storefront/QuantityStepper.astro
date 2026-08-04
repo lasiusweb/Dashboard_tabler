@@ -1,0 +1,76 @@
+---
+// Quantity +/- stepper bound to the localStorage cart. Reads/writes a single
+// cart line; the header badge + cart page stay in sync via `subscribe`.
+import Icon from '@ui/Icon.astro';
+
+interface Props {
+	productId: string;
+	packSize: string;
+	/** initial quantity (for cart rows) */
+	qty?: number;
+	min?: number;
+	/** max stock available (0 / undefined disables the + button) */
+	stock?: number | null;
+	compact?: boolean;
+}
+
+const { productId, packSize, qty = 1, min = 1, stock = null, compact } = Astro.props;
+
+const max = stock && stock > 0 ? stock : 99;
+---
+
+<div class:list={['input-group input-group-flat input-group-sm', 'store-stepper', compact && 'w-auto']}>
+	<button class="btn btn-icon" type="button" data-store-action="dec" data-product-id={productId} data-pack-size={packSize} aria-label="Decrease">
+		<Icon name="minus" />
+	</button>
+	<input
+		type="text"
+		class="form-control text-center store-stepper-value"
+		value={qty}
+		data-min={min}
+		data-max={max}
+		inputmode="numeric"
+		aria-label="Quantity"
+		style="min-width: 3rem"
+	/>
+	<button class="btn btn-icon" type="button" data-store-action="inc" data-product-id={productId} data-pack-size={packSize} aria-label="Increase">
+		<Icon name="plus" />
+	</button>
+</div>
+
+<script>
+	import { getCart, setQty, subscribe } from '@shared/lib/storefront-client';
+
+	function mountStepper(root) {
+		const valueEl = root.querySelector('.store-stepper-value');
+		const inc = root.querySelector('[data-store-action="inc"]');
+		const dec = root.querySelector('[data-store-action="dec"]');
+		if (!valueEl || !inc || !dec) return;
+
+		const productId = inc.dataset.productId;
+		const packSize = inc.dataset.packSize;
+		const min = Number(valueEl.dataset.min ?? 1);
+		const max = Number(valueEl.dataset.max ?? 99);
+		const initial = Number(valueEl.value ?? 1);
+
+		const set = (v) => {
+			const next = Math.min(Math.max(v, min), max);
+			valueEl.value = String(next);
+			setQty(productId, packSize, next);
+		};
+
+		dec.addEventListener('click', () => set(Number(valueEl.value ?? 1) - 1));
+		inc.addEventListener('click', () => set(Number(valueEl.value ?? 1) + 1));
+		valueEl.addEventListener('input', () => {
+			const v = parseInt(valueEl.value.replace(/\D/g, ''), 10);
+			set(Number.isNaN(v) ? min : v);
+		});
+
+		subscribe(() => {
+			const line = getCart().find((l) => l.productId === productId && l.packSize === packSize);
+			valueEl.value = String((line ? line.qty : initial) || 1);
+		});
+	}
+
+	document.querySelectorAll('.store-stepper').forEach(mountStepper);
+</script>

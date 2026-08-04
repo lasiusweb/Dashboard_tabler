@@ -11,14 +11,14 @@ const copies = [
 	{
 		from: join(root, 'assets'),
 		to: publicDir,
-		packageName: '@tabler/docs',
+		packageName: '@firstcrop/docs',
 		requiredFile: join(root, 'assets', 'css', 'docs.css'),
 	},
 	{
 		from: join(repo, 'core', 'dist'),
 		to: join(publicDir, 'dist'),
-		packageName: '@tabler/core',
-		requiredFile: join(repo, 'core', 'dist', 'css', 'tabler.css'),
+		packageName: '@firstcrop/core',
+		requiredFile: join(repo, 'core', 'dist', 'css', 'firstcrop.css'),
 	},
 	{
 		// Sourced from preview's isolated tmp-assets/ (not dist/) — dist/ is Astro's own
@@ -26,7 +26,7 @@ const copies = [
 		// across repeated builds. See preview/.build/copy-assets.mjs.
 		from: join(repo, 'preview', 'tmp-assets'),
 		to: join(publicDir, 'preview'),
-		packageName: '@tabler/preview',
+		packageName: '@firstcrop/preview',
 		requiredFile: join(repo, 'preview', 'tmp-assets', 'css', 'demo.css'),
 	},
 	{

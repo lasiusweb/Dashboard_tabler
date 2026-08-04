@@ -678,7 +678,7 @@ $social-colors: (
   'rss': #ffa500,
   'flickr': #0063dc,
   'bitbucket': #0052cc,
-  'tabler': #066fd1,
+  'firstcrop': #2fb344,
 ) !default;
 
 $gray-colors: (
@@ -2291,7 +2291,7 @@ $thumbnail-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
 $figure-caption-font-size: $small-font-size !default;
 $figure-caption-color: var(--#{$prefix}secondary-color) !default;
 
-// Tabler Plugins
+// FirstCrop Plugins
 $social-apps: ('apple', 'discord', 'dribbble', 'facebook', 'figma', 'github', 'google', 'instagram', 'linkedin', 'medium', 'meta', 'metamask', 'pinterest', 'reddit', 'signal', 'skype', 'snapchat', 'spotify', 'telegram', 'tiktok', 'tumblr', 'twitch', 'vk', 'x', 'youtube');
 
 // Payments

@@ -1,0 +1,9 @@
+{
+  "slug": "irrigation",
+  "name": "Irrigation",
+  "icon": "droplets",
+  "description": "Drip systems and emitters that cut water use by up to 40% on field and polyhouse crops.",
+  "productIds": ["FC-3106"],
+  "season": "zaid",
+  "faqIds": ["faq-delivery-rural"]
+}

@@ -1,0 +1,99 @@
+---
+// Support — contact channels, policies, escalation steps and an FAQ accordion
+// grouped by category.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Icon from '@ui/Icon.astro';
+import Card from '@ui/Card.astro';
+import CardBody from '@ui/CardBody.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import FaqAccordion from '@shared/components/storefront/FaqAccordion.astro';
+import { getConfig, getFaqs } from '@shared/lib/storefront-data';
+
+const support = await getConfig('support');
+const faqs = await getFaqs();
+const faqOrder: Record<string, number> = { ordering: 0, delivery: 1, payment: 2, returns: 3, product: 4 };
+const orderedFaqs = [...faqs].sort((a, b) => (faqOrder[a.category] ?? 9) - (faqOrder[b.category] ?? 9) || a.question.localeCompare(b.question));
+---
+
+<StoreLayout title="Support" currentNav="support">
+	<div class="mb-4">
+		<h1 class="h2 mb-1">How can we help?</h1>
+		<p class="text-secondary mb-0">{support.footerNote}</p>
+	</div>
+
+	<!-- Contact channels -->
+	<div class="row g-3 mb-4">
+		{support.channels.map((channel) => (
+			<div class="col-md-4">
+				<Card class="h-100">
+					<CardBody>
+						<div class="d-flex align-items-center gap-3">
+							<div class="store-offer-icon"><Icon name={channel.icon} /></div>
+							<div>
+								<h3 class="h6 mb-0">{channel.name}</h3>
+								<div class="fw-medium">{channel.detail}</div>
+								<div class="text-secondary small">{channel.hours}</div>
+							</div>
+						</div>
+					</CardBody>
+				</Card>
+			</div>
+		))}
+	</div>
+
+	<!-- Escalation steps -->
+	<Card class="mb-4">
+		<CardBody>
+			<h3 class="h5 mb-3"><Icon name="headset" class="me-1" />Get it sorted, step by step</h3>
+			<div class="row g-3">
+				{support.escalationSteps.map((step, index) => (
+					<div class="col-md-4">
+						<div class="d-flex gap-3">
+							<span class="badge bg-green-lt text-green" style="min-width:1.75rem;height:1.75rem">{index + 1}</span>
+							<div>
+								<div class="fw-medium">{step.title}</div>
+								<div class="text-secondary small">{step.text}</div>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</CardBody>
+	</Card>
+
+	<!-- Policies -->
+	<div class="row g-3 mb-4">
+		{support.policies.map((policy) => (
+			<div class="col-md-4">
+				<Card class="h-100">
+					<CardHeader>
+						<div class="d-flex align-items-center gap-2">
+							<Icon name={policy.icon} color="green" />
+							<div class="card-title">{policy.title}</div>
+						</div>
+					</CardHeader>
+					<CardBody>
+						<p class="text-secondary small mb-2">{policy.text}</p>
+						<ul class="list-unstyled small mb-0">
+							{policy.bullets.map((bullet) => (
+								<li class="d-flex gap-2 mb-1"><Icon name="check" color="green" class="mt-0" />{bullet}</li>
+							))}
+						</ul>
+					</CardBody>
+				</Card>
+			</div>
+		))}
+	</div>
+
+	<!-- FAQ -->
+	<Card>
+		<CardHeader>
+			<div class="card-title">Frequently asked questions</div>
+		</CardHeader>
+		<CardBody>
+			<div id="store-faq-group">
+				<FaqAccordion faqs={orderedFaqs} showCategory />
+			</div>
+		</CardBody>
+	</Card>
+</StoreLayout>

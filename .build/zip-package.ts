@@ -29,14 +29,14 @@ zip.addLocalFile(
 
 zip.addFile(
 	'documentation.url',
-	Buffer.from('[InternetShortcut]\nURL = https://tabler.io/docs')
+	Buffer.from('[InternetShortcut]\nURL = https://firstcrop.in/docs')
 )
 
 // Folder to zip and output path
 const outputZipPath = path.join(
 	__dirname,
 	'../packages-zip',
-	`tabler-${pkg.version}.zip`
+	`firstcrop-${pkg.version}.zip`
 )
 
 // Write the zip file

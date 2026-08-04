@@ -19319,7 +19319,7 @@ function LD(e) {
 LD({
 	container: "#docsearch",
 	appId: "NE1EGTYLS9",
-	indexName: "tabler",
+	indexName: "firstcrop",
 	apiKey: "016353235ef1dd32a6c392be0e939058"
 });
 //#endregion

@@ -1,0 +1,40 @@
+{
+  "slug": "paddy-hybrid-10kg",
+  "id": "FC-1208",
+  "name": "Hybrid paddy seeds (10 kg)",
+  "categoryId": "seeds",
+  "brand": "Basmati",
+  "image": null,
+  "rating": 4.6,
+  "ratingCount": 1284,
+  "reviewIds": ["rev-paddy-1", "rev-paddy-2"],
+  "shortDescription": "High-yield hybrid paddy for Kharif — 4.5–5 t/ha even in a normal monsoon.",
+  "longDescription": "A Swarna-sub-1 grade hybrid with strong tillering and good submergence tolerance. Suited to rain-fed and irrigated Kharif sowing across Maharashtra, Telangana and East UP.",
+  "highlights": ["Yield 4.5–5 t/ha", "Submergence tolerant", "125–130 day duration", "Uniform grain quality"],
+  "specifications": {
+    "Duration": "125–130 days",
+    "Seed rate": "10 kg/ha",
+    "Suitable season": "Kharif",
+    "Germination": "≥ 85%",
+    "Packing": "10 kg bag"
+  },
+  "packSizes": [{ "label": "10 kg", "mrp": 5400, "price": 5140, "unit": "bag" }],
+  "stock": 214,
+  "tags": ["paddy", "kharif", "hybrid", "seeds"],
+  "badge": "Bestseller",
+  "season": ["kharif"],
+  "cultivationGuide": [
+    "Raise nursery 25–30 days before transplanting",
+    "Keep 5 cm standing water after transplanting",
+    "Top-dress urea at tillering and panicle stages",
+    "Harvest at 80–85% grain moisture"
+  ],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 5200 },
+    { "date": "2026-03-01", "price": 5200 },
+    { "date": "2026-04-01", "price": 5280 },
+    { "date": "2026-05-01", "price": 5140 },
+    { "date": "2026-06-01", "price": 5140 },
+    { "date": "2026-07-01", "price": 5140 }
+  ]
+}

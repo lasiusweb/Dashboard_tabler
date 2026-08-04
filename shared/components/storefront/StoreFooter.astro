@@ -1,0 +1,91 @@
+---
+// Customer-facing store footer: "Grow with firstcrop." statement, link columns,
+// contact + WhatsApp, and a payments row.
+import Icon from '@ui/Icon.astro';
+import { site } from '@shared/lib/site';
+
+const columns = [
+	{
+		title: 'Shop',
+		links: [
+			{ label: 'Seeds', href: 'store-category.html?category=seeds' },
+			{ label: 'Fertilizers', href: 'store-category.html?category=fertilizers' },
+			{ label: 'Pesticides', href: 'store-category.html?category=pesticides' },
+			{ label: 'Tools & equipment', href: 'store-category.html?category=tools-equipment' },
+		],
+	},
+	{
+		title: 'Season',
+		links: [
+			{ label: 'Kharif calendar', href: 'store-season.html' },
+			{ label: 'Rabi calendar', href: 'store-season.html' },
+			{ label: 'Zaid calendar', href: 'store-season.html' },
+			{ label: 'Sowing tips', href: 'store-season.html' },
+		],
+	},
+	{
+		title: 'Support',
+		links: [
+			{ label: 'Help centre', href: 'store-support.html' },
+			{ label: 'Returns & refunds', href: 'store-support.html' },
+			{ label: 'Track your order', href: 'store-orders.html' },
+			{ label: 'Offers', href: 'store-offers.html' },
+		],
+	},
+];
+---
+
+<footer class="border-top d-print-none mt-auto">
+	<div class="container-xl py-5">
+		<div class="row g-4">
+			<div class="col-lg-4">
+				<div class="d-flex align-items-center gap-2 mb-2">
+					<span class="fw-bold fs-4 text-body">firstcrop</span>
+				</div>
+				<p class="text-secondary">Grow with firstcrop. Certified seeds, subsidised fertilizers and genuine crop protection — delivered to your farm gate.</p>
+				<div class="mt-3">
+					<a href="#" class="btn btn-outline-green btn-sm">
+						<Icon name="brand-whatsapp" class="me-1" />
+						WhatsApp support
+					</a>
+				</div>
+			</div>
+
+			{columns.map((col) => (
+				<div class="col-6 col-lg-2">
+					<div class="h6">{col.title}</div>
+					<ul class="list-unstyled mb-0">
+						{col.links.map((link) => (
+							<li class="mb-1">
+								<a href={link.href} class="link-secondary">{link.label}</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+
+			<div class="col-6 col-lg-2">
+				<div class="h6">Contact</div>
+				<ul class="list-unstyled mb-0 text-secondary">
+					<li class="mb-1">support@firstcrop.in</li>
+					<li class="mb-1">1800 266 5000</li>
+					<li class="mb-1">Mon–Sat, 8 AM – 8 PM</li>
+				</ul>
+			</div>
+		</div>
+
+		<hr class="my-4" />
+
+		<div class="row align-items-center text-center text-lg-start">
+			<div class="col-lg-6">
+				<div class="text-secondary small">© {new Date().getFullYear()} {site.title} · Terms of service · Privacy policy</div>
+			</div>
+			<div class="col-lg-6 text-lg-end mt-2 mt-lg-0">
+				<span class="text-secondary small me-2">Pay with</span>
+				<Icon name="cash" class="text-secondary" />
+				<Icon name="credit-card" class="text-secondary ms-2" />
+				<Icon name="device-mobile" class="text-secondary ms-2" />
+			</div>
+		</div>
+	</div>
+</footer>

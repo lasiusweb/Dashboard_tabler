@@ -97,7 +97,7 @@
 
 .alert-minor {
   background: transparent;
-  border-color: var(--tblr-border-color);
+  border-color: var(--fc-border-color);
 }
 
 @each $name, $color in $theme-colors {

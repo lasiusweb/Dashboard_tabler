@@ -51,16 +51,16 @@ describe('Alert', () => {
       expect(document.querySelectorAll('.alert')).toHaveLength(0)
     })
 
-    it('should close an alert via data-tblr-dismiss', () => {
-      fixtureEl.innerHTML = ['<div class="alert">', '  <button type="button" data-tblr-dismiss="alert">x</button>', '</div>'].join('')
+    it('should close an alert via data-fc-dismiss', () => {
+      fixtureEl.innerHTML = ['<div class="alert">', '  <button type="button" data-fc-dismiss="alert">x</button>', '</div>'].join('')
 
       const button = document.querySelector('button')!
       button.click()
       expect(document.querySelectorAll('.alert')).toHaveLength(0)
     })
 
-    it('should close an alert via data-tblr-dismiss with data-tblr-target', () => {
-      fixtureEl.innerHTML = ['<div class="alert">', '  <button type="button" data-tblr-target=".alert" data-tblr-dismiss="alert">x</button>', '</div>'].join('')
+    it('should close an alert via data-fc-dismiss with data-fc-target', () => {
+      fixtureEl.innerHTML = ['<div class="alert">', '  <button type="button" data-fc-target=".alert" data-fc-dismiss="alert">x</button>', '</div>'].join('')
 
       const button = document.querySelector('button')!
       button.click()

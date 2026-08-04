@@ -1,0 +1,14 @@
+{
+  "slug": "offer-free-shipping",
+  "title": "Free delivery over ₹1,500",
+  "description": "Doorstep delivery anywhere we serve, on orders above the minimum basket.",
+  "code": "SHIPFREE",
+  "type": "freeShipping",
+  "value": 0,
+  "minBasket": 1500,
+  "validUntil": "2026-09-30",
+  "products": [],
+  "color": "azure",
+  "icon": "truck",
+  "featured": false
+}

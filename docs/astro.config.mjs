@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://docs.tabler.io',
+  site: 'https://docs.firstcrop.in',
   // pages live at the package root (./pages) — content-first layout; all
   // components/lib/data are shared (see the @shared alias)
   srcDir: '.',

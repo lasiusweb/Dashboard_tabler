@@ -20,32 +20,32 @@ describe('Manipulator', () => {
   })
 
   describe('setDataAttribute', () => {
-    it('should set a data-tblr-* attribute', () => {
+    it('should set a data-fc-* attribute', () => {
       Manipulator.setDataAttribute(div, 'key', 'value')
 
-      expect(div.getAttribute('data-tblr-key')).toBe('value')
+      expect(div.getAttribute('data-fc-key')).toBe('value')
     })
 
     it('should convert camelCase keys to kebab-case', () => {
       Manipulator.setDataAttribute(div, 'testKey', '123')
 
-      expect(div.getAttribute('data-tblr-test-key')).toBe('123')
+      expect(div.getAttribute('data-fc-test-key')).toBe('123')
     })
 
     it('should overwrite existing value', () => {
       Manipulator.setDataAttribute(div, 'key', 'old')
       Manipulator.setDataAttribute(div, 'key', 'new')
 
-      expect(div.getAttribute('data-tblr-key')).toBe('new')
+      expect(div.getAttribute('data-fc-key')).toBe('new')
     })
   })
 
   describe('removeDataAttribute', () => {
-    it('should remove data-tblr-* attribute', () => {
-      div.setAttribute('data-tblr-key', 'value')
+    it('should remove data-fc-* attribute', () => {
+      div.setAttribute('data-fc-key', 'value')
       Manipulator.removeDataAttribute(div, 'key')
 
-      expect(div.getAttribute('data-tblr-key')).toBeNull()
+      expect(div.getAttribute('data-fc-key')).toBeNull()
     })
 
     it('should remove data-bs-* attribute', () => {
@@ -56,31 +56,31 @@ describe('Manipulator', () => {
     })
 
     it('should remove both prefixes at once', () => {
-      div.setAttribute('data-tblr-key', 'a')
+      div.setAttribute('data-fc-key', 'a')
       div.setAttribute('data-bs-key', 'b')
       Manipulator.removeDataAttribute(div, 'key')
 
-      expect(div.getAttribute('data-tblr-key')).toBeNull()
+      expect(div.getAttribute('data-fc-key')).toBeNull()
       expect(div.getAttribute('data-bs-key')).toBeNull()
     })
 
     it('should handle camelCase keys', () => {
-      div.setAttribute('data-tblr-some-thing', 'x')
+      div.setAttribute('data-fc-some-thing', 'x')
       Manipulator.removeDataAttribute(div, 'someThing')
 
-      expect(div.getAttribute('data-tblr-some-thing')).toBeNull()
+      expect(div.getAttribute('data-fc-some-thing')).toBeNull()
     })
   })
 
   describe('getDataAttribute', () => {
-    it('should prioritize data-tblr-* over data-bs-*', () => {
-      div.setAttribute('data-tblr-key', 'tblr-value')
+    it('should prioritize data-fc-* over data-bs-*', () => {
+      div.setAttribute('data-fc-key', 'fc-value')
       div.setAttribute('data-bs-key', 'bs-value')
 
-      expect(Manipulator.getDataAttribute(div, 'key')).toBe('tblr-value')
+      expect(Manipulator.getDataAttribute(div, 'key')).toBe('fc-value')
     })
 
-    it('should fall back to data-bs-* if data-tblr-* is absent', () => {
+    it('should fall back to data-bs-* if data-fc-* is absent', () => {
       div.setAttribute('data-bs-key', 'bs-value')
 
       expect(Manipulator.getDataAttribute(div, 'key')).toBe('bs-value')
@@ -91,49 +91,49 @@ describe('Manipulator', () => {
     })
 
     it('should normalize "true" to boolean true', () => {
-      div.setAttribute('data-tblr-flag', 'true')
+      div.setAttribute('data-fc-flag', 'true')
 
       expect(Manipulator.getDataAttribute(div, 'flag')).toBe(true)
     })
 
     it('should normalize "false" to boolean false', () => {
-      div.setAttribute('data-tblr-flag', 'false')
+      div.setAttribute('data-fc-flag', 'false')
 
       expect(Manipulator.getDataAttribute(div, 'flag')).toBe(false)
     })
 
     it('should normalize numeric strings to numbers', () => {
-      div.setAttribute('data-tblr-count', '42')
+      div.setAttribute('data-fc-count', '42')
 
       expect(Manipulator.getDataAttribute(div, 'count')).toBe(42)
     })
 
     it('should normalize "null" to null', () => {
-      div.setAttribute('data-tblr-val', 'null')
+      div.setAttribute('data-fc-val', 'null')
 
       expect(Manipulator.getDataAttribute(div, 'val')).toBeNull()
     })
 
     it('should normalize empty string to null', () => {
-      div.setAttribute('data-tblr-val', '')
+      div.setAttribute('data-fc-val', '')
 
       expect(Manipulator.getDataAttribute(div, 'val')).toBeNull()
     })
 
     it('should parse JSON-encoded values', () => {
-      div.setAttribute('data-tblr-obj', '{"a":1}')
+      div.setAttribute('data-fc-obj', '{"a":1}')
 
       expect(Manipulator.getDataAttribute(div, 'obj')).toEqual({ a: 1 })
     })
 
     it('should return raw string for non-parseable values', () => {
-      div.setAttribute('data-tblr-val', 'hello world')
+      div.setAttribute('data-fc-val', 'hello world')
 
       expect(Manipulator.getDataAttribute(div, 'val')).toBe('hello world')
     })
 
     it('should handle camelCase key lookup', () => {
-      div.setAttribute('data-tblr-my-key', 'yes')
+      div.setAttribute('data-fc-my-key', 'yes')
 
       expect(Manipulator.getDataAttribute(div, 'myKey')).toBe('yes')
     })
@@ -148,9 +148,9 @@ describe('Manipulator', () => {
       expect(Manipulator.getDataAttributes(div)).toEqual({})
     })
 
-    it('should collect data-tblr-* attributes', () => {
-      div.setAttribute('data-tblr-name', 'test')
-      div.setAttribute('data-tblr-count', '5')
+    it('should collect data-fc-* attributes', () => {
+      div.setAttribute('data-fc-name', 'test')
+      div.setAttribute('data-fc-count', '5')
 
       const attrs = Manipulator.getDataAttributes(div)
 
@@ -166,19 +166,19 @@ describe('Manipulator', () => {
       expect(attrs.toggle).toBe('modal')
     })
 
-    it('should prioritize tblr over bs for the same key', () => {
-      div.setAttribute('data-tblr-key', 'tblr')
+    it('should prioritize fc over bs for the same key', () => {
+      div.setAttribute('data-fc-key', 'fc')
       div.setAttribute('data-bs-key', 'bs')
 
       const attrs = Manipulator.getDataAttributes(div)
 
-      expect(attrs.key).toBe('tblr')
+      expect(attrs.key).toBe('fc')
     })
 
     it('should exclude *Config attributes', () => {
-      div.setAttribute('data-tblr-config', '{}')
+      div.setAttribute('data-fc-config', '{}')
       div.setAttribute('data-bs-config', '{}')
-      div.setAttribute('data-tblr-name', 'hello')
+      div.setAttribute('data-fc-name', 'hello')
 
       const attrs = Manipulator.getDataAttributes(div)
 
@@ -187,9 +187,9 @@ describe('Manipulator', () => {
     })
 
     it('should normalize all values', () => {
-      div.setAttribute('data-tblr-flag', 'true')
-      div.setAttribute('data-tblr-num', '10')
-      div.setAttribute('data-tblr-nil', 'null')
+      div.setAttribute('data-fc-flag', 'true')
+      div.setAttribute('data-fc-num', '10')
+      div.setAttribute('data-fc-nil', 'null')
 
       const attrs = Manipulator.getDataAttributes(div)
 

@@ -2,7 +2,7 @@
 import ThemeSettings from '@ui/ThemeSettings.astro';
 import { site } from '@shared/lib/site';
 import PageModals from '@shared/components/PageModals.astro';
-import libs from '@tabler/core/libs.json';
+import libs from '@firstcrop/core/libs.json';
 
 interface Props {
 	title?: string;
@@ -10,7 +10,7 @@ interface Props {
 	pageLibs?: string[];
 	/** body-class front matter, e.g. "layout-boxed" / "layout-fluid" */
 	bodyClass?: string;
-	/** layout-rtl — dir="rtl" + RTL variants of the tabler/plugin stylesheets */
+	/** layout-rtl — dir="rtl" + RTL variants of the firstcrop/plugin stylesheets */
 	rtl?: boolean;
 	/** relative asset base (Liquid `page | relative`): '.' for root pages, '..' one level deep */
 	base?: string;
@@ -21,7 +21,7 @@ const { title, pageLibs = [], bodyClass, rtl = false, base = '.' } = Astro.props
 // PoC mirrors the Eleventy development build: unminified assets, dev favicon.
 const environment = 'development';
 const min = environment === 'development' ? '' : '.min';
-// RTL swaps tabler/plugin stylesheets for their .rtl.css variants (demo stays LTR)
+// RTL swaps firstcrop/plugin stylesheets for their .rtl.css variants (demo stays LTR)
 const rtlSuffix = rtl ? '.rtl' : '';
 
 type Lib = { npm?: string; js?: string[]; css?: string[]; head?: boolean };
@@ -72,11 +72,11 @@ const libJsFiles = (head: boolean) =>
 		}
 
 		<!-- BEGIN GLOBAL MANDATORY STYLES -->
-		<link href={`${base}/dist/css/tabler${rtlSuffix}${min}.css`} rel="stylesheet" />
+		<link href={`${base}/dist/css/firstcrop${rtlSuffix}${min}.css`} rel="stylesheet" />
 		<!-- END GLOBAL MANDATORY STYLES -->
 
 		<!-- BEGIN PLUGINS STYLES -->
-		{site.cssPlugins.map((plugin) => <link href={`${base}/dist/css/tabler-${plugin}${rtlSuffix}${min}.css`} rel="stylesheet" />)}
+		{site.cssPlugins.map((plugin) => <link href={`${base}/dist/css/firstcrop-${plugin}${rtlSuffix}${min}.css`} rel="stylesheet" />)}
 		<!-- END PLUGINS STYLES -->
 
 		<!-- BEGIN DEMO STYLES -->
@@ -107,7 +107,7 @@ const libJsFiles = (head: boolean) =>
 		<a href="#content" class="visually-hidden skip-link">Skip to main content</a>
 
 		<!-- BEGIN GLOBAL THEME SCRIPT -->
-		<script is:inline src={`${base}/dist/js/tabler-theme${min}.js`}></script>
+		<script is:inline src={`${base}/dist/js/firstcrop-theme${min}.js`}></script>
 		<!-- END GLOBAL THEME SCRIPT -->
 
 		<slot />
@@ -130,7 +130,7 @@ const libJsFiles = (head: boolean) =>
 		}
 
 		<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-		<script is:inline src={`${base}/dist/js/tabler${min}.js`} defer></script>
+		<script is:inline src={`${base}/dist/js/firstcrop${min}.js`} defer></script>
 		<!-- END GLOBAL MANDATORY SCRIPTS -->
 
 		<!-- BEGIN DEMO SCRIPTS -->
@@ -161,7 +161,7 @@ const libJsFiles = (head: boolean) =>
 
 				var checkItems = function () {
 					for (var key in themeConfig) {
-						var value = window.localStorage["tabler-" + key] || themeConfig[key]
+						var value = window.localStorage["firstcrop-" + key] || themeConfig[key]
 
 						if (!!value) {
 							var radios = form.querySelectorAll(`[name="${key}"]`)
@@ -191,7 +191,7 @@ const libJsFiles = (head: boolean) =>
 							} else {
 								document.documentElement.removeAttribute("data-bs-" + key)
 							}
-							window.localStorage.setItem("tabler-" + key, value)
+							window.localStorage.setItem("firstcrop-" + key, value)
 							url.searchParams.set(key, value)
 						}
 					}
@@ -203,7 +203,7 @@ const libJsFiles = (head: boolean) =>
 					for (var key in themeConfig) {
 						var value = themeConfig[key]
 						document.documentElement.removeAttribute("data-bs-" + key)
-						window.localStorage.removeItem("tabler-" + key)
+						window.localStorage.removeItem("firstcrop-" + key)
 						url.searchParams.delete(key)
 					}
 

@@ -67,7 +67,7 @@
   @include box-shadow(var(--#{$prefix}dropdown-box-shadow));
 
   &[data-bs-popper],
-  &[data-tblr-popper] {
+  &[data-fc-popper] {
     top: 100%;
     left: 0;
     margin-top: var(--#{$prefix}dropdown-spacer);
@@ -97,7 +97,7 @@
       --bs-position: start;
 
       &[data-bs-popper],
-      &[data-tblr-popper] {
+      &[data-fc-popper] {
         right: auto;
         left: 0;
       }
@@ -107,7 +107,7 @@
       --bs-position: end;
 
       &[data-bs-popper],
-      &[data-tblr-popper] {
+      &[data-fc-popper] {
         right: 0;
         left: auto;
       }
@@ -120,7 +120,7 @@
 // Just add .dropup after the standard .dropdown class and you're set.
 .dropup {
   .dropdown-menu[data-bs-popper],
-  .dropdown-menu[data-tblr-popper] {
+  .dropdown-menu[data-fc-popper] {
     top: auto;
     bottom: 100%;
     margin-top: 0;
@@ -134,7 +134,7 @@
 
 .dropend {
   .dropdown-menu[data-bs-popper],
-  .dropdown-menu[data-tblr-popper] {
+  .dropdown-menu[data-fc-popper] {
     top: 0;
     right: auto;
     left: 100%;
@@ -152,7 +152,7 @@
 
 .dropstart {
   .dropdown-menu[data-bs-popper],
-  .dropdown-menu[data-tblr-popper] {
+  .dropdown-menu[data-fc-popper] {
     top: 0;
     right: 100%;
     left: auto;

@@ -1,0 +1,14 @@
+{
+  "slug": "offer-soil-15",
+  "title": "Soil health — 15% off",
+  "description": "On bio-fertilizers and micronutrient mixes for better root and soil.",
+  "code": "SOIL15",
+  "type": "percent",
+  "value": 15,
+  "minBasket": 999,
+  "validUntil": "2026-11-30",
+  "products": ["FC-3104", "FC-3103"],
+  "color": "purple",
+  "icon": "leaf",
+  "featured": false
+}

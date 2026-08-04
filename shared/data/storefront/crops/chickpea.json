@@ -1,0 +1,12 @@
+{
+  "slug": "chickpea",
+  "name": "Chickpea (gram)",
+  "season": "rabi",
+  "sowStart": "October",
+  "sowEnd": "November",
+  "harvestStart": "February",
+  "harvestEnd": "April",
+  "states": ["Madhya Pradesh", "Maharashtra", "Rajasthan", "Uttar Pradesh"],
+  "productIds": ["FC-3104", "FC-3105", "FC-3102"],
+  "tip": "Treat seed with Rhizobium; control wilt with carbendazim at the first sign and keep the field drained."
+}

@@ -1,0 +1,297 @@
+---
+// Cart — client-rendered from the localStorage cart. Line items with quantity
+// steppers, coupon row, saved-for-later, price summary, checkout CTA and empty
+// state. Products + offers + checkout config are embedded at build time.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Icon from '@ui/Icon.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Empty from '@ui/Empty.astro';
+import CouponChip from '@shared/components/storefront/CouponChip.astro';
+import ProductCard from '@shared/components/storefront/ProductCard.astro';
+import { getProducts, getCategories, getConfig, getCollection, categoryMap, productsById } from '@shared/lib/storefront-data';
+import type { Offer } from '@shared/lib/storefront-data';
+
+const products = await getProducts();
+const categories = await getCategories();
+const cats = categoryMap(categories);
+const cartConfig = await getConfig('cart');
+const checkoutConfig = await getConfig('checkout');
+const offers = await getCollection<Offer>('offers');
+const recommended = productsById(products, cartConfig.recommendedIds ?? []);
+const offersByCode = new Map(offers.map((o) => [o.code, o]));
+
+const offer = offers[0];
+---
+
+<StoreLayout title="Cart">
+	<div class="d-flex align-items-center justify-content-between mb-4">
+		<h1 class="h2 mb-0">Your cart</h1>
+		<a href="store-shop.html" class="btn btn-link btn-sm">Continue shopping</a>
+	</div>
+
+	<div
+		data-store-cart
+		data-products={JSON.stringify(
+			products.map((p) => ({
+				slug: p.slug,
+				id: p.id,
+				name: p.name,
+				categoryId: p.categoryId,
+				icon: cats.get(p.categoryId)?.icon,
+				image: p.image,
+				packSizes: p.packSizes,
+				stock: p.stock,
+				rating: p.rating,
+				ratingCount: p.ratingCount,
+			})),
+		)}
+		data-checkout={JSON.stringify({
+			deliveryFees: checkoutConfig.deliveryFees,
+			freeShipThreshold: checkoutConfig.freeShipThreshold,
+			codFee: checkoutConfig.codFee,
+		})}
+		data-offers={JSON.stringify(
+			[...offersByCode.entries()].map(([code, o]) => ({ code, type: o.type, value: o.value, minBasket: o.minBasket })),
+		)}
+	>
+		<!-- empty state (toggled by script) -->
+		<div data-cart-empty>
+			<Empty icon="shopping-cart" title={cartConfig.emptyState?.title ?? 'Your cart is empty'} subtitle={cartConfig.emptyState?.message ?? ''} buttonText="Browse products" />
+		</div>
+
+		<div class="row g-4" data-cart-body>
+			<!-- line items -->
+			<div class="col-lg-8">
+				<Card>
+					<CardBody class="p-0">
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter mb-0">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th class="text-center">Qty</th>
+										<th class="text-end">Total</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody data-cart-rows />
+							</table>
+						</div>
+					</CardBody>
+				</Card>
+
+				{/* coupon row */}
+				{offer && (
+					<Card class="mt-3">
+						<CardHeader>
+							<div class="card-title">Have a coupon?</div>
+						</CardHeader>
+						<CardBody>
+							<CouponChip code={offer.code} label={offer.title} apply />
+						</CardBody>
+					</Card>
+				)}
+
+				{/* recommended */}
+				<div class="mt-4">
+					<h2 class="h4 mb-3">Recommended for you</h2>
+					<div class="row g-3">
+						{recommended.map((product) => (
+							<div class="col-6 col-md-4 col-lg-3">
+								<ProductCard product={product} icon={cats.get(product.categoryId)?.icon} />
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			<!-- summary -->
+			<div class="col-lg-4">
+				<Card class="sticky-top" style="top: 5rem">
+					<CardHeader>
+						<div class="card-title">Order summary</div>
+					</CardHeader>
+					<CardBody>
+						<div class="space-y-2">
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">Subtotal</span>
+								<span class="fw-medium" data-sum-subtotal>₹0</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">Discount</span>
+								<span class="fw-medium text-green" data-sum-discount>− ₹0</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">Delivery</span>
+								<span class="fw-medium" data-sum-delivery>₹0</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span class="text-secondary">COD fee</span>
+								<span class="fw-medium" data-sum-cod>₹0</span>
+							</div>
+							<hr class="my-2" />
+							<div class="d-flex justify-content-between fs-4">
+								<span>Total</span>
+								<span class="fw-bold" data-sum-total>₹0</span>
+							</div>
+						</div>
+						<a href="store-checkout.html" class="btn btn-primary w-100 mt-3">Checkout</a>
+						<div class="text-secondary small text-center mt-2">
+							<Icon name="shield-check" class="me-1" />
+							Genuine inputs, subsidy applied at checkout
+						</div>
+					</CardBody>
+				</Card>
+			</div>
+		</div>
+	</div>
+</StoreLayout>
+
+<script>
+	import {
+		getCart,
+		removeFromCart,
+		setQty,
+		subscribe,
+		showToast,
+		readJsonData,
+	} from '@shared/lib/storefront-client';
+	import {
+		cartTotals,
+		couponSavings,
+		couponEligible,
+		formatINR,
+	} from '@shared/lib/storefront';
+
+	type CartProduct = {
+		slug: string;
+		id: string;
+		name: string;
+		categoryId: string;
+		icon?: string | null;
+		image?: string | null;
+		packSizes: Array<{ label: string; mrp: number; price: number; unit: string; subsidy?: number }>;
+		stock: number | null;
+		rating: number;
+		ratingCount: number;
+	};
+	type CartCheckout = { deliveryFees: Record<string, number>; freeShipThreshold: number; codFee: number };
+	type CartOffer = { code: string; type: 'percent' | 'fixed' | 'freeShipping'; value: number; minBasket: number };
+	type CartLineView = { product: CartProduct; pack?: CartProduct['packSizes'][number]; price: number; productId: string; packSize: string; qty: number };
+
+	const root = document.querySelector<HTMLElement>('[data-store-cart]');
+	if (root) {
+		const products = readJsonData<CartProduct[]>(root, 'data-products') ?? [];
+		const checkout = readJsonData<CartCheckout>(root, 'data-checkout') ?? { deliveryFees: { metro: 49 }, freeShipThreshold: 1500, codFee: 0 };
+		const offers = readJsonData<CartOffer[]>(root, 'data-offers') ?? [];
+		const rowsEl = root.querySelector<HTMLElement>('[data-cart-rows]')!;
+		const emptyEl = root.querySelector<HTMLElement>('[data-cart-empty]')!;
+		const bodyEl = root.querySelector<HTMLElement>('[data-cart-body]')!;
+		const byId = new Map(products.map((p) => [p.id, p]));
+
+		const deliveryFor = () => {
+			const subtotal = getCart().reduce(
+				(s, l) => s + (byId.get(l.productId)?.packSizes.find((p) => p.label === l.packSize)?.price ?? 0) * l.qty,
+				0,
+			);
+			if (subtotal >= (checkout.freeShipThreshold ?? Infinity)) return 0;
+			return checkout.deliveryFees?.metro ?? 49;
+		};
+
+		const render = () => {
+			const lines: CartLineView[] = getCart()
+				.map((line) => {
+					const product = byId.get(line.productId);
+					const pack = product?.packSizes.find((p) => p.label === line.packSize) ?? product?.packSizes[0];
+					return { ...line, product, pack, price: pack?.price ?? 0 } as CartLineView;
+				})
+				.filter((l): l is CartLineView => Boolean(l.product));
+
+			const hasItems = lines.length > 0;
+			emptyEl.style.display = hasItems ? 'none' : '';
+			bodyEl.style.display = hasItems ? '' : 'none';
+			if (!hasItems) return;
+
+			rowsEl.innerHTML = lines
+				.map((l) => {
+					const price = l.pack?.price ?? 0;
+					return `<tr>
+						<td>
+							<div class="d-flex align-items-center gap-3">
+								<a href="store-product.html?product=${l.product.slug}" class="store-tile store-tile-sm" style="width:4rem;height:4rem" aria-label="${l.product.name}"></a>
+								<div>
+									<a href="store-product.html?product=${l.product.slug}" class="text-decoration-none fw-medium">${l.product.name}</a>
+									<div class="text-secondary small">${l.pack?.label ?? ''}${l.pack?.subsidy ? ` · ₹${l.pack.subsidy} subsidy` : ''}</div>
+								</div>
+							</div>
+						</td>
+						<td class="text-center">
+							<div class="input-group input-group-flat input-group-sm mx-auto" style="width: 8rem">
+								<button class="btn btn-icon" type="button" data-qty="dec" data-id="${l.product.id}" data-pack="${l.pack?.label ?? ''}" aria-label="Decrease">&minus;</button>
+								<input class="form-control text-center" value="${l.qty}" readonly aria-label="Quantity" />
+								<button class="btn btn-icon" type="button" data-qty="inc" data-id="${l.product.id}" data-pack="${l.pack?.label ?? ''}" aria-label="Increase">+</button>
+							</div>
+						</td>
+						<td class="text-end fw-medium">${formatINR(price * l.qty)}</td>
+						<td class="text-end">
+							<button class="btn btn-icon btn-ghost-danger" type="button" data-remove data-id="${l.product.id}" data-pack="${l.pack?.label ?? ''}" aria-label="Remove">&times;</button>
+						</td>
+					</tr>`;
+				})
+				.join('');
+
+			rowsEl.querySelectorAll<HTMLElement>('[data-qty]').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const line = getCart().find((l) => l.productId === btn.dataset.id && l.packSize === btn.dataset.pack);
+					const next = (line?.qty ?? 1) + (btn.dataset.qty === 'inc' ? 1 : -1);
+					setQty(btn.dataset.id ?? '', btn.dataset.pack ?? '', next);
+				});
+			});
+			rowsEl.querySelectorAll<HTMLElement>('[data-remove]').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					removeFromCart(btn.dataset.id ?? '', btn.dataset.pack ?? '');
+					showToast('Removed from cart');
+				});
+			});
+
+			const subtotal = lines.reduce((s, l) => s + (l.pack?.price ?? 0) * l.qty, 0);
+			const delivery = deliveryFor();
+			let discount = 0;
+			const applyBtn = document.querySelector<HTMLElement>('[data-coupon-apply]');
+			if (applyBtn) {
+				const offer = offers.find((o) => o.code === applyBtn.dataset.couponApply);
+				if (offer && couponEligible(subtotal, offer)) discount = couponSavings(subtotal, offer, delivery);
+			}
+			const totals = cartTotals(lines, { delivery, codFee: checkout.codFee ?? 0, discount });
+
+			root.querySelector('[data-sum-subtotal]')!.textContent = formatINR(totals.subtotal);
+			root.querySelector('[data-sum-discount]')!.textContent = `− ${formatINR(totals.discount)}`;
+			root.querySelector('[data-sum-delivery]')!.textContent = totals.delivery > 0 ? formatINR(totals.delivery) : 'FREE';
+			root.querySelector('[data-sum-cod]')!.textContent = totals.codFee > 0 ? formatINR(totals.codFee) : 'FREE';
+			root.querySelector('[data-sum-total]')!.textContent = formatINR(totals.total);
+		};
+
+		subscribe(render);
+
+		const applyBtn = document.querySelector<HTMLElement>('[data-coupon-apply]');
+		if (applyBtn) {
+			applyBtn.addEventListener('click', () => {
+				const code = applyBtn.dataset.couponApply;
+				const offer = offers.find((o) => o.code === code);
+				if (!offer) return;
+				const subtotal = getCart().reduce(
+					(s, l) => s + (byId.get(l.productId)?.packSizes.find((p) => p.label === l.packSize)?.price ?? 0) * l.qty,
+					0,
+				);
+				if (!couponEligible(subtotal, offer)) {
+					showToast(`Add ${formatINR(offer.minBasket - subtotal)} more to use ${code}`);
+					return;
+				}
+				showToast(`Coupon ${code} applied`);
+				render();
+			});
+		}
+	}
+</script>

@@ -62,7 +62,7 @@ const ratioClass = data?.ratio ?? ratio ?? '16x9';
 				});
 
 				markers.forEach((coords) => {
-					new mapboxgl.Marker({ color: 'var(--tblr-primary)' }).setLngLat(coords).addTo(map);
+					new mapboxgl.Marker({ color: 'var(--fc-primary)' }).setLngLat(coords).addTo(map);
 				});
 
 				window.tabler_map[mapContainerId] = map;

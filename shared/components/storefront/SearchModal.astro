@@ -1,0 +1,24 @@
+---
+// Search modal — navigates to the shop page with ?q=… on submit.
+import Icon from '@ui/Icon.astro';
+
+interface Props {
+	placeholder?: string;
+}
+
+const { placeholder = 'Search seeds, fertilizers, tools…' } = Astro.props;
+---
+
+<div class="modal fade" id="store-search" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<form action="store-shop.html" method="get" class="modal-body" data-store-search>
+				<div class="input-group input-group-flat">
+					<span class="input-group-text"><Icon name="search" /></span>
+					<input type="search" name="q" class="form-control" placeholder={placeholder} autofocus autocomplete="off" />
+					<button class="btn btn-primary" type="submit">Search</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

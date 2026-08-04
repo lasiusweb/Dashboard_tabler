@@ -145,7 +145,7 @@ Progress steps
   color: inherit;
   text-align: center;
   cursor: default;
-  background-color: var(--tblr-border-color);
+  background-color: var(--fc-border-color);
   @include border-radius(var(--#{$prefix}border-radius-pill));
 
   @at-root a#{&} {

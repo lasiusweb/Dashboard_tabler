@@ -1,0 +1,55 @@
+{
+  "kpis": [
+    { "title": "Live SKUs", "value": "1,842", "change": "+3.1%", "up": true, "color": "primary", "icon": "package" },
+    { "title": "Stock-out SKUs", "value": "38", "change": "+9", "up": false, "color": "red", "icon": "package-off" },
+    { "title": "Low-stock SKUs", "value": "61", "change": "+14", "up": false, "color": "orange", "icon": "alert-triangle" },
+    { "title": "Inventory value", "value": "₹42.8Cr", "change": "+6.2%", "up": true, "color": "green", "icon": "coins" },
+    { "title": "Days of inventory", "value": "26", "change": "-2", "up": true, "color": "cyan", "icon": "calendar" }
+  ],
+  "categories": [
+    { "name": "Seeds", "gmv": "₹5.9Cr", "share": 32, "margin": "24%", "growth": "+18%" },
+    { "name": "Fertilizers", "gmv": "₹5.1Cr", "share": 28, "margin": "12%", "growth": "+7%" },
+    { "name": "Pesticides", "gmv": "₹3.3Cr", "share": 18, "margin": "28%", "growth": "+11%" },
+    { "name": "Tools & Equipment", "gmv": "₹1.8Cr", "share": 10, "margin": "31%", "growth": "+14%" },
+    { "name": "Irrigation", "gmv": "₹1.2Cr", "share": 7, "margin": "26%", "growth": "+22%" },
+    { "name": "Animal Feed", "gmv": "₹1.0Cr", "share": 5, "margin": "18%", "growth": "+9%" }
+  ],
+  "topSellers": [
+    { "sku": "FC-1042", "name": "DAP Fertilizer (50kg)", "category": "Fertilizers", "units": 4210, "value": "₹56.8L", "stock": "In stock", "stockColor": "green", "health": 92 },
+    { "sku": "FC-0771", "name": "Urea 46%N (50kg)", "category": "Fertilizers", "units": 3880, "value": "₹59.7L", "stock": "Low stock", "stockColor": "orange", "health": 41 },
+    { "sku": "FC-1208", "name": "Hybrid paddy seeds (10kg)", "category": "Seeds", "units": 2140, "value": "₹1.1Cr", "stock": "In stock", "stockColor": "green", "health": 88 },
+    { "sku": "FC-0554", "name": "Imidacloprid 17.8 SL (1L)", "category": "Pesticides", "units": 1930, "value": "₹21.6L", "stock": "In stock", "stockColor": "green", "health": 90 },
+    { "sku": "FC-2014", "name": "Wheat HD-3086 seeds (10kg)", "category": "Seeds", "units": 1720, "value": "₹48.2L", "stock": "Out of stock", "stockColor": "red", "health": 18 }
+  ],
+  "slowMovers": [
+    { "sku": "FC-3340", "name": "Power tiller attachment", "category": "Tools & Equipment", "units": 6, "days": 140, "value": "₹3.2L", "action": "Markdown 20%" },
+    { "sku": "FC-2981", "name": "Harvesting sickle (bulk pack)", "category": "Tools & Equipment", "units": 14, "days": 95, "value": "₹42K", "action": "Bundle with seeds" },
+    { "sku": "FC-1872", "name": "Fertilizer spreader (manual)", "category": "Tools & Equipment", "units": 9, "days": 82, "value": "₹58K", "action": "Markdown 15%" },
+    { "sku": "FC-2410", "name": "Solar fence energizer", "category": "Tools & Equipment", "units": 5, "days": 120, "value": "₹1.8L", "action": "Seasonal listing" }
+  ],
+  "stockAlerts": [
+    { "sku": "FC-0771", "name": "Urea 46%N (50kg)", "stock": 9, "days": 3, "action": "Reorder", "color": "danger" },
+    { "sku": "FC-1208", "name": "Wheat HD-3086 seeds (10kg)", "stock": 0, "days": 0, "action": "Restock urgent", "color": "danger" },
+    { "sku": "FC-0554", "name": "Micronutrient mix (2kg)", "stock": 12, "days": 4, "action": "Reorder", "color": "warning" },
+    { "sku": "FC-1042", "name": "Carbendazim 50 WP (500g)", "stock": 8, "days": 2, "action": "Reorder", "color": "warning" }
+  ],
+  "priceBands": [
+    { "band": "Under ₹500", "share": 22 },
+    { "band": "₹500 – ₹1,000", "share": 27 },
+    { "band": "₹1,000 – ₹3,000", "share": 31 },
+    { "band": "₹3,000 – ₹10,000", "share": 15 },
+    { "band": "Above ₹10,000", "share": 5 }
+  ],
+  "subsidized": [
+    { "name": "DAP Fertilizer (50kg)", "mrp": "₹1,350", "subsidy": "₹235", "final": "₹1,115", "status": "Active", "color": "green" },
+    { "name": "Urea 46%N (50kg)", "mrp": "₹325", "subsidy": "₹80", "final": "₹245", "status": "Active", "color": "green" },
+    { "name": "NPK 12:32:16 (50kg)", "mrp": "₹1,480", "subsidy": "₹190", "final": "₹1,290", "status": "Active", "color": "green" },
+    { "name": "Bio-fertilizer pack (2kg)", "mrp": "₹460", "subsidy": "₹110", "final": "₹350", "status": "Expiring", "color": "orange" }
+  ],
+  "worstReturners": [
+    { "name": "Battery sprayer (16L)", "returns": 42, "rate": 6.8 },
+    { "name": "Poultry feed broiler (30kg)", "returns": 31, "rate": 5.4 },
+    { "name": "Drip emitter set (100m)", "returns": 27, "rate": 4.9 },
+    { "name": "Hybrid tomato seeds (10g)", "returns": 22, "rate": 4.1 }
+  ]
+}

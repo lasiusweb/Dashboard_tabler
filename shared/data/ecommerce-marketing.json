@@ -1,0 +1,47 @@
+{
+  "kpis": [
+    { "title": "Sessions (30d)", "value": "18.8L", "change": "+9.3%", "up": true, "color": "primary", "icon": "eye" },
+    { "title": "Conversion rate", "value": "3.42%", "change": "+0.21%", "up": true, "color": "green", "icon": "percentage" },
+    { "title": "Customer acquisition cost", "value": "₹148", "change": "-6%", "up": true, "color": "purple", "icon": "coin" },
+    { "title": "Blended ROAS", "value": "4.8×", "change": "+0.4×", "up": true, "color": "azure", "icon": "chart-line" },
+    { "title": "Coupon redemptions", "value": "18,420", "change": "+12%", "up": true, "color": "cyan", "icon": "ticket" },
+    { "title": "WhatsApp reorder rate", "value": "5.8%", "change": "+0.7%", "up": true, "color": "green", "icon": "brand-whatsapp" }
+  ],
+  "channels": [
+    { "channel": "Organic search", "sessions": 640000, "a2c": 41200, "orders": 24200, "rate": 3.8, "color": "green" },
+    { "channel": "Paid Google", "sessions": 320000, "a2c": 21800, "orders": 12400, "rate": 3.9, "color": "blue" },
+    { "channel": "Paid Meta", "sessions": 280000, "a2c": 18400, "orders": 9800, "rate": 3.5, "color": "purple" },
+    { "channel": "WhatsApp", "sessions": 210000, "a2c": 19600, "orders": 12100, "rate": 5.8, "color": "green" },
+    { "channel": "Referral", "sessions": 180000, "a2c": 14200, "orders": 8200, "rate": 4.6, "color": "orange" },
+    { "channel": "Social", "sessions": 160000, "a2c": 8200, "orders": 4100, "rate": 2.6, "color": "yellow" },
+    { "channel": "Direct", "sessions": 90000, "a2c": 5200, "orders": 3180, "rate": 3.5, "color": "cyan" }
+  ],
+  "cacLtv": [
+    { "channel": "Organic", "cac": 86, "ltv": 4680 },
+    { "channel": "Paid Google", "cac": 210, "ltv": 5240 },
+    { "channel": "Paid Meta", "cac": 178, "ltv": 4860 },
+    { "channel": "WhatsApp", "cac": 124, "ltv": 6120 },
+    { "channel": "Referral", "cac": 64, "ltv": 7840 },
+    { "channel": "Direct", "cac": 72, "ltv": 4980 }
+  ],
+  "campaigns": [
+    { "name": "Kharif sowing push — Seeds", "channel": "Paid Google", "spend": "₹4.2L", "revenue": "₹21.8L", "roas": 5.2, "roasColor": "green" },
+    { "name": "Fertilizer monsoon offer", "channel": "Paid Meta", "spend": "₹3.1L", "revenue": "₹12.4L", "roas": 4.0, "roasColor": "green" },
+    { "name": "Drip kit WhatsApp blast", "channel": "WhatsApp", "spend": "₹1.2L", "revenue": "₹9.6L", "roas": 8.0, "roasColor": "green" },
+    { "name": "Rabi wheat pre-season", "channel": "Paid Google", "spend": "₹2.8L", "revenue": "₹9.8L", "roas": 3.5, "roasColor": "yellow" },
+    { "name": "Retargeting — cart abandon", "channel": "Paid Meta", "spend": "₹1.8L", "revenue": "₹6.1L", "roas": 3.4, "roasColor": "yellow" },
+    { "name": "YouTube monsoon prep", "channel": "Video", "spend": "₹2.2L", "revenue": "₹4.4L", "roas": 2.0, "roasColor": "red" }
+  ],
+  "coupons": [
+    { "code": "KHARIF10", "type": "Percent", "value": "10% off", "redemptions": 8420, "gmv": "₹1.4Cr", "burn": "68%" },
+    { "code": "SOW50", "type": "Fixed", "value": "₹50 off", "redemptions": 6240, "gmv": "₹82L", "burn": "54%" },
+    { "code": "FPO250", "type": "Fixed", "value": "₹250 off (bulk)", "redemptions": 1190, "gmv": "₹96L", "burn": "71%" },
+    { "code": "DRIP15", "type": "Percent", "value": "15% irrigation", "redemptions": 880, "gmv": "₹44L", "burn": "39%" }
+  ],
+  "abTests": [
+    { "test": "Product page CTA", "variant": "Order via WhatsApp", "sessions": 84000, "conversion": 4.1, "lift": "+18%", "sig": "95%", "color": "green" },
+    { "test": "Cart reminder timing", "variant": "4h after abandon", "sessions": 62000, "conversion": 3.7, "lift": "+9%", "sig": "90%", "color": "yellow" },
+    { "test": "Homepage banner", "variant": "Kharif seeds first", "sessions": 78000, "conversion": 3.5, "lift": "-2%", "sig": "None", "color": "red" },
+    { "test": "Checkout fields", "variant": "Reduced to 4 fields", "sessions": 54000, "conversion": 3.9, "lift": "+12%", "sig": "97%", "color": "green" }
+  ]
+}

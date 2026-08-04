@@ -664,13 +664,13 @@ describe('Tab', () => {
     })
   })
 
-  describe('data-tblr-toggle', () => {
-    it('should create tab via data-tblr-toggle="tab"', () => {
+  describe('data-fc-toggle', () => {
+    it('should create tab via data-fc-toggle="tab"', () => {
       return new Promise<void>((resolve) => {
         fixtureEl.innerHTML = [
           '<ul class="nav nav-tabs" role="tablist">',
           '  <li class="nav-item" role="presentation"><button type="button" data-bs-target="#home" class="nav-link active" role="tab" aria-selected="true">Home</button></li>',
-          '  <li class="nav-item" role="presentation"><button type="button" id="triggerProfile" data-tblr-toggle="tab" data-bs-target="#profile" class="nav-link" role="tab">Profile</button></li>',
+          '  <li class="nav-item" role="presentation"><button type="button" id="triggerProfile" data-fc-toggle="tab" data-bs-target="#profile" class="nav-link" role="tab">Profile</button></li>',
           '</ul>',
           '<div class="tab-content">',
           '  <div class="tab-pane active" id="home" role="tabpanel"></div>',
@@ -690,12 +690,12 @@ describe('Tab', () => {
       })
     })
 
-    it('should create tab via data-tblr-toggle="pill"', () => {
+    it('should create tab via data-fc-toggle="pill"', () => {
       return new Promise<void>((resolve) => {
         fixtureEl.innerHTML = [
           '<ul class="nav nav-pills" role="tablist">',
           '  <li class="nav-item" role="presentation"><button type="button" data-bs-target="#home" class="nav-link active" role="tab" aria-selected="true">Home</button></li>',
-          '  <li class="nav-item" role="presentation"><button type="button" id="triggerProfile" data-tblr-toggle="pill" data-bs-target="#profile" class="nav-link" role="tab">Profile</button></li>',
+          '  <li class="nav-item" role="presentation"><button type="button" id="triggerProfile" data-fc-toggle="pill" data-bs-target="#profile" class="nav-link" role="tab">Profile</button></li>',
           '</ul>',
           '<div class="tab-content">',
           '  <div class="tab-pane active" id="home" role="tabpanel"></div>',
@@ -714,8 +714,8 @@ describe('Tab', () => {
       })
     })
 
-    it('should initialize active tabs with data-tblr-toggle on load', () => {
-      fixtureEl.innerHTML = ['<ul class="nav" role="tablist">', '  <li><button class="nav-link active" data-tblr-toggle="tab" data-bs-target="#home" role="tab">Home</button></li>', '</ul>', '<div id="home" role="tabpanel"></div>'].join('')
+    it('should initialize active tabs with data-fc-toggle on load', () => {
+      fixtureEl.innerHTML = ['<ul class="nav" role="tablist">', '  <li><button class="nav-link active" data-fc-toggle="tab" data-bs-target="#home" role="tab">Home</button></li>', '</ul>', '<div id="home" role="tabpanel"></div>'].join('')
 
       const trigger = fixtureEl.querySelector('button') as HTMLElement
 
@@ -724,12 +724,12 @@ describe('Tab', () => {
       expect(trigger.classList.contains('active')).toBe(true)
     })
 
-    it('should create tab via data-tblr-toggle="list"', () => {
+    it('should create tab via data-fc-toggle="list"', () => {
       return new Promise<void>((resolve) => {
         fixtureEl.innerHTML = [
           '<div class="list-group" role="tablist">',
-          '  <a class="list-group-item list-group-item-action active" data-tblr-toggle="list" href="#home" role="tab">Home</a>',
-          '  <a id="triggerProfile" class="list-group-item list-group-item-action" data-tblr-toggle="list" href="#profile" role="tab">Profile</a>',
+          '  <a class="list-group-item list-group-item-action active" data-fc-toggle="list" href="#home" role="tab">Home</a>',
+          '  <a id="triggerProfile" class="list-group-item list-group-item-action" data-fc-toggle="list" href="#profile" role="tab">Profile</a>',
           '</div>',
           '<div class="tab-content">',
           '  <div class="tab-pane active" id="home" role="tabpanel">Home</div>',
@@ -748,12 +748,12 @@ describe('Tab', () => {
       })
     })
 
-    it('should switch tabs via data-tblr-toggle with data-tblr-target', () => {
+    it('should switch tabs via data-fc-toggle with data-fc-target', () => {
       return new Promise<void>((resolve) => {
         fixtureEl.innerHTML = [
           '<ul class="nav" role="tablist">',
-          '  <li><button class="nav-link active" data-tblr-toggle="tab" data-tblr-target="#home" role="tab">Home</button></li>',
-          '  <li><button id="triggerProfile" class="nav-link" data-tblr-toggle="tab" data-tblr-target="#profile" role="tab">Profile</button></li>',
+          '  <li><button class="nav-link active" data-fc-toggle="tab" data-fc-target="#home" role="tab">Home</button></li>',
+          '  <li><button id="triggerProfile" class="nav-link" data-fc-toggle="tab" data-fc-target="#profile" role="tab">Profile</button></li>',
           '</ul>',
           '<div class="tab-content">',
           '  <div class="tab-pane active" id="home" role="tabpanel">Home</div>',

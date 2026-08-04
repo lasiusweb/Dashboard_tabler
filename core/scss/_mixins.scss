@@ -1,8 +1,8 @@
 @forward 'mixins/mixins';
 @forward 'mixins/functions';
 
-// Bootstrap mixins managed by Tabler
-// rfs is forwarded with `$enable-rfs: false` (Tabler disables responsive font
+// Bootstrap mixins managed by FirstCrop
+// rfs is forwarded with `$enable-rfs: false` (FirstCrop disables responsive font
 // sizes by default) — the `!default` flag keeps it user-overridable.
 // `divide` is hidden because `mixins/functions` already forwards an identical
 // implementation.

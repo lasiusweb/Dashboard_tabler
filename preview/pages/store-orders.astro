@@ -1,0 +1,114 @@
+---
+// Order history — list of Orders with a status badge, line items and an
+// OrderTimeline for the most recent order. Links to shop/support/offers.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Icon from '@ui/Icon.astro';
+import Card from '@ui/Card.astro';
+import CardBody from '@ui/CardBody.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import Badge from '@ui/Badge.astro';
+import OrderTimeline from '@shared/components/storefront/OrderTimeline.astro';
+import { getCollection } from '@shared/lib/storefront-data';
+import { formatINR, orderStatusStep, STATUS_STEPS } from '@shared/lib/storefront';
+import type { Order } from '@shared/lib/storefront-data';
+
+const orders = await getCollection<Order>('orders');
+const recent = orders[0];
+const statusColor: Record<string, string> = {
+	Placed: 'blue',
+	Packed: 'azure',
+	Shipped: 'green',
+	Delivered: 'green',
+	Cancelled: 'red',
+	RTO: 'orange',
+};
+---
+
+<StoreLayout title="Your orders" currentNav="shop">
+	<div class="mb-4">
+		<h1 class="h2 mb-1">Your orders</h1>
+		<p class="text-secondary mb-0">Track deliveries and review past purchases. This is a demo list from the local dataset.</p>
+	</div>
+
+	{recent && (
+		<Card class="mb-4">
+			<CardHeader>
+				<div class="d-flex align-items-center gap-2">
+					<div class="card-title">Latest order · {recent.id}</div>
+					<Badge color={statusColor[recent.status] ?? 'secondary'}>{recent.status}</Badge>
+				</div>
+			</CardHeader>
+			<CardBody>
+				<div class="row g-4">
+					<div class="col-lg-7">
+						<h3 class="h5 mb-2">Items</h3>
+						<div class="table-responsive">
+							<table class="table table-sm table-vcenter mb-0">
+								<thead><tr><th>Item</th><th>Size</th><th class="text-end">Qty</th><th class="text-end">Price</th></tr></thead>
+								<tbody>
+									{recent.items.map((item) => (
+										<tr>
+											<td>{item.name}</td>
+											<td class="text-secondary">{item.packSize}</td>
+											<td class="text-end text-secondary">{item.qty}</td>
+											<td class="text-end fw-medium">{formatINR(item.price)}</td>
+										</tr>
+									))}
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="3" class="text-end text-secondary">Total</td>
+										<td class="text-end fw-bold">{formatINR(recent.total)}</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+					<div class="col-lg-5">
+						<h3 class="h5 mb-2">Progress</h3>
+						{recent.timeline && recent.timeline.length > 0 ? (
+							<OrderTimeline events={recent.timeline} />
+						) : (
+							<div class="d-flex flex-wrap gap-2">
+								{STATUS_STEPS.map((step, i) => (
+									<Badge color={i < orderStatusStep(recent.status) ? 'green' : 'secondary'} light>{step}</Badge>
+								))}
+							</div>
+						)}
+					</div>
+				</div>
+			</CardBody>
+		</Card>
+	)}
+
+	{orders.length > 0 && (
+		<div class="space-y-3">
+			{orders.map((order) => (
+				<Card class="card-sm">
+					<CardBody>
+						<div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+							<strong>{order.id}</strong>
+							<span class="text-secondary small">{order.date}</span>
+							<Badge color={statusColor[order.status] ?? 'secondary'}>{order.status}</Badge>
+							<span class="ms-auto text-secondary small">{order.payment}</span>
+						</div>
+						<div class="text-secondary small">
+							{order.items.map((i, index) => (
+								<span>
+									{index > 0 && ' · '}{i.name} ({i.qty} × {formatINR(i.price)})
+								</span>
+							))}
+							<span class="ms-2">· Total <strong class="text-body">{formatINR(order.total)}</strong></span>
+						</div>
+					</CardBody>
+				</Card>
+			))}
+		</div>
+	)}
+
+	<div class="d-flex flex-wrap gap-2 mt-4">
+		<a href="store-shop.html" class="btn btn-primary btn-sm"><Icon name="shopping-cart" class="me-1" />Shop again</a>
+		<a href="store-support.html" class="btn btn-outline-primary btn-sm"><Icon name="headset" class="me-1" />Order help</a>
+		<a href="store-offers.html" class="btn btn-outline-secondary btn-sm"><Icon name="gift" class="me-1" />View offers</a>
+	</div>
+</StoreLayout>

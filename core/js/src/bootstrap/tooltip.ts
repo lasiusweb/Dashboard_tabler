@@ -183,8 +183,8 @@ class Tooltip extends BaseComponent {
 
     EventHandler.off(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler)
 
-    if (this._element.getAttribute('data-bs-original-title') || this._element.getAttribute('data-tblr-original-title')) {
-      this._element.setAttribute('title', this._element.getAttribute('data-bs-original-title') || this._element.getAttribute('data-tblr-original-title') || '')
+    if (this._element.getAttribute('data-bs-original-title') || this._element.getAttribute('data-fc-original-title')) {
+      this._element.setAttribute('title', this._element.getAttribute('data-bs-original-title') || this._element.getAttribute('data-fc-original-title') || '')
     }
 
     this._disposePopper()
@@ -352,7 +352,7 @@ class Tooltip extends BaseComponent {
   }
 
   _getTitle(): string {
-    return this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title') || this._element.getAttribute('data-tblr-original-title') || ''
+    return this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title') || this._element.getAttribute('data-fc-original-title') || ''
   }
 
   _initializeOnDelegatedTarget(event: Event & { delegateTarget?: HTMLElement }): Tooltip {

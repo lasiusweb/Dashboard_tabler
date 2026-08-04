@@ -5,9 +5,9 @@
   "fixed": [],
   "linked": [
     [
-      "@tabler/core",
-      "@tabler/preview",
-      "@tabler/docs"
+      "@firstcrop/core",
+      "@firstcrop/preview",
+      "@firstcrop/docs"
     ]
   ],
   "access": "public",

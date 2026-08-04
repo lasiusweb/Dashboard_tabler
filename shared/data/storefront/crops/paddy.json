@@ -1,0 +1,12 @@
+{
+  "slug": "paddy",
+  "name": "Paddy (rice)",
+  "season": "kharif",
+  "sowStart": "June",
+  "sowEnd": "August",
+  "harvestStart": "October",
+  "harvestEnd": "December",
+  "states": ["Maharashtra", "Telangana", "Uttar Pradesh", "Bihar"],
+  "productIds": ["FC-1208", "FC-1042", "FC-0771", "FC-0554", "FC-3102"],
+  "tip": "Use hybrid seed for rain-fed fields; keep 5 cm water after transplanting and top-dress urea at tillering."
+}

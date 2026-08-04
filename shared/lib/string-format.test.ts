@@ -35,7 +35,7 @@ describe('formatNumber', () => {
 
 describe('splitDropTrailingEmpty', () => {
   it('drops trailing empty strings', () => {
-    expect(splitDropTrailingEmpty('Tabler,Pages,', ',')).toEqual(['Tabler', 'Pages'])
+    expect(splitDropTrailingEmpty('FirstCrop,Pages,', ',')).toEqual(['FirstCrop', 'Pages'])
   })
 
   it('keeps internal empty segments', () => {

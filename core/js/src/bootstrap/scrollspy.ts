@@ -23,7 +23,7 @@ const EVENT_LOAD_DATA_API = `load${EVENT_KEY}${DATA_API_KEY}`
 const CLASS_NAME_DROPDOWN_ITEM = 'dropdown-item'
 const CLASS_NAME_ACTIVE = 'active'
 
-const SELECTOR_DATA_SPY = '[data-bs-spy="scroll"], [data-tblr-spy="scroll"]'
+const SELECTOR_DATA_SPY = '[data-bs-spy="scroll"], [data-fc-spy="scroll"]'
 const SELECTOR_TARGET_LINKS = '[href]'
 const SELECTOR_NAV_LIST_GROUP = '.nav, .list-group'
 const SELECTOR_NAV_LINKS = '.nav-link'

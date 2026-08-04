@@ -26,7 +26,7 @@ export const createEvent = (eventName: string, parameters: EventInit = {}): Even
 }
 
 export const clearBodyAndDocument = (): void => {
-  for (const attribute of ['data-bs-padding-right', 'data-tblr-padding-right', 'style']) {
+  for (const attribute of ['data-bs-padding-right', 'data-fc-padding-right', 'style']) {
     document.documentElement.removeAttribute(attribute)
     document.body.removeAttribute(attribute)
   }

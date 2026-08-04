@@ -1,0 +1,32 @@
+{
+  "slug": "battery-sprayer-16l",
+  "id": "FC-3107",
+  "name": "Battery sprayer (16 L)",
+  "categoryId": "tools-equipment",
+  "brand": "KisanPro",
+  "image": null,
+  "rating": 3.9,
+  "ratingCount": 96,
+  "reviewIds": [],
+  "shortDescription": "16 L rechargeable knapsack sprayer with 12 V lithium battery and brass nozzle.",
+  "longDescription": "A dependable rechargeable sprayer for pesticides and liquid fertilizers. Charge holds for a full 16 L tank. Replaceable nozzle set keeps pressure even over seasons.",
+  "highlights": ["16 L tank", "12 V lithium battery", "8-hour charge", "Brass nozzle"],
+  "specifications": {
+    "Tank": "16 L",
+    "Battery": "12 V lithium",
+    "Charging": "8 hours",
+    "Nozzle": "Brass adjustable"
+  },
+  "packSizes": [{ "label": "1 unit", "mrp": 2999, "price": 2499, "unit": "sprayer" }],
+  "stock": 34,
+  "tags": ["tools", "sprayer", "battery", "pesticide"],
+  "season": ["kharif"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 2699 },
+    { "date": "2026-03-01", "price": 2599 },
+    { "date": "2026-04-01", "price": 2549 },
+    { "date": "2026-05-01", "price": 2499 },
+    { "date": "2026-06-01", "price": 2499 },
+    { "date": "2026-07-01", "price": 2499 }
+  ]
+}

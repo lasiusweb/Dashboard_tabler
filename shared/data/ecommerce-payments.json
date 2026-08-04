@@ -1,0 +1,46 @@
+{
+  "kpis": [
+    { "title": "Collections (30d)", "value": "₹17.1Cr", "change": "+9.8%", "up": true, "color": "green", "icon": "cash" },
+    { "title": "Payment success rate", "value": "92.6%", "change": "+1.1%", "up": true, "color": "primary", "icon": "circle-check" },
+    { "title": "Refunds pending", "value": "₹24.6L", "change": "-18%", "up": true, "color": "orange", "icon": "rotate" },
+    { "title": "Settlement cycle", "value": "T+2", "change": "0", "up": true, "color": "cyan", "icon": "clock" },
+    { "title": "Gateway fees", "value": "1.42%", "change": "-0.08%", "up": true, "color": "purple", "icon": "percentage" },
+    { "title": "Failed transactions", "value": "7.4%", "change": "-0.9%", "up": true, "color": "red", "icon": "alert-circle" }
+  ],
+  "methodSuccess": [
+    { "method": "UPI", "rate": 94.8, "failed": 1420, "settlement": "T+1" },
+    { "method": "Cards", "rate": 91.2, "failed": 510, "settlement": "T+2" },
+    { "method": "Wallets", "rate": 93.5, "failed": 330, "settlement": "T+1" },
+    { "method": "Net banking", "rate": 88.4, "failed": 450, "settlement": "T+2" },
+    { "method": "COD", "rate": 86.9, "failed": 2590, "settlement": "7 day cycle" }
+  ],
+  "failureCodes": [
+    { "code": "Insufficient balance", "count": 1180, "share": 34 },
+    { "code": "OTP timeout / expiry", "count": 990, "share": 28 },
+    { "code": "Bank server down", "count": 620, "share": 18 },
+    { "code": "Transaction limit reached", "count": 410, "share": 12 },
+    { "code": "Card blocked / expired", "count": 280, "share": 8 }
+  ],
+  "settlementCalendar": [
+    { "channel": "UPI", "cycle": "T+1", "nextCredit": "03 Aug", "amount": "₹8.2L" },
+    { "channel": "Cards", "cycle": "T+2", "nextCredit": "04 Aug", "amount": "₹1.5L" },
+    { "channel": "Wallets", "cycle": "T+1", "nextCredit": "03 Aug", "amount": "₹1.3L" },
+    { "channel": "Net banking", "cycle": "T+2", "nextCredit": "04 Aug", "amount": "₹0.9L" },
+    { "channel": "COD cycle", "cycle": "7 days", "nextCredit": "06 Aug", "amount": "₹4.6L" }
+  ],
+  "codCollection": [
+    { "stage": "Out for collection", "orders": 610, "value": "₹17.4L" },
+    { "stage": "Collected", "orders": 18320, "value": "₹5.2Cr" },
+    { "stage": "Bounced", "orders": 1240, "value": "₹35.2L" }
+  ],
+  "reconciliation": [
+    { "date": "02 Aug", "gatewayRef": "G-882104", "order": "FC-284712", "amount": "₹1,540", "status": "Matched", "color": "green" },
+    { "date": "02 Aug", "gatewayRef": "G-882031", "order": "FC-284698", "amount": "₹2,310", "status": "Mismatch", "color": "red" },
+    { "date": "01 Aug", "gatewayRef": "G-881955", "order": "FC-284590", "amount": "₹4,120", "status": "Matched", "color": "green" },
+    { "date": "01 Aug", "gatewayRef": "G-881870", "order": "FC-284471", "amount": "₹1,890", "status": "Missing", "color": "orange" },
+    { "date": "01 Aug", "gatewayRef": "G-881812", "order": "FC-284402", "amount": "₹8,640", "status": "Matched", "color": "green" },
+    { "date": "31 Jul", "gatewayRef": "G-881690", "order": "FC-284288", "amount": "₹1,120", "status": "Matched", "color": "green" },
+    { "date": "31 Jul", "gatewayRef": "G-881611", "order": "FC-284170", "amount": "₹3,760", "status": "Mismatch", "color": "red" },
+    { "date": "31 Jul", "gatewayRef": "G-881508", "order": "FC-284059", "amount": "₹1,450", "status": "Matched", "color": "green" }
+  ]
+}

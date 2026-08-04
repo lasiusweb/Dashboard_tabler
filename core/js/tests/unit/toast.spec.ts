@@ -75,9 +75,9 @@ describe('Toast', () => {
       })
     })
 
-    it('should close toast via data-tblr-dismiss', () => {
+    it('should close toast via data-fc-dismiss', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<div class="toast" data-bs-delay="1" data-bs-autohide="false" data-bs-animation="false">', '  <button type="button" class="btn-close" data-tblr-dismiss="toast"></button>', '</div>'].join('')
+        fixtureEl.innerHTML = ['<div class="toast" data-bs-delay="1" data-bs-autohide="false" data-bs-animation="false">', '  <button type="button" class="btn-close" data-fc-dismiss="toast"></button>', '</div>'].join('')
 
         const toastEl = fixtureEl.querySelector('div')!
         const toast = new Toast(toastEl)

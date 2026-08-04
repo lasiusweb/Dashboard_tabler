@@ -4,7 +4,7 @@ order: 5
 summary: Set up Tabler in Angular and build a first working page.
 description: Integrate Tabler with Angular.
 icon: brand-angular
-seoDescription: Install `@tabler/core`, register CSS and JS in `angular.json`, and render a minimal Angular page with a Tabler card.
+seoDescription: Install `@firstcrop/core`, register CSS and JS in `angular.json`, and render a minimal Angular page with a Tabler card.
 layout: '@shared/layouts/DocsMdxLayout.astro'
 ---
 
@@ -14,7 +14,7 @@ import Steps from '@components/Steps.astro'
 
 Angular manages global assets through its build configuration, and Tabler fits that model well: register the compiled CSS and JS once in `angular.json`, and every component template can use Tabler classes right away.
 
-This guide uses the Angular CLI. You will install `@tabler/core`, register its assets in the build config, and render a first component template with a Tabler card.
+This guide uses the Angular CLI. You will install `@firstcrop/core`, register its assets in the build config, and render a first component template with a Tabler card.
 
 ## Setup
 
@@ -22,9 +22,9 @@ This guide uses the Angular CLI. You will install `@tabler/core`, register its a
 
 ### Install Tabler package
 
-Install `@tabler/core` with your preferred package manager:
+Install `@firstcrop/core` with your preferred package manager:
 
-<TabsPackage name="@tabler/core" />
+<TabsPackage name="@firstcrop/core" />
 
 You can also use CDN files when you need a quick setup:
 
@@ -36,20 +36,20 @@ Register Tabler CSS in the Angular build config (`angular.json`) under `projects
 
 ```json
 {
-  "styles": ["src/styles.scss", "node_modules/@tabler/core/dist/css/tabler.min.css"]
+  "styles": ["src/styles.scss", "node_modules/@firstcrop/core/dist/css/firstcrop.min.css"]
 }
 ```
 
 Alternatively, import the compiled CSS directly in `src/styles.scss`:
 
 ```scss
-@import '@tabler/core/dist/css/tabler.min.css';
+@import '@firstcrop/core/dist/css/firstcrop.min.css';
 ```
 
 For full theme customization, import SCSS sources in `src/styles.scss` instead:
 
 ```scss
-@import '@tabler/core/scss/tabler';
+@import '@firstcrop/core/scss/firstcrop';
 ```
 
 ### Import and initialize JavaScript
@@ -58,7 +58,7 @@ Tabler JavaScript is required for interactive components such as dropdowns, moda
 
 ```json
 {
-  "scripts": ["node_modules/@tabler/core/dist/js/tabler.min.js"]
+  "scripts": ["node_modules/@firstcrop/core/dist/js/firstcrop.min.js"]
 }
 ```
 
@@ -92,8 +92,8 @@ A minimal `angular.json` example (relevant part):
       "architect": {
         "build": {
           "options": {
-            "styles": ["src/styles.scss", "node_modules/@tabler/core/dist/css/tabler.min.css"],
-            "scripts": ["node_modules/@tabler/core/dist/js/tabler.min.js"]
+            "styles": ["src/styles.scss", "node_modules/@firstcrop/core/dist/css/firstcrop.min.css"],
+            "scripts": ["node_modules/@firstcrop/core/dist/js/firstcrop.min.js"]
           }
         }
       }

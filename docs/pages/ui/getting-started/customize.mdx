@@ -24,7 +24,7 @@ Now you just need to tell Tabler to use your favorite font:
 ```html
 <style>
   :root {
-    --tblr-font-sans-serif: "Inter";
+    --fc-font-sans-serif: "Inter";
   }
 </style>
 ```
@@ -35,49 +35,49 @@ Tabler exposes typography settings as CSS variables. You can override them by se
 
 ### Base font size
 
-To change the default font size used by body text and many components, override `--tblr-body-font-size`:
+To change the default font size used by body text and many components, override `--fc-body-font-size`:
 
 ```html
 <style>
   :root {
-    --tblr-body-font-size: 1rem;
+    --fc-body-font-size: 1rem;
   }
 </style>
 ```
 
 ### Headings
 
-Headings use `--tblr-font-size-h1` … `--tblr-font-size-h6` and `--tblr-line-height-h1` … `--tblr-line-height-h6`:
+Headings use `--fc-font-size-h1` … `--fc-font-size-h6` and `--fc-line-height-h1` … `--fc-line-height-h6`:
 
 ```html
 <style>
   :root {
-    --tblr-font-size-h1: 2rem;
-    --tblr-line-height-h1: 2.5rem;
+    --fc-font-size-h1: 2rem;
+    --fc-line-height-h1: 2.5rem;
   }
 </style>
 ```
 
 ## Custom primary color
 
-To change the primary color of Tabler you need to set the `--tblr-primary` variable in your CSS. You can use any color format you like (hex, rgb, hsl, etc). In this example we will use a custom red color:
+To change the primary color of Tabler you need to set the `--fc-primary` variable in your CSS. You can use any color format you like (hex, rgb, hsl, etc). In this example we will use a custom red color:
 
 ```html
 <style>
   :root {
-    --tblr-primary: #f11d46;
+    --fc-primary: #f11d46;
   }
 </style>
 ```
 
-If you use `--tblr-primary` in `rgba()` contexts (or see inconsistent colors), also override `--tblr-primary-rgb` (as comma-separated RGB values) and optionally `--tblr-primary-fg` (text/icon color used on primary backgrounds):
+If you use `--fc-primary` in `rgba()` contexts (or see inconsistent colors), also override `--fc-primary-rgb` (as comma-separated RGB values) and optionally `--fc-primary-fg` (text/icon color used on primary backgrounds):
 
 ```html
 <style>
   :root {
-    --tblr-primary: #f11d46;
-    --tblr-primary-rgb: 241, 29, 70;
-    --tblr-primary-fg: #fff;
+    --fc-primary: #f11d46;
+    --fc-primary-rgb: 241, 29, 70;
+    --fc-primary-fg: #fff;
   }
 </style>
 ```
@@ -89,32 +89,32 @@ Tabler also exposes a few "system" colors you can customize globally:
 ```html
 <style>
   :root {
-    --tblr-secondary: #6b7280;
-    --tblr-tertiary: #9ca3af;
-    --tblr-link-color: #066fd1;
-    --tblr-link-hover-color: #045db0;
+    --fc-secondary: #6b7280;
+    --fc-tertiary: #9ca3af;
+    --fc-link-color: #066fd1;
+    --fc-link-hover-color: #045db0;
   }
 </style>
 ```
 
 ### Gray scale
 
-You can override the full gray palette (`--tblr-gray-50` … `--tblr-gray-950`) to match your brand:
+You can override the full gray palette (`--fc-gray-50` … `--fc-gray-950`) to match your brand:
 
 ```html
 <style>
   :root {
-    --tblr-gray-50: #f9fafb;
-    --tblr-gray-100: #f3f4f6;
-    --tblr-gray-200: #e5e7eb;
-    --tblr-gray-300: #d1d5db;
-    --tblr-gray-400: #9ca3af;
-    --tblr-gray-500: #6b7280;
-    --tblr-gray-600: #4b5563;
-    --tblr-gray-700: #374151;
-    --tblr-gray-800: #1f2937;
-    --tblr-gray-900: #111827;
-    --tblr-gray-950: #030712;
+    --fc-gray-50: #f9fafb;
+    --fc-gray-100: #f3f4f6;
+    --fc-gray-200: #e5e7eb;
+    --fc-gray-300: #d1d5db;
+    --fc-gray-400: #9ca3af;
+    --fc-gray-500: #6b7280;
+    --fc-gray-600: #4b5563;
+    --fc-gray-700: #374151;
+    --fc-gray-800: #1f2937;
+    --fc-gray-900: #111827;
+    --fc-gray-950: #030712;
   }
 </style>
 ```

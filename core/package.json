@@ -1,8 +1,8 @@
 {
-  "name": "@tabler/core",
+  "name": "@firstcrop/core",
   "version": "1.4.0",
   "description": "Premium and Open Source dashboard template with responsive and high quality UI.",
-  "homepage": "https://tabler.io",
+  "homepage": "https://firstcrop.in",
   "scripts": {
     "dev": "pnpm run clean && pnpm run copy && pnpm run watch",
     "build": "pnpm run clean && pnpm run build-assets && pnpm run copy && pnpm run generate-sri",
@@ -20,11 +20,11 @@
     "css-lint-variables": "find-unused-sass-variables scss/",
     "js": "pnpm run js-build && pnpm run js-build-min",
     "js-build": "concurrently \"pnpm run js-build-standalone\" \"pnpm run js-build-theme\"",
-    "js-build-theme": "cross-env BASE_NAME=tabler-theme vite build --config .build/vite.config.mts",
-    "js-build-standalone": "cross-env BASE_NAME=tabler vite build --config .build/vite.config.mts",
+    "js-build-theme": "cross-env BASE_NAME=firstcrop-theme vite build --config .build/vite.config.mts",
+    "js-build-standalone": "cross-env BASE_NAME=firstcrop vite build --config .build/vite.config.mts",
     "js-build-min": "concurrently \"pnpm run js-build-min-standalone\" \"pnpm run js-build-min-theme\"",
-    "js-build-min-standalone": "concurrently \"terser dist/js/tabler.js --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/tabler.js.map,filename=dist/js/tabler.min.js.map,url=tabler.min.js.map\\\" -o dist/js/tabler.min.js\" \"terser dist/js/tabler.esm.js --module --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/tabler.esm.js.map,filename=dist/js/tabler.esm.min.js.map,url=tabler.esm.min.js.map\\\" -o dist/js/tabler.esm.min.js\"",
-    "js-build-min-theme": "concurrently \"terser dist/js/tabler-theme.js --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/tabler-theme.js.map,filename=dist/js/tabler-theme.min.js.map,url=tabler-theme.min.js.map\\\" -o dist/js/tabler-theme.min.js\" \"terser dist/js/tabler-theme.esm.js --module --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/tabler-theme.esm.js.map,filename=dist/js/tabler-theme.esm.min.js.map,url=tabler-theme.esm.min.js.map\\\" -o dist/js/tabler-theme.esm.min.js\"",
+    "js-build-min-standalone": "concurrently \"terser dist/js/firstcrop.js --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/firstcrop.js.map,filename=dist/js/firstcrop.min.js.map,url=firstcrop.min.js.map\\\" -o dist/js/firstcrop.min.js\" \"terser dist/js/firstcrop.esm.js --module --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/firstcrop.esm.js.map,filename=dist/js/firstcrop.esm.min.js.map,url=firstcrop.esm.min.js.map\\\" -o dist/js/firstcrop.esm.min.js\"",
+    "js-build-min-theme": "concurrently \"terser dist/js/firstcrop-theme.js --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/firstcrop-theme.js.map,filename=dist/js/firstcrop-theme.min.js.map,url=firstcrop-theme.min.js.map\\\" -o dist/js/firstcrop-theme.min.js\" \"terser dist/js/firstcrop-theme.esm.js --module --compress --mangle --comments '/@license|@preserve|^!/' --source-map \\\"content=dist/js/firstcrop-theme.esm.js.map,filename=dist/js/firstcrop-theme.esm.min.js.map,url=firstcrop-theme.esm.min.js.map\\\" -o dist/js/firstcrop-theme.esm.min.js\"",
     "copy": "concurrently \"pnpm run copy-img\" \"pnpm run copy-libs\" \"pnpm run copy-fonts\"",
     "copy-img": "shx mkdir -p dist/img && shx cp -rf img/* dist/img",
     "copy-libs": "tsx .build/copy-libs.ts",
@@ -47,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tabler/tabler.git"
+    "url": "git+https://github.com/firstcrop/firstcrop.git"
   },
   "keywords": [
     "css",
@@ -61,11 +61,11 @@
   "author": "codecalm",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tabler/tabler/issues"
+    "url": "https://github.com/firstcrop/firstcrop/issues"
   },
   "funding": {
     "type": "github",
-    "url": "https://github.com/sponsors/codecalm"
+    "url": "https://github.com/firstcrop/firstcrop"
   },
   "engines": {
     "node": ">=20"
@@ -78,76 +78,76 @@
     "scss/**/*.scss",
     "libs.json"
   ],
-  "style": "dist/css/tabler.css",
-  "sass": "scss/tabler.scss",
-  "unpkg": "dist/js/tabler.min.js",
-  "umd:main": "dist/js/tabler.min.js",
-  "module": "dist/js/tabler.esm.js",
-  "main": "dist/js/tabler.js",
+  "style": "dist/css/firstcrop.css",
+  "sass": "scss/firstcrop.scss",
+  "unpkg": "dist/js/firstcrop.min.js",
+  "umd:main": "dist/js/firstcrop.min.js",
+  "module": "dist/js/firstcrop.esm.js",
+  "main": "dist/js/firstcrop.js",
   "bundlewatch": {
     "files": [
       {
-        "path": "./dist/css/tabler.css",
+        "path": "./dist/css/firstcrop.css",
         "maxSize": "80 kB"
       },
       {
-        "path": "./dist/css/tabler.min.css",
+        "path": "./dist/css/firstcrop.min.css",
         "maxSize": "75 kB"
       },
       {
-        "path": "./dist/css/tabler.rtl.css",
+        "path": "./dist/css/firstcrop.rtl.css",
         "maxSize": "79 kB"
       },
       {
-        "path": "./dist/css/tabler.rtl.min.css",
+        "path": "./dist/css/firstcrop.rtl.min.css",
         "maxSize": "75 kB"
       },
       {
-        "path": "./dist/css/tabler-flags.css",
+        "path": "./dist/css/firstcrop-flags.css",
         "maxSize": "2.6 kB"
       },
       {
-        "path": "./dist/css/tabler-flags.min.css",
+        "path": "./dist/css/firstcrop-flags.min.css",
         "maxSize": "2.1 kB"
       },
       {
-        "path": "./dist/css/tabler-payments.css",
+        "path": "./dist/css/firstcrop-payments.css",
         "maxSize": "2.4 kB"
       },
       {
-        "path": "./dist/css/tabler-payments.min.css",
+        "path": "./dist/css/firstcrop-payments.min.css",
         "maxSize": "2.1 kB"
       },
       {
-        "path": "./dist/css/tabler-socials.css",
+        "path": "./dist/css/firstcrop-socials.css",
         "maxSize": "2.1 kB"
       },
       {
-        "path": "./dist/css/tabler-socials.min.css",
+        "path": "./dist/css/firstcrop-socials.min.css",
         "maxSize": "2.1 kB"
       },
       {
-        "path": "./dist/css/tabler-vendors.css",
+        "path": "./dist/css/firstcrop-vendors.css",
         "maxSize": "7.7 kB"
       },
       {
-        "path": "./dist/css/tabler-vendors.min.css",
+        "path": "./dist/css/firstcrop-vendors.min.css",
         "maxSize": "6.7 kB"
       },
       {
-        "path": "./dist/js/tabler.js",
+        "path": "./dist/js/firstcrop.js",
         "maxSize": "64 kB"
       },
       {
-        "path": "./dist/js/tabler.min.js",
+        "path": "./dist/js/firstcrop.min.js",
         "maxSize": "48 kB"
       },
       {
-        "path": "./dist/js/tabler.esm.js",
+        "path": "./dist/js/firstcrop.esm.js",
         "maxSize": "64 kB"
       },
       {
-        "path": "./dist/js/tabler.esm.min.js",
+        "path": "./dist/js/firstcrop.esm.min.js",
         "maxSize": "48 kB"
       }
     ]

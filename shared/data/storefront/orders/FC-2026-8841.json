@@ -1,0 +1,21 @@
+{
+  "slug": "FC-2026-8841",
+  "id": "FC-2026-8841",
+  "date": "2026-07-28",
+  "status": "Shipped",
+  "items": [
+    { "productId": "FC-1208", "name": "Hybrid paddy seeds (10 kg)", "packSize": "10 kg", "qty": 1, "price": 5140 },
+    { "productId": "FC-1042", "name": "DAP fertilizer (50 kg)", "packSize": "50 kg", "qty": 2, "price": 1115 }
+  ],
+  "payment": "UPI",
+  "payColor": "green",
+  "statusColor": "azure",
+  "total": 7370,
+  "zone": "metro",
+  "timeline": [
+    { "label": "Order placed", "date": "28 Jul, 9:14 AM", "done": true },
+    { "label": "Packed at warehouse", "date": "29 Jul, 6:02 PM", "done": true },
+    { "label": "Shipped", "date": "30 Jul, 11:40 AM", "done": true },
+    { "label": "Delivered", "date": "Expected 1 Aug", "done": false }
+  ]
+}

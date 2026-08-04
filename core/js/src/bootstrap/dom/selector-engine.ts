@@ -8,7 +8,7 @@
 import { isDisabled, isVisible, parseSelector } from '../util/index'
 
 const getSelector = (element: HTMLElement): string | null => {
-  let selector = element.getAttribute('data-tblr-target') || element.getAttribute('data-bs-target')
+  let selector = element.getAttribute('data-fc-target') || element.getAttribute('data-bs-target')
 
   if (!selector || selector === '#') {
     let hrefAttribute = element.getAttribute('href')

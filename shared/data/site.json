@@ -1,22 +1,22 @@
 {
-  "title": "Tabler",
+  "title": "FirstCrop",
   "descriptionShort": "Premium and Open Source dashboard template with responsive and high quality UI.",
-  "description": "Tabler is packed with beautifully crafted components and powerful features. Jump in and start building a stunning dashboard — all for free!",
-  "themeColor": "#066fd1",
-  "email": "support@tabler.io",
-  "homepage": "https://tabler.io",
-  "githubUrl": "https://github.com/tabler/tabler",
-  "githubSponsorsUrl": "https://github.com/sponsors/codecalm",
-  "opencollectiveUrl": "https://opencollective.com/tabler",
-  "xUrl": "https://x.com/tabler_io",
-  "linkedinUrl": "https://www.linkedin.com/company/tabler-io",
-  "changelogUrl": "https://github.com/tabler/tabler/releases",
-  "previewUrl": "https://preview.tabler.io",
-  "docsUrl": "https://docs.tabler.io",
+  "description": "FirstCrop is packed with beautifully crafted components and powerful features. Jump in and start building a stunning dashboard — all for free!",
+  "themeColor": "#2fb344",
+  "email": "support@firstcrop.in",
+  "homepage": "https://firstcrop.in",
+  "githubUrl": "https://github.com/firstcrop/firstcrop",
+  "githubSponsorsUrl": "https://github.com/firstcrop/firstcrop",
+  "opencollectiveUrl": "https://opencollective.com/firstcrop",
+  "xUrl": "https://x.com/firstcrop",
+  "linkedinUrl": "https://www.linkedin.com/company/firstcrop",
+  "changelogUrl": "https://github.com/firstcrop/firstcrop/releases",
+  "previewUrl": "https://preview.firstcrop.in",
+  "docsUrl": "https://docs.firstcrop.in",
   "mapboxKey": "pk.eyJ1IjoidGFibGVyIiwiYSI6ImNscHh3dnhndjB2M3QycW85bGd0NXRmZ3YifQ.9LfHPsNoEXQH-xzz-81Ffw",
   "googleMapsKey": "AIzaSyAr5mRB4U1KRkVznIrDWEvZjroYcD202DI",
   "googleMapsDevKey": "AIzaSyCL-BY8-sq12m0S9H-S_yMqDmcun3A9znw",
-  "npmPackage": "@tabler/core",
+  "npmPackage": "@firstcrop/core",
   "cssPlugins": [
     "flags",
     "socials",
@@ -26,98 +26,98 @@
     "themes"
   ],
   "icons": {
-    "link": "https://tabler.io/icons"
+    "link": "https://firstcrop.in/icons"
   },
   "emails": {
     "price": "$29",
-    "buy_link": "https://r.tabler.io/buy-emails"
+    "buy_link": "https://firstcrop.in/buy-emails"
   },
   "illustrations": {
     "price": "$59",
     "count": 50,
-    "buy_link": "https://r.tabler.io/buy-illustrations"
+    "buy_link": "https://firstcrop.in/buy-illustrations"
   },
   "colors": {
     "blue": {
       "class": "blue",
-      "prop": "--tblr-blue",
+      "prop": "--fc-blue",
       "title": "Blue",
       "hex": "#066fd1",
       "abbr": "bl"
     },
     "azure": {
       "class": "azure",
-      "prop": "--tblr-azure",
+      "prop": "--fc-azure",
       "title": "Azure",
       "hex": "#4299e1",
       "abbr": "az"
     },
     "indigo": {
       "class": "indigo",
-      "prop": "--tblr-indigo",
+      "prop": "--fc-indigo",
       "title": "Indigo",
       "hex": "#4263eb",
       "abbr": "id"
     },
     "purple": {
       "class": "purple",
-      "prop": "--tblr-purple",
+      "prop": "--fc-purple",
       "title": "Purple",
       "hex": "#ae3ec9",
       "abbr": "pu"
     },
     "pink": {
       "class": "pink",
-      "prop": "--tblr-pink",
+      "prop": "--fc-pink",
       "title": "Pink",
       "hex": "#d6336c",
       "abbr": "pk"
     },
     "red": {
       "class": "red",
-      "prop": "--tblr-red",
+      "prop": "--fc-red",
       "title": "Red",
       "hex": "#d63939",
       "abbr": "rd"
     },
     "orange": {
       "class": "orange",
-      "prop": "--tblr-orange",
+      "prop": "--fc-orange",
       "title": "Orange",
       "hex": "#f76707",
       "abbr": "or"
     },
     "yellow": {
       "class": "yellow",
-      "prop": "--tblr-yellow",
+      "prop": "--fc-yellow",
       "title": "Yellow",
       "hex": "#f59f00",
       "abbr": "yl"
     },
     "lime": {
       "class": "lime",
-      "prop": "--tblr-lime",
+      "prop": "--fc-lime",
       "title": "Lime",
       "hex": "#74b816",
       "abbr": "lm"
     },
     "green": {
       "class": "green",
-      "prop": "--tblr-green",
+      "prop": "--fc-green",
       "title": "Green",
       "hex": "#2fb344",
       "abbr": "gn"
     },
     "teal": {
       "class": "teal",
-      "prop": "--tblr-teal",
+      "prop": "--fc-teal",
       "title": "Teal",
       "hex": "#0ca678",
       "abbr": "tl"
     },
     "cyan": {
       "class": "cyan",
-      "prop": "--tblr-cyan",
+      "prop": "--fc-cyan",
       "title": "Cyan",
       "hex": "#17a2b8",
       "abbr": "cy"
@@ -126,84 +126,84 @@
   "lightColors": {
     "blue": {
       "class": "blue",
-      "prop": "--tblr-blue-lt",
+      "prop": "--fc-blue-lt",
       "title": "Blue Light",
       "abbr": "bl",
       "hex": "#066fd1"
     },
     "azure": {
       "class": "azure",
-      "prop": "--tblr-azure-lt",
+      "prop": "--fc-azure-lt",
       "title": "Azure Light",
       "abbr": "az",
       "hex": "#4299e1"
     },
     "indigo": {
       "class": "indigo",
-      "prop": "--tblr-indigo-lt",
+      "prop": "--fc-indigo-lt",
       "title": "Indigo Light",
       "abbr": "id",
       "hex": "#4263eb"
     },
     "purple": {
       "class": "purple",
-      "prop": "--tblr-purple-lt",
+      "prop": "--fc-purple-lt",
       "title": "Purple Light",
       "abbr": "pu",
       "hex": "#ae3ec9"
     },
     "pink": {
       "class": "pink",
-      "prop": "--tblr-pink-lt",
+      "prop": "--fc-pink-lt",
       "title": "Pink Light",
       "abbr": "pk",
       "hex": "#d6336c"
     },
     "red": {
       "class": "red",
-      "prop": "--tblr-red-lt",
+      "prop": "--fc-red-lt",
       "title": "Red Light",
       "abbr": "rd",
       "hex": "#d63939"
     },
     "orange": {
       "class": "orange",
-      "prop": "--tblr-orange-lt",
+      "prop": "--fc-orange-lt",
       "title": "Orange Light",
       "abbr": "or",
       "hex": "#f76707"
     },
     "yellow": {
       "class": "yellow",
-      "prop": "--tblr-yellow-lt",
+      "prop": "--fc-yellow-lt",
       "title": "Yellow Light",
       "abbr": "yl",
       "hex": "#f59f00"
     },
     "lime": {
       "class": "lime",
-      "prop": "--tblr-lime-lt",
+      "prop": "--fc-lime-lt",
       "title": "Lime Light",
       "abbr": "lm",
       "hex": "#74b816"
     },
     "green": {
       "class": "green",
-      "prop": "--tblr-green-lt",
+      "prop": "--fc-green-lt",
       "title": "Green Light",
       "abbr": "gn",
       "hex": "#2fb344"
     },
     "teal": {
       "class": "teal",
-      "prop": "--tblr-teal-lt",
+      "prop": "--fc-teal-lt",
       "title": "Teal Light",
       "abbr": "tl",
       "hex": "#0ca678"
     },
     "cyan": {
       "class": "cyan",
-      "prop": "--tblr-cyan-lt",
+      "prop": "--fc-cyan-lt",
       "title": "Cyan Light",
       "abbr": "cy",
       "hex": "#17a2b8"
@@ -254,182 +254,181 @@
   "socialColors": {
     "facebook": {
       "title": "Facebook",
-      "hex": "var(--tblr-facebook)",
+      "hex": "var(--fc-facebook)",
       "abbr": "fb",
       "icon": "brand-facebook",
-      "prop": "--tblr-facebook"
+      "prop": "--fc-facebook"
     },
     "twitter": {
       "title": "Twitter",
-      "hex": "var(--tblr-twitter)",
+      "hex": "var(--fc-twitter)",
       "abbr": "tw",
       "icon": "brand-twitter",
-      "prop": "--tblr-twitter"
+      "prop": "--fc-twitter"
     },
     "x": {
       "title": "X",
-      "hex": "var(--tblr-x)",
+      "hex": "var(--fc-x)",
       "abbr": "x",
       "icon": "brand-x",
-      "prop": "--tblr-x"
+      "prop": "--fc-x"
     },
     "linkedin": {
       "title": "Linkedin",
-      "hex": "var(--tblr-linkedin)",
+      "hex": "var(--fc-linkedin)",
       "abbr": "li",
       "icon": "brand-linkedin",
-      "prop": "--tblr-linkedin"
+      "prop": "--fc-linkedin"
     },
     "google": {
       "title": "Google",
-      "hex": "var(--tblr-google)",
+      "hex": "var(--fc-google)",
       "abbr": "go",
       "icon": "brand-google",
-      "prop": "--tblr-google"
+      "prop": "--fc-google"
     },
     "youtube": {
       "title": "Youtube",
-      "hex": "var(--tblr-youtube)",
+      "hex": "var(--fc-youtube)",
       "abbr": "yt",
       "icon": "brand-youtube",
-      "prop": "--tblr-youtube"
+      "prop": "--fc-youtube"
     },
     "vimeo": {
       "title": "Vimeo",
-      "hex": "var(--tblr-vimeo)",
+      "hex": "var(--fc-vimeo)",
       "abbr": "vi",
       "icon": "brand-vimeo",
-      "prop": "--tblr-vimeo"
+      "prop": "--fc-vimeo"
     },
     "dribbble": {
       "title": "Dribbble",
-      "hex": "var(--tblr-dribbble)",
+      "hex": "var(--fc-dribbble)",
       "abbr": "dr",
       "icon": "brand-dribbble",
-      "prop": "--tblr-dribbble"
+      "prop": "--fc-dribbble"
     },
     "github": {
       "title": "Github",
-      "hex": "var(--tblr-github)",
+      "hex": "var(--fc-github)",
       "abbr": "gh",
       "icon": "brand-github",
-      "prop": "--tblr-github"
+      "prop": "--fc-github"
     },
     "instagram": {
       "title": "Instagram",
-      "hex": "var(--tblr-instagram)",
+      "hex": "var(--fc-instagram)",
       "abbr": "ig",
       "icon": "brand-instagram",
-      "prop": "--tblr-instagram"
+      "prop": "--fc-instagram"
     },
     "pinterest": {
       "title": "Pinterest",
-      "hex": "var(--tblr-pinterest)",
+      "hex": "var(--fc-pinterest)",
       "abbr": "pt",
       "icon": "brand-pinterest",
-      "prop": "--tblr-pinterest"
+      "prop": "--fc-pinterest"
     },
     "vk": {
       "title": "VK",
-      "hex": "var(--tblr-vk)",
+      "hex": "var(--fc-vk)",
       "abbr": "vk",
       "icon": "brand-vk",
-      "prop": "--tblr-vk"
+      "prop": "--fc-vk"
     },
     "rss": {
       "title": "RSS",
-      "hex": "var(--tblr-rss)",
+      "hex": "var(--fc-rss)",
       "abbr": "rs",
       "icon": "rss",
-      "prop": "--tblr-rss"
+      "prop": "--fc-rss"
     },
     "flickr": {
       "title": "Flickr",
-      "hex": "var(--tblr-flickr)",
+      "hex": "var(--fc-flickr)",
       "abbr": "fl",
       "icon": "brand-flickr",
-      "prop": "--tblr-flickr"
+      "prop": "--fc-flickr"
     },
     "bitbucket": {
       "title": "Bitbucket",
-      "hex": "var(--tblr-bitbucket)",
+      "hex": "var(--fc-bitbucket)",
       "abbr": "bb",
       "icon": "brand-bitbucket",
-      "prop": "--tblr-bitbucket"
+      "prop": "--fc-bitbucket"
     },
-    "tabler": {
-      "title": "Tabler",
-      "hex": "var(--tblr-tabler)",
-      "abbr": "tb",
-      "icon": "brand-tabler",
-      "prop": "--tblr-tabler"
+    "firstcrop": {
+      "title": "FirstCrop",
+      "hex": "var(--fc-firstcrop)",
+      "abbr": "fc",
+      "prop": "--fc-firstcrop"
     }
   },
   "grayColors": {
     "gray-50": {
-      "hex": "var(--tblr-gray-50)",
+      "hex": "var(--fc-gray-50)",
       "title": "Gray 50",
-      "prop": "--tblr-gray-50",
+      "prop": "--fc-gray-50",
       "abbr": "50"
     },
     "gray-100": {
-      "hex": "var(--tblr-gray-100)",
+      "hex": "var(--fc-gray-100)",
       "title": "Gray 100",
-      "prop": "--tblr-gray-100",
+      "prop": "--fc-gray-100",
       "abbr": "100"
     },
     "gray-200": {
-      "hex": "var(--tblr-gray-200)",
+      "hex": "var(--fc-gray-200)",
       "title": "Gray 200",
-      "prop": "--tblr-gray-200",
+      "prop": "--fc-gray-200",
       "abbr": "200"
     },
     "gray-300": {
-      "hex": "var(--tblr-gray-300)",
+      "hex": "var(--fc-gray-300)",
       "title": "Gray 300",
-      "prop": "--tblr-gray-300",
+      "prop": "--fc-gray-300",
       "abbr": "300"
     },
     "gray-400": {
-      "hex": "var(--tblr-gray-400)",
+      "hex": "var(--fc-gray-400)",
       "title": "Gray 400",
-      "prop": "--tblr-gray-400",
+      "prop": "--fc-gray-400",
       "abbr": "400"
     },
     "gray-500": {
-      "hex": "var(--tblr-gray-500)",
+      "hex": "var(--fc-gray-500)",
       "title": "Gray 500",
-      "prop": "--tblr-gray-500",
+      "prop": "--fc-gray-500",
       "abbr": "500"
     },
     "gray-600": {
-      "hex": "var(--tblr-gray-600)",
+      "hex": "var(--fc-gray-600)",
       "title": "Gray 600",
-      "prop": "--tblr-gray-600",
+      "prop": "--fc-gray-600",
       "abbr": "600"
     },
     "gray-700": {
-      "hex": "var(--tblr-gray-700)",
+      "hex": "var(--fc-gray-700)",
       "title": "Gray 700",
-      "prop": "--tblr-gray-700",
+      "prop": "--fc-gray-700",
       "abbr": "700"
     },
     "gray-800": {
-      "hex": "var(--tblr-gray-800)",
+      "hex": "var(--fc-gray-800)",
       "title": "Gray 800",
-      "prop": "--tblr-gray-800",
+      "prop": "--fc-gray-800",
       "abbr": "800"
     },
     "gray-900": {
-      "hex": "var(--tblr-gray-900)",
+      "hex": "var(--fc-gray-900)",
       "title": "Gray 900",
-      "prop": "--tblr-gray-900",
+      "prop": "--fc-gray-900",
       "abbr": "900"
     },
     "gray-950": {
-      "hex": "var(--tblr-gray-950)",
+      "hex": "var(--fc-gray-950)",
       "title": "Gray 950",
-      "prop": "--tblr-gray-950",
+      "prop": "--fc-gray-950",
       "abbr": "950"
     }
   },
@@ -437,17 +436,17 @@
     "white": {
       "hex": "#ffffff",
       "title": "White",
-      "prop": "--tblr-white"
+      "prop": "--fc-white"
     },
     "dark": {
       "hex": "#303645",
       "title": "Dark",
-      "prop": "--tblr-dark"
+      "prop": "--fc-dark"
     },
     "gray": {
       "hex": "#868e96",
       "title": "Gray",
-      "prop": "--tblr-gray"
+      "prop": "--fc-gray"
     }
   },
   "variants": [

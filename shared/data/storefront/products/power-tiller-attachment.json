@@ -1,0 +1,32 @@
+{
+  "slug": "power-tiller-attachment",
+  "id": "FC-3108",
+  "name": "Power tiller attachment",
+  "categoryId": "tools-equipment",
+  "brand": "KisanPro",
+  "image": null,
+  "rating": 4.5,
+  "ratingCount": 41,
+  "reviewIds": [],
+  "shortDescription": "Rotavator attachment for small power tillers — 1 ha/day in normal soil.",
+  "longDescription": "Bolt-on rotavator for 6–8 HP power tillers. Covers about one hectare per day in normal soil and handles a second pass in hard ground. Slow-moving item, offered with seasonal markdown.",
+  "highlights": ["1 ha/day coverage", "Fits 6–8 HP tillers", "Hardened tines", "Bolts-on in 15 min"],
+  "specifications": {
+    "Compatibility": "6–8 HP tillers",
+    "Coverage": "1 ha/day",
+    "Tines": "Hardened steel",
+    "Packing": "Forklift crate"
+  },
+  "packSizes": [{ "label": "1 unit", "mrp": 18500, "price": 16000, "unit": "attachment" }],
+  "stock": 5,
+  "tags": ["tools", "tiller", "rotavator", "attachment"],
+  "season": ["rabi", "kharif"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 17900 },
+    { "date": "2026-03-01", "price": 17200 },
+    { "date": "2026-04-01", "price": 16800 },
+    { "date": "2026-05-01", "price": 16400 },
+    { "date": "2026-06-01", "price": 16000 },
+    { "date": "2026-07-01", "price": 16000 }
+  ]
+}

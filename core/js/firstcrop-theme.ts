@@ -30,10 +30,10 @@ for (const key in themeConfig) {
   let selectedValue: string
 
   if (!!param) {
-    localStorage.setItem('tabler-' + key, param)
+    localStorage.setItem('firstcrop-' + key, param)
     selectedValue = param
   } else {
-    const storedTheme = localStorage.getItem('tabler-' + key)
+    const storedTheme = localStorage.getItem('firstcrop-' + key)
     selectedValue = storedTheme ? storedTheme : themeConfig[key as keyof ThemeConfig]
   }
 
@@ -49,7 +49,7 @@ for (const key in themeConfig) {
 }
 
 prefersDark.addEventListener('change', (event) => {
-  if (localStorage.getItem('tabler-theme') === 'auto') {
+  if (localStorage.getItem('firstcrop-theme') === 'auto') {
     if (event.matches) {
       document.documentElement.setAttribute('data-bs-theme', 'dark')
     } else {

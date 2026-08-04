@@ -1,0 +1,33 @@
+---
+// Price with optional MRP strikethrough + discount %. Mirrors the admin ecommerce
+// price styles; renders "On request" when price is 0.
+import { formatINR, discountPercent } from '@shared/lib/storefront';
+
+interface Props {
+	mrp?: number;
+	price: number;
+	size?: 'sm' | 'md';
+	/** show the discount pill (defaults to true) */
+	showDiscount?: boolean;
+	class?: string;
+}
+
+const { mrp, price, size = 'md', showDiscount = true, class: className } = Astro.props;
+
+const discount = mrp ? discountPercent(mrp, price) : 0;
+const priceClass = size === 'sm' ? 'h4' : 'h3';
+---
+
+<div class:list={['d-flex align-items-baseline gap-2 flex-wrap', className]}>
+	{
+		price > 0 ? (
+			<Fragment>
+				<span class:list={[priceClass, 'store-price m-0']}>{formatINR(price)}</span>
+				{mrp && mrp > price && <span class="store-price-mrp">{formatINR(mrp)}</span>}
+				{showDiscount && discount > 0 && <span class="store-discount text-green">{discount}% off</span>}
+			</Fragment>
+		) : (
+			<span class={priceClass}>On request</span>
+		)
+	}
+</div>

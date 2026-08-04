@@ -1,0 +1,49 @@
+---
+// Storefront product card: image tile, badge, name, rating, price, add-to-cart
+// and wishlist. Links to the product detail page.
+import ProductImage from './ProductImage.astro';
+import PriceTag from './PriceTag.astro';
+import RatingStars from './RatingStars.astro';
+import AddToCartButton from './AddToCartButton.astro';
+import WishlistToggle from './WishlistToggle.astro';
+import Badge from '@ui/Badge.astro';
+import type { Product } from '@shared/lib/storefront-data';
+
+interface Props {
+	product: Product;
+	/** category icon used in the placeholder tile */
+	icon?: string;
+	class?: string;
+}
+
+const { product, icon, class: className } = Astro.props;
+
+const price = product.packSizes[0];
+const packLabel = product.packSizes[0]?.label;
+---
+
+<div class:list={['card card-sm store-card', className]}>
+	<a href={`store-product.html?product=${product.slug}`} class="card-img-top d-block p-2">
+		<ProductImage product={product} icon={icon} />
+	</a>
+
+	<WishlistToggle productId={product.id} class="ms-auto m-2" />
+
+	<div class="card-body">
+		{product.badge && <Badge color="green" light>{product.badge}</Badge>}
+		<a href={`store-product.html?product=${product.slug}`} class="text-decoration-none d-block mt-1">
+			<div class="fw-medium text-body text-truncate d-block" title={product.name}>{product.name}</div>
+		</a>
+		<RatingStars rating={product.rating} size="sm" class="mt-1" />
+		<div class="mt-2 d-flex align-items-center justify-content-between gap-2">
+			<div>
+				<PriceTag mrp={price?.mrp} price={price?.price ?? 0} size="sm" />
+				<div class="text-secondary small">{packLabel}</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card-footer bg-transparent">
+		<AddToCartButton productId={product.id} packSize={packLabel ?? '1'} stock={product.stock} block />
+	</div>
+</div>

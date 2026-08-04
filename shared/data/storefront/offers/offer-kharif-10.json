@@ -1,0 +1,14 @@
+{
+  "slug": "offer-kharif-10",
+  "title": "Kharif sowing — 10% off",
+  "description": "On paddy seeds, pesticides and drip. Auto-applied at checkout.",
+  "code": "KHARIF10",
+  "type": "percent",
+  "value": 10,
+  "minBasket": 2000,
+  "validUntil": "2026-08-31",
+  "products": ["FC-1208", "FC-0554", "FC-3106", "FC-3102"],
+  "color": "green",
+  "icon": "discount",
+  "featured": true
+}

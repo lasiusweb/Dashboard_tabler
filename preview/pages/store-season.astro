@@ -1,0 +1,133 @@
+---
+// Season calendar — Kharif / Rabi / Zaid crop windows in a 12-month grid,
+// crop cards grouped by season, and state-aware notes.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Icon from '@ui/Icon.astro';
+import Card from '@ui/Card.astro';
+import CardBody from '@ui/CardBody.astro';
+import Badge from '@ui/Badge.astro';
+import { getCollection } from '@shared/lib/storefront-data';
+import type { Crop } from '@shared/lib/storefront-data';
+
+const crops = await getCollection<Crop>('crops');
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const monthIndex: Record<string, number> = {
+	January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+	July: 6, August: 7, September: 8, October: 9, November: 10, December: 11,
+	Jan: 0, Feb: 1, Mar: 2, Apr: 3, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
+};
+
+const seasonTone: Record<string, string> = { kharif: 'cal-kharif', rabi: 'cal-rabi', zaid: 'cal-zaid' };
+
+// Precompute each crop's 12-cell calendar row so the template stays simple.
+const calendarRows = crops.map((crop) => {
+	const sowStart = monthIndex[crop.sowStart] ?? 0;
+	const sowEnd = monthIndex[crop.sowEnd] ?? 11;
+	const activeTone = seasonTone[crop.season] ?? 'cal-kharif';
+	const cells = months.map((label, index) => {
+		const active = index >= sowStart && index <= sowEnd;
+		return active ? { label: '', cls: `cal-cell ${activeTone}` } : { label, cls: 'cal-cell' };
+	});
+	return { crop, cells };
+});
+
+const seasons = [
+	{ key: 'kharif', label: 'Kharif', icon: 'droplets', tone: 'green', blurb: 'Sown with the south-west monsoon (June–August), harvested in autumn. Paddy, cotton, soybean, moong.' },
+	{ key: 'rabi', label: 'Rabi', icon: 'sun', tone: 'blue', blurb: 'Sown after the monsoon (October–December), harvested in spring. Wheat, mustard, chickpea.' },
+	{ key: 'zaid', label: 'Zaid', icon: 'flame', tone: 'orange', blurb: 'A short summer crop season between rabi harvest and kharif sowing. Watermelon and other warm-season produce.' },
+] as const;
+
+const seasonBadge: Record<string, 'green' | 'blue' | 'orange'> = { kharif: 'green', rabi: 'blue', zaid: 'orange' };
+---
+
+<StoreLayout title="Season calendar" currentNav="season">
+	<div class="mb-4">
+		<h1 class="h2 mb-1">Sowing calendar</h1>
+		<p class="text-secondary mb-0">When to sow and harvest for the three Indian crop seasons — Kharif, Rabi and Zaid.</p>
+	</div>
+
+	<!-- Season overview -->
+	<div class="row g-3 mb-4">
+		{seasons.map((season) => {
+			const seasonCrops = crops.filter((c) => c.season === season.key);
+			return (
+				<div class="col-md-4">
+					<Card>
+						<CardBody>
+							<div class="d-flex align-items-center gap-2 mb-1">
+								<Icon name={season.icon} color={season.tone} />
+								<h3 class="h5 mb-0">{season.label}</h3>
+							</div>
+							<p class="text-secondary small mb-0">{season.blurb}</p>
+							<div class="mt-2 text-secondary small">{seasonCrops.length} crops in this dataset</div>
+						</CardBody>
+					</Card>
+				</div>
+			);
+		})}
+	</div>
+
+	<!-- 12-month calendar -->
+	<Card class="mb-4">
+		<CardBody>
+			<h3 class="h5 mb-3">Sowing windows</h3>
+			{calendarRows.map(({ crop, cells }) => (
+				<div class="mb-2">
+					<div class="d-flex align-items-center justify-content-between mb-1">
+						<span class="fw-medium">{crop.name}</span>
+						<span class="text-secondary small">{crop.season}</span>
+					</div>
+					<div class="store-calendar">
+						{cells.map((cell, index) => (
+							<div class={cell.cls} title={`${months[index]} — ${cell.cls.includes('cal-') ? 'sowing' : ''}`}>{cell.label}</div>
+						))}
+					</div>
+				</div>
+			))}
+			<div class="d-flex flex-wrap gap-3 mt-3">
+				<span class="d-inline-flex align-items-center gap-1"><span class="badge" style="background:rgba(47,179,68,.55)"> </span> Kharif sowing</span>
+				<span class="d-inline-flex align-items-center gap-1"><span class="badge" style="background:rgba(64,138,241,.55)"> </span> Rabi sowing</span>
+				<span class="d-inline-flex align-items-center gap-1"><span class="badge" style="background:rgba(245,158,11,.55)"> </span> Zaid sowing</span>
+			</div>
+		</CardBody>
+	</Card>
+
+	<!-- Crop cards by season -->
+	{seasons.map((season) => {
+		const seasonCrops = crops.filter((c) => c.season === season.key);
+		if (seasonCrops.length === 0) return null;
+		return (
+			<section class="mb-4">
+				<div class="d-flex align-items-center gap-2 mb-3">
+					<Icon name={season.icon} color={season.tone} />
+					<h3 class="h4 mb-0">{season.label} crops</h3>
+					<Badge color={seasonBadge[season.key]} light>{seasonCrops.length}</Badge>
+				</div>
+				<div class="row g-3">
+					{seasonCrops.map((crop) => (
+						<div class="col-md-6 col-lg-4">
+							<Card class="h-100">
+								<CardBody>
+									<div class="d-flex align-items-start justify-content-between gap-2">
+										<h4 class="h6 mb-1">{crop.name}</h4>
+										<Badge color={seasonBadge[crop.season]} light>{crop.season}</Badge>
+									</div>
+									<div class="text-secondary small mb-2">
+										Sow {crop.sowStart}–{crop.sowEnd} · Harvest {crop.harvestStart}–{crop.harvestEnd}
+									</div>
+									{crop.states && crop.states.length > 0 && (
+										<div class="text-secondary small mb-2">Key states: {crop.states.join(', ')}</div>
+									)}
+									{crop.tip && (
+										<div class="alert alert-soft alert-green py-2 px-3 small mb-2" role="alert"><Icon name="check" class="me-1" />{crop.tip}</div>
+									)}
+								</CardBody>
+							</Card>
+						</div>
+					))}
+				</div>
+			</section>
+		);
+	})}
+</StoreLayout>

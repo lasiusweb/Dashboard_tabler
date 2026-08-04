@@ -1,0 +1,9 @@
+{
+  "slug": "fertilizers",
+  "name": "Fertilizers",
+  "icon": "droplet",
+  "description": "DAP, urea, NPK and bio-fertilizers with subsidies applied at checkout where eligible.",
+  "productIds": ["FC-1042", "FC-0771", "FC-3103", "FC-3104", "FC-3105"],
+  "season": "rabi",
+  "faqIds": ["faq-payment-subsidy"]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "imidacloprid-17-8sl",
+  "id": "FC-0554",
+  "name": "Imidacloprid 17.8 SL (1 L)",
+  "categoryId": "pesticides",
+  "brand": "CropGuard",
+  "image": null,
+  "rating": 4.4,
+  "ratingCount": 862,
+  "reviewIds": ["rev-imida-1"],
+  "shortDescription": "Systemic insecticide for hoppers, thrips and aphids on rice and vegetables.",
+  "longDescription": "Fast-acting systemic control of sucking pests. Effective on brown planthopper and white-backed planthopper in paddy. Use personal protective equipment while spraying.",
+  "highlights": ["Systemic action", "2 mL/L water dose", "Controls hoppers & aphids", "Safe for natural enemies at label dose"],
+  "specifications": {
+    "Formulation": "17.8 SL",
+    "Dose": "2 mL/L water",
+    "Crops": "Paddy, brinjal, cotton",
+    "Packing": "1 L bottle"
+  },
+  "packSizes": [{ "label": "1 L", "mrp": 1120, "price": 980, "unit": "bottle" }],
+  "stock": 176,
+  "tags": ["pesticide", "insecticide", "sucking pests", "hopper"],
+  "badge": "Top rated",
+  "season": ["kharif"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 1020 },
+    { "date": "2026-03-01", "price": 1000 },
+    { "date": "2026-04-01", "price": 990 },
+    { "date": "2026-05-01", "price": 980 },
+    { "date": "2026-06-01", "price": 980 },
+    { "date": "2026-07-01", "price": 980 }
+  ]
+}

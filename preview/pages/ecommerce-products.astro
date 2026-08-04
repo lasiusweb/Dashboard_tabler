@@ -1,0 +1,293 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import Button from '@ui/Button.astro';
+import products from '@data/ecommerce-products.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Products"
+	pageHeader="Ecommerce Products"
+	description="Catalog, inventory and stock health for firstcrop.in."
+	pageMenu="ecommerce.products"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(products as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Category performance</div>
+							<div class="card-subtitle">GMV by category (₹Cr), 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-products-category" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Stock health</div>
+							<div class="card-subtitle">All live SKUs</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-products-stock-health" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Margin vs growth</div>
+							<div class="card-subtitle">By category</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-products-margin-growth" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Top sellers</div>
+							<div class="card-subtitle">Units sold, 30 days</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>SKU</th>
+										<th>Category</th>
+										<th class="text-end">Units</th>
+										<th class="text-end">Value</th>
+										<th>Stock</th>
+										<th>Health</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { topSellers: { sku: string; name: string; category: string; units: number; value: string; stock: string; stockColor: string; health: number }[] }).topSellers.map(
+											(p) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{p.name}</div>
+														<div class="text-secondary">{p.sku}</div>
+													</td>
+													<td>{p.category}</td>
+													<td class="text-end">{p.units.toLocaleString('en-IN')}</td>
+													<td class="text-end fw-medium">{p.value}</td>
+													<td><Badge color={p.stockColor} light>{p.stock}</Badge></td>
+													<td>
+														<div class="d-flex align-items-center gap-2">
+															<Progress value={p.health} color={p.health > 60 ? 'green' : p.health > 30 ? 'yellow' : 'red'} class="flex-grow-1" />
+															<span class="text-secondary">{p.health}</span>
+														</div>
+													</td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Stock alerts</div>
+							<div class="card-subtitle">Reorder before peak demand</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>SKU</th>
+										<th class="text-end">Days</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { stockAlerts: { sku: string; name: string; stock: number; days: number; action: string; color: string }[] }).stockAlerts.map((a) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{a.name}</div>
+													<div class="text-secondary">{a.sku} · {a.stock} units</div>
+												</td>
+												<td class="text-end text-secondary">{a.days} d</td>
+												<td class="text-end"><Button text={a.action} size="sm" color={a.color} /></td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Inventory value</div>
+							<div class="card-subtitle">By category (₹Cr)</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-products-inventory-value" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Slow movers & dead stock</div>
+							<div class="card-subtitle">Units sold in 60 days</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>SKU</th>
+										<th class="text-end">Units</th>
+										<th class="text-end">Age (d)</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { slowMovers: { sku: string; name: string; units: number; days: number; value: string; action: string }[] }).slowMovers.map((s) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{s.name}</div>
+													<div class="text-secondary">{s.sku} · {s.value}</div>
+												</td>
+												<td class="text-end">{s.units}</td>
+												<td class="text-end"><Badge color={s.days > 100 ? 'danger' : 'warning'} light>{s.days}</Badge></td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Subsidised fertilizers</div>
+							<div class="card-subtitle">Govt-subsidy flagged SKUs</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th class="text-end">MRP</th>
+										<th class="text-end">Final</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { subsidized: { name: string; mrp: string; subsidy: string; final: string; status: string; color: string }[] }).subsidized.map(
+											(s) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{s.name}</div>
+														<div class="text-secondary">Subsidy {s.subsidy}</div>
+													</td>
+													<td class="text-end text-secondary">{s.mrp}</td>
+													<td class="text-end fw-medium">{s.final}</td>
+													<td><Badge color={s.color} light>{s.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Price bands</div>
+							<div class="card-subtitle">Share of SKUs by price</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-products-price-bands" height={14} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Worst returners</div>
+							<div class="card-subtitle">Products driving returns</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th class="text-end">Returns</th>
+										<th>Return rate</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { worstReturners: { name: string; returns: number; rate: number }[] }).worstReturners.map((w) => (
+											<tr>
+												<td class="fw-medium">{w.name}</td>
+												<td class="text-end">{w.returns}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={w.rate * 10} color={w.rate > 5 ? 'red' : 'yellow'} class="flex-grow-1" />
+														<span class="text-secondary">{w.rate}%</span>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

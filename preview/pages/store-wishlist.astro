@@ -1,0 +1,123 @@
+---
+// Wishlist — client-rendered from the localStorage wishlist (see
+// storefront-client). Products + category icons are embedded at build time.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Empty from '@ui/Empty.astro';
+import { getProducts, getCategories, getConfig, categoryMap } from '@shared/lib/storefront-data';
+
+const products = await getProducts();
+const categories = await getCategories();
+const cats = categoryMap(categories);
+const wishlistConfig = await getConfig('wishlist');
+---
+
+<StoreLayout title="Wishlist" currentNav="shop">
+	<div class="mb-4">
+		<h1 class="h2 mb-1">Your wishlist</h1>
+		<p class="text-secondary mb-0">{wishlistConfig.giftPrompt}</p>
+	</div>
+
+	<div
+		data-store-wishlist
+		data-products={JSON.stringify(
+			products.map((p) => ({
+				slug: p.slug,
+				id: p.id,
+				name: p.name,
+				categoryId: p.categoryId,
+				icon: cats.get(p.categoryId)?.icon,
+				image: p.image,
+				rating: p.rating,
+				ratingCount: p.ratingCount,
+				packSizes: p.packSizes,
+				stock: p.stock,
+				badge: p.badge,
+			})),
+		)}
+	>
+		<div data-wishlist-empty>
+			<Empty
+				icon="heart"
+				title={wishlistConfig.emptyState?.title ?? 'No saved items yet'}
+				subtitle={wishlistConfig.emptyState?.message ?? 'Tap the heart on any product to save it here.'}
+				buttonText="Browse products"
+			/>
+		</div>
+		<div class="row g-3" data-wishlist-grid style="display:none"></div>
+	</div>
+</StoreLayout>
+
+<script>
+	import { getWishlist, subscribe, addToCart, showToast, readJsonData } from '@shared/lib/storefront-client';
+	import { formatINR } from '@shared/lib/storefront';
+
+	type WishlistProduct = {
+		slug: string;
+		id: string;
+		name: string;
+		categoryId: string;
+		icon?: string | null;
+		image?: string | null;
+		rating: number;
+		ratingCount: number;
+		packSizes: Array<{ label: string; mrp: number; price: number; unit: string; subsidy?: number }>;
+		stock: number | null;
+		badge?: string;
+	};
+
+	const root = document.querySelector<HTMLElement>('[data-store-wishlist]');
+	if (root) {
+		const products = readJsonData<WishlistProduct[]>(root, 'data-products') ?? [];
+		const emptyEl = root.querySelector<HTMLElement>('[data-wishlist-empty]')!;
+		const grid = root.querySelector<HTMLElement>('[data-wishlist-grid]')!;
+		const byId = new Map(products.map((p) => [p.id, p]));
+
+		const render = () => {
+			const ids = getWishlist();
+			const items = ids.map((id) => byId.get(id)).filter((p): p is WishlistProduct => Boolean(p));
+			const hasItems = items.length > 0;
+
+			emptyEl.style.display = hasItems ? 'none' : '';
+			grid.style.display = hasItems ? '' : 'none';
+			if (!hasItems) return;
+
+			grid.innerHTML = items
+				.map((product) => {
+					const price = product.packSizes?.[0]?.price ?? 0;
+					const label = product.packSizes?.[0]?.label ?? '';
+					return `
+						<div class="col-6 col-md-4 col-lg-3">
+							<div class="card card-sm store-card">
+								<a href="store-product.html?product=${product.slug}" class="card-img-top d-block p-2">
+									<div class="store-tile store-tile-green" style="width:100%;aspect-ratio:1">
+										<span style="font-size:2rem;font-weight:700">${product.name.charAt(0)}</span>
+									</div>
+								</a>
+								<div class="card-body">
+									<a href="store-product.html?product=${product.slug}" class="text-decoration-none d-block">
+										<div class="fw-medium text-body text-truncate d-block" title="${product.name}">${product.name}</div>
+									</a>
+									<div class="mt-1"><span class="fw-semibold">${formatINR(price)}</span><span class="text-secondary small ms-1">${label}</span></div>
+								</div>
+								<div class="card-footer bg-transparent">
+									<button class="btn btn-primary btn-sm w-100" type="button" data-add="${product.id}" data-pack="${label}">
+										<i class="icon me-1" style="--tw-icon-size:1rem">shopping-cart</i>Add to cart
+									</button>
+								</div>
+							</div>
+						</div>`;
+				})
+				.join('');
+
+			grid.querySelectorAll<HTMLElement>('[data-add]').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					addToCart(btn.dataset.add ?? '', btn.dataset.pack ?? '1');
+					showToast('Added to cart');
+				});
+			});
+		};
+
+		subscribe(render);
+		render();
+	}
+</script>

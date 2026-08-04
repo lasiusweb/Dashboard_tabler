@@ -1,0 +1,39 @@
+{
+  "slug": "wheat-hd3086-10kg",
+  "id": "FC-2014",
+  "name": "Wheat HD-3086 seeds (10 kg)",
+  "categoryId": "seeds",
+  "brand": "Kisan Beej",
+  "image": null,
+  "rating": 4.3,
+  "ratingCount": 754,
+  "reviewIds": [],
+  "shortDescription": "Popular HD-3086 wheat variety for timely Rabi sowing in the north-west plains.",
+  "longDescription": "HD-3086 gives a strong tillering response with adequate irrigation and suits the 140–145 day window of the Indo-Gangetic plain. Currently out of stock for this season.",
+  "highlights": ["140–145 day variety", "Good chapati quality", "Yellow-rust tolerant", "Timely Rabi sowing"],
+  "specifications": {
+    "Duration": "140–145 days",
+    "Seed rate": "100 kg/ha",
+    "Suitable season": "Rabi",
+    "Packing": "10 kg bag"
+  },
+  "packSizes": [{ "label": "10 kg", "mrp": 3100, "price": 2802, "unit": "bag" }],
+  "stock": 0,
+  "tags": ["wheat", "rabi", "seeds", "hd-3086"],
+  "badge": "Out of stock",
+  "season": ["rabi"],
+  "cultivationGuide": [
+    "Sow between late October and mid-November",
+    "Give first irrigation at crown-root initiation",
+    "Top-dress urea at 3 irrigations",
+    "Harvest at full maturity to avoid shattering"
+  ],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 2950 },
+    { "date": "2026-03-01", "price": 2900 },
+    { "date": "2026-04-01", "price": 2850 },
+    { "date": "2026-05-01", "price": 2802 },
+    { "date": "2026-06-01", "price": 2802 },
+    { "date": "2026-07-01", "price": 2802 }
+  ]
+}

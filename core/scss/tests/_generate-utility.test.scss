@@ -1,7 +1,7 @@
 // Output tests for the `generate-utility` mixin from
-// scss/mixins/bootstrap/_utilities.scss — the engine behind Tabler's utility
+// scss/mixins/bootstrap/_utilities.scss — the engine behind FirstCrop's utility
 // classes. `@use "../mixins/bootstrap/utilities"` pulls in the real
-// settings/variables chain, so `$prefix` = "tblr-" and
+// settings/variables chain, so `$prefix` = "fc-" and
 // `$enable-important-utilities` = true (hence the `!important` in the output).
 //
 // Each `it` feeds the mixin a hand-built utility map and asserts the generated
@@ -106,7 +106,7 @@
       }
       @include expect() {
         .opacity-50 {
-          --tblr-opacity: 0.5;
+          --fc-opacity: 0.5;
         }
       }
     }

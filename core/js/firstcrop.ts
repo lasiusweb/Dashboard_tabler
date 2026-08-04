@@ -13,4 +13,4 @@ import './src/sortable'
 export * from './src/bootstrap'
 
 // Re-export tabler namespace
-export * as tabler from './src/tabler'
+export * as tabler from './src/firstcrop'

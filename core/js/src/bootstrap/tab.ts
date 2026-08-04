@@ -41,10 +41,10 @@ const NOT_SELECTOR_DROPDOWN_TOGGLE = `:not(${SELECTOR_DROPDOWN_TOGGLE})`
 const SELECTOR_TAB_PANEL = '.list-group, .nav, [role="tablist"]'
 const SELECTOR_OUTER = '.nav-item, .list-group-item'
 const SELECTOR_INNER = `.nav-link${NOT_SELECTOR_DROPDOWN_TOGGLE}, .list-group-item${NOT_SELECTOR_DROPDOWN_TOGGLE}, [role="tab"]${NOT_SELECTOR_DROPDOWN_TOGGLE}`
-const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"], [data-tblr-toggle="tab"], [data-tblr-toggle="pill"], [data-tblr-toggle="list"]'
+const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"], [data-fc-toggle="tab"], [data-fc-toggle="pill"], [data-fc-toggle="list"]'
 const SELECTOR_INNER_ELEM = `${SELECTOR_INNER}, ${SELECTOR_DATA_TOGGLE}`
 
-const SELECTOR_DATA_TOGGLE_ACTIVE = `.${CLASS_NAME_ACTIVE}[data-bs-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="list"], .${CLASS_NAME_ACTIVE}[data-tblr-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-tblr-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-tblr-toggle="list"]`
+const SELECTOR_DATA_TOGGLE_ACTIVE = `.${CLASS_NAME_ACTIVE}[data-bs-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="list"], .${CLASS_NAME_ACTIVE}[data-fc-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-fc-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-fc-toggle="list"]`
 
 class Tab extends BaseComponent {
   _parent: HTMLElement | null

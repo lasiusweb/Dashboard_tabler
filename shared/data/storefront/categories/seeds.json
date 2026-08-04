@@ -1,0 +1,9 @@
+{
+  "slug": "seeds",
+  "name": "Seeds",
+  "icon": "leaf",
+  "description": "Hybrid & certified seeds for paddy, wheat, pulses and oilseeds — matched to your sowing season.",
+  "productIds": ["FC-1208", "FC-2014"],
+  "season": "kharif",
+  "faqIds": ["faq-return-seeds"]
+}

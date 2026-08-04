@@ -1,0 +1,32 @@
+{
+  "slug": "solar-fence-energizer",
+  "id": "FC-3111",
+  "name": "Solar fence energizer",
+  "categoryId": "tools-equipment",
+  "brand": "AgriVolt",
+  "image": null,
+  "rating": 4.7,
+  "ratingCount": 54,
+  "reviewIds": ["rev-solar-1"],
+  "shortDescription": "10 km solar-powered energizer for crop protection fencing, no wiring needed.",
+  "longDescription": "Solar-powered energizer that pulses up to 10 km of fence line. Keeps wild boar and stray cattle out of standing crops. Battery backup carries through overcast weeks.",
+  "highlights": ["10 km fence capacity", "Solar + battery backup", "Weather-sealed unit", "3-year panel warranty"],
+  "specifications": {
+    "Fence capacity": "10 km",
+    "Power": "Solar 20 W",
+    "Backup": "7 days overcast",
+    "Warranty": "3 years panel"
+  },
+  "packSizes": [{ "label": "1 unit", "mrp": 8999, "price": 7999, "unit": "energizer" }],
+  "stock": 5,
+  "tags": ["tools", "fence", "solar", "wild animal protection"],
+  "season": ["kharif", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 8599 },
+    { "date": "2026-03-01", "price": 8399 },
+    { "date": "2026-04-01", "price": 8199 },
+    { "date": "2026-05-01", "price": 7999 },
+    { "date": "2026-06-01", "price": 7999 },
+    { "date": "2026-07-01", "price": 7999 }
+  ]
+}

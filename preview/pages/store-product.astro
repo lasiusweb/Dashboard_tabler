@@ -1,0 +1,279 @@
+---
+// Product detail — breadcrumb, gallery, pack-size selector, price + add-to-cart,
+// delivery PIN check, highlights, specs, cultivation guide, price-trend chart,
+// reviews, related products, FAQ subset.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Breadcrumb from '@ui/Breadcrumb.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Icon from '@ui/Icon.astro';
+import ProductImage from '@shared/components/storefront/ProductImage.astro';
+import PriceTag from '@shared/components/storefront/PriceTag.astro';
+import RatingStars from '@shared/components/storefront/RatingStars.astro';
+import AddToCartButton from '@shared/components/storefront/AddToCartButton.astro';
+import QuantityStepper from '@shared/components/storefront/QuantityStepper.astro';
+import WishlistToggle from '@shared/components/storefront/WishlistToggle.astro';
+import FaqAccordion from '@shared/components/storefront/FaqAccordion.astro';
+import ProductCard from '@shared/components/storefront/ProductCard.astro';
+import { getProducts, getCategories, getFaqs, getCollection, categoryMap } from '@shared/lib/storefront-data';
+import type { Review, PinCode } from '@shared/lib/storefront-data';
+
+const products = await getProducts();
+const categories = await getCategories();
+const faqs = await getFaqs();
+const reviews = await getCollection<Review>('reviews');
+const pincodes = await getCollection<PinCode>('pincodes');
+const cats = categoryMap(categories);
+const reviewById = new Map(reviews.map((r) => [r.id, r]));
+
+const slug = Astro.url.searchParams.get('product') ?? products[0]?.slug ?? '';
+const product = products.find((p) => p.slug === slug) ?? products[0];
+const category = product ? cats.get(product.categoryId) : undefined;
+const categoryProducts = (category ? products.filter((p) => p.categoryId === category.slug && p.slug !== product.slug) : []).slice(0, 4);
+const productFaqs = (category?.faqIds ?? []).map((id) => faqs.find((f) => f.id === id)).filter(Boolean) as NonNullable<typeof faqs>[0][];
+const price = product?.packSizes[0];
+
+const deliveryText = product?.stock !== null && product?.stock !== undefined ? `${product.stock} in stock` : 'In stock';
+---
+
+<StoreLayout title={product?.name ?? 'Product'} currentNav="shop">
+	<Breadcrumb pages={['Home', 'Shop', category?.name ?? '', product?.name ?? '']} class="mb-3" />
+
+	<div class="row g-4 mb-4">
+		<!-- Gallery -->
+		<div class="col-lg-6">
+			<div class="position-relative">
+				<ProductImage product={product} icon={category?.icon} tile="sm" class="rounded-3 w-100" />
+				<WishlistToggle productId={product.id} class="position-absolute top-0 end-0 m-3 btn-icon bg-white rounded-circle" />
+			</div>
+		</div>
+
+		<!-- Details -->
+		<div class="col-lg-6">
+			{product.badge && <span class="badge bg-green-lt text-green mb-2">{product.badge}</span>}
+			<h1 class="h2 mb-1">{product.name}</h1>
+			<div class="d-flex align-items-center gap-2 mb-2">
+				<RatingStars rating={product.rating} />
+				<span class="text-secondary small">· {product.ratingCount.toLocaleString('en-IN')} reviews</span>
+			</div>
+			<p class="text-secondary">{product.shortDescription}</p>
+
+			{/* Pack size selector */}
+			<div class="d-flex flex-wrap gap-2 mb-3">
+				{product.packSizes.map((pack, index) => (
+					<label class="form-check form-check-inline m-0">
+						<input class="form-check-input" type="radio" name="pack" value={pack.label} checked={index === 0} data-pack-label={pack.label} />
+						<span class="form-check-label">
+							<span class="d-block fw-medium">{pack.label}</span>
+							<span class="text-secondary small">{pack.subsidy ? `₹${pack.subsidy} subsidy` : ''}</span>
+						</span>
+					</label>
+				))}
+			</div>
+
+			{/* Price */}
+			<div class="mb-3">
+				<PriceTag mrp={price?.mrp} price={price?.price ?? 0} />
+				{price?.subsidy ? <div class="text-secondary small">Govt subsidy of ₹{price.subsidy} applied at checkout</div> : null}
+			</div>
+
+			{/* Quantity + add to cart */}
+			<div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+				<QuantityStepper productId={product.id} packSize={product.packSizes[0]?.label ?? ''} qty={1} stock={product.stock} />
+				<AddToCartButton productId={product.id} packSize={product.packSizes[0]?.label ?? ''} stock={product.stock} />
+			</div>
+			<div class="text-secondary small mb-4">
+				<Icon name="truck" class="me-1" />
+				{deliveryText} · usually ships in 1–2 days
+			</div>
+
+			{/* Delivery PIN check */}
+			<div class="store-pin-check">
+				<div class="d-flex align-items-center gap-2 mb-1">
+					<Icon name="map-pin" />
+					<span class="fw-medium">Check delivery to your pincode</span>
+				</div>
+				<form
+					class="input-group"
+					data-pin-check
+					data-pins={JSON.stringify(
+						pincodes.map((p) => ({ pincode: p.pincode, zone: p.zone, deliveryDays: p.deliveryDays, cod: p.cod })),
+					)}
+				>
+					<input type="text" class="form-control" placeholder="Enter 6-digit pincode" maxlength="6" inputmode="numeric" pattern="\d{6}" />
+					<button class="btn btn-outline-primary" type="submit">Check</button>
+				</form>
+				<div class="small text-secondary mt-2" data-pin-result></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Highlights + specs -->
+	<div class="row g-4 mb-4">
+		<div class="col-lg-6">
+			<Card class="h-100">
+				<CardHeader>
+					<div class="card-title">Highlights</div>
+				</CardHeader>
+				<CardBody>
+					<ul class="list-unstyled space-y-2 mb-0">
+						{product.highlights.map((h) => (
+							<li class="d-flex gap-2">
+								<Icon name="check" color="green" class="mt-1" />
+								<span>{h}</span>
+							</li>
+						))}
+					</ul>
+				</CardBody>
+			</Card>
+		</div>
+		<div class="col-lg-6">
+			<Card class="h-100">
+				<CardHeader>
+					<div class="card-title">Specifications</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter mb-0">
+						<tbody>
+							{Object.entries(product.specifications).map(([key, value]) => (
+								<tr>
+									<td class="text-secondary">{key}</td>
+									<td class="fw-medium">{value}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+
+	<!-- Cultivation guide + price trend -->
+	<div class="row g-4 mb-4">
+		{product.cultivationGuide && product.cultivationGuide.length > 0 && (
+			<div class="col-lg-6">
+				<Card class="h-100">
+					<CardHeader>
+						<div class="card-title">Cultivation guide</div>
+					</CardHeader>
+					<CardBody>
+						<ol class="space-y-2 mb-0">
+							{product.cultivationGuide.map((step) => (
+								<li>{step}</li>
+							))}
+						</ol>
+					</CardBody>
+				</Card>
+			</div>
+		)}
+		{product.priceTrend && product.priceTrend.length > 0 && (
+			<div class={product.cultivationGuide?.length ? 'col-lg-6' : 'col-12'}>
+				<Card class="h-100">
+					<CardHeader>
+						<div class="card-title">Price trend</div>
+						<div class="card-subtitle">Last 6 months, per unit</div>
+					</CardHeader>
+					<CardBody>
+						<Chart chartId="store-pdp-price-trend" height={13} />
+					</CardBody>
+				</Card>
+			</div>
+		)}
+	</div>
+
+	<!-- Reviews -->
+	<div class="mb-4">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<h2 class="h3 mb-0">Reviews</h2>
+			<span class="text-secondary small">{product.rating.toFixed(1)} average · {product.ratingCount.toLocaleString('en-IN')} ratings</span>
+		</div>
+		<div class="row g-3">
+			{product.reviewIds.slice(0, 3).map((id) => {
+				const review = reviewById.get(id);
+				if (!review) return null;
+				return (
+					<div class="col-md-4">
+						<div class="card h-100">
+							<div class="card-body p-4">
+								<div class="d-flex align-items-center justify-content-between mb-2">
+									<RatingStars rating={review.rating} size="sm" showValue={false} />
+									<span class="text-secondary small">{review.date}</span>
+								</div>
+								<div class="fw-medium mb-1">{review.title}</div>
+								<p class="text-secondary small mb-2">{review.body}</p>
+								<div class="d-flex align-items-center justify-content-between">
+									<span class="small">{review.author}</span>
+									<span class="badge bg-green-lt text-green small">{review.verified ? 'Verified' : 'Guest'}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				);
+			})}
+		</div>
+	</div>
+
+	<!-- Related -->
+	{categoryProducts.length > 0 && (
+		<div class="mb-4">
+			<h2 class="h3 mb-3">More in {category?.name}</h2>
+			<div class="row g-3">
+				{categoryProducts.map((p) => (
+					<div class="col-6 col-md-4 col-lg-3">
+						<ProductCard product={p} icon={category?.icon} />
+					</div>
+				))}
+			</div>
+		</div>
+	)}
+
+	<!-- FAQ subset -->
+	{productFaqs.length > 0 && (
+		<div>
+			<h2 class="h3 mb-3">Frequently asked</h2>
+			<FaqAccordion faqs={productFaqs} showCategory />
+		</div>
+	)}
+</StoreLayout>
+
+<script>
+	import { checkPinCode, formatEstimate, deliveryEstimate, type PinLookup } from '@shared/lib/storefront';
+	import { readJsonData } from '@shared/lib/storefront-client';
+
+	// pack-size selector → update add-to-cart pack + stock
+	const packInputs = document.querySelectorAll<HTMLInputElement>('[name="pack"]');
+	const addBtn = document.querySelector<HTMLElement>('.store-add-btn');
+	if (packInputs.length && addBtn) {
+		packInputs.forEach((input) => {
+			input.addEventListener('change', () => {
+				if (!input.checked) return;
+				addBtn.dataset.packSize = input.value;
+			});
+		});
+	}
+
+	// PIN check — validates against the static pincode table and shows zone/ETA
+	const form = document.querySelector<HTMLFormElement>('[data-pin-check]');
+	const result = document.querySelector<HTMLElement>('[data-pin-result]');
+	if (form && result) {
+		const pins = readJsonData<PinLookup[]>(form, 'data-pins') ?? [];
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const value = form.querySelector<HTMLInputElement>('input')!.value.trim();
+			const match = /^\d{6}$/.test(value);
+			if (!match) {
+				result.textContent = 'Enter a valid 6-digit pincode.';
+				return;
+			}
+			const pin = checkPinCode(value, pins);
+			if (!pin) {
+				result.textContent = 'We do not deliver to this pincode yet.';
+				return;
+			}
+			const eta = formatEstimate(deliveryEstimate(pin.deliveryDays));
+			result.textContent = `${pin.zone} zone · ${pin.deliveryDays}-day delivery · ${eta}${pin.cod ? ' · COD available' : ' · prepaid only'}`;
+		});
+	}
+</script>

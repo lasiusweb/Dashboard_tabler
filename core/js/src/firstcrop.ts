@@ -1,4 +1,4 @@
-export const prefix: string = 'tblr-'
+export const prefix: string = 'fc-'
 
 export const hexToRgba = (hex: string, opacity: number): string | null => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)

@@ -1,0 +1,32 @@
+{
+  "slug": "carbendazim-50wp",
+  "id": "FC-3102",
+  "name": "Carbendazim 50 WP (500 g)",
+  "categoryId": "pesticides",
+  "brand": "CropGuard",
+  "image": null,
+  "rating": 4.2,
+  "ratingCount": 231,
+  "reviewIds": [],
+  "shortDescription": "Broad-spectrum fungicide for blast, wilt and powdery mildew on cereals and pulses.",
+  "longDescription": "A contact and systemic fungicide that protects paddy against blast and pulses against wilt. Best applied preventively at first disease appearance.",
+  "highlights": ["Controls blast & wilt", "1 g/L water dose", "Systemic + contact action", "2–3 applications per season"],
+  "specifications": {
+    "Formulation": "50 WP",
+    "Dose": "1 g/L water",
+    "Crops": "Paddy, gram, tomato",
+    "Packing": "500 g pouch"
+  },
+  "packSizes": [{ "label": "500 g", "mrp": 420, "price": 365, "unit": "pouch" }],
+  "stock": 8,
+  "tags": ["pesticide", "fungicide", "blast", "wilt"],
+  "season": ["kharif", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 385 },
+    { "date": "2026-03-01", "price": 375 },
+    { "date": "2026-04-01", "price": 370 },
+    { "date": "2026-05-01", "price": 365 },
+    { "date": "2026-06-01", "price": 365 },
+    { "date": "2026-07-01", "price": 365 }
+  ]
+}

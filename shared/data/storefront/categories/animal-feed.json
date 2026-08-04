@@ -1,0 +1,9 @@
+{
+  "slug": "animal-feed",
+  "name": "Animal Feed",
+  "icon": "wheat",
+  "description": "Poultry and cattle feed in farm-ready packs, with nutrition labels on every bag.",
+  "productIds": ["FC-3112"],
+  "season": "rabi",
+  "faqIds": ["faq-ordering-bulk"]
+}

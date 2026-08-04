@@ -46,7 +46,7 @@ const illustrationsData = Object.fromEntries(
 >
 	<div
 		class="mb-7"
-		style={`--tblr-illustrations-primary: var(--tblr-color-primary); --tblr-illustrations-skin: ${skinFirst.hex};`}
+		style={`--fc-illustrations-primary: var(--fc-color-primary); --fc-illustrations-skin: ${skinFirst.hex};`}
 		id="current-illustration-style"
 	>
 		<div class="row row-cards">
@@ -69,13 +69,13 @@ const illustrationsData = Object.fromEntries(
 											<div class="row g-2">
 												<div class="col-auto">
 													<label class="form-colorinput">
-														<input name="color" type="radio" value="var(--tblr-color-primary)" class="form-colorinput-input js-select-color" checked />
+														<input name="color" type="radio" value="var(--fc-color-primary)" class="form-colorinput-input js-select-color" checked />
 														<span class="form-colorinput-color bg-primary"></span>
 													</label>
 												</div>
 												<div class="col-auto">
 													<label class="form-colorinput">
-														<input name="color" type="radio" value="var(--tblr-bg-surface-inverted)" class="form-colorinput-input js-select-color" />
+														<input name="color" type="radio" value="var(--fc-bg-surface-inverted)" class="form-colorinput-input js-select-color" />
 														<span class="form-colorinput-color bg-inverted"></span>
 													</label>
 												</div>
@@ -194,14 +194,14 @@ const illustrationsData = Object.fromEntries(
 		document.querySelectorAll('.js-select-color').forEach((elem) => {
 			elem.addEventListener('change', (e) => {
 				primaryColor = e.target.value;
-				document.getElementById('current-illustration-style').style.setProperty('--tblr-illustrations-primary', primaryColor);
+				document.getElementById('current-illustration-style').style.setProperty('--fc-illustrations-primary', primaryColor);
 			});
 		});
 
 		document.querySelectorAll('.js-select-skin-color').forEach((elem) => {
 			elem.addEventListener('change', (e) => {
 				skinColor = e.target.value;
-				document.getElementById('current-illustration-style').style.setProperty('--tblr-illustrations-skin', skinColor);
+				document.getElementById('current-illustration-style').style.setProperty('--fc-illustrations-skin', skinColor);
 			});
 		});
 	</script>

@@ -1,0 +1,12 @@
+{
+  "slug": "cotton",
+  "name": "Cotton",
+  "season": "kharif",
+  "sowStart": "May",
+  "sowEnd": "June",
+  "harvestStart": "October",
+  "harvestEnd": "January",
+  "states": ["Gujarat", "Maharashtra", "Telangana"],
+  "productIds": ["FC-3105", "FC-0554", "FC-3103"],
+  "tip": "Start sucking-pest scouting 45 days after sowing; micronutrient foliar helps boll filling."
+}

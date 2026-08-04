@@ -12,6 +12,6 @@ const { plugins }: Props = Astro.props
 <Code
 	lang="html"
 	code={plugins.map(plugin => {
-		return `<link rel="stylesheet" href="${site.cdnUrl}/dist/css/tabler-${plugin}.min.css" />`
+		return `<link rel="stylesheet" href="${site.cdnUrl}/dist/css/firstcrop-${plugin}.min.css" />`
 	}).join('\n')}
 />

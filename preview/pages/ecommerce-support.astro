@@ -1,0 +1,269 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import support from '@data/ecommerce-support.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Support"
+	pageHeader="Ecommerce Support"
+	description="Tickets, returns and CSAT for firstcrop.in."
+	pageMenu="ecommerce.support"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(support as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-2">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Ticket volume by channel</div>
+							<div class="card-subtitle">Daily, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-support-volume" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Support channels</div>
+							<div class="card-subtitle">Tickets, share and CSAT</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Channel</th>
+										<th class="text-end">Tickets</th>
+										<th>Share</th>
+										<th class="text-end">CSAT</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(support as { channels: { channel: string; tickets: number; share: number; csat: number }[] }).channels.map((c) => (
+											<tr>
+												<td class="fw-medium">{c.channel}</td>
+												<td class="text-end">{c.tickets.toLocaleString('en-IN')}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={c.share} color="green" class="flex-grow-1" />
+														<span class="text-secondary">{c.share}%</span>
+													</div>
+												</td>
+												<td class="text-end">
+													<span class="d-inline-flex align-items-center gap-1 fw-medium">
+														<i class="ti ti-star-filled text-yellow"></i>
+														{c.csat}
+													</span>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Ticket categories</div>
+							<div class="card-subtitle">Share of volume</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Category</th>
+										<th class="text-end">Tickets</th>
+										<th>Share</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(support as { categories: { category: string; tickets: number; share: number; csat: number }[] }).categories.map((c) => (
+											<tr>
+												<td class="fw-medium">{c.category}</td>
+												<td class="text-end">{c.tickets.toLocaleString('en-IN')}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={c.share} color="azure" class="flex-grow-1" />
+														<span class="text-secondary">{c.share}%</span>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Avg resolution time</div>
+							<div class="card-subtitle">Hours by category</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-support-resolution" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">CSAT by channel</div>
+							<div class="card-subtitle">Out of 5</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-support-csat" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Returns workflow</div>
+							<div class="card-subtitle">Open returns by stage</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Stage</th>
+										<th class="text-end">Orders</th>
+										<th class="text-end">Value</th>
+										<th>Share</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(support as { returnsWorkflow: { stage: string; orders: number; value: string }[] }).returnsWorkflow.map((w) => (
+											<tr>
+												<td class="fw-medium">{w.stage}</td>
+												<td class="text-end">{w.orders}</td>
+												<td class="text-end">{w.value}</td>
+												<td>
+													<div class="progress progress-sm">
+														<div
+															class="progress-bar bg-primary"
+															style={`width: ${(w.orders / 420) * 100}%`}
+														></div>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">RTO / return restock</div>
+							<div class="card-subtitle">Outcome of recovered stock</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Outcome</th>
+										<th class="text-end">Orders</th>
+										<th>Share</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(support as { rtoRestock: { stage: string; orders: number; share: number }[] }).rtoRestock.map((r) => (
+											<tr>
+												<td class="fw-medium">{r.stage}</td>
+												<td class="text-end">{r.orders.toLocaleString('en-IN')}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={r.share} color={r.share > 50 ? 'green' : 'yellow'} class="flex-grow-1" />
+														<span class="text-secondary">{r.share}%</span>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Recent tickets</div>
+					<div class="card-subtitle">Latest across channels</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Ticket</th>
+								<th>Customer</th>
+								<th>Subject</th>
+								<th>Channel</th>
+								<th>Priority</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(support as { recentTickets: { id: string; customer: string; subject: string; channel: string; status: string; color: string; priority: string }[] }).recentTickets.map((t) => (
+									<tr>
+										<td class="text-secondary">{t.id}</td>
+										<td class="fw-medium">{t.customer}</td>
+										<td>{t.subject}</td>
+										<td><Badge light>{t.channel}</Badge></td>
+										<td><Badge color={t.priority === 'High' ? 'danger' : t.priority === 'Medium' ? 'yellow' : 'azure'} light>{t.priority}</Badge></td>
+										<td><Badge color={t.color} light>{t.status}</Badge></td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

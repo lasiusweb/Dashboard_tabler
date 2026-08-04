@@ -1,0 +1,155 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import loyalty from '@data/ecommerce-loyalty.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Loyalty"
+	pageHeader="Ecommerce Loyalty"
+	description="Members, tiers and WhatsApp reorders for firstcrop.in."
+	pageMenu="ecommerce.loyalty"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(loyalty as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(loyalty as { tiers: { name: string; members: number; threshold: string; pointsRate: string; benefits: string; color: string }[] }).tiers.map((t) => (
+						<div class="col-lg-4">
+							<Card>
+								<CardBody>
+									<div class="d-flex align-items-center mb-3">
+										<div class={`avatar avatar-lg avatar-rounded me-3 bg-${t.color}-lt`}>
+											<i class={`ti ti-award fs-2`}></i>
+										</div>
+										<div>
+											<div class="fs-4 fw-bold">{t.name} tier</div>
+											<div class="text-secondary">{t.threshold} spend</div>
+										</div>
+									</div>
+									<div class="row g-3 text-center mb-3">
+										<div class="col">
+											<div class="display-6 fw-bold">{t.members.toLocaleString('en-IN')}</div>
+											<div class="text-secondary">members</div>
+										</div>
+										<div class="col">
+											<div class="display-6 fw-bold">{t.pointsRate}</div>
+											<div class="text-secondary">points rate</div>
+										</div>
+									</div>
+									<div class="d-flex align-items-center gap-2 text-secondary mb-1">
+										<i class="ti ti-checks"></i>
+										<span>{t.benefits}</span>
+									</div>
+									<div class="progress progress-sm mt-2">
+										<div
+											class={`progress-bar bg-${t.color}`}
+											style={`width: ${(t.members / 9600) * 100}%`}
+										></div>
+									</div>
+								</CardBody>
+							</Card>
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Membership growth</div>
+							<div class="card-subtitle">Daily, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-loyalty-members" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">WhatsApp reorder funnel</div>
+							<div class="card-subtitle">Broadcast → order, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-loyalty-wa-funnel" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Points issued vs redeemed</div>
+							<div class="card-subtitle">Thousands per day, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-loyalty-points" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Seasonal reorder reminders</div>
+							<div class="card-subtitle">Crop-calendar WhatsApp campaigns</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Campaign</th>
+										<th>Season</th>
+										<th class="text-end">Audience</th>
+										<th class="text-end">Orders</th>
+										<th class="text-end">Conversion</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(loyalty as { reminders: { campaign: string; season: string; audience: number; orders: number; conversion: number; status: string; color: string }[] }).reminders.map((r) => (
+											<tr>
+												<td class="fw-medium">{r.campaign}</td>
+												<td><Badge color={r.season === 'Kharif' ? 'green' : r.season === 'Rabi' ? 'azure' : 'yellow'} light>{r.season}</Badge></td>
+												<td class="text-end">{r.audience.toLocaleString('en-IN')}</td>
+												<td class="text-end">{r.orders.toLocaleString('en-IN')}</td>
+												<td class="text-end fw-medium">{r.conversion}%</td>
+												<td><Badge color={r.color} light>{r.status}</Badge></td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

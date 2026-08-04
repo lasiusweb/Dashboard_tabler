@@ -1,0 +1,24 @@
+{
+  "deliveryFees": {
+    "metro": 49,
+    "urban": 59,
+    "semi-urban": 79,
+    "rural": 99
+  },
+  "freeShipThreshold": 1500,
+  "codFee": 29,
+  "payMethods": [
+    { "id": "upi", "name": "UPI", "icon": "device-mobile" },
+    { "id": "cod", "name": "Cash on Delivery", "icon": "cash" },
+    { "id": "cards", "name": "Credit / Debit card", "icon": "credit-card" },
+    { "id": "wallet", "name": "Mobile wallet", "icon": "wallet" },
+    { "id": "netbanking", "name": "Net banking", "icon": "receipt" }
+  ],
+  "validation": {
+    "nameMin": 3,
+    "phone": "^[6-9]\\d{9}$",
+    "pincode": "^\\d{6}$",
+    "addressMin": 10
+  },
+  "supportNote": "Placing this demo order does not charge anything — it is a preview of the checkout flow."
+}

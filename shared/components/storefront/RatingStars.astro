@@ -1,0 +1,23 @@
+---
+// Static star row (full/empty by rating, no interactive StarRating lib needed).
+import Icon from '@ui/Icon.astro';
+
+interface Props {
+	rating: number;
+	showValue?: boolean;
+	size?: string;
+	class?: string;
+}
+
+const { rating, showValue = true, size, class: className } = Astro.props;
+
+const full = Math.round(rating);
+const stars = Array.from({ length: 5 }, (_, i) => i < full);
+---
+
+<div class:list={['store-rating', className]} aria-label={`Rated ${rating} out of 5`}>
+	{stars.map((filled) => (
+		<Icon name="star" type={filled ? 'filled' : 'outline'} size={size} />
+	))}
+	{showValue && <span class="ms-1 text-secondary small fw-normal">{rating.toFixed(1)}</span>}
+</div>

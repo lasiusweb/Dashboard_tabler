@@ -1,0 +1,32 @@
+{
+  "slug": "fertilizer-spreader-manual",
+  "id": "FC-3109",
+  "name": "Fertilizer spreader (manual)",
+  "categoryId": "tools-equipment",
+  "brand": "KisanPro",
+  "image": null,
+  "rating": 4.1,
+  "ratingCount": 63,
+  "reviewIds": [],
+  "shortDescription": "Hand-push broadcaster for even urea and DAP application on small holdings.",
+  "longDescription": "Crank-operated broadcaster with a 12 L hopper and adjustable spread width. Gives even coverage on plots up to two acres, cutting wastage versus hand broadcasting.",
+  "highlights": ["12 L hopper", "Adjustable spread width", "Even urea coverage", "Folds for storage"],
+  "specifications": {
+    "Hopper": "12 L",
+    "Spread width": "2–3 m",
+    "Suitable": "Small holdings ≤ 2 acre",
+    "Packing": "Carton"
+  },
+  "packSizes": [{ "label": "1 unit", "mrp": 2599, "price": 2299, "unit": "spreader" }],
+  "stock": 9,
+  "tags": ["tools", "spreader", "fertilizer", "urea"],
+  "season": ["kharif", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 2449 },
+    { "date": "2026-03-01", "price": 2399 },
+    { "date": "2026-04-01", "price": 2350 },
+    { "date": "2026-05-01", "price": 2299 },
+    { "date": "2026-06-01", "price": 2299 },
+    { "date": "2026-07-01", "price": 2299 }
+  ]
+}

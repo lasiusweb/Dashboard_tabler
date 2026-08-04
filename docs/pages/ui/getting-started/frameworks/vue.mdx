@@ -4,7 +4,7 @@ order: 4
 summary: Set up Tabler in Vue and build a first working page.
 description: Integrate Tabler with Vue.
 icon: brand-vue
-seoDescription: Install `@tabler/core`, import CSS and JS in Vue, and render a minimal page layout with a Tabler card.
+seoDescription: Install `@firstcrop/core`, import CSS and JS in Vue, and render a minimal page layout with a Tabler card.
 layout: '@shared/layouts/DocsMdxLayout.astro'
 ---
 
@@ -12,9 +12,9 @@ import TabsPackage from '@components/TabsPackage.astro'
 import CdnImportPackage from '@components/CdnImportPackage.astro'
 import Steps from '@components/Steps.astro'
 
-Vue single-file components render standard HTML templates, so Tabler classes work directly in your markup while `@tabler/core` supplies the styling. JavaScript is only needed for interactive components such as dropdowns, modals, and tooltips.
+Vue single-file components render standard HTML templates, so Tabler classes work directly in your markup while `@firstcrop/core` supplies the styling. JavaScript is only needed for interactive components such as dropdowns, modals, and tooltips.
 
-This guide uses a standard Vite-based Vue setup. You will install `@tabler/core`, import its CSS and JS in `src/main.js`, and render a first page with a Tabler card.
+This guide uses a standard Vite-based Vue setup. You will install `@firstcrop/core`, import its CSS and JS in `src/main.js`, and render a first page with a Tabler card.
 
 ## Setup
 
@@ -22,9 +22,9 @@ This guide uses a standard Vite-based Vue setup. You will install `@tabler/core`
 
 ### Install Tabler package
 
-Install `@tabler/core` with your preferred package manager:
+Install `@firstcrop/core` with your preferred package manager:
 
-<TabsPackage name="@tabler/core" />
+<TabsPackage name="@firstcrop/core" />
 
 You can also use CDN files when you need a quick setup:
 
@@ -35,13 +35,13 @@ You can also use CDN files when you need a quick setup:
 Import Tabler CSS once in your Vue entry file (`src/main.js`):
 
 ```js
-import '@tabler/core/dist/css/tabler.min.css'
+import '@firstcrop/core/dist/css/firstcrop.min.css'
 ```
 
 For full theme customization, import SCSS sources instead:
 
 ```scss
-@import '@tabler/core/scss/tabler';
+@import '@firstcrop/core/scss/firstcrop';
 ```
 
 ### Import and initialize JavaScript
@@ -49,14 +49,14 @@ For full theme customization, import SCSS sources instead:
 Tabler JavaScript is required for interactive components such as dropdowns, modals, and tooltips. Import it once in `src/main.js`:
 
 ```js
-import '@tabler/core/dist/js/tabler.min.js'
+import '@firstcrop/core/dist/js/firstcrop.min.js'
 ```
 
 Vue-specific note: initialize DOM-based behavior after mount, not during render. Use `onMounted` in components that need manual initialization:
 
 ```js
 import { onMounted } from 'vue'
-import { Tooltip } from '@tabler/core'
+import { Tooltip } from '@firstcrop/core'
 
 onMounted(() => {
   const elements = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -71,8 +71,8 @@ Create a simple `src/main.js` that loads Tabler assets and mounts the app:
 ```js
 import { createApp } from 'vue'
 import App from './App.vue'
-import '@tabler/core/dist/css/tabler.min.css'
-import '@tabler/core/dist/js/tabler.min.js'
+import '@firstcrop/core/dist/css/firstcrop.min.css'
+import '@firstcrop/core/dist/js/firstcrop.min.js'
 
 createApp(App).mount('#app')
 ```

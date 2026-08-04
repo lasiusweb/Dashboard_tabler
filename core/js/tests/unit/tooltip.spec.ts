@@ -415,16 +415,16 @@ describe('Tooltip', () => {
       expect(tooltip._getTitle()).toBe('Original title')
     })
 
-    it('should return data-tblr-original-title', () => {
-      fixtureEl.innerHTML = '<a href="#" data-tblr-original-title="Tblr title">Trigger</a>'
+    it('should return data-fc-original-title', () => {
+      fixtureEl.innerHTML = '<a href="#" data-fc-original-title="FirstCrop title">Trigger</a>'
       const el = fixtureEl.querySelector('a')!
       const tooltip = new Tooltip(el)
 
-      expect(tooltip._getTitle()).toBe('Tblr title')
+      expect(tooltip._getTitle()).toBe('FirstCrop title')
     })
 
-    it('should prefer data-bs-original-title over data-tblr-original-title', () => {
-      fixtureEl.innerHTML = '<a href="#" data-bs-original-title="BS title" data-tblr-original-title="Tblr title">Trigger</a>'
+    it('should prefer data-bs-original-title over data-fc-original-title', () => {
+      fixtureEl.innerHTML = '<a href="#" data-bs-original-title="BS title" data-fc-original-title="FirstCrop title">Trigger</a>'
       const el = fixtureEl.querySelector('a')!
       const tooltip = new Tooltip(el)
 
@@ -580,22 +580,22 @@ describe('Tooltip', () => {
     })
   })
 
-  describe('data-tblr-original-title', () => {
-    it('should restore title from data-tblr-original-title on dispose', () => {
-      fixtureEl.innerHTML = '<a href="#" data-tblr-original-title="Tblr tooltip">Trigger</a>'
+  describe('data-fc-original-title', () => {
+    it('should restore title from data-fc-original-title on dispose', () => {
+      fixtureEl.innerHTML = '<a href="#" data-fc-original-title="FirstCrop tooltip">Trigger</a>'
       const el = fixtureEl.querySelector('a')!
       const tooltip = new Tooltip(el, { title: 'test' })
 
       tooltip.dispose()
-      expect(el.getAttribute('title')).toBe('Tblr tooltip')
+      expect(el.getAttribute('title')).toBe('FirstCrop tooltip')
     })
 
-    it('should use data-tblr-original-title as fallback for _getTitle', () => {
-      fixtureEl.innerHTML = '<a href="#" data-tblr-original-title="Tblr tooltip title">Trigger</a>'
+    it('should use data-fc-original-title as fallback for _getTitle', () => {
+      fixtureEl.innerHTML = '<a href="#" data-fc-original-title="FirstCrop tooltip title">Trigger</a>'
       const el = fixtureEl.querySelector('a')!
       const tooltip = new Tooltip(el)
 
-      expect(tooltip._getTitle()).toBe('Tblr tooltip title')
+      expect(tooltip._getTitle()).toBe('FirstCrop tooltip title')
     })
   })
 

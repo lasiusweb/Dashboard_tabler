@@ -1,0 +1,25 @@
+---
+// Vertical order timeline from order events ({ label, date, done }[]).
+import Icon from '@ui/Icon.astro';
+import type { OrderEvent } from '@shared/lib/storefront-data';
+
+interface Props {
+	events: OrderEvent[];
+	complete?: boolean;
+	class?: string;
+}
+
+const { events, class: className } = Astro.props;
+---
+
+<ol class:list={['store-timeline list-unstyled mb-0', className]}>
+	{events.map((event) => (
+		<li class:list={['store-timeline-item', event.done && 'done']}>
+			<div class="d-flex align-items-center gap-2">
+				<span class="fw-medium">{event.label}</span>
+				{event.done ? <Icon name="check" color="green" size="sm" /> : <span class="badge bg-secondary-lt text-secondary">Pending</span>}
+			</div>
+			<div class="text-secondary small">{event.date}</div>
+		</li>
+	))}
+</ol>

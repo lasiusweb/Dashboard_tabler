@@ -1,0 +1,12 @@
+{
+  "slug": "moong",
+  "name": "Moong (green gram)",
+  "season": "zaid",
+  "sowStart": "March",
+  "sowEnd": "April",
+  "harvestStart": "May",
+  "harvestEnd": "June",
+  "states": ["Rajasthan", "Uttar Pradesh", "Madhya Pradesh"],
+  "productIds": ["FC-3104", "FC-3103"],
+  "tip": "A summer moong crop after wheat fixes nitrogen and adds a quick harvest before the monsoon."
+}

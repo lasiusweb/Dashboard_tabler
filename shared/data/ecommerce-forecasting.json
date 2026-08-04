@@ -1,0 +1,27 @@
+{
+  "kpis": [
+    { "title": "Forecast accuracy (WAPE)", "value": "86.2%", "change": "+1.4%", "up": true, "color": "green", "icon": "target" },
+    { "title": "Next 60d demand (est.)", "value": "₹4.2Cr", "change": "+11%", "up": true, "color": "primary", "icon": "trending-up" },
+    { "title": "SKUs needing reorder", "value": "42", "change": "+6", "up": false, "color": "orange", "icon": "alert-triangle" },
+    { "title": "Weather-risk states", "value": "3", "change": "0", "up": false, "color": "red", "icon": "cloud-rain" },
+    { "title": "Kit attach rate", "value": "12.4%", "change": "+2.1%", "up": true, "color": "purple", "icon": "package" }
+  ],
+  "sowingCalendar": [
+    { "crop": "Paddy", "season": "Kharif", "window": "Jun – Jul", "demand": "High", "kit": "Seed + DAP + urea + pesticide", "attach": "14.2%" },
+    { "crop": "Cotton", "season": "Kharif", "window": "Apr – Jun", "demand": "High", "kit": "Bt seed + micronutrient", "attach": "11.8%" },
+    { "crop": "Wheat", "season": "Rabi", "window": "Oct – Nov", "demand": "High", "kit": "Seed + NPK + weedicide", "attach": "13.6%" },
+    { "crop": "Mustard", "season": "Rabi", "window": "Sep – Oct", "demand": "Medium", "kit": "Seed + fertilizer", "attach": "8.4%" },
+    { "crop": "Maize (summer)", "season": "Zaid", "window": "Apr – May", "demand": "Medium", "kit": "Hybrid seed + starter", "attach": "9.1%" }
+  ],
+  "weatherRisk": [
+    { "state": "Bihar", "risk": "Delayed monsoon", "impact": "Paddy sowing −2 weeks", "orders": "▼ 12%", "action": "Delay seed campaign", "color": "red" },
+    { "state": "Rajasthan", "risk": "Weak rainfall", "impact": "Drought seeds + irrigation", "orders": "▲ 8%", "action": "Push drip & micro-irrigation", "color": "yellow" },
+    { "state": "Karnataka", "risk": "Flood alerts", "impact": "Fertilizer damage risk", "orders": "▼ 5%", "action": "Pause high-value COD", "color": "red" }
+  ],
+  "reorderSuggestions": [
+    { "sku": "FC-1042", "name": "DAP Fertilizer (50kg)", "stock": 9, "forecast60d": 4200, "suggested": 5200, "supplier": "IFFCO dist.", "lead": "5 days", "priority": "High", "color": "danger" },
+    { "sku": "FC-1208", "name": "Wheat HD-3086 seeds (10kg)", "stock": 0, "forecast60d": 3100, "suggested": 3400, "supplier": "SAU breeder", "lead": "21 days", "priority": "High", "color": "danger" },
+    { "sku": "FC-0771", "name": "Urea 46%N (50kg)", "stock": 420, "forecast60d": 5800, "suggested": 6000, "supplier": "IFFCO dist.", "lead": "4 days", "priority": "Medium", "color": "warning" },
+    { "sku": "FC-0554", "name": "Carbendazim 50 WP (500g)", "stock": 8, "forecast60d": 920, "suggested": 1000, "supplier": "UPL", "lead": "7 days", "priority": "Medium", "color": "warning" }
+  ]
+}

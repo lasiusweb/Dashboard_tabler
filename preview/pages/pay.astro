@@ -1,5 +1,5 @@
 ---
-// page-libs [tabler-payments, imask]: `tabler-payments` is not a key in
+// page-libs [firstcrop-payments, imask]: `firstcrop-payments` is not a key in
 // core/libs.json, so it resolves to nothing (only imask emits a <script>) —
 // matches the Eleventy reference.
 import PayLayout from '@shared/layouts/PayLayout.astro';
@@ -9,7 +9,7 @@ import FormGroup from '@ui/FormGroup.astro';
 import Icon from '@ui/Icon.astro';
 ---
 
-<PayLayout title="Pay" pageLibs={['tabler-payments', 'imask']}>
+<PayLayout title="Pay" pageLibs={['firstcrop-payments', 'imask']}>
 	<div class="bg-dark bg-cover" style="background-image: url(./static/bg-cover.jpg)">
 		<div class="bg-dark bg-opacity-75 pt-5 bg-blur">
 			<div class="container container-tight bg-overlay">

@@ -197,8 +197,8 @@ describe('SelectorEngine', () => {
   })
 
   describe('getSelector / getSelectorFromElement / getElementFromSelector', () => {
-    it('should resolve data-tblr-target', () => {
-      fixtureEl.innerHTML = '<div id="target"></div><a data-tblr-target="#target"></a>'
+    it('should resolve data-fc-target', () => {
+      fixtureEl.innerHTML = '<div id="target"></div><a data-fc-target="#target"></a>'
       const trigger = fixtureEl.querySelector('a')! as HTMLElement
 
       expect(SelectorEngine.getElementFromSelector(trigger)).toBe(fixtureEl.querySelector('#target'))
@@ -211,11 +211,11 @@ describe('SelectorEngine', () => {
       expect(SelectorEngine.getElementFromSelector(trigger)).toBe(fixtureEl.querySelector('#target'))
     })
 
-    it('should prioritize data-tblr-target over data-bs-target', () => {
-      fixtureEl.innerHTML = '<div id="tblr"></div><div id="bs"></div><a data-tblr-target="#tblr" data-bs-target="#bs"></a>'
+    it('should prioritize data-fc-target over data-bs-target', () => {
+      fixtureEl.innerHTML = '<div id="fc"></div><div id="bs"></div><a data-fc-target="#fc" data-bs-target="#bs"></a>'
       const trigger = fixtureEl.querySelector('a')! as HTMLElement
 
-      expect(SelectorEngine.getElementFromSelector(trigger)!.id).toBe('tblr')
+      expect(SelectorEngine.getElementFromSelector(trigger)!.id).toBe('fc')
     })
 
     it('should resolve href as fallback', () => {
@@ -261,14 +261,14 @@ describe('SelectorEngine', () => {
     })
 
     it('getSelectorFromElement should return selector string when element exists', () => {
-      fixtureEl.innerHTML = '<div id="target"></div><a data-tblr-target="#target"></a>'
+      fixtureEl.innerHTML = '<div id="target"></div><a data-fc-target="#target"></a>'
       const trigger = fixtureEl.querySelector('a')! as HTMLElement
 
       expect(SelectorEngine.getSelectorFromElement(trigger)).toBe('#target')
     })
 
     it('getSelectorFromElement should return null when target element does not exist', () => {
-      fixtureEl.innerHTML = '<a data-tblr-target="#nonexistent"></a>'
+      fixtureEl.innerHTML = '<a data-fc-target="#nonexistent"></a>'
       const trigger = fixtureEl.querySelector('a')! as HTMLElement
 
       expect(SelectorEngine.getSelectorFromElement(trigger)).toBeNull()
@@ -284,7 +284,7 @@ describe('SelectorEngine', () => {
 
   describe('getMultipleElementsFromSelector', () => {
     it('should return all matching elements', () => {
-      fixtureEl.innerHTML = '<div class="item"></div><div class="item"></div><a data-tblr-target=".item"></a>'
+      fixtureEl.innerHTML = '<div class="item"></div><div class="item"></div><a data-fc-target=".item"></a>'
       const trigger = fixtureEl.querySelector('a')! as HTMLElement
 
       expect(SelectorEngine.getMultipleElementsFromSelector(trigger)).toHaveLength(2)

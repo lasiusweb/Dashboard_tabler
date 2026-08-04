@@ -4,7 +4,7 @@ order: 6
 summary: Set up Tabler in Nuxt and build a first working page.
 description: Integrate Tabler with Nuxt.
 icon: brand-nuxt
-seoDescription: Install `@tabler/core`, import CSS and client-only JS in Nuxt, and render a minimal page layout with a Tabler card.
+seoDescription: Install `@firstcrop/core`, import CSS and client-only JS in Nuxt, and render a minimal page layout with a Tabler card.
 layout: '@shared/layouts/DocsMdxLayout.astro'
 ---
 
@@ -12,9 +12,9 @@ import TabsPackage from '@components/TabsPackage.astro'
 import CdnImportPackage from '@components/CdnImportPackage.astro'
 import Steps from '@components/Steps.astro'
 
-Nuxt renders on the server by default, so Tabler integrates in two parts: CSS registered globally in `nuxt.config.ts`, and `tabler.min.js` loaded through a client-only plugin so it never runs during server-side rendering.
+Nuxt renders on the server by default, so Tabler integrates in two parts: CSS registered globally in `nuxt.config.ts`, and `firstcrop.min.js` loaded through a client-only plugin so it never runs during server-side rendering.
 
-You will install `@tabler/core`, register the styles, add the client plugin, and render a first page with a Tabler card.
+You will install `@firstcrop/core`, register the styles, add the client plugin, and render a first page with a Tabler card.
 
 ## Setup
 
@@ -22,9 +22,9 @@ You will install `@tabler/core`, register the styles, add the client plugin, and
 
 ### Install Tabler package
 
-Install `@tabler/core` with your preferred package manager:
+Install `@firstcrop/core` with your preferred package manager:
 
-<TabsPackage name="@tabler/core" />
+<TabsPackage name="@firstcrop/core" />
 
 You can also use CDN files when you need a quick setup:
 
@@ -36,27 +36,27 @@ Register Tabler CSS in `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
-  css: ['@tabler/core/dist/css/tabler.min.css'],
+  css: ['@firstcrop/core/dist/css/firstcrop.min.css'],
 })
 ```
 
 For full theme customization, import SCSS sources in your app stylesheet:
 
 ```scss
-@import '@tabler/core/scss/tabler';
+@import '@firstcrop/core/scss/firstcrop';
 ```
 
 ### Import and initialize JavaScript
 
 Tabler JavaScript is required for interactive components such as dropdowns, modals, and tooltips.
 
-Nuxt-specific note: `tabler.min.js` accesses `document`, so load it only on the client. If you import it during SSR, Nuxt throws `document is not defined`.
+Nuxt-specific note: `firstcrop.min.js` accesses `document`, so load it only on the client. If you import it during SSR, Nuxt throws `document is not defined`.
 
 Create a client-only plugin in `plugins/tabler.client.ts`:
 
 ```ts
 export default defineNuxtPlugin(async () => {
-  await import('@tabler/core/dist/js/tabler.min.js')
+  await import('@firstcrop/core/dist/js/firstcrop.min.js')
 })
 ```
 

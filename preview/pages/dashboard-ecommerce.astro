@@ -1,0 +1,435 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import StatusDot from '@ui/StatusDot.astro';
+import DropdownDays from '@ui/DropdownDays.astro';
+import dashboard from '@data/ecommerce-dashboard.json';
+import crossBorder from '@data/ecommerce-cross-border.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Dashboard"
+	pageHeader="Ecommerce Dashboard"
+	description="firstcrop.in — your agri-inputs store health check for today."
+	pageMenu="ecommerce.overview"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(dashboard as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map(
+						(kpi) => (
+							<div class="col-sm-6 col-lg-3">
+								<EcommerceStats
+									color={kpi.color}
+									icon={kpi.icon}
+									title={kpi.title}
+									description={kpi.value}
+									change={kpi.change}
+									up={kpi.up}
+									chartData={kpi.color === 'red' || kpi.color === 'orange' ? '42,40,43,41,39,40,38,37,38,36,35,37' : '30,32,31,34,33,36,35,38,37,40,39,42'}
+								/>
+							</div>
+						)
+					)
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Revenue trend</div>
+							<div class="card-subtitle">This financial year vs last</div>
+							<DropdownDays />
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-overview-revenue" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">GMV by category</div>
+							<div class="card-subtitle">30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-overview-categories" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Acquisition funnel</div>
+							<div class="card-subtitle">Sessions to orders, 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-overview-funnel" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Conversion by channel</div>
+							<div class="card-subtitle">WhatsApp leads, referrals close best</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-overview-channel-conversion" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Orders trend</div>
+							<div class="card-subtitle">Daily orders, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-overview-orders" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Crop seasonality</div>
+							<div class="card-subtitle">GMV by sowing season (₹Cr / month)</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-overview-seasonality" height={14} />
+						</CardBody>
+						<ul class="list-group list-group-flush">
+							{
+								(dashboard as { seasonality: { season: string; months: string; gmvShare: number; peak: string; note: string }[] }).seasonality.map(
+									(s) => (
+										<li class="list-group-item">
+											<div class="row align-items-center">
+												<div class="col-3">
+													<strong>{s.season}</strong>
+												</div>
+												<div class="col-3 text-secondary">{s.months}</div>
+												<div class="col-4">
+													<Progress value={s.gmvShare} color="green" size="sm" />
+												</div>
+												<div class="col-2 text-end">{s.gmvShare}%</div>
+											</div>
+											<small class="text-secondary">{s.peak} — {s.note}</small>
+										</li>
+									)
+								)
+							}
+						</ul>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Fulfilment pipeline</div>
+							<div class="card-subtitle">Live order value by stage</div>
+						</CardHeader>
+						<CardBody>
+							<ul class="list-unstyled space-y-3">
+								{
+									(dashboard as { fulfillment: { stage: string; orders: number; value: string }[] }).fulfillment.map((f, i) => (
+										<li>
+											<div class="d-flex align-items-baseline justify-content-between">
+												<div>
+													<StatusDot color={['primary', 'azure', 'orange', 'green'][i]} />
+													<span class="ms-2">{f.stage}</span>
+												</div>
+												<div class="text-secondary">{f.value}</div>
+											</div>
+											<Progress
+												value={[12, 32, 28, 100][i]}
+												color={['primary', 'azure', 'orange', 'green'][i]}
+												class="progress-sm mt-2"
+											/>
+											<small class="text-secondary">{f.orders.toLocaleString('en-IN')} orders</small>
+										</li>
+									))
+								}
+							</ul>
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Low-stock alerts</div>
+							<div class="card-subtitle">Restock before sowing peaks</div>
+							<a class="btn btn-sm btn-link" href="ecommerce-products.html">View products</a>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>SKU</th>
+										<th class="text-end">Stock</th>
+										<th class="text-end">Days left</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(dashboard as { lowStock: { sku: string; name: string; stock: number; days: number }[] }).lowStock.map((p) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{p.name}</div>
+													<div class="text-secondary">{p.sku}</div>
+												</td>
+												<td class="text-end"><Badge color={p.days < 3 ? 'danger' : 'warning'} light>{p.stock}</Badge></td>
+												<td class="text-end text-secondary">{p.days}</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Top states</div>
+							<div class="card-subtitle">Orders by state, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-overview-regional" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Recent orders</div>
+							<a class="btn btn-sm btn-link" href="ecommerce-orders.html">View all</a>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Order</th>
+										<th>Customer</th>
+										<th>Product</th>
+										<th class="text-end">Amount</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(dashboard as { recentOrders: { id: string; customer: string; state: string; product: string; amount: string; status: string; color: string }[] }).recentOrders.map(
+											(o) => (
+												<tr>
+													<td class="text-secondary">{o.id}</td>
+													<td>
+														<div class="fw-medium">{o.customer}</div>
+														<div class="text-secondary">{o.state}</div>
+													</td>
+													<td>{o.product}</td>
+													<td class="text-end fw-medium">{o.amount}</td>
+													<td><Badge color={o.color} light>{o.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title d-flex align-items-center gap-2">
+						Cross-border expansion
+						<Badge color="green">Exports</Badge>
+					</div>
+					<div class="card-subtitle">firstcrop.in international — FY26 export program</div>
+				</CardHeader>
+				<CardBody>
+					<div class="row g-3">
+						{
+							(crossBorder as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map(
+								(kpi) => (
+									<div class="col-sm-6 col-lg-3 col-xxl">
+										<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+									</div>
+								)
+							)
+						}
+					</div>
+
+					<div class="row g-3 mt-2">
+						{
+							(crossBorder as { markets: { country: string; flag: string; gmv: string; growth: string; share: number; score: number; scoreColor: string }[] }).markets.map((m) => (
+								<div class="col-12 col-md-6 col-xl-3">
+									<div class="card card-sm mb-0">
+										<div class="card-body">
+											<div class="d-flex align-items-center mb-2">
+												<span class={`flag flag-country-${m.flag}`} />
+												<div class="ms-2">
+													<div class="fw-medium">{m.country}</div>
+													<div class="text-secondary small">Market score {m.score}/100</div>
+												</div>
+												<div class="ms-auto"><Badge color={m.scoreColor} light>{m.growth}</Badge></div>
+											</div>
+											<div class="h3 mb-0">{m.gmv}</div>
+											<Progress value={m.score} color={m.scoreColor} class="mt-2" />
+										</div>
+									</div>
+								</div>
+							))
+						}
+					</div>
+
+					<div class="row g-3 mt-2">
+						<div class="col-12 col-lg-6">
+							<div class="card mb-0">
+								<div class="card-header">
+									<h3 class="card-title mb-0">Shipping corridors</h3>
+								</div>
+								<div class="table-responsive">
+									<table class="table card-table table-vcenter">
+										<thead>
+											<tr>
+												<th>Route</th>
+												<th>Mode</th>
+												<th>Transit</th>
+												<th class="text-end">Freight</th>
+												<th>Reliability</th>
+											</tr>
+										</thead>
+										<tbody>
+											{
+												(crossBorder as { corridors: { route: string; mode: string; transit: string; freight: string; reliability: number }[] }).corridors.map((c) => (
+													<tr>
+														<td class="fw-medium">{c.route}</td>
+														<td>{c.mode}</td>
+														<td>{c.transit}</td>
+														<td class="text-end">{c.freight}</td>
+														<td>
+															<div class="d-flex align-items-center gap-2">
+																<Progress value={c.reliability} color={c.reliability > 85 ? 'green' : 'yellow'} class="flex-grow-1" />
+																<span class="text-secondary">{c.reliability}%</span>
+															</div>
+														</td>
+													</tr>
+												))
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="card mb-0">
+								<div class="card-header">
+									<h3 class="card-title mb-0">Landed-cost monitor</h3>
+									<div class="card-subtitle">USD per kg / unit</div>
+								</div>
+								<div class="table-responsive">
+									<table class="table card-table table-vcenter">
+										<thead>
+											<tr>
+												<th>Item</th>
+												<th class="text-end">Ex-works</th>
+												<th class="text-end">Freight</th>
+												<th class="text-end">Duty</th>
+												<th class="text-end">Landed</th>
+											</tr>
+										</thead>
+										<tbody>
+											{
+												(crossBorder as { landedCost: { item: string; exw: string; freight: string; duty: string; landed: string }[] }).landedCost.map((l) => (
+													<tr>
+														<td class="fw-medium">{l.item}</td>
+														<td class="text-end">${l.exw}</td>
+														<td class="text-end">${l.freight}</td>
+														<td class="text-end">${l.duty}</td>
+														<td class="text-end fw-medium">${l.landed}</td>
+													</tr>
+												))
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row g-3 mt-2">
+						<div class="col-12 col-lg-4">
+							<div class="card mb-0">
+								<div class="card-header">
+									<h3 class="card-title mb-0">INR/USD</h3>
+									<div class="card-subtitle">30 days</div>
+								</div>
+								<div class="card-body">
+									<Chart chartId="ecom-overview-exports-fx" height={9} />
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-8">
+							<div class="card mb-0">
+								<div class="card-header">
+									<h3 class="card-title mb-0">Compliance checklist</h3>
+								</div>
+								<div class="table-responsive">
+									<table class="table card-table table-vcenter">
+										<thead>
+											<tr>
+												<th>Requirement</th>
+												<th>Market</th>
+												<th class="text-end">Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											{
+												(crossBorder as { compliance: { item: string; market: string; status: string; color: string }[] }).compliance.map((c) => (
+													<tr>
+														<td class="fw-medium">{c.item}</td>
+														<td>{c.market}</td>
+														<td class="text-end"><Badge color={c.color} light>{c.status}</Badge></td>
+													</tr>
+												))
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</CardBody>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

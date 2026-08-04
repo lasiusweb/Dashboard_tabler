@@ -568,13 +568,13 @@ describe('Modal', () => {
     })
   })
 
-  describe('data-tblr-toggle', () => {
-    it('should open modal via data-tblr-toggle="modal"', () => {
+  describe('data-fc-toggle', () => {
+    it('should open modal via data-fc-toggle="modal"', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<button data-tblr-toggle="modal" data-bs-target="#testModal">Open</button>', '<div class="modal" id="testModal" tabindex="-1">', '  <div class="modal-dialog"><div class="modal-content"></div></div>', '</div>'].join('')
+        fixtureEl.innerHTML = ['<button data-fc-toggle="modal" data-bs-target="#testModal">Open</button>', '<div class="modal" id="testModal" tabindex="-1">', '  <div class="modal-dialog"><div class="modal-content"></div></div>', '</div>'].join('')
 
         const modalEl = fixtureEl.querySelector('#testModal')!
-        const btn = fixtureEl.querySelector('[data-tblr-toggle="modal"]') as HTMLElement
+        const btn = fixtureEl.querySelector('[data-fc-toggle="modal"]') as HTMLElement
 
         modalEl.addEventListener('shown.bs.modal', () => {
           const modal = Modal.getInstance(modalEl) as Modal
@@ -586,12 +586,12 @@ describe('Modal', () => {
       })
     })
 
-    it('should open modal via data-tblr-toggle with data-tblr-target', () => {
+    it('should open modal via data-fc-toggle with data-fc-target', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<button data-tblr-toggle="modal" data-tblr-target="#testModal">Open</button>', '<div class="modal" id="testModal" tabindex="-1">', '  <div class="modal-dialog"><div class="modal-content"></div></div>', '</div>'].join('')
+        fixtureEl.innerHTML = ['<button data-fc-toggle="modal" data-fc-target="#testModal">Open</button>', '<div class="modal" id="testModal" tabindex="-1">', '  <div class="modal-dialog"><div class="modal-content"></div></div>', '</div>'].join('')
 
         const modalEl = fixtureEl.querySelector('#testModal')!
-        const btn = fixtureEl.querySelector('[data-tblr-toggle="modal"]') as HTMLElement
+        const btn = fixtureEl.querySelector('[data-fc-toggle="modal"]') as HTMLElement
 
         modalEl.addEventListener('shown.bs.modal', () => {
           const modal = Modal.getInstance(modalEl) as Modal
@@ -604,13 +604,13 @@ describe('Modal', () => {
     })
   })
 
-  describe('data-tblr-dismiss', () => {
-    it('should close modal via data-tblr-dismiss="modal"', () => {
+  describe('data-fc-dismiss', () => {
+    it('should close modal via data-fc-dismiss="modal"', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<div class="modal" tabindex="-1">', '  <div class="modal-dialog">', '    <div class="modal-content">', '      <button type="button" class="btn-close" data-tblr-dismiss="modal"></button>', '    </div>', '  </div>', '</div>'].join('')
+        fixtureEl.innerHTML = ['<div class="modal" tabindex="-1">', '  <div class="modal-dialog">', '    <div class="modal-content">', '      <button type="button" class="btn-close" data-fc-dismiss="modal"></button>', '    </div>', '  </div>', '</div>'].join('')
 
         const modalEl = fixtureEl.querySelector('.modal')!
-        const dismissBtn = fixtureEl.querySelector('[data-tblr-dismiss="modal"]') as HTMLElement
+        const dismissBtn = fixtureEl.querySelector('[data-fc-dismiss="modal"]') as HTMLElement
         const modal = new Modal(modalEl)
 
         modalEl.addEventListener('shown.bs.modal', () => {

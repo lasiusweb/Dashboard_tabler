@@ -1,0 +1,232 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import marketing from '@data/ecommerce-marketing.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Marketing"
+	pageHeader="Ecommerce Marketing"
+	description="Acquisition, campaigns and offers for firstcrop.in."
+	pageMenu="ecommerce.marketing"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(marketing as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Sessions</div>
+							<div class="card-subtitle">Daily traffic, last 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-marketing-sessions" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Blended ROAS</div>
+							<div class="card-subtitle">All paid channels</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-marketing-roas" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Campaign spend vs revenue</div>
+							<div class="card-subtitle">Active campaigns (₹L)</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-marketing-campaign" height={13} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Channel funnel</div>
+					<div class="card-subtitle">Sessions → add-to-cart → orders → conversion</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Channel</th>
+								<th class="text-end">Sessions</th>
+								<th class="text-end">Add to cart</th>
+								<th class="text-end">Orders</th>
+								<th>Conversion</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(marketing as { channels: { channel: string; sessions: number; a2c: number; orders: number; rate: number; color: string }[] }).channels.map((ch) => (
+									<tr>
+										<td class="fw-medium">{ch.channel}</td>
+										<td class="text-end">{ch.sessions.toLocaleString('en-IN')}</td>
+										<td class="text-end">{ch.a2c.toLocaleString('en-IN')}</td>
+										<td class="text-end">{ch.orders.toLocaleString('en-IN')}</td>
+										<td>
+											<div class="d-flex align-items-center gap-2">
+												<Progress value={ch.rate * 15} color={ch.color} class="flex-grow-1" />
+												<span class="fw-medium">{ch.rate}%</span>
+											</div>
+										</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Campaigns</div>
+							<div class="card-subtitle">Spend, revenue and ROAS</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Campaign</th>
+										<th class="text-end">Spend</th>
+										<th class="text-end">Revenue</th>
+										<th>ROAS</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(marketing as { campaigns: { name: string; channel: string; spend: string; revenue: string; roas: number; roasColor: string }[] }).campaigns.map((c) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{c.name}</div>
+													<div class="text-secondary">{c.channel}</div>
+												</td>
+												<td class="text-end">{c.spend}</td>
+												<td class="text-end">{c.revenue}</td>
+												<td><Badge color={c.roasColor} light>{c.roas}×</Badge></td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Coupons & offers</div>
+							<div class="card-subtitle">Redemptions, GMV and burn rate</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Code</th>
+										<th>Type</th>
+										<th class="text-end">Redemptions</th>
+										<th class="text-end">GMV</th>
+										<th>Burn</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(marketing as { coupons: { code: string; type: string; value: string; redemptions: number; gmv: string; burn: string }[] }).coupons.map((c) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{c.code}</div>
+													<div class="text-secondary">{c.value}</div>
+												</td>
+												<td><Badge light>{c.type}</Badge></td>
+												<td class="text-end">{c.redemptions.toLocaleString('en-IN')}</td>
+												<td class="text-end">{c.gmv}</td>
+												<td>
+													<div class="d-flex align-items-center gap-2">
+														<Progress value={Number(c.burn.replace('%', ''))} color={Number(c.burn.replace('%', '')) > 60 ? 'green' : 'yellow'} class="flex-grow-1" />
+														<span class="text-secondary">{c.burn}</span>
+													</div>
+												</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">A/B test tracker</div>
+					<div class="card-subtitle">Variant performance against control</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Test</th>
+								<th>Variant</th>
+								<th class="text-end">Sessions</th>
+								<th class="text-end">Conversion</th>
+								<th>Lift</th>
+								<th>Significance</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(marketing as { abTests: { test: string; variant: string; sessions: number; conversion: number; lift: string; sig: string; color: string }[] }).abTests.map(
+									(t) => (
+										<tr>
+											<td class="fw-medium">{t.test}</td>
+											<td>{t.variant}</td>
+											<td class="text-end">{t.sessions.toLocaleString('en-IN')}</td>
+											<td class="text-end">{t.conversion}%</td>
+											<td><Badge color={t.color} light>{t.lift}</Badge></td>
+											<td class="text-secondary">{t.sig}</td>
+										</tr>
+									)
+								)
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

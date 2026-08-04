@@ -1,0 +1,122 @@
+---
+// Customer-facing store header: announcement banner that retracts on scroll,
+// logo, primary nav (Home, Shop, Season, Offers, Support), search trigger,
+// wishlist + cart icons (cart count syncs from localStorage), mobile offcanvas.
+import Icon from '@ui/Icon.astro';
+import { site } from '@shared/lib/site';
+
+interface Props {
+	/** active nav key: home | shop | season | offers | support */
+	currentNav?: string;
+}
+
+const { currentNav = '' } = Astro.props;
+
+const nav = [
+	{ key: 'home', title: 'Home', href: 'store-home.html' },
+	{ key: 'shop', title: 'Shop', href: 'store-shop.html' },
+	{ key: 'season', title: 'Season', href: 'store-season.html' },
+	{ key: 'offers', title: 'Offers', href: 'store-offers.html' },
+	{ key: 'support', title: 'Support', href: 'store-support.html' },
+];
+
+const logoSvg =
+	'<rect x="2" y="2" width="28" height="28" rx="8" fill="var(--fc-primary, #2fb344)" /><rect x="9" y="7" width="4.5" height="18" rx="1" fill="#ffffff" /><rect x="9" y="7" width="11" height="4.5" rx="1" fill="#ffffff" /><rect x="9" y="13" width="8.5" height="4.5" rx="1" fill="#ffffff" />';
+---
+
+<div class="store-announce" id="store-announce">
+	<strong>Kharif sowing is on</strong> — book paddy seed and subsidised DAP before the window closes. COD on most pincodes.
+</div>
+
+<header class="store-header d-print-none">
+	<div class="container-xl">
+		<div class="row align-items-center py-2 g-2">
+			<div class="col-auto d-lg-none">
+				<button class="store-icon-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#store-offcanvas" aria-label="Open menu">
+					<Icon name="menu" />
+				</button>
+			</div>
+
+			<div class="col-auto">
+				<a href="store-home.html" class="d-flex align-items-center gap-2 text-decoration-none" aria-label={site.title}>
+					<span class="icon" set:html={logoSvg} />
+					<span class="fw-bold text-body fs-4 d-none d-sm-inline">firstcrop</span>
+				</a>
+			</div>
+
+			<div class="col d-none d-lg-block">
+				<nav aria-label="Store" class="store-nav">
+					{nav.map((item) => (
+						<a
+							class:list={['nav-link', currentNav === item.key && 'active']}
+							href={item.href}
+							aria-current={currentNav === item.key ? 'page' : undefined}
+						>
+							{item.title}
+						</a>
+					))}
+				</nav>
+			</div>
+
+			<div class="col-auto ms-auto ms-lg-0 d-flex align-items-center gap-1">
+				<button class="store-icon-btn d-none d-sm-inline-flex" type="button" data-bs-toggle="modal" data-bs-target="#store-search" aria-label="Search">
+					<Icon name="search" />
+				</button>
+				<a class="store-icon-btn" href="store-wishlist.html" aria-label="Wishlist">
+					<Icon name="heart" />
+				</a>
+				<a class="store-icon-btn" href="store-cart.html" aria-label="Cart" data-cart-link>
+					<Icon name="shopping-cart" />
+					<span class="store-cart-badge d-none" data-cart-badge>0</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Mobile menu -->
+<div class="offcanvas offcanvas-start" id="store-offcanvas" tabindex="-1">
+	<div class="offcanvas-header">
+		<div class="fw-bold fs-4">firstcrop</div>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" />
+	</div>
+	<div class="offcanvas-body">
+		<ul class="nav nav-vertical">
+			{nav.map((item) => (
+				<li class="nav-item">
+					<a class:list={['nav-link', currentNav === item.key && 'active']} href={item.href}>
+						<span class="nav-link-title">{item.title}</span>
+					</a>
+				</li>
+			))}
+			<li class="nav-item">
+				<a class="nav-link" href="store-wishlist.html">
+					<span class="nav-link-icon"><Icon name="heart" /></span>
+					<span class="nav-link-title">Wishlist</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<script>
+	// retract the announcement banner on scroll
+	const announce = document.getElementById('store-announce');
+	if (announce) {
+		const onScroll = () => announce.classList.toggle('retracted', window.scrollY > 40);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		onScroll();
+	}
+
+	// cart count badge — re-render on any cart change
+	const badge = document.querySelector('[data-cart-badge]');
+	if (badge) {
+		import('@shared/lib/storefront-client').then(({ subscribe, cartCount }) => {
+			subscribe(() => {
+				const n = cartCount();
+				badge.textContent = String(n);
+				badge.classList.toggle('d-none', n === 0);
+			});
+		});
+	}
+</script>

@@ -1,0 +1,33 @@
+{
+  "slug": "dap-50kg",
+  "id": "FC-1042",
+  "name": "DAP fertilizer (50 kg)",
+  "categoryId": "fertilizers",
+  "brand": "NutriFarm",
+  "image": null,
+  "rating": 4.7,
+  "ratingCount": 2140,
+  "reviewIds": ["rev-dap-1", "rev-dap-2"],
+  "shortDescription": "Di-ammonium phosphate 18:46:0 for basal application at sowing or transplanting.",
+  "longDescription": "The standard basal phosphorus source for paddy, wheat and pulses. Government subsidy of ₹235 per bag is applied at checkout automatically.",
+  "highlights": ["18% N / 46% P₂O₅", "Basal dose at sowing", "Subsidy applied at checkout", "Farm bulk pack"],
+  "specifications": {
+    "Analysis": "18:46:0",
+    "Dose": "60–75 kg/ha basal",
+    "Suitable crops": "Paddy, wheat, pulses",
+    "Packing": "50 kg bag"
+  },
+  "packSizes": [{ "label": "50 kg", "mrp": 1350, "price": 1115, "unit": "bag", "subsidy": 235 }],
+  "stock": 842,
+  "tags": ["fertilizer", "dap", "basal", "kharif", "rabi"],
+  "badge": "Subsidized",
+  "season": ["kharif", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 1180 },
+    { "date": "2026-03-01", "price": 1180 },
+    { "date": "2026-04-01", "price": 1160 },
+    { "date": "2026-05-01", "price": 1115 },
+    { "date": "2026-06-01", "price": 1115 },
+    { "date": "2026-07-01", "price": 1115 }
+  ]
+}

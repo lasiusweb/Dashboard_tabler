@@ -11,10 +11,9 @@ const year = new Date().getFullYear()
 
 function getBanner(pluginFilename) {
   return `/*!
- * Tabler${pluginFilename ? ` ${pluginFilename}` : ''} v${pkg.version} (${pkg.homepage})
- * Copyright 2018-${year} The Tabler Authors
- * Copyright 2018-${year} codecalm.net Paweł Kuna
- * Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+ * FirstCrop${pluginFilename ? ` ${pluginFilename}` : ''} v${pkg.version} (${pkg.homepage})
+ * Copyright 2018-${year} The FirstCrop Authors
+ * Forked from Tabler (https://github.com/tabler/tabler/blob/master/LICENSE) — MIT licensed
  */`
 }
 

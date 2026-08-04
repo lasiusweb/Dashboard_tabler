@@ -19,6 +19,54 @@
       }
     }
   },
+  "ecommerce": {
+    "title": "Ecommerce",
+    "icon": "shopping-cart",
+    "columns": 2,
+    "children": {
+      "overview": {
+        "url": "dashboard-ecommerce.html",
+        "title": "Overview",
+        "badge": "New"
+      },
+      "orders": {
+        "url": "ecommerce-orders.html",
+        "title": "Orders"
+      },
+      "payments": {
+        "url": "ecommerce-payments.html",
+        "title": "Payments"
+      },
+      "products": {
+        "url": "ecommerce-products.html",
+        "title": "Products"
+      },
+      "customers": {
+        "url": "ecommerce-customers.html",
+        "title": "Customers"
+      },
+      "marketing": {
+        "url": "ecommerce-marketing.html",
+        "title": "Marketing"
+      },
+      "loyalty": {
+        "url": "ecommerce-loyalty.html",
+        "title": "Loyalty"
+      },
+      "support": {
+        "url": "ecommerce-support.html",
+        "title": "Support"
+      },
+      "logistics": {
+        "url": "ecommerce-logistics.html",
+        "title": "Logistics"
+      },
+      "forecasting": {
+        "url": "ecommerce-forecasting.html",
+        "title": "Forecasting"
+      }
+    }
+  },
   "base": {
     "title": "Interface",
     "icon": "package",
@@ -102,7 +150,63 @@
       "cards": {
         "title": "Cards",
         "children": {
-          "base": {
+  "storefront": {
+    "title": "Storefront",
+    "icon": "building-store",
+    "columns": 2,
+    "children": {
+      "home": {
+        "url": "store-home.html",
+        "title": "Home",
+        "badge": "New"
+      },
+      "shop": {
+        "url": "store-shop.html",
+        "title": "Shop"
+      },
+      "category": {
+        "url": "store-category.html",
+        "title": "Category"
+      },
+      "product": {
+        "url": "store-product.html",
+        "title": "Product"
+      },
+      "cart": {
+        "url": "store-cart.html",
+        "title": "Cart"
+      },
+      "checkout": {
+        "url": "store-checkout.html",
+        "title": "Checkout"
+      },
+      "confirmation": {
+        "url": "store-confirmation.html",
+        "title": "Order confirmation"
+      },
+      "orders": {
+        "url": "store-orders.html",
+        "title": "My orders"
+      },
+      "wishlist": {
+        "url": "store-wishlist.html",
+        "title": "Wishlist"
+      },
+      "season": {
+        "url": "store-season.html",
+        "title": "Season"
+      },
+      "support": {
+        "url": "store-support.html",
+        "title": "Support"
+      },
+      "offers": {
+        "url": "store-offers.html",
+        "title": "Offers"
+      }
+    }
+  },
+  "base": {
             "url": "cards.html",
             "title": "Sample cards"
           },

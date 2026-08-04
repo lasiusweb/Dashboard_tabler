@@ -1,0 +1,32 @@
+{
+  "slug": "harvesting-sickle-bulk",
+  "id": "FC-3110",
+  "name": "Harvesting sickle (bulk pack)",
+  "categoryId": "tools-equipment",
+  "brand": "KisanPro",
+  "image": null,
+  "rating": 4.6,
+  "ratingCount": 208,
+  "reviewIds": ["rev-sickle-1"],
+  "shortDescription": "Serrated steel sickle, pack of 5 — a field-ready spare for every worker.",
+  "longDescription": "Tempered serrated blades with a comfortable wooden grip. Sold as a bulk pack of five so every harvesting hand has a sharp backup.",
+  "highlights": ["Pack of 5", "Serrated tempered blade", "Wooden grip", "Replaceable blade"],
+  "specifications": {
+    "Blade": "Serrated, tempered steel",
+    "Grip": "Wooden",
+    "Pack": "5 pieces",
+    "Packing": "Jute bundle"
+  },
+  "packSizes": [{ "label": "Pack of 5", "mrp": 799, "price": 649, "unit": "pack" }],
+  "stock": 121,
+  "tags": ["tools", "sickle", "harvest", "hand tool"],
+  "season": ["rabi", "kharif"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 699 },
+    { "date": "2026-03-01", "price": 679 },
+    { "date": "2026-04-01", "price": 660 },
+    { "date": "2026-05-01", "price": 649 },
+    { "date": "2026-06-01", "price": 649 },
+    { "date": "2026-07-01", "price": 649 }
+  ]
+}

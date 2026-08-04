@@ -1,0 +1,42 @@
+{
+  "kpis": [
+    { "title": "Export markets live", "value": "4", "change": "+1", "up": true, "color": "green", "icon": "world" },
+    { "title": "Export GMV (FY26)", "value": "$412K", "change": "+64%", "up": true, "color": "primary", "icon": "currency-dollar" },
+    { "title": "Avg landed cost", "value": "$8.4/kg", "change": "-6%", "up": true, "color": "azure", "icon": "ship" },
+    { "title": "Shipments in pipeline", "value": "18", "change": "+5", "up": true, "color": "purple", "icon": "box-seam" },
+    { "title": "INR/USD (30d)", "value": "83.6", "change": "-0.4%", "up": true, "color": "cyan", "icon": "arrows-left-right" }
+  ],
+  "markets": [
+    { "country": "United Arab Emirates", "flag": "ae", "gmv": "$148K", "growth": "+71%", "share": 36, "score": 86, "scoreColor": "green" },
+    { "country": "Saudi Arabia", "flag": "sa", "gmv": "$96K", "growth": "+58%", "share": 23, "score": 82, "scoreColor": "green" },
+    { "country": "Kenya", "flag": "ke", "gmv": "$72K", "growth": "+44%", "share": 17, "score": 74, "scoreColor": "yellow" },
+    { "country": "Bangladesh", "flag": "bd", "gmv": "$96K", "growth": "+12%", "share": 23, "score": 68, "scoreColor": "yellow" }
+  ],
+  "corridors": [
+    { "route": "Nhava Sheva → Jebel Ali (UAE)", "mode": "Sea (LCL)", "transit": "12 days", "freight": "$1,140/MT", "reliability": 92 },
+    { "route": "Nhava Sheva → Jeddah (KSA)", "mode": "Sea (LCL)", "transit": "15 days", "freight": "$1,360/MT", "reliability": 88 },
+    { "route": "Mumbai → Mombasa (Kenya)", "mode": "Sea (FCL)", "transit": "19 days", "freight": "$1,540/MT", "reliability": 84 },
+    { "route": "Petrapole → Benapole (BD)", "mode": "Road (rail)", "transit": "6 days", "freight": "$480/MT", "reliability": 76 }
+  ],
+  "landedCost": [
+    { "item": "Hybrid vegetable seeds", "exw": "$2.4", "freight": "$0.9", "duty": "$0.4", "landed": "$3.7" },
+    { "item": "Granular fertilizers", "exw": "$5.2", "freight": "$1.4", "duty": "$1.2", "landed": "$7.8" },
+    { "item": "Drip irrigation kits", "exw": "$12.0", "freight": "$3.1", "duty": "$2.2", "landed": "$17.3" },
+    { "item": "Bio-pesticides", "exw": "$8.6", "freight": "$2.4", "duty": "$1.8", "landed": "$12.8" }
+  ],
+  "compliance": [
+    { "item": "Phytosanitary certificate", "market": "All", "status": "In place", "color": "green" },
+    { "item": "Seed import permit", "market": "Kenya", "status": "In progress", "color": "yellow" },
+    { "item": "GMP / ISO 9001", "market": "UAE", "status": "In place", "color": "green" },
+    { "item": "GST on exports (0% LUT)", "market": "India", "status": "In place", "color": "green" },
+    { "item": "MOFA attestation", "market": "Saudi Arabia", "status": "Pending", "color": "red" }
+  ],
+  "fx": [
+    { "month": "Mar", "rate": 83.1 },
+    { "month": "Apr", "rate": 83.4 },
+    { "month": "May", "rate": 83.2 },
+    { "month": "Jun", "rate": 83.8 },
+    { "month": "Jul", "rate": 83.5 },
+    { "month": "Aug", "rate": 83.6 }
+  ]
+}

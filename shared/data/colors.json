@@ -2,62 +2,62 @@
   "base": [
     {
       "name": "blue",
-      "variable": "var(--tblr-blue)",
-      "value": "#066fd1"
+      "variable": "var(--fc-blue)",
+      "value": "#2fb344"
     },
     {
       "name": "azure",
-      "variable": "var(--tblr-azure)",
+      "variable": "var(--fc-azure)",
       "value": "#4299e1"
     },
     {
       "name": "indigo",
-      "variable": "var(--tblr-indigo)",
+      "variable": "var(--fc-indigo)",
       "value": "#4263eb"
     },
     {
       "name": "purple",
-      "variable": "var(--tblr-purple)",
+      "variable": "var(--fc-purple)",
       "value": "#ae3ec9"
     },
     {
       "name": "pink",
-      "variable": "var(--tblr-pink)",
+      "variable": "var(--fc-pink)",
       "value": "#d6336c"
     },
     {
       "name": "red",
-      "variable": "var(--tblr-red)",
+      "variable": "var(--fc-red)",
       "value": "#d63939"
     },
     {
       "name": "orange",
-      "variable": "var(--tblr-orange)",
+      "variable": "var(--fc-orange)",
       "value": "#f76707"
     },
     {
       "name": "yellow",
-      "variable": "var(--tblr-yellow)",
+      "variable": "var(--fc-yellow)",
       "value": "#f59f00"
     },
     {
       "name": "lime",
-      "variable": "var(--tblr-lime)",
+      "variable": "var(--fc-lime)",
       "value": "#74b816"
     },
     {
       "name": "green",
-      "variable": "var(--tblr-green)",
+      "variable": "var(--fc-green)",
       "value": "#2fb344"
     },
     {
       "name": "teal",
-      "variable": "var(--tblr-teal)",
+      "variable": "var(--fc-teal)",
       "value": "#0ca678"
     },
     {
       "name": "cyan",
-      "variable": "var(--tblr-cyan)",
+      "variable": "var(--fc-cyan)",
       "value": "#17a2b8"
     }
   ],
@@ -211,8 +211,8 @@
       "value": "#0052cc"
     },
     {
-      "name": "tabler",
-      "value": "#066fd1"
+      "name": "firstcrop",
+      "value": "#2fb344"
     }
   ]
 }

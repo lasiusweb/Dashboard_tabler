@@ -1,0 +1,33 @@
+{
+  "slug": "npx-12-32-16-50kg",
+  "id": "FC-3105",
+  "name": "NPK 12:32:16 (50 kg)",
+  "categoryId": "fertilizers",
+  "brand": "NutriFarm",
+  "image": null,
+  "rating": 4.4,
+  "ratingCount": 476,
+  "reviewIds": ["rev-npk-1"],
+  "shortDescription": "Phosphorus-rich complex fertilizer for root development in the basal stage.",
+  "longDescription": "A high-phosphorus complex for strong early rooting, ideal for wheat, maize and orchards. Subsidy of ₹190 per bag applied at checkout.",
+  "highlights": ["12% N / 32% P₂O₅ / 16% K₂O", "Root-development basal", "Subsidy applied at checkout", "Prilled, easy spreading"],
+  "specifications": {
+    "Analysis": "12:32:16",
+    "Dose": "50–75 kg/ha basal",
+    "Suitable crops": "Wheat, maize, fruit trees",
+    "Packing": "50 kg bag"
+  },
+  "packSizes": [{ "label": "50 kg", "mrp": 1480, "price": 1290, "unit": "bag", "subsidy": 190 }],
+  "stock": 320,
+  "tags": ["fertilizer", "npk", "complex", "basal"],
+  "badge": "Subsidized",
+  "season": ["rabi", "kharif"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 1380 },
+    { "date": "2026-03-01", "price": 1340 },
+    { "date": "2026-04-01", "price": 1310 },
+    { "date": "2026-05-01", "price": 1290 },
+    { "date": "2026-06-01", "price": 1290 },
+    { "date": "2026-07-01", "price": 1290 }
+  ]
+}

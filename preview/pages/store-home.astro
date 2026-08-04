@@ -1,0 +1,190 @@
+---
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Icon from '@ui/Icon.astro';
+import ProductCard from '@shared/components/storefront/ProductCard.astro';
+import CategoryTile from '@shared/components/storefront/CategoryTile.astro';
+import { getConfig, getProducts, getCategories, productsById, categoryMap } from '@shared/lib/storefront-data';
+
+const home = await getConfig('home');
+const products = await getProducts();
+const categories = await getCategories();
+const cats = categoryMap(categories);
+
+const featured = productsById(products, home.featuredProductIds ?? []);
+const bundles = productsById(products, home.bundleIds ?? []);
+const tileCount = (categoryId: string) => products.filter((p) => p.categoryId === categoryId).length;
+---
+
+<StoreLayout title="Farm store" currentNav="home">
+	<!-- BEGIN HERO -->
+	<div class="store-hero mb-4">
+		<div class="store-hero-art">
+			<Icon name="leaf" />
+		</div>
+		<div class="store-hero-inner p-4 p-md-5">
+			<div class="row">
+				<div class="col-lg-7">
+					<h1 class="display-6 fw-bold mb-3">{home.hero?.title}</h1>
+					<p class="fs-4 mb-4 opacity-90">{home.hero?.subtitle}</p>
+					<div class="d-flex flex-wrap gap-2">
+						{(home.hero?.ctas ?? []).map((cta) => (
+							<a
+								href={cta.href}
+								class:list={['btn btn-lg', cta.primary ? 'btn-white text-green' : 'btn-outline-light']}
+							>
+								{cta.label}
+							</a>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END HERO -->
+
+	<!-- BEGIN TRUST BADGES -->
+	<div class="row g-3 mb-4">
+		{(home.trustBadges ?? []).map((badge) => (
+			<div class="col-6 col-md-3">
+				<div class="card card-sm h-100">
+					<div class="card-body p-3 d-flex align-items-center gap-3">
+						<span class="avatar avatar-lg bg-green-lt text-green"><Icon name={badge.icon} /></span>
+						<div>
+							<div class="fw-medium">{badge.title}</div>
+							<div class="text-secondary small">{badge.text}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		))}
+	</div>
+	<!-- END TRUST BADGES -->
+
+	<!-- BEGIN CATEGORY TILES -->
+	<div class="row g-3 mb-4">
+		{(home.categoryTiles ?? []).map((tile) => {
+			const category = cats.get(tile.categoryId);
+			if (!category) return null;
+			return (
+				<div class="col-sm-6 col-lg-4">
+					<CategoryTile category={category} count={tileCount(category.slug)} caption={tile.caption} />
+				</div>
+			);
+		})}
+	</div>
+	<!-- END CATEGORY TILES -->
+
+	<!-- BEGIN FEATURED PRODUCTS -->
+	<div class="d-flex align-items-center justify-content-between mb-3">
+		<h2 class="h3 mb-0">Popular this season</h2>
+		<a href="store-shop.html" class="btn btn-link btn-sm">View all products</a>
+	</div>
+	<div class="row g-3 mb-4">
+		{featured.map((product) => (
+			<div class="col-6 col-md-4 col-lg-2">
+				<ProductCard product={product} icon={cats.get(product.categoryId)?.icon} />
+			</div>
+		))}
+	</div>
+	<!-- END FEATURED PRODUCTS -->
+
+	<!-- BEGIN CATEGORY SHARE + SEASON CALLOUT -->
+	<div class="row g-3 mb-4">
+		<div class="col-lg-4">
+			<Card class="h-100">
+				<CardHeader>
+					<div class="card-title">What farmers buy</div>
+					<div class="card-subtitle">Share of orders by category</div>
+				</CardHeader>
+				<CardBody>
+					<Chart chartId="store-home-category-share" height={15} />
+				</CardBody>
+			</Card>
+		</div>
+		<div class="col-lg-8">
+			<div class="card h-100">
+				<div class="card-body p-4 d-flex flex-column justify-content-center">
+					<div class="d-flex align-items-center gap-3 mb-2">
+						<span class="avatar avatar-lg bg-green-lt text-green"><Icon name={home.seasonCallout?.icon ?? 'droplets'} /></span>
+						<h2 class="h3 mb-0">{home.seasonCallout?.title}</h2>
+					</div>
+					<p class="text-secondary mb-3">{home.seasonCallout?.text}</p>
+					<div>
+						<a href={home.seasonCallout?.cta?.href ?? 'store-season.html'} class="btn btn-primary">{home.seasonCallout?.cta?.label}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END CATEGORY SHARE + SEASON CALLOUT -->
+
+	<!-- BEGIN BUNDLES -->
+	<div class="d-flex align-items-center justify-content-between mb-3">
+		<h2 class="h3 mb-0">Kharif bundles</h2>
+		<a href="store-shop.html" class="btn btn-link btn-sm">Build your own</a>
+	</div>
+	<div class="row g-3 mb-4">
+		{bundles.map((product) => (
+			<div class="col-6 col-md-4 col-lg-3">
+				<ProductCard product={product} icon={cats.get(product.categoryId)?.icon} />
+			</div>
+		))}
+	</div>
+	<!-- END BUNDLES -->
+
+	<!-- BEGIN STATS -->
+	<div class="row g-3 mb-4">
+		{(home.stats ?? []).map((stat) => (
+			<div class="col-6 col-md-3">
+				<div class="card card-sm">
+					<div class="card-body p-3 text-center">
+						<div class="h2 mb-0 text-green">{stat.value}</div>
+						<div class="text-secondary small">{stat.label}</div>
+					</div>
+				</div>
+			</div>
+		))}
+	</div>
+	<!-- END STATS -->
+
+	<!-- BEGIN TESTIMONIALS -->
+	<div class="d-flex align-items-center mb-3">
+		<h2 class="h3 mb-0">Farmers trust firstcrop</h2>
+	</div>
+	<div class="row g-3 mb-4">
+		{(home.testimonials ?? []).map((t) => (
+			<div class="col-md-4">
+				<div class="card h-100">
+					<div class="card-body p-4">
+						<Icon name="quote" class="text-green" />
+						<p class="mt-2 mb-3">"{t.quote}"</p>
+						<div class="fw-medium">{t.author}</div>
+						<div class="text-secondary small">{t.role}</div>
+					</div>
+				</div>
+			</div>
+		))}
+	</div>
+	<!-- END TESTIMONIALS -->
+
+	<!-- BEGIN WHATSAPP STRIP -->
+	<div class="card bg-green text-white">
+		<div class="card-body p-4 d-flex flex-column flex-md-row align-items-md-center gap-3">
+			<div class="col">
+				<div class="h3 mb-1">Have a sowing question?</div>
+				<div class="opacity-90">Message us on WhatsApp — our agronomists reply 7 days a week, 7 AM – 8 PM.</div>
+			</div>
+			<div>
+				<a href="#" class="btn btn-white">
+					<Icon name="brand-whatsapp" class="me-1" />
+					Chat on WhatsApp
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- END WHATSAPP STRIP -->
+</StoreLayout>

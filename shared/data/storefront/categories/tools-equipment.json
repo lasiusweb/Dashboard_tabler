@@ -1,0 +1,9 @@
+{
+  "slug": "tools-equipment",
+  "name": "Tools & Equipment",
+  "icon": "tools",
+  "description": "Sprayers, tiller attachments, spreaders and fencing that last more than one season.",
+  "productIds": ["FC-3107", "FC-3108", "FC-3109", "FC-3110", "FC-3111"],
+  "season": "rabi",
+  "faqIds": ["faq-return-tools"]
+}

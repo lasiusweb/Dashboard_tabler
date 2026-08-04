@@ -1,0 +1,183 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import forecasting from '@data/ecommerce-forecasting.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Forecasting"
+	pageHeader="Ecommerce Forecasting"
+	description="Demand forecast, sowing calendar and replenishment for firstcrop.in."
+	pageMenu="ecommerce.forecasting"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(forecasting as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Demand forecast</div>
+							<div class="card-subtitle">Next 8 weeks, vs last year</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-forecast-weekly" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Seasonal forecast</div>
+							<div class="card-subtitle">Forecast vs actual by sowing season (₹Cr)</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-forecast-seasonal" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Sowing calendar</div>
+							<div class="card-subtitle">Crop kits aligned to sowing windows</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Crop</th>
+										<th>Season</th>
+										<th>Window</th>
+										<th>Demand</th>
+										<th>Kit</th>
+										<th class="text-end">Attach rate</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(forecasting as { sowingCalendar: { crop: string; season: string; window: string; demand: string; kit: string; attach: string }[] }).sowingCalendar.map((s) => (
+											<tr>
+												<td class="fw-medium">{s.crop}</td>
+												<td><Badge color={s.season === 'Kharif' ? 'green' : s.season === 'Rabi' ? 'azure' : 'yellow'} light>{s.season}</Badge></td>
+												<td class="text-secondary">{s.window}</td>
+												<td><Badge color={s.demand === 'High' ? 'danger' : 'yellow'} light>{s.demand}</Badge></td>
+												<td class="text-secondary">{s.kit}</td>
+												<td class="text-end fw-medium">{s.attach}</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Forecast accuracy</div>
+							<div class="card-subtitle">WAPE, last 6 months</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-forecast-accuracy" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(forecasting as { weatherRisk: { state: string; risk: string; impact: string; orders: string; action: string; color: string }[] }).weatherRisk.map((w) => (
+						<div class="col-lg-4">
+							<Card>
+								<CardHeader>
+									<div class="card-title">
+										<div class="d-flex align-items-center gap-2">
+											<i class={`ti ti-cloud-rain text-${w.color}`}></i>
+											{w.state}
+										</div>
+									</div>
+									<div class="card-subtitle">{w.risk}</div>
+								</CardHeader>
+								<CardBody>
+									<div class="mb-2 text-secondary">Impact: <span class="fw-medium text-body">{w.impact}</span></div>
+									<div class="mb-2 text-secondary">Orders: <span class={`fw-medium text-${w.orders.startsWith('▼') ? 'danger' : 'green'}`}>{w.orders}</span></div>
+									<Badge color={w.color} light>
+										<i class="ti ti-bulb me-1"></i>{w.action}
+									</Badge>
+								</CardBody>
+							</Card>
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Reorder suggestions</div>
+					<div class="card-subtitle">Next 60 days replenishment from forecast</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>SKU</th>
+								<th>Product</th>
+								<th class="text-end">Stock</th>
+								<th class="text-end">Forecast 60d</th>
+								<th class="text-end">Suggested</th>
+								<th>Supplier</th>
+								<th class="text-end">Lead time</th>
+								<th>Priority</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(forecasting as { reorderSuggestions: { sku: string; name: string; stock: number; forecast60d: number; suggested: number; supplier: string; lead: string; priority: string; color: string }[] }).reorderSuggestions.map(
+									(r) => (
+										<tr>
+											<td class="text-secondary">{r.sku}</td>
+											<td class="fw-medium">{r.name}</td>
+											<td class="text-end">{r.stock.toLocaleString('en-IN')}</td>
+											<td class="text-end">{r.forecast60d.toLocaleString('en-IN')}</td>
+											<td class="text-end fw-medium">{r.suggested.toLocaleString('en-IN')}</td>
+											<td class="text-secondary">{r.supplier}</td>
+											<td class="text-end">{r.lead}</td>
+											<td><Badge color={r.color} light>{r.priority}</Badge></td>
+										</tr>
+									)
+								)
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

@@ -1,0 +1,157 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import payments from '@data/ecommerce-payments.json';
+---
+
+<DefaultLayout
+	title="Ecommerce Payments"
+	pageHeader="Ecommerce Payments"
+	description="Collections, settlements and gateway health for firstcrop.in."
+	pageMenu="ecommerce.payments"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(payments as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-2">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Success rate by method</div>
+							<div class="card-subtitle">Prepaid gateways vs COD</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-payments-success" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Failure codes</div>
+							<div class="card-subtitle">Why prepaid payments fail</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-payments-failure-codes" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Gateway fees</div>
+							<div class="card-subtitle">Blended fee rate, 6 months</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-payments-gateway-fees" height={15} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Refund pipeline</div>
+							<div class="card-subtitle">Pending refunds by value (₹L), 30 days</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-payments-refund-trend" height={14} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">COD collection</div>
+							<div class="card-subtitle">Orders by collection stage</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="ecom-payments-cod" height={14} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Settlement calendar</div>
+							<div class="card-subtitle">Next credits per channel</div>
+						</CardHeader>
+						<CardBody>
+							<ul class="list-unstyled space-y-3 mb-0">
+								{
+									(payments as { settlementCalendar: { channel: string; cycle: string; nextCredit: string; amount: string }[] }).settlementCalendar.map((s) => (
+										<li class="d-flex justify-content-between align-items-center">
+											<div>
+												<div class="fw-medium">{s.channel}</div>
+												<div class="text-secondary small">{s.cycle} · {s.nextCredit}</div>
+											</div>
+											<div class="fw-medium">{s.amount}</div>
+										</li>
+									))
+								}
+							</ul>
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Reconciliation exceptions</div>
+					<div class="card-subtitle">Gateway vs order ledger mismatches</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Gateway ref</th>
+								<th>Order</th>
+								<th class="text-end">Amount</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(payments as { reconciliation: { date: string; gatewayRef: string; order: string; amount: string; status: string; color: string }[] }).reconciliation.map(
+									(r) => (
+										<tr>
+											<td class="text-secondary">{r.date}</td>
+											<td class="text-secondary">{r.gatewayRef}</td>
+											<td>{r.order}</td>
+											<td class="text-end fw-medium">{r.amount}</td>
+											<td><Badge color={r.color} light>{r.status}</Badge></td>
+										</tr>
+									)
+								)
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

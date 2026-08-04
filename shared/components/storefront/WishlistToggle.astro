@@ -1,0 +1,41 @@
+---
+// Heart wishlist toggle (~ 1-line). Persists to localStorage and shows a toast.
+import Icon from '@ui/Icon.astro';
+
+interface Props {
+	productId: string;
+	class?: string;
+}
+
+const { productId, class: className } = Astro.props;
+---
+
+<button
+	class:list={['store-wishlist', className]}
+	type="button"
+	data-product-id={productId}
+	data-wishlist-toggle
+	aria-label="Toggle wishlist"
+	title="Save to wishlist"
+>
+	<Icon name="heart" />
+</button>
+
+<script>
+	import { isWishlisted, toggleWishlist, subscribe, showToast } from '@shared/lib/storefront-client';
+
+	function mountToggle(btn) {
+		const productId = btn.dataset.productId;
+		const render = () => {
+			btn.classList.toggle('active', isWishlisted(productId));
+			btn.classList.toggle('text-red', isWishlisted(productId));
+		};
+		btn.addEventListener('click', () => {
+			const now = toggleWishlist(productId);
+			showToast(now ? 'Saved to wishlist' : 'Removed from wishlist');
+		});
+		subscribe(render);
+	}
+
+	document.querySelectorAll('[data-wishlist-toggle]').forEach(mountToggle);
+</script>

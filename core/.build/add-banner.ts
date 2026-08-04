@@ -15,16 +15,16 @@ interface Plugins {
 }
 
 const plugins: Plugins = {
-	'tabler-flags': 'Flags',
-	'tabler-flags.rtl': 'Flags RTL',
-	'tabler-marketing': 'Marketing',
-	'tabler-marketing.rtl': 'Marketing RTL',
-	'tabler-payments': 'Payments',
-	'tabler-payments.rtl': 'Payments RTL',
-	'tabler-socials': 'Socials',
-	'tabler-socials.rtl': 'Socials RTL',
-	'tabler-vendors': 'Vendors',
-	'tabler-vendors.rtl': 'Vendors RTL',
+	'firstcrop-flags': 'Flags',
+	'firstcrop-flags.rtl': 'Flags RTL',
+	'firstcrop-marketing': 'Marketing',
+	'firstcrop-marketing.rtl': 'Marketing RTL',
+	'firstcrop-payments': 'Payments',
+	'firstcrop-payments.rtl': 'Payments RTL',
+	'firstcrop-socials': 'Socials',
+	'firstcrop-socials.rtl': 'Socials RTL',
+	'firstcrop-vendors': 'Vendors',
+	'firstcrop-vendors.rtl': 'Vendors RTL',
 }
 
 styles.forEach((file: string) => {

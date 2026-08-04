@@ -117,13 +117,13 @@
       }
       @include expect() {
         .t {
-          --tblr-gutter-x: 1rem;
-          --tblr-gutter-y: 0;
+          --fc-gutter-x: 1rem;
+          --fc-gutter-y: 0;
           display: flex;
           flex-wrap: wrap;
-          margin-top: calc(-1 * var(--tblr-gutter-y));
-          margin-right: calc(-0.5 * var(--tblr-gutter-x));
-          margin-left: calc(-0.5 * var(--tblr-gutter-x));
+          margin-top: calc(-1 * var(--fc-gutter-y));
+          margin-right: calc(-0.5 * var(--fc-gutter-x));
+          margin-left: calc(-0.5 * var(--fc-gutter-x));
         }
       }
     }
@@ -143,9 +143,9 @@
           flex-shrink: 0;
           width: 100%;
           max-width: 100%;
-          padding-right: calc(var(--tblr-gutter-x) * 0.5);
-          padding-left: calc(var(--tblr-gutter-x) * 0.5);
-          margin-top: var(--tblr-gutter-y);
+          padding-right: calc(var(--fc-gutter-x) * 0.5);
+          padding-left: calc(var(--fc-gutter-x) * 0.5);
+          margin-top: var(--fc-gutter-y);
         }
       }
     }

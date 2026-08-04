@@ -8,7 +8,7 @@ import { devNull } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 /**
- * Equivalent of the Eleventy "html-prettify" step (@tabler/preview): the
+ * Equivalent of the Eleventy "html-prettify" step (@firstcrop/preview): the
  * generated HTML is the product (users copy it 1:1), so after the build we
  * format it with prettier per .prettierrc.
  * @returns {import('astro').AstroIntegration}
@@ -20,7 +20,7 @@ function prettifyHtml() {
 			'astro:build:done': async ({ dir, logger }) => {
 				const outDir = fileURLToPath(dir);
 				// dist/preview/ and dist/dist/ are copy-assets.mjs's copies of public/{preview,dist}
-				// (demo css/js and @tabler/core's dist, including vendored libs) — not pages, and
+				// (demo css/js and @firstcrop/core's dist, including vendored libs) — not pages, and
 				// some vendored libs ship their own malformed docs/*.html that trips the parser below.
 				/** @param {string} file */
 				const isVendorCopy = (file) => file.includes(`${outDir}preview/`) || file.includes(`${outDir}dist/`);
@@ -34,9 +34,9 @@ function prettifyHtml() {
 					if (cleaned !== content) writeFileSync(file, cleaned);
 				}
 				execFileSync(
-					'npx',
+					process.execPath,
 					[
-						'prettier',
+						fileURLToPath(import.meta.resolve('prettier/bin/prettier.cjs')),
 						'--write',
 						'--parser',
 						'html',

@@ -843,9 +843,612 @@
           },
           {
             "x": 1792706400000,
-            "y": [86028.52, 91660.63, 77064.28, 83253.51]
-          }
+              "y": [86028.52, 91660.63, 77064.28, 83253.51]
+            }
         ]
+      }
+    ]
+  },
+  "ecom-overview-revenue": {
+    "type": "area",
+    "legend": true,
+    "stroke-width": [3, 2],
+    "stroke-dash": [0, 6],
+    "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    "series": [
+      {
+        "name": "This FY (₹Cr)",
+        "color": "green",
+        "data": [9.4, 10.1, 11.8, 12.6, 10.2, 9.8, 12.4, 13.9, 14.2, 15.1, 16.4, 18.4]
+      },
+      {
+        "name": "Last FY (₹Cr)",
+        "color": "secondary",
+        "data": [8.2, 8.8, 9.6, 10.4, 9.1, 8.6, 10.8, 11.9, 12.4, 13.2, 14.1, 15.6]
+      }
+    ]
+  },
+  "ecom-overview-orders": {
+    "type": "line",
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "stroke-width": [2],
+    "show-markers": true,
+    "legend": true,
+    "series": [
+      {
+        "name": "Orders",
+        "color": "primary",
+        "data": [1480, 1520, 1610, 1580, 1720, 1690, 1810, 1760, 1840, 1910, 1880, 1990, 2050, 2010, 2140, 2090, 2210, 2180, 2300, 2240, 2360, 2310, 2290, 2410, 2380, 2330, 2280, 2350, 2290, 2318]
+      }
+    ]
+  },
+  "ecom-overview-categories": {
+    "type": "donut",
+    "legend": true,
+    "series": [
+      { "name": "Seeds", "color": "green", "data": 32 },
+      { "name": "Fertilizers", "color": "azure", "data": 28 },
+      { "name": "Pesticides", "color": "red", "data": 18 },
+      { "name": "Tools & Equipment", "color": "yellow", "data": 10 },
+      { "name": "Irrigation", "color": "cyan", "data": 7 },
+      { "name": "Animal Feed", "color": "purple", "data": 5 }
+    ]
+  },
+  "ecom-overview-funnel": {
+    "type": "bar",
+    "horizontal": true,
+    "hide-grid": true,
+    "show-x": false,
+    "legend": false,
+    "series": [
+      {
+        "name": "Users",
+        "color": "primary",
+        "data": [1880000, 1280000, 742000, 412000, 64280]
+      }
+    ],
+    "categories": ["Sessions", "Product views", "Add to cart", "Checkout", "Orders"]
+  },
+  "ecom-overview-channel-conversion": {
+    "type": "bar",
+    "legend": false,
+    "categories": ["Organic", "Paid Google", "Paid Meta", "WhatsApp", "Referral", "Direct"],
+    "series": [
+      {
+        "name": "Conversion %",
+        "color": "green",
+        "data": [3.8, 3.9, 3.5, 5.8, 4.6, 3.5]
+      }
+    ]
+  },
+  "ecom-overview-seasonality": {
+    "type": "bar",
+    "stacked": true,
+    "legend": true,
+    "categories": ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May"],
+    "series": [
+      { "name": "Kharif", "color": "green", "data": [1.1, 1.6, 1.3, 0.8, 0.2, 0.1, 0.1, 0.1, 0.2, 0.2, 0.4, 0.7] },
+      { "name": "Rabi", "color": "azure", "data": [0.2, 0.2, 0.3, 0.4, 0.9, 1.4, 1.5, 1.2, 1.0, 0.8, 0.3, 0.2] },
+      { "name": "Zaid", "color": "yellow", "data": [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.3, 0.4, 0.3] }
+    ]
+  },
+  "ecom-overview-regional": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Orders",
+        "color": "primary",
+        "data": [11240, 9820, 8260, 7040, 6480, 5780, 5020, 4210]
+      }
+    ],
+    "categories": ["Maharashtra", "Uttar Pradesh", "Punjab", "Madhya Pradesh", "Bihar", "Tamil Nadu", "Rajasthan", "Gujarat"]
+  },
+  "ecom-overview-exports-fx": {
+    "type": "line",
+    "stroke-width": [2],
+    "show-markers": true,
+    "legend": false,
+    "categories": ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    "series": [
+      {
+        "name": "INR/USD",
+        "color": "cyan",
+        "data": [83.1, 83.4, 83.2, 83.8, 83.5, 83.6]
+      }
+    ]
+  },
+  "ecom-orders-pipeline": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "GMV (₹Cr)",
+        "color": "primary",
+        "data": [18.4, 17.9, 16.8, 15.6, 2.8]
+      }
+    ],
+    "categories": ["Placed", "Packed", "Shipped", "Delivered", "RTO / Cancelled"]
+  },
+  "ecom-orders-payment-mix": {
+    "type": "donut",
+    "legend": true,
+    "series": [
+      { "name": "UPI", "color": "green", "data": 46 },
+      { "name": "COD", "color": "orange", "data": 31 },
+      { "name": "Cards", "color": "blue", "data": 9 },
+      { "name": "Wallets", "color": "purple", "data": 8 },
+      { "name": "Net banking", "color": "cyan", "data": 6 }
+    ]
+  },
+  "ecom-orders-rto-trend": {
+    "type": "area",
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "legend": false,
+    "series": [
+      {
+        "name": "RTO rate %",
+        "color": "red",
+        "data": [4.6, 4.5, 4.7, 4.4, 4.3, 4.5, 4.2, 4.1, 4.3, 4.0, 4.1, 3.9, 4.0, 3.8, 3.9, 3.7, 3.8, 3.9, 3.7, 3.6, 3.8, 3.7, 3.5, 3.6, 3.7, 3.5, 3.4, 3.6, 3.5, 3.8]
+      }
+    ]
+  },
+  "ecom-orders-cancellations": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Orders",
+        "color": "yellow",
+        "data": [520, 410, 300, 290]
+      }
+    ],
+    "categories": ["Cheaper elsewhere", "Ordered by mistake", "Sowing date passed", "Delivery too slow"]
+  },
+  "ecom-orders-value-dist": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Order share %",
+        "color": "azure",
+        "data": [24, 30, 29, 14, 3]
+      }
+    ],
+    "categories": ["Under ₹500", "₹500 – ₹1,000", "₹1,000 – ₹3,000", "₹3,000 – ₹10,000", "Above ₹10,000"]
+  },
+  "ecom-orders-sla-zone": {
+    "type": "bar",
+    "legend": true,
+    "categories": ["Metro", "Urban", "Semi-urban", "Rural"],
+    "series": [
+      { "name": "Target days", "color": "secondary", "data": [2, 3, 5, 7] },
+      { "name": "Actual days", "color": "primary", "data": [1.8, 2.7, 4.9, 7.6] }
+    ]
+  },
+  "ecom-payments-success": {
+    "type": "bar",
+    "legend": false,
+    "categories": ["UPI", "Cards", "Wallets", "Net banking", "COD"],
+    "series": [
+      {
+        "name": "Success %",
+        "color": "green",
+        "data": [94.8, 91.2, 93.5, 88.4, 86.9]
+      }
+    ]
+  },
+  "ecom-payments-failure-codes": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Count",
+        "color": "red",
+        "data": [1180, 990, 620, 410, 280]
+      }
+    ],
+    "categories": ["Insufficient balance", "OTP timeout / expiry", "Bank server down", "Limit reached", "Card blocked"]
+  },
+  "ecom-payments-refund-trend": {
+    "type": "area",
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "legend": false,
+    "series": [
+      {
+        "name": "Refunds (₹L)",
+        "color": "orange",
+        "data": [38, 36, 41, 39, 43, 40, 44, 42, 40, 37, 39, 36, 34, 35, 33, 34, 32, 31, 33, 30, 29, 31, 30, 28, 27, 28, 26, 27, 25, 24.6]
+      }
+    ]
+  },
+  "ecom-payments-gateway-fees": {
+    "type": "line",
+    "stroke-width": [2],
+    "show-markers": true,
+    "legend": false,
+    "categories": ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    "series": [
+      {
+        "name": "Fees %",
+        "color": "purple",
+        "data": [1.62, 1.58, 1.55, 1.5, 1.46, 1.42]
+      }
+    ]
+  },
+  "ecom-payments-cod": {
+    "type": "bar",
+    "legend": false,
+    "categories": ["Out for collection", "Collected", "Bounced"],
+    "series": [
+      {
+        "name": "Orders",
+        "color": "primary",
+        "data": [610, 18320, 1240]
+      }
+    ]
+  },
+  "ecom-products-category": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "GMV (₹Cr)",
+        "color": "green",
+        "data": [5.9, 5.1, 3.3, 1.8, 1.2, 1.0]
+      }
+    ],
+    "categories": ["Seeds", "Fertilizers", "Pesticides", "Tools & Equip", "Irrigation", "Animal Feed"]
+  },
+  "ecom-products-stock-health": {
+    "type": "donut",
+    "legend": true,
+    "series": [
+      { "name": "Healthy", "color": "green", "data": 1743 },
+      { "name": "Low stock", "color": "yellow", "data": 61 },
+      { "name": "Out of stock", "color": "red", "data": 38 }
+    ]
+  },
+  "ecom-products-inventory-value": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Inventory (₹Cr)",
+        "color": "azure",
+        "data": [15.4, 12.1, 7.6, 4.2, 2.3, 1.2]
+      }
+    ],
+    "categories": ["Seeds", "Fertilizers", "Pesticides", "Tools & Equip", "Irrigation", "Animal Feed"]
+  },
+  "ecom-products-price-bands": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "SKU share %",
+        "color": "purple",
+        "data": [22, 27, 31, 15, 5]
+      }
+    ],
+    "categories": ["Under ₹500", "₹500 – ₹1,000", "₹1,000 – ₹3,000", "₹3,000 – ₹10,000", "Above ₹10,000"]
+  },
+  "ecom-products-margin-growth": {
+    "type": "bar",
+    "legend": true,
+    "categories": ["Seeds", "Fertilizers", "Pesticides", "Tools & Equip", "Irrigation", "Animal Feed"],
+    "series": [
+      { "name": "Margin %", "color": "green", "data": [24, 12, 28, 31, 26, 18] },
+      { "name": "Growth %", "color": "azure", "data": [18, 7, 11, 14, 22, 9] }
+    ]
+  },
+  "ecom-customers-new-repeat": {
+    "type": "area",
+    "stacked": true,
+    "legend": true,
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "series": [
+      { "name": "New", "color": "cyan", "data": [180, 196, 210, 204, 224, 218, 240, 231, 250, 244, 260, 251, 268, 259, 275, 266, 288, 279, 295, 284, 302, 291, 299, 307, 296, 288, 301, 292, 298, 304] },
+      { "name": "Repeat", "color": "green", "data": [240, 251, 265, 258, 276, 269, 291, 282, 300, 293, 312, 303, 324, 315, 335, 326, 348, 339, 360, 349, 372, 358, 366, 378, 364, 356, 371, 359, 366, 375] }
+    ]
+  },
+  "ecom-customers-rfm": {
+    "type": "donut",
+    "legend": true,
+    "series": [
+      { "name": "Champions", "color": "green", "data": 14 },
+      { "name": "Loyal", "color": "azure", "data": 20 },
+      { "name": "At risk", "color": "orange", "data": 17 },
+      { "name": "New", "color": "purple", "data": 19 },
+      { "name": "Lost", "color": "gray-500", "data": 30 }
+    ]
+  },
+  "ecom-customers-cac-ltv": {
+    "type": "bar",
+    "legend": true,
+    "categories": ["WhatsApp", "Organic", "Paid Google", "Paid Meta", "Referrals", "FPO"],
+    "series": [
+      { "name": "CAC (₹)", "color": "red", "data": [124, 86, 210, 178, 64, 92] },
+      { "name": "LTV (₹)", "color": "green", "data": [6120, 4680, 5240, 4860, 7840, 9220] }
+    ]
+  },
+  "ecom-customers-state": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Customers",
+        "color": "primary",
+        "data": [5280, 4610, 3980, 3440, 3180, 2840, 2480, 2160, 1960, 1820]
+      }
+    ],
+    "categories": ["Maharashtra", "UP", "Punjab", "MP", "Bihar", "TN", "Rajasthan", "Gujarat", "Karnataka", "Haryana"]
+  },
+  "ecom-marketing-sessions": {
+    "type": "area",
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "legend": false,
+    "series": [
+      {
+        "name": "Sessions",
+        "color": "primary",
+        "data": [54000, 55100, 56300, 55800, 57400, 56900, 58200, 57700, 59100, 58800, 60400, 59800, 61500, 60900, 62600, 62000, 63800, 63100, 64800, 64200, 65900, 65100, 66400, 65800, 67100, 66500, 67800, 67200, 68500, 67900]
+      }
+    ]
+  },
+  "ecom-marketing-campaign": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": true,
+    "series": [
+      { "name": "Spend (₹L)", "color": "secondary", "data": [4.2, 3.1, 1.2, 2.8, 1.8, 2.2] },
+      { "name": "Revenue (₹L)", "color": "green", "data": [21.8, 12.4, 9.6, 9.8, 6.1, 4.4] }
+    ],
+    "categories": ["Kharif seeds", "Fertilizer offer", "Drip blast", "Wheat pre-season", "Retargeting", "YouTube"]
+  },
+  "ecom-marketing-roas": {
+    "type": "line",
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "stroke-width": [2],
+    "show-markers": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Blended ROAS",
+        "color": "green",
+        "data": [3.9, 4.0, 3.8, 4.1, 4.2, 4.0, 4.3, 4.2, 4.4, 4.3, 4.5, 4.4, 4.6, 4.5, 4.7, 4.5, 4.6, 4.8, 4.6, 4.7, 4.9, 4.7, 4.8, 4.9, 4.7, 4.8, 4.9, 4.8, 4.7, 4.8]
+      }
+    ]
+  },
+  "ecom-loyalty-members": {
+    "type": "area",
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "legend": false,
+    "series": [
+      {
+        "name": "Members",
+        "color": "purple",
+        "data": [15200, 15400, 15700, 15600, 15900, 16100, 16300, 16200, 16500, 16700, 16900, 16800, 17100, 17300, 17500, 17400, 17700, 17800, 18000, 17900, 18150, 18260, 18190, 18310, 18280, 18370, 18410, 18380, 18400, 18420]
+      }
+    ]
+  },
+  "ecom-loyalty-points": {
+    "type": "line",
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "legend": true,
+    "stroke-width": [2, 2],
+    "show-markers": true,
+    "series": [
+      { "name": "Points issued", "color": "primary", "data": [420, 435, 448, 441, 462, 455, 478, 469, 490, 482, 504, 495, 518, 506, 531, 520, 545, 533, 558, 546, 571, 558, 566, 584, 570, 561, 579, 566, 574, 588] },
+      { "name": "Points redeemed", "color": "green", "data": [118, 124, 131, 128, 139, 134, 146, 141, 152, 147, 160, 155, 168, 162, 175, 170, 184, 178, 192, 186, 198, 192, 196, 205, 199, 194, 202, 197, 201, 208] }
+    ]
+  },
+  "ecom-loyalty-wa-funnel": {
+    "type": "bar",
+    "horizontal": true,
+    "legend": false,
+    "series": [
+      {
+        "name": "Count",
+        "color": "green",
+        "data": [482000, 456000, 318000, 62400, 12100]
+      }
+    ],
+    "categories": ["Sent", "Delivered", "Read", "Replied", "Ordered"]
+  },
+  "ecom-support-volume": {
+    "type": "area",
+    "stacked": true,
+    "legend": true,
+    "datetime": true,
+    "start-date": "2026-07-04",
+    "series": [
+      { "name": "WhatsApp", "color": "green", "data": [150, 158, 166, 162, 172, 169, 180, 176, 188, 182, 196, 190, 204, 198, 212, 205, 220, 213, 228, 221, 234, 228, 231, 240, 233, 226, 237, 230, 235, 241] },
+      { "name": "Phone", "color": "blue", "data": [70, 74, 78, 76, 81, 79, 84, 82, 87, 85, 91, 88, 94, 91, 98, 95, 102, 99, 106, 102, 109, 106, 107, 111, 108, 105, 110, 107, 109, 112] },
+      { "name": "Email", "color": "purple", "data": [40, 42, 45, 43, 46, 45, 48, 47, 50, 49, 52, 50, 54, 52, 56, 54, 58, 56, 60, 58, 62, 60, 61, 64, 62, 60, 63, 61, 62, 64] }
+    ]
+  },
+  "ecom-support-resolution": {
+    "type": "bar",
+    "legend": false,
+    "categories": ["Delivery & tracking", "Product quality", "Refund & payment", "Damage in transit", "Usage guidance"],
+    "series": [
+      {
+        "name": "Hours",
+        "color": "orange",
+        "data": [3.1, 12.4, 9.2, 14.8, 1.2]
+      }
+    ]
+  },
+  "ecom-support-csat": {
+    "type": "bar",
+    "legend": false,
+    "categories": ["WhatsApp", "Phone", "Email", "App / web"],
+    "series": [
+      {
+        "name": "CSAT",
+        "color": "purple",
+        "data": [4.5, 4.1, 4.3, 4.2]
+      }
+    ]
+  },
+  "ecom-logistics-ontime": {
+    "type": "radialBar",
+    "radial-start-angle": -120,
+    "radial-end-angle": 120,
+    "radial-name-show": true,
+    "radial-name-offset-y": 4,
+    "radial-value-offset-y": -12,
+    "stroke-linecap": "round",
+    "series": [
+      {
+        "name": "On-time %",
+        "color": "green",
+        "data": 91.4
+      }
+    ]
+  },
+  "ecom-logistics-transit": {
+    "type": "line",
+    "legend": false,
+    "stroke-width": [2],
+    "show-markers": true,
+    "categories": ["Placed", "Packed", "Carrier pickup", "In transit", "Delivered"],
+    "series": [
+      {
+        "name": "Median days",
+        "color": "primary",
+        "data": [0, 0.4, 1.1, 2.8, 3.9]
+      }
+    ]
+  },
+  "ecom-logistics-last-mile": {
+    "type": "donut",
+    "legend": true,
+    "series": [
+      { "name": "Address unavailable", "color": "red", "data": 31 },
+      { "name": "Buyer unavailable", "color": "orange", "data": 26 },
+      { "name": "Carrier delay", "color": "yellow", "data": 22 },
+      { "name": "Weather / road", "color": "azure", "data": 21 }
+    ]
+  },
+  "ecom-logistics-pick-queue": {
+    "type": "bar",
+    "legend": false,
+    "categories": ["0 – 4h", "4 – 12h", "12 – 24h", "24 – 48h", "Over 48h"],
+    "series": [
+      {
+        "name": "Orders",
+        "color": "cyan",
+        "data": [1210, 640, 310, 180, 60]
+      }
+    ]
+  },
+  "ecom-forecast-weekly": {
+    "type": "area",
+    "legend": true,
+    "categories": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"],
+    "series": [
+      { "name": "Forecast (₹L)", "color": "primary", "data": [58, 62, 71, 84, 92, 74, 61, 66] },
+      { "name": "Last year (₹L)", "color": "secondary", "data": [52, 55, 60, 72, 78, 63, 54, 58] }
+    ]
+  },
+  "ecom-forecast-seasonal": {
+    "type": "bar",
+    "legend": true,
+    "categories": ["Kharif", "Rabi", "Zaid"],
+    "series": [
+      { "name": "Forecast (₹Cr)", "color": "secondary", "data": [7.5, 8.6, 2.2] },
+      { "name": "Actual (₹Cr)", "color": "green", "data": [7.2, 8.1, 2.4] }
+    ]
+  },
+  "ecom-forecast-accuracy": {
+    "type": "line",
+    "legend": false,
+    "stroke-width": [2],
+    "show-markers": true,
+    "categories": ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    "series": [
+      {
+        "name": "WAPE %",
+        "color": "green",
+        "data": [82.1, 83.4, 84.2, 85.1, 85.8, 86.2]
+      }
+    ]
+  },
+  "store-season-crop-calendar": {
+    "type": "heatmap",
+    "chart-height": 350,
+    "series": [
+      {
+        "name": "Paddy",
+        "data": [0, 0, 0, 0, 0, 0, 3, 2, 1, 0, 0, 0]
+      },
+      {
+        "name": "Wheat",
+        "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 1]
+      },
+      {
+        "name": "Cotton",
+        "data": [0, 0, 0, 0, 1, 3, 2, 0, 0, 0, 0, 0]
+      },
+      {
+        "name": "Chickpea",
+        "data": [0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 2, 0]
+      },
+      {
+        "name": "Soybean",
+        "data": [0, 0, 0, 0, 1, 3, 2, 0, 0, 0, 0, 0]
+      },
+      {
+        "name": "Watermelon",
+        "data": [0, 0, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0]
+      }
+    ],
+    "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "colors": ["#2fb344"]
+  },
+  "store-home-category-share": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Seeds", "color": "green", "data": 32 },
+      { "name": "Fertilizers", "color": "azure", "data": 28 },
+      { "name": "Pesticides", "color": "red", "data": 18 },
+      { "name": "Tools & Equipment", "color": "yellow", "data": 10 },
+      { "name": "Irrigation", "color": "cyan", "data": 7 },
+      { "name": "Animal Feed", "color": "purple", "data": 5 }
+    ]
+  },
+  "store-pdp-price-trend": {
+    "type": "line",
+    "legend": false,
+    "stroke-width": [2],
+    "show-markers": true,
+    "categories": ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    "series": [
+      {
+        "name": "Price (₹)",
+        "color": "green",
+        "data": [1120, 1150, 1180, 1140, 1160, 1195]
       }
     ]
   }

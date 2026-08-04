@@ -1,0 +1,9 @@
+{
+  "slug": "pesticides",
+  "name": "Pesticides",
+  "icon": "spray",
+  "description": "Insecticides and fungicides with clear dosage labels for sucking pests, blasts and wilt.",
+  "productIds": ["FC-0554", "FC-3102"],
+  "season": "kharif",
+  "faqIds": ["faq-usage-safety"]
+}

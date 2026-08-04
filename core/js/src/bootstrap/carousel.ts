@@ -49,8 +49,8 @@ const SELECTOR_ITEM = '.carousel-item'
 const SELECTOR_ACTIVE_ITEM = SELECTOR_ACTIVE + SELECTOR_ITEM
 const SELECTOR_ITEM_IMG = '.carousel-item img'
 const SELECTOR_INDICATORS = '.carousel-indicators'
-const SELECTOR_DATA_SLIDE = '[data-bs-slide], [data-bs-slide-to], [data-tblr-slide], [data-tblr-slide-to]'
-const SELECTOR_DATA_RIDE = '[data-bs-ride="carousel"], [data-tblr-ride="carousel"]'
+const SELECTOR_DATA_SLIDE = '[data-bs-slide], [data-bs-slide-to], [data-fc-slide], [data-fc-slide-to]'
+const SELECTOR_DATA_RIDE = '[data-bs-ride="carousel"], [data-fc-ride="carousel"]'
 
 const KEY_TO_DIRECTION: Record<string, string> = {
   [ARROW_LEFT_KEY]: DIRECTION_RIGHT,
@@ -256,7 +256,7 @@ class Carousel extends BaseComponent {
     activeIndicator!.classList.remove(CLASS_NAME_ACTIVE)
     activeIndicator!.removeAttribute('aria-current')
 
-    const newActiveIndicator = SelectorEngine.findOne(`[data-bs-slide-to="${index}"], [data-tblr-slide-to="${index}"]`, this._indicatorsElement)
+    const newActiveIndicator = SelectorEngine.findOne(`[data-bs-slide-to="${index}"], [data-fc-slide-to="${index}"]`, this._indicatorsElement)
 
     if (newActiveIndicator) {
       newActiveIndicator.classList.add(CLASS_NAME_ACTIVE)
@@ -271,7 +271,7 @@ class Carousel extends BaseComponent {
       return
     }
 
-    const elementInterval = Number.parseInt(element.getAttribute('data-bs-interval') || element.getAttribute('data-tblr-interval') || '', 10)
+    const elementInterval = Number.parseInt(element.getAttribute('data-bs-interval') || element.getAttribute('data-fc-interval') || '', 10)
 
     this._config.interval = elementInterval || this._config.defaultInterval
   }
@@ -392,7 +392,7 @@ EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_SLIDE, function (t
   event.preventDefault()
 
   const carousel = Carousel.getOrCreateInstance(target) as Carousel
-  const slideIndex = this.getAttribute('data-bs-slide-to') || this.getAttribute('data-tblr-slide-to')
+  const slideIndex = this.getAttribute('data-bs-slide-to') || this.getAttribute('data-fc-slide-to')
 
   if (slideIndex) {
     carousel.to(Number(slideIndex))

@@ -89,11 +89,11 @@ export function chartStyle(opts: { id: string; data: ChartData }): string {
   for (const [i, serie] of series.entries()) {
     const color = serie.color ?? data.color ?? 'primary'
     const opacity = serie['color-opacity'] ?? '100%'
-    css += `    --chart-${id}-color-${i}: color-mix(in srgb, transparent, var(--tblr-${color}) ${opacity});\n`
+    css += `    --chart-${id}-color-${i}: color-mix(in srgb, transparent, var(--fc-${color}) ${opacity});\n`
   }
   if (type === 'area') {
-    css += `    --chart-${id}-fill-0: color-mix(in srgb, transparent, var(--tblr-primary) 16%);\n`
-    css += `    --chart-${id}-fill-1: color-mix(in srgb, transparent, var(--tblr-primary) 16%);\n`
+    css += `    --chart-${id}-fill-0: color-mix(in srgb, transparent, var(--fc-primary) 16%);\n`
+    css += `    --chart-${id}-fill-1: color-mix(in srgb, transparent, var(--fc-primary) 16%);\n`
   }
   return `<style>\n  :root {\n${css}  }\n</style>`
 }

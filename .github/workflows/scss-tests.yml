@@ -30,4 +30,4 @@ jobs:
         run: pnpm install
 
       - name: Run SCSS tests
-        run: pnpm --filter @tabler/core test:scss
+        run: pnpm --filter @firstcrop/core test:scss

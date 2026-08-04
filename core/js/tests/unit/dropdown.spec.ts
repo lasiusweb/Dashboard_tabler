@@ -1066,12 +1066,12 @@ describe('Dropdown', () => {
     })
   })
 
-  describe('data-tblr-toggle', () => {
-    it('should toggle via data-tblr-toggle="dropdown"', () => {
+  describe('data-fc-toggle', () => {
+    it('should toggle via data-fc-toggle="dropdown"', () => {
       return new Promise<void>((resolve) => {
-        fixtureEl.innerHTML = ['<div class="dropdown">', '  <button class="btn dropdown-toggle" data-tblr-toggle="dropdown">Dropdown</button>', '  <div class="dropdown-menu">', '    <a class="dropdown-item" href="#">Link</a>', '  </div>', '</div>'].join('')
+        fixtureEl.innerHTML = ['<div class="dropdown">', '  <button class="btn dropdown-toggle" data-fc-toggle="dropdown">Dropdown</button>', '  <div class="dropdown-menu">', '    <a class="dropdown-item" href="#">Link</a>', '  </div>', '</div>'].join('')
 
-        const btnDropdown = fixtureEl.querySelector('[data-tblr-toggle="dropdown"]') as HTMLElement
+        const btnDropdown = fixtureEl.querySelector('[data-fc-toggle="dropdown"]') as HTMLElement
 
         btnDropdown.addEventListener('shown.bs.dropdown', () => {
           expect(btnDropdown.classList.contains('show')).toBe(true)
@@ -1083,10 +1083,10 @@ describe('Dropdown', () => {
       })
     })
 
-    it('should create instance via data-tblr-toggle', () => {
-      fixtureEl.innerHTML = ['<div class="dropdown">', '  <button class="btn dropdown-toggle" data-tblr-toggle="dropdown">Dropdown</button>', '  <div class="dropdown-menu"></div>', '</div>'].join('')
+    it('should create instance via data-fc-toggle', () => {
+      fixtureEl.innerHTML = ['<div class="dropdown">', '  <button class="btn dropdown-toggle" data-fc-toggle="dropdown">Dropdown</button>', '  <div class="dropdown-menu"></div>', '</div>'].join('')
 
-      const btnDropdown = fixtureEl.querySelector('[data-tblr-toggle="dropdown"]')!
+      const btnDropdown = fixtureEl.querySelector('[data-fc-toggle="dropdown"]')!
       const dropdown = new Dropdown(btnDropdown)
 
       expect(Dropdown.getInstance(btnDropdown)).toBe(dropdown)

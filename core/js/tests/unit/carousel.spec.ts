@@ -302,8 +302,8 @@ describe('Carousel', () => {
       expect(carousel._config.interval).toBe(2000)
     })
 
-    it('should use data-tblr-interval from active element', () => {
-      fixtureEl.innerHTML = ['<div id="myCarousel" class="carousel slide">', '  <div class="carousel-inner">', '    <div class="carousel-item active" data-tblr-interval="3000">item 1</div>', '    <div class="carousel-item">item 2</div>', '  </div>', '</div>'].join('')
+    it('should use data-fc-interval from active element', () => {
+      fixtureEl.innerHTML = ['<div id="myCarousel" class="carousel slide">', '  <div class="carousel-inner">', '    <div class="carousel-item active" data-fc-interval="3000">item 1</div>', '    <div class="carousel-item">item 2</div>', '  </div>', '</div>'].join('')
 
       const carouselEl = fixtureEl.querySelector('#myCarousel')!
       const carousel = new Carousel(carouselEl)
@@ -349,12 +349,12 @@ describe('Carousel', () => {
       expect(indicators[1].getAttribute('aria-current')).toBe('true')
     })
 
-    it('should update indicator with data-tblr-slide-to', () => {
+    it('should update indicator with data-fc-slide-to', () => {
       fixtureEl.innerHTML = [
         '<div id="myCarousel" class="carousel slide">',
         '  <div class="carousel-indicators">',
-        '    <button class="active" data-tblr-slide-to="0" aria-current="true"></button>',
-        '    <button data-tblr-slide-to="1"></button>',
+        '    <button class="active" data-fc-slide-to="0" aria-current="true"></button>',
+        '    <button data-fc-slide-to="1"></button>',
         '  </div>',
         '  <div class="carousel-inner">',
         '    <div class="carousel-item active">item 1</div>',
@@ -368,7 +368,7 @@ describe('Carousel', () => {
 
       carousel._setActiveIndicatorElement(1)
 
-      const indicators = fixtureEl.querySelectorAll('[data-tblr-slide-to]')
+      const indicators = fixtureEl.querySelectorAll('[data-fc-slide-to]')
       expect(indicators[0].classList.contains('active')).toBe(false)
       expect(indicators[1].classList.contains('active')).toBe(true)
     })
@@ -448,9 +448,9 @@ describe('Carousel', () => {
     })
   })
 
-  describe('data-tblr', () => {
-    it('should auto-init via data-tblr-ride="carousel"', () => {
-      fixtureEl.innerHTML = '<div id="myCarousel" class="carousel slide" data-tblr-ride="carousel"></div>'
+  describe('data-fc', () => {
+    it('should auto-init via data-fc-ride="carousel"', () => {
+      fixtureEl.innerHTML = '<div id="myCarousel" class="carousel slide" data-fc-ride="carousel"></div>'
 
       window.dispatchEvent(createEvent('load'))
 
@@ -460,15 +460,15 @@ describe('Carousel', () => {
       instance!.dispose()
     })
 
-    it('should start cycling via data-tblr-ride', () => {
-      fixtureEl.innerHTML = '<div id="myCarousel" class="carousel slide" data-tblr-ride="carousel"></div>'
+    it('should start cycling via data-fc-ride', () => {
+      fixtureEl.innerHTML = '<div id="myCarousel" class="carousel slide" data-fc-ride="carousel"></div>'
 
       const carousel = new Carousel('#myCarousel')
       expect(carousel._interval).not.toBeNull()
       carousel.dispose()
     })
 
-    it('should navigate via data-tblr-slide="next"', () => {
+    it('should navigate via data-fc-slide="next"', () => {
       return new Promise<void>((resolve) => {
         fixtureEl.innerHTML = [
           '<div id="myCarousel" class="carousel slide">',
@@ -476,12 +476,12 @@ describe('Carousel', () => {
           '    <div class="carousel-item active">item 1</div>',
           '    <div id="item2" class="carousel-item">item 2</div>',
           '  </div>',
-          '  <button data-tblr-slide="next" data-bs-target="#myCarousel">Next</button>',
+          '  <button data-fc-slide="next" data-bs-target="#myCarousel">Next</button>',
           '</div>',
         ].join('')
 
         const carouselEl = fixtureEl.querySelector('#myCarousel')!
-        const nextBtn = fixtureEl.querySelector('[data-tblr-slide="next"]') as HTMLElement
+        const nextBtn = fixtureEl.querySelector('[data-fc-slide="next"]') as HTMLElement
 
         carouselEl.addEventListener('slid.bs.carousel', () => {
           expect(fixtureEl.querySelector('#item2')!.classList.contains('active')).toBe(true)
@@ -492,7 +492,7 @@ describe('Carousel', () => {
       })
     })
 
-    it('should navigate via data-tblr-slide="prev"', () => {
+    it('should navigate via data-fc-slide="prev"', () => {
       return new Promise<void>((resolve) => {
         fixtureEl.innerHTML = [
           '<div id="myCarousel" class="carousel slide">',
@@ -500,12 +500,12 @@ describe('Carousel', () => {
           '    <div id="item1" class="carousel-item">item 1</div>',
           '    <div class="carousel-item active">item 2</div>',
           '  </div>',
-          '  <button data-tblr-slide="prev" data-bs-target="#myCarousel">Prev</button>',
+          '  <button data-fc-slide="prev" data-bs-target="#myCarousel">Prev</button>',
           '</div>',
         ].join('')
 
         const carouselEl = fixtureEl.querySelector('#myCarousel')!
-        const prevBtn = fixtureEl.querySelector('[data-tblr-slide="prev"]') as HTMLElement
+        const prevBtn = fixtureEl.querySelector('[data-fc-slide="prev"]') as HTMLElement
 
         carouselEl.addEventListener('slid.bs.carousel', () => {
           expect(fixtureEl.querySelector('#item1')!.classList.contains('active')).toBe(true)
@@ -516,13 +516,13 @@ describe('Carousel', () => {
       })
     })
 
-    it('should handle data-tblr-slide-to in indicators', () => {
+    it('should handle data-fc-slide-to in indicators', () => {
       return new Promise<void>((resolve) => {
         fixtureEl.innerHTML = [
           '<div id="myCarousel" class="carousel slide">',
           '  <div class="carousel-indicators">',
-          '    <button class="active" data-tblr-slide-to="0" data-bs-target="#myCarousel" aria-current="true"></button>',
-          '    <button data-tblr-slide-to="1" data-bs-target="#myCarousel"></button>',
+          '    <button class="active" data-fc-slide-to="0" data-bs-target="#myCarousel" aria-current="true"></button>',
+          '    <button data-fc-slide-to="1" data-bs-target="#myCarousel"></button>',
           '  </div>',
           '  <div class="carousel-inner">',
           '    <div class="carousel-item active">item 1</div>',
@@ -532,7 +532,7 @@ describe('Carousel', () => {
         ].join('')
 
         const carouselEl = fixtureEl.querySelector('#myCarousel')!
-        const trigger = fixtureEl.querySelectorAll('[data-tblr-slide-to]')[1] as HTMLElement
+        const trigger = fixtureEl.querySelectorAll('[data-fc-slide-to]')[1] as HTMLElement
 
         carouselEl.addEventListener('slid.bs.carousel', () => {
           expect(fixtureEl.querySelector('#item2')!.classList.contains('active')).toBe(true)

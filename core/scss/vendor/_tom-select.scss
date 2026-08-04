@@ -52,7 +52,7 @@ $input-border-width: 1px;
     padding: $dropdown-item-padding-y $dropdown-item-padding-x;
   }
 
-  // Override TomSelect's bootstrap5 preset which references --bs- vars not available in Tabler (#2600)
+  // Override TomSelect's bootstrap5 preset which references --bs- vars not available in FirstCrop (#2600)
   .active {
     background-color: var(--#{$prefix}active-bg);
     color: var(--#{$prefix}body-color);

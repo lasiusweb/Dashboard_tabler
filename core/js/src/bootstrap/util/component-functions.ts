@@ -20,7 +20,7 @@ const enableDismissTrigger = (component: DismissibleComponent, method = 'hide'):
   const clickEvent = `click.dismiss${component.EVENT_KEY}`
   const name = component.NAME
 
-  EventHandler.on(document, clickEvent, `[data-bs-dismiss="${name}"], [data-tblr-dismiss="${name}"]`, function (this: HTMLElement, event: Event) {
+  EventHandler.on(document, clickEvent, `[data-bs-dismiss="${name}"], [data-fc-dismiss="${name}"]`, function (this: HTMLElement, event: Event) {
     if (['A', 'AREA'].includes(this.tagName)) {
       event.preventDefault()
     }

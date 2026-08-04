@@ -88,7 +88,7 @@
 
 .nav-sm {
   --#{$prefix}nav-height: #{$nav-segmented-height-sm};
-  --#{$prefix}nav-font-size: var(--tblr-font-size-h5);
+  --#{$prefix}nav-font-size: var(--fc-font-size-h5);
   --#{$prefix}nav-radius: #{$nav-segmented-radius-sm};
   --#{$prefix}nav-link-padding-x: #{$nav-segmented-link-padding-x-sm};
   --#{$prefix}nav-link-gap: #{$nav-segmented-link-gap-sm};
@@ -97,7 +97,7 @@
 
 .nav-lg {
   --#{$prefix}nav-height: #{$nav-segmented-height-lg};
-  --#{$prefix}nav-font-size: var(--tblr-font-size-h3);
+  --#{$prefix}nav-font-size: var(--fc-font-size-h3);
   --#{$prefix}nav-radius: #{$nav-segmented-radius-lg};
   --#{$prefix}nav-link-padding-x: #{$nav-segmented-link-padding-x-lg};
   --#{$prefix}nav-link-gap: #{$nav-segmented-link-gap-lg};

@@ -1,0 +1,102 @@
+---
+// Catalogue — category chips, sort + filter bar (plain .form-select), product
+// grid with pagination and "X of Y results". Reads ?q= and ?category= query
+// params to pre-filter from search / category pages.
+import StoreLayout from '@shared/layouts/StoreLayout.astro';
+import Icon from '@ui/Icon.astro';
+import Pagination from '@ui/Pagination.astro';
+import ProductCard from '@shared/components/storefront/ProductCard.astro';
+import { getProducts, getCategories, categoryMap } from '@shared/lib/storefront-data';
+import { searchProducts } from '@shared/lib/storefront';
+
+const products = await getProducts();
+const categories = await getCategories();
+const cats = categoryMap(categories);
+
+const query = (Astro.url.searchParams.get('q') ?? '').trim();
+const categorySlug = Astro.url.searchParams.get('category') ?? '';
+const activeCategory = cats.get(categorySlug);
+
+let visible = products;
+if (activeCategory) visible = visible.filter((p) => p.categoryId === activeCategory.slug);
+if (query) visible = searchProducts(
+  visible.map((p) => ({ ...p, categoryName: cats.get(p.categoryId)?.name ?? '' })),
+  query,
+);
+const total = visible.length;
+const perPage = 16;
+const page = Math.max(1, Number(Astro.url.searchParams.get('page') ?? 1));
+const pages = Math.max(1, Math.ceil(total / perPage));
+const pageProducts = visible.slice((page - 1) * perPage, page * perPage);
+---
+
+<StoreLayout
+	title={activeCategory ? activeCategory.name : query ? `Search: ${query}` : 'Shop'}
+	currentNav="shop"
+	containerClass="container-xxl"
+>
+	<div class="mb-4">
+		<h1 class="h2 mb-1">{activeCategory ? activeCategory.name : query ? `Results for "${query}"` : 'Shop all inputs'}</h1>
+		<p class="text-secondary mb-0">
+			{activeCategory ? activeCategory.description : 'Certified seeds, fertilizers, crop protection and equipment for every Indian farm.'}
+		</p>
+	</div>
+
+	<!-- Category chips -->
+	<div class="d-flex flex-wrap gap-2 mb-4">
+		<a
+			href="store-shop.html"
+			class:list={['btn btn-sm', !activeCategory ? 'btn-primary' : 'btn-outline-secondary']}
+		>All</a>
+		{categories.map((c) => (
+			<a
+				href={`store-shop.html?category=${c.slug}`}
+				class:list={['btn btn-sm', activeCategory?.slug === c.slug ? 'btn-primary' : 'btn-outline-secondary']}
+			>
+				<Icon name={c.icon} class="me-1" />
+				{c.name}
+			</a>
+		))}
+	</div>
+
+	<!-- Sort + filter bar -->
+	<div class="card card-sm mb-4">
+		<div class="card-body p-2 d-flex flex-wrap align-items-center gap-2">
+			<span class="text-secondary small ms-1">{total} products</span>
+			<div class="ms-auto d-flex gap-2">
+				<select class="form-select form-select-sm" aria-label="Sort">
+					<option value="relevance">Sort: Relevance</option>
+					<option value="price-asc">Price: Low to high</option>
+					<option value="price-desc">Price: High to low</option>
+					<option value="rating">Top rated</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<!-- Product grid -->
+	{total > 0 ? (
+		<div class="row g-3 mb-4">
+			{pageProducts.map((product) => (
+				<div class="col-6 col-md-4 col-lg-3">
+					<ProductCard product={product} icon={cats.get(product.categoryId)?.icon} />
+				</div>
+			))}
+		</div>
+	) : (
+		<div class="card card-sm">
+			<div class="card-body p-5 text-center">
+				<div class="empty-icon mx-auto"><Icon name="search" /></div>
+				<p class="empty-title">No products found</p>
+				<p class="empty-subtitle text-secondary">Try a different search term or clear the category filter.</p>
+				<a href="store-shop.html" class="btn btn-primary">Browse all products</a>
+			</div>
+		</div>
+	)}
+
+	{pages > 1 && (
+		<div class="d-flex justify-content-center mb-4">
+			<Pagination />
+		</div>
+	)}
+</StoreLayout>

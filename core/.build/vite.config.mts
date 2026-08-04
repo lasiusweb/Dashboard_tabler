@@ -6,9 +6,11 @@ import getBanner from '../../shared/banner/index.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const baseName = process.env.BASE_NAME || 'tabler'
+const baseName = process.env.BASE_NAME || 'firstcrop'
 const entryFile = baseName
-const libraryName = baseName
+// Keep the UMD global namespace `tabler` (window.tabler) stable so existing
+// consumers and core tests that reference it keep working.
+const libraryName = 'tabler'
 
 const bannerText = getBanner()
 

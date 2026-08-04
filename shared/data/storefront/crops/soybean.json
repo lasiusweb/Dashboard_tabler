@@ -1,0 +1,12 @@
+{
+  "slug": "soybean",
+  "name": "Soybean",
+  "season": "kharif",
+  "sowStart": "June",
+  "sowEnd": "July",
+  "harvestStart": "October",
+  "harvestEnd": "November",
+  "states": ["Madhya Pradesh", "Maharashtra"],
+  "productIds": ["FC-3105", "FC-0554"],
+  "tip": "Inoculate seed with bio-fertilizer at sowing and watch for girdle beetle in early July."
+}

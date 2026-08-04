@@ -24,11 +24,11 @@ const { mapId, color: colorProp, ratio = '4x3' } = Astro.props;
 const data = (mapsVector as Record<string, MapData>)[mapId];
 const color = colorProp ?? data?.color ?? 'primary';
 
-// scale1..scale10 — a 10-step color-mix ramp against var(--tblr-primary).
+// scale1..scale10 — a 10-step color-mix ramp against var(--fc-primary).
 const scale = Object.fromEntries(
 	Array.from({ length: 10 }, (_, n) => [
 		`scale${n + 1}`,
-		`color-mix(in srgb, transparent, var(--tblr-primary) ${(n + 1) * 10}%)`,
+		`color-mix(in srgb, transparent, var(--fc-primary) ${(n + 1) * 10}%)`,
 	]),
 );
 
@@ -45,8 +45,8 @@ const mapOptions = data
 			backgroundColor: 'transparent',
 			regionStyle: {
 				initial: {
-					fill: 'var(--tblr-bg-surface-secondary)',
-					stroke: data.filled ? '#fff' : 'var(--tblr-border-color)',
+					fill: 'var(--fc-bg-surface-secondary)',
+					stroke: data.filled ? '#fff' : 'var(--fc-border-color)',
 					strokeWidth: data.filled ? 1 : 2,
 				},
 			},
@@ -65,9 +65,9 @@ const mapOptions = data
 								opacity: 1,
 								strokeWidth: 3,
 								stokeOpacity: 0.5,
-								fill: `var(--tblr-${color})`,
+								fill: `var(--fc-${color})`,
 							},
-							hover: { fill: `var(--tblr-${color})`, stroke: `var(--tblr-${color})` },
+							hover: { fill: `var(--fc-${color})`, stroke: `var(--fc-${color})` },
 						},
 						markerLabelStyle: { initial: { fontSize: 10 } },
 					}

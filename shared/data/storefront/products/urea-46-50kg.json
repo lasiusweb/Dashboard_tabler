@@ -1,0 +1,33 @@
+{
+  "slug": "urea-46-50kg",
+  "id": "FC-0771",
+  "name": "Urea 46% N (50 kg)",
+  "categoryId": "fertilizers",
+  "brand": "NutriFarm",
+  "image": null,
+  "rating": 4.5,
+  "ratingCount": 3910,
+  "reviewIds": ["rev-urea-1"],
+  "shortDescription": "Prilled urea 46% nitrogen for top-dressing across all major crops.",
+  "longDescription": "The cheapest nitrogen source per unit. Apply at tillering / active growth stages and water in within 48 hours. Subsidy of ₹80 per bag applied at checkout.",
+  "highlights": ["46% nitrogen", "Top-dressing grade", "Subsidy applied at checkout", "Fast dissolution"],
+  "specifications": {
+    "Analysis": "46:0:0",
+    "Dose": "50–100 kg/ha split",
+    "Suitable crops": "Paddy, wheat, maize, sugarcane",
+    "Packing": "50 kg bag"
+  },
+  "packSizes": [{ "label": "50 kg", "mrp": 325, "price": 245, "unit": "bag", "subsidy": 80 }],
+  "stock": 9,
+  "tags": ["fertilizer", "urea", "nitrogen", "top-dressing"],
+  "badge": "Subsidized",
+  "season": ["kharif", "rabi"],
+  "priceTrend": [
+    { "date": "2026-02-01", "price": 275 },
+    { "date": "2026-03-01", "price": 265 },
+    { "date": "2026-04-01", "price": 255 },
+    { "date": "2026-05-01", "price": 245 },
+    { "date": "2026-06-01", "price": 245 },
+    { "date": "2026-07-01", "price": 245 }
+  ]
+}

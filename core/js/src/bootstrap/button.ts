@@ -14,7 +14,7 @@ const EVENT_KEY = `.${DATA_KEY}`
 const DATA_API_KEY = '.data-api'
 
 const CLASS_NAME_ACTIVE = 'active'
-const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="button"], [data-tblr-toggle="button"]'
+const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="button"], [data-fc-toggle="button"]'
 const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`
 
 class Button extends BaseComponent {

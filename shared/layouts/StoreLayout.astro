@@ -1,0 +1,73 @@
+---
+// Storefront layout — customer-facing shell over BaseLayout. Renders the
+// announcement + header, the page body in a .container-xl, the footer, the
+// search modal, and a toast host that renders `firstcrop:toast` events.
+import BaseLayout from './BaseLayout.astro';
+import StoreHeader from '@shared/components/storefront/StoreHeader.astro';
+import StoreFooter from '@shared/components/storefront/StoreFooter.astro';
+import SearchModal from '@shared/components/storefront/SearchModal.astro';
+
+interface Props {
+	title?: string;
+	pageLibs?: string[];
+	/** active store nav key: home | shop | season | offers | support */
+	currentNav?: string;
+	/** extra classes on the .container-xl body wrapper */
+	containerClass?: string;
+	/** bodyClass passed to BaseLayout */
+	bodyClass?: string;
+}
+
+const { title, pageLibs, currentNav, containerClass, bodyClass = 'store' } = Astro.props;
+---
+
+<BaseLayout title={title} pageLibs={pageLibs} bodyClass={bodyClass}>
+	<div class="page">
+		<!-- BEGIN STORE HEADER -->
+		<StoreHeader currentNav={currentNav} />
+		<!-- END STORE HEADER -->
+
+		<!-- BEGIN PAGE BODY -->
+		<main id="content" class="page-body">
+			<div class:list={['container-xl py-4 py-lg-5', containerClass]}>
+				<slot />
+			</div>
+		</main>
+		<!-- END PAGE BODY -->
+
+		<!-- BEGIN FOOTER -->
+		<StoreFooter />
+		<!-- END FOOTER -->
+	</div>
+
+	<SearchModal />
+
+	{/* toast host — renders firstcrop:toast events emitted by cart/wishlist actions */}
+	<div class="toast-container position-fixed bottom-0 end-0 p-3" data-store-toasts style="z-index: 1090" />
+	<script is:inline>
+		document.addEventListener('firstcrop:toast', function (event) {
+			var host = document.querySelector('[data-store-toasts]');
+			if (!host) return;
+			var message = typeof event.detail === 'string' ? event.detail : '';
+			var toast = document.createElement('div');
+			toast.className = 'toast show';
+			toast.setAttribute('role', 'alert');
+			toast.setAttribute('aria-live', 'assertive');
+			toast.setAttribute('aria-atomic', 'true');
+			toast.innerHTML =
+				'<div class="toast-body d-flex align-items-center">' +
+				'<span class="text-green me-2" style="font-size:1.1rem">✓</span>' +
+				'<span class="me-auto"></span>' +
+				'<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>' +
+				'</div>';
+			toast.querySelector('.me-auto').textContent = message;
+			host.appendChild(toast);
+			setTimeout(function () {
+				toast.classList.remove('show');
+				setTimeout(function () {
+					toast.remove();
+				}, 300);
+			}, 2800);
+		});
+	</script>
+</BaseLayout>

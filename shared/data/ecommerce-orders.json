@@ -1,0 +1,61 @@
+{
+  "kpis": [
+    { "title": "Orders today", "value": "2,318", "change": "+4.2%", "up": true, "color": "primary", "icon": "shopping-cart" },
+    { "title": "Delivered on time", "value": "91.4%", "change": "+0.6%", "up": true, "color": "green", "icon": "truck-delivery" },
+    { "title": "RTO rate", "value": "3.8%", "change": "-0.4%", "up": true, "color": "red", "icon": "box-off" },
+    { "title": "Returns rate", "value": "1.9%", "change": "-0.2%", "up": true, "color": "orange", "icon": "rotate" },
+    { "title": "Cancellations", "value": "2.4%", "change": "+0.3%", "up": false, "color": "yellow", "icon": "x-circle" },
+    { "title": "Pending fulfilment", "value": "7,180", "change": "-12%", "up": true, "color": "cyan", "icon": "package" }
+  ],
+  "pipeline": [
+    { "stage": "Placed", "value": "₹18.4Cr", "count": 64280 },
+    { "stage": "Packed", "value": "₹17.9Cr", "count": 62540 },
+    { "stage": "Shipped", "value": "₹16.8Cr", "count": 58810 },
+    { "stage": "Delivered", "value": "₹15.6Cr", "count": 54860 },
+    { "stage": "RTO / Cancelled", "value": "₹2.8Cr", "count": 9420 }
+  ],
+  "paymentMix": [
+    { "method": "UPI", "share": 46, "orders": 29570, "value": "₹8.5Cr" },
+    { "method": "COD", "share": 31, "orders": 19930, "value": "₹5.7Cr" },
+    { "method": "Cards", "share": 9, "orders": 5790, "value": "₹1.7Cr" },
+    { "method": "Wallets", "share": 8, "orders": 5140, "value": "₹1.5Cr" },
+    { "method": "Net banking", "share": 6, "orders": 3850, "value": "₹1.1Cr" }
+  ],
+  "rtoReasons": [
+    { "reason": "COD refusal at doorstep", "orders": 1240, "share": 51 },
+    { "reason": "Address unavailable / moved", "orders": 610, "share": 25 },
+    { "reason": "Buyer unavailable (out of town)", "orders": 390, "share": 16 },
+    { "reason": "Delivery delayed beyond need", "orders": 200, "share": 8 }
+  ],
+  "cancellationReasons": [
+    { "reason": "Found cheaper elsewhere", "orders": 520, "share": 34 },
+    { "reason": "Ordered by mistake", "orders": 410, "share": 27 },
+    { "reason": "Sowing date passed", "orders": 300, "share": 20 },
+    { "reason": "Delivery too slow", "orders": 290, "share": 19 }
+  ],
+  "valueDistribution": [
+    { "band": "Under ₹500", "orders": 15430, "share": 24 },
+    { "band": "₹500 – ₹1,000", "orders": 19310, "share": 30 },
+    { "band": "₹1,000 – ₹3,000", "orders": 18640, "share": 29 },
+    { "band": "₹3,000 – ₹10,000", "orders": 9040, "share": 14 },
+    { "band": "Above ₹10,000", "orders": 1860, "share": 3 }
+  ],
+  "slaZones": [
+    { "zone": "Metro", "targetDays": 2, "actualDays": 1.8, "onTime": 96.2 },
+    { "zone": "Urban", "targetDays": 3, "actualDays": 2.7, "onTime": 93.1 },
+    { "zone": "Semi-urban", "targetDays": 5, "actualDays": 4.9, "onTime": 90.8 },
+    { "zone": "Rural", "targetDays": 7, "actualDays": 7.6, "onTime": 84.3 }
+  ],
+  "recentOrders": [
+    { "id": "FC-284712", "customer": "Ramesh Patil", "date": "02 Aug 2026", "items": "Urea 46%N (50kg)", "amount": "₹1,540", "payment": "UPI", "payColor": "green", "status": "Delivered", "color": "green" },
+    { "id": "FC-284711", "customer": "Farmers Collective, Nashik", "date": "02 Aug 2026", "items": "Hybrid paddy seeds (10kg)", "amount": "₹8,240", "payment": "Net banking", "payColor": "cyan", "status": "Shipped", "color": "azure" },
+    { "id": "FC-284710", "customer": "Sunita Devi", "date": "02 Aug 2026", "items": "DAP Fertilizer (50kg)", "amount": "₹1,350", "payment": "COD", "payColor": "orange", "status": "Packed", "color": "orange" },
+    { "id": "FC-284709", "customer": "Gurpreet Singh", "date": "01 Aug 2026", "items": "Drip irrigation kit (1ac)", "amount": "₹6,890", "payment": "UPI", "payColor": "green", "status": "Delivered", "color": "green" },
+    { "id": "FC-284708", "customer": "Kisan Agro Services", "date": "01 Aug 2026", "items": "Imidacloprid 17.8 SL (1L)", "amount": "₹1,120", "payment": "Wallet", "payColor": "purple", "status": "Pending", "color": "yellow" },
+    { "id": "FC-284707", "customer": "Lakshmi Narayanan", "date": "01 Aug 2026", "items": "Poultry feed layer (30kg)", "amount": "₹1,860", "payment": "UPI", "payColor": "green", "status": "Delivered", "color": "green" },
+    { "id": "FC-284706", "customer": "Mohd. Irfan", "date": "31 Jul 2026", "items": "Chlorpyrifos 20 EC (1L)", "amount": "₹980", "payment": "COD", "payColor": "orange", "status": "RTO", "color": "red" },
+    { "id": "FC-284705", "customer": "VillageMart, Mandsaur", "date": "31 Jul 2026", "items": "Wheat HD-3086 (10kg × 40)", "amount": "₹52,400", "payment": "Net banking", "payColor": "cyan", "status": "Delivered", "color": "green" },
+    { "id": "FC-284704", "customer": "Anita Kumari", "date": "31 Jul 2026", "items": "Kitchen garden seed kit", "amount": "₹1,240", "payment": "UPI", "payColor": "green", "status": "Cancelled", "color": "gray-500" },
+    { "id": "FC-284703", "customer": "Bharat Agri Traders", "date": "30 Jul 2026", "items": "Micronutrient mix (2kg × 60)", "amount": "₹18,600", "payment": "Card", "payColor": "blue", "status": "Delivered", "color": "green" }
+  ]
+}
