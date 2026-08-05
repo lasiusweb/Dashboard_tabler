@@ -1,0 +1,44 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import CrmStats from '@shared/components/cards/CrmStats.astro';
+---
+
+<DefaultLayout
+	title="Manufacturing Dashboard"
+	pageHeader="Manufacturing Dashboard"
+	description="FirstCrop ERP - Manufacturing overview and KPIs"
+	pageMenu="dashboards.manufacturing"
+	pageLibs={['apexcharts']}
+>
+	<div>
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="primary" icon="packages" lt title="Active Batches" description="24" changeValue="+3" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="azure" icon="test-pipe" lt title="QC Pending" description="8" changeValue="+2" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="green" icon="check-circle" lt title="QC Passed" description="156" changeValue="+12" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="purple" icon="truck-delivery" lt title="Dispatched" description="89" changeValue="+8" />
+				</div>
+
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="yellow" icon="alert-triangle" lt title="Expiring Soon" description="5" changeValue="+1" changeValueUnit=" urgent" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="red" icon="package-off" lt title="Low Stock" description="3" changeValue="-1" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="cyan" icon="file-invoice" lt title="Pending Payments" description="₹12.5L" changeValue="+2.1" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="green" icon="trending-up" lt title="Revenue (MTD)" description="₹45.2L" changeValue="+8.5" />
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

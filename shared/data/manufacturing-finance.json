@@ -1,0 +1,44 @@
+{
+  "kpis": [
+    { "title": "Revenue (MTD)", "value": "₹42.3L", "change": "+18.2%", "up": true, "color": "primary", "icon": "currency-rupee" },
+    { "title": "Pending Payments", "value": "₹12.8L", "change": "+₹2.1L", "up": false, "color": "orange", "icon": "clock" },
+    { "title": "Paid (MTD)", "value": "₹29.5L", "change": "+14.6%", "up": true, "color": "green", "icon": "check" },
+    { "title": "Avg Collection", "value": "28 days", "change": "-2d", "up": true, "color": "cyan", "icon": "calendar" }
+  ],
+  "invoices": [
+    { "invoice": "INV-2024-0312", "customer": "Krishi Sahakari Samiti", "amount": "₹4.2L", "cgst": "₹37.8K", "sgst": "₹37.8K", "total": "₹4.96L", "status": "Paid", "statusColor": "green", "date": "Jan 15" },
+    { "invoice": "INV-2024-0311", "customer": "AgriTech Solutions", "amount": "₹1.8L", "cgst": "₹16.2K", "sgst": "₹16.2K", "total": "₹2.12L", "status": "Sent", "statusColor": "blue", "date": "Jan 14" },
+    { "invoice": "INV-2024-0310", "customer": "Bihar Agriculture Dept", "amount": "₹12.5L", "cgst": "₹1.13L", "sgst": "₹1.13L", "total": "₹14.76L", "status": "Pending", "statusColor": "orange", "date": "Jan 12" },
+    { "invoice": "INV-2024-0309", "customer": "FarmFirst Cooperatives", "amount": "₹2.9L", "cgst": "₹26.1K", "sgst": "₹26.1K", "total": "₹3.42L", "status": "Overdue", "statusColor": "red", "date": "Jan 10" },
+    { "invoice": "INV-2024-0308", "customer": "GreenGrow Exports", "amount": "₹8.7L", "igst": "₹1.57L", "total": "₹10.27L", "status": "Paid", "statusColor": "green", "date": "Jan 8" }
+  ],
+  "paymentBreakdown": [
+    { "method": "Bank Transfer", "count": 42, "share": 48, "avgDays": 22 },
+    { "method": "UPI", "count": 28, "share": 32, "avgDays": 2 },
+    { "method": "Cheque", "count": 12, "share": 14, "avgDays": 35 },
+    { "method": "NEFT/RTGS", "count": 5, "share": 6, "avgDays": 3 }
+  ],
+  "receivables": [
+    { "customer": "Bihar Agriculture Dept", "amount": "₹14.76L", "days": 35, "status": "Overdue", "statusColor": "red", "action": "Follow up" },
+    { "customer": "FarmFirst Cooperatives", "amount": "₹3.42L", "days": 45, "status": "Overdue", "statusColor": "red", "action": "Escalate" },
+    { "customer": "AgriTech Solutions", "amount": "₹2.12L", "days": 12, "status": "Current", "statusColor": "green", "action": "Monitor" },
+    { "customer": "District Agriculture Office", "amount": "₹8.6L", "days": 28, "status": "Due", "statusColor": "orange", "action": "Remind" }
+  ],
+  "gstSummary": [
+    { "month": "Dec 2024", "sales": "₹88L", "cgst": "₹7.92L", "sgst": "₹7.92L", "igst": "₹2.1L", "netPayable": "₹13.74L", "filed": true },
+    { "month": "Jan 2025", "sales": "₹42L", "cgst": "₹3.78L", "sgst": "₹3.78L", "igst": "₹1.57L", "netPayable": "₹5.99L", "filed": false }
+  ],
+  "monthlyRevenue": [
+    { "month": "Aug", "revenue": 82, "expenses": 58, "profit": 24 },
+    { "month": "Sep", "revenue": 94, "expenses": 62, "profit": 32 },
+    { "month": "Oct", "revenue": 112, "expenses": 74, "profit": 38 },
+    { "month": "Nov", "revenue": 102, "expenses": 68, "profit": 34 },
+    { "month": "Dec", "revenue": 88, "expenses": 61, "profit": 27 },
+    { "month": "Jan", "revenue": 42, "expenses": 28, "profit": 14 }
+  ],
+  "tdsSummary": [
+    { "section": "194C (Contractors)", "amount": "₹1.2L", "deducted": "₹1.2L", "status": "Filed", "statusColor": "green" },
+    { "section": "194J (Professional)", "amount": "₹0.8L", "deducted": "₹0.8L", "status": "Filed", "statusColor": "green" },
+    { "section": "194Q (Purchase)", "amount": "₹2.4L", "deducted": "₹2.4L", "status": "Pending", "statusColor": "orange" }
+  ]
+}

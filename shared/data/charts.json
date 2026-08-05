@@ -1451,5 +1451,198 @@
         "data": [1120, 1150, 1180, 1140, 1160, 1195]
       }
     ]
+  },
+
+  "mfg-products-category": {
+    "type": "bar",
+    "legend": true,
+    "horizontal": true,
+    "categories": ["Bio-Fertilizer", "Bio-Pesticide", "Bio-Fungicide", "Organic Fertilizer", "PGR", "Soil Conditioner"],
+    "series": [
+      { "name": "Products", "color": "green", "data": [38, 28, 22, 18, 10, 8] },
+      { "name": "Growth %", "color": "azure", "data": [18, 24, 15, 9, 31, 12] }
+    ]
+  },
+  "mfg-products-formulation": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Liquid", "color": "blue", "data": 36 },
+      { "name": "Powder", "color": "green", "data": 31 },
+      { "name": "Granule", "color": "yellow", "data": 19 },
+      { "name": "Tablet", "color": "purple", "data": 10 },
+      { "name": "Suspension", "color": "cyan", "data": 4 }
+    ]
+  },
+  "mfg-products-strain-health": {
+    "type": "radialBar",
+    "height": 10,
+    "sparkline": true,
+    "series": [
+      { "color": "green", "data": 94 },
+      { "color": "azure", "data": 91 },
+      { "color": "cyan", "data": 88 }
+    ]
+  },
+
+  "mfg-batches-pipeline": {
+    "type": "bar",
+    "legend": true,
+    "stacked": true,
+    "categories": ["Planned", "In Progress", "Fermentation", "Processing", "QC Pending", "Packaging", "Ready"],
+    "series": [
+      { "name": "Count", "color": "green", "data": [6, 8, 12, 4, 8, 3, 5] }
+    ]
+  },
+  "mfg-batches-yield": {
+    "type": "line",
+    "legend": true,
+    "stroke-width": [2, 2],
+    "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "series": [
+      { "name": "Target", "color": "gray-400", "data": [90, 90, 92, 92, 93, 93] },
+      { "name": "Actual", "color": "green", "data": [88, 91, 89, 93, 91, 92] }
+    ]
+  },
+
+  "mfg-qc-trend": {
+    "type": "bar",
+    "legend": true,
+    "stacked": true,
+    "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "series": [
+      { "name": "Pass", "color": "green", "data": [92, 94, 91, 95, 93, 94] },
+      { "name": "Fail", "color": "red", "data": [8, 6, 9, 5, 7, 6] }
+    ]
+  },
+  "mfg-qc-fail-reasons": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "CFU below threshold", "color": "red", "data": 40 },
+      { "name": "Contamination", "color": "orange", "data": 30 },
+      { "name": "pH out of range", "color": "yellow", "data": 20 },
+      { "name": "Viscosity deviation", "color": "gray-400", "data": 10 }
+    ]
+  },
+  "mfg-qc-test-types": {
+    "type": "bar",
+    "legend": false,
+    "horizontal": true,
+    "categories": ["CFU Count", "pH Level", "Moisture", "Contamination", "Viscosity", "Heavy Metals"],
+    "series": [
+      { "name": "Pass Rate", "color": "green", "data": [95.2, 94.7, 97.1, 93.3, 95.5, 100] }
+    ]
+  },
+
+  "mfg-inventory-category": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Raw Materials", "color": "blue", "data": 23 },
+      { "name": "Work in Progress", "color": "yellow", "data": 16 },
+      { "name": "Finished Goods", "color": "green", "data": 54 },
+      { "name": "Packaging", "color": "purple", "data": 7 }
+    ]
+  },
+
+  "mfg-orders-pipeline": {
+    "type": "bar",
+    "legend": true,
+    "stacked": true,
+    "categories": ["Placed", "Confirmed", "In Production", "Ready", "Shipped", "Delivered"],
+    "series": [
+      { "name": "Count", "color": "green", "data": [5, 8, 12, 4, 6, 15] }
+    ]
+  },
+  "mfg-orders-type": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Distributor", "color": "blue", "data": 52 },
+      { "name": "Direct", "color": "purple", "data": 26 },
+      { "name": "Government", "color": "green", "data": 14 },
+      { "name": "Export", "color": "orange", "data": 8 }
+    ]
+  },
+  "mfg-orders-trend": {
+    "type": "line",
+    "legend": true,
+    "stroke-width": [2, 2],
+    "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "series": [
+      { "name": "Orders", "color": "blue", "data": [62, 71, 85, 78, 68, 42] },
+      { "name": "Revenue (₹L)", "color": "green", "data": [82, 94, 112, 102, 88, 56] }
+    ]
+  },
+
+  "mfg-procurement-spend": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Strains & Cultures", "color": "green", "data": 44 },
+      { "name": "Media & Chemicals", "color": "blue", "data": 29 },
+      { "name": "Packaging", "color": "yellow", "data": 17 },
+      { "name": "Labels & Print", "color": "purple", "data": 10 }
+    ]
+  },
+  "mfg-procurement-trend": {
+    "type": "line",
+    "legend": false,
+    "stroke-width": [2],
+    "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "series": [
+      { "name": "Spend (₹L)", "color": "green", "data": [14.2, 16.8, 19.4, 17.6, 15.8, 18.6] }
+    ]
+  },
+
+  "mfg-logistics-zone": {
+    "type": "bar",
+    "legend": true,
+    "horizontal": true,
+    "categories": ["Metro", "Urban", "Semi-Urban", "Rural"],
+    "series": [
+      { "name": "On-Time %", "color": "green", "data": [96, 92, 88, 82] },
+      { "name": "Avg Days", "color": "blue", "data": [2.1, 3.2, 4.5, 6.8] }
+    ]
+  },
+  "mfg-logistics-trend": {
+    "type": "bar",
+    "legend": true,
+    "stacked": true,
+    "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "series": [
+      { "name": "On-Time", "color": "green", "data": [89, 91, 88, 93, 91, 92] },
+      { "name": "Delayed", "color": "yellow", "data": [8, 6, 9, 5, 7, 5] },
+      { "name": "RTO", "color": "red", "data": [3, 3, 3, 2, 2, 3] }
+    ]
+  },
+
+  "mfg-finance-payment-methods": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Bank Transfer", "color": "blue", "data": 48 },
+      { "name": "UPI", "color": "green", "data": 32 },
+      { "name": "Cheque", "color": "yellow", "data": 14 },
+      { "name": "NEFT/RTGS", "color": "purple", "data": 6 }
+    ]
+  },
+  "mfg-finance-revenue-trend": {
+    "type": "line",
+    "legend": true,
+    "stroke-width": [2, 2, 2],
+    "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "series": [
+      { "name": "Revenue (₹L)", "color": "green", "data": [82, 94, 112, 102, 88, 42] },
+      { "name": "Expenses (₹L)", "color": "red", "data": [58, 62, 74, 68, 61, 28] },
+      { "name": "Profit (₹L)", "color": "blue", "data": [24, 32, 38, 34, 27, 14] }
+    ]
   }
 }

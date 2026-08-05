@@ -1,0 +1,43 @@
+{
+  "kpis": [
+    { "title": "Active Batches", "value": "34", "change": "+5", "up": true, "color": "primary", "icon": "flask" },
+    { "title": "In Fermentation", "value": "12", "change": "+2", "up": true, "color": "blue", "icon": "clock" },
+    { "title": "QC Pending", "value": "8", "change": "-1", "up": true, "color": "orange", "icon": "checklist" },
+    { "title": "Avg Yield", "value": "91.2%", "change": "+1.8%", "up": true, "color": "green", "icon": "trending-up" }
+  ],
+  "pipeline": [
+    { "stage": "Planned", "count": 6, "value": "₹12.4L", "color": "gray" },
+    { "stage": "In Progress", "count": 8, "value": "₹28.6L", "color": "blue" },
+    { "stage": "Fermentation", "count": 12, "value": "₹45.2L", "color": "cyan" },
+    { "stage": "Processing", "count": 4, "value": "₹18.9L", "color": "purple" },
+    { "stage": "QC Pending", "count": 8, "value": "₹32.1L", "color": "orange" },
+    { "stage": "Packaging", "count": 3, "value": "₹8.7L", "color": "yellow" },
+    { "stage": "Ready", "count": 5, "value": "₹15.3L", "color": "green" }
+  ],
+  "activeBatches": [
+    { "batch": "BT-2024-0851", "product": "Nitrofix Bio", "status": "Fermentation", "statusColor": "cyan", "started": "Jan 15", "temp": "30°C", "ph": "7.2", "daysLeft": 3, "yield": "—" },
+    { "batch": "BT-2024-0850", "product": "Trichoguard WP", "status": "Processing", "statusColor": "purple", "started": "Jan 12", "temp": "28°C", "ph": "6.8", "daysLeft": 1, "yield": "89%" },
+    { "batch": "BT-2024-0849", "product": "Phosphovita", "status": "Fermentation", "statusColor": "cyan", "started": "Jan 14", "temp": "32°C", "ph": "7.0", "daysLeft": 4, "yield": "—" },
+    { "batch": "BT-2024-0848", "product": "Beaukill SC", "status": "QC Pending", "statusColor": "orange", "started": "Jan 10", "temp": "25°C", "ph": "6.5", "daysLeft": 0, "yield": "85%" },
+    { "batch": "BT-2024-0847", "product": "GrowBoost PGR", "status": "Packaging", "statusColor": "yellow", "started": "Jan 8", "temp": "N/A", "ph": "N/A", "daysLeft": 0, "yield": "96%" },
+    { "batch": "BT-2024-0846", "product": "Nitrofix Bio", "status": "Fermentation", "statusColor": "cyan", "started": "Jan 16", "temp": "31°C", "ph": "7.1", "daysLeft": 5, "yield": "—" }
+  ],
+  "fermentationTimeline": [
+    { "batch": "BT-0851", "product": "Nitrofix Bio", "fermenter": "FR-03", "startTemp": "30°C", "currentTemp": "32°C", "ph": "7.2", "hours": 48, "targetHours": 72, "status": "On track", "statusColor": "green" },
+    { "batch": "BT-0849", "product": "Phosphovita", "fermenter": "FR-01", "startTemp": "32°C", "currentTemp": "33°C", "ph": "7.0", "hours": 36, "targetHours": 60, "status": "On track", "statusColor": "green" },
+    { "batch": "BT-0846", "product": "Nitrofix Bio", "fermenter": "FR-05", "startTemp": "31°C", "currentTemp": "34°C", "ph": "6.9", "hours": 24, "targetHours": 72, "status": "Temp high", "statusColor": "orange" }
+  ],
+  "yieldTrend": [
+    { "month": "Aug", "target": 90, "actual": 88 },
+    { "month": "Sep", "target": 90, "actual": 91 },
+    { "month": "Oct", "target": 92, "actual": 89 },
+    { "month": "Nov", "target": 92, "actual": 93 },
+    { "month": "Dec", "target": 93, "actual": 91 },
+    { "month": "Jan", "target": 93, "actual": 92 }
+  ],
+  "alerts": [
+    { "type": "Temperature", "batch": "BT-0846", "message": "Fermenter FR-05 temp above threshold", "severity": "warning", "action": "Check" },
+    { "type": "Expiry", "batch": "BT-0842", "message": "Batch expires in 5 days - needs dispatch", "severity": "danger", "action": "Dispatch" },
+    { "type": "QC", "batch": "BT-0848", "message": "QC tests pending for 2 days", "severity": "warning", "action": "Follow up" }
+  ]
+}

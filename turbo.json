@@ -6,7 +6,8 @@
     "NEXT_PUBLIC_POSTHOG_HOST",
     "DOCSEARCH_API_KEY",
     "DOCSEARCH_APP_ID",
-    "DOCSEARCH_INDEX_NAME"
+    "DOCSEARCH_INDEX_NAME",
+    "DATABASE_URL"
   ],
   "tasks": {
     "build": {
@@ -44,6 +45,14 @@
       ],
       "outputs": [
         "dist/**"
+      ],
+      "cache": true
+    },
+    "@firstcrop/db#build": {
+      "dependsOn": [],
+      "outputs": [
+        "node_modules/.prisma/**",
+        "node_modules/@prisma/client/**"
       ],
       "cache": true
     },

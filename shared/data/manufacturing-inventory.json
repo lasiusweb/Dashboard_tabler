@@ -1,0 +1,43 @@
+{
+  "kpis": [
+    { "title": "Total Stock Value", "value": "₹1.8Cr", "change": "+8.2%", "up": true, "color": "primary", "icon": "building" },
+    { "title": "Raw Materials", "value": "₹42L", "change": "+5.1%", "up": true, "color": "blue", "icon": "package" },
+    { "title": "Finished Goods", "value": "₹98L", "change": "+12.3%", "up": true, "color": "green", "icon": "check" },
+    { "title": "Expiring (30d)", "value": "₹8.2L", "change": "+₹1.2L", "up": false, "color": "red", "icon": "alert-triangle" }
+  ],
+  "locations": [
+    { "name": "Warehouse A (Raw Materials)", "type": "WAREHOUSE", "items": 48, "capacity": 72, "tempControlled": false, "temp": "—" },
+    { "name": "Cold Storage 1", "type": "COLD_STORAGE", "items": 24, "capacity": 85, "tempControlled": true, "temp": "4-8°C" },
+    { "name": "Production Floor", "type": "PRODUCTION_FLOOR", "items": 12, "capacity": 45, "tempControlled": true, "temp": "25-30°C" },
+    { "name": "QC Lab Storage", "type": "QC_LAB", "items": 8, "capacity": 30, "tempControlled": true, "temp": "20-25°C" },
+    { "name": "Finished Goods Warehouse", "type": "FINISHED_GOODS", "items": 62, "capacity": 68, "tempControlled": false, "temp": "—" },
+    { "name": "Dispatch Center", "type": "DISPATCH_CENTER", "items": 15, "capacity": 25, "tempControlled": false, "temp": "—" }
+  ],
+  "rawMaterials": [
+    { "name": "Bacillus subtilis culture", "code": "RM-ST-001", "category": "Strain", "stock": "2.4 kg", "reorder": "1.0 kg", "status": "Healthy", "statusColor": "green" },
+    { "name": "Trichoderma viride culture", "code": "RM-ST-002", "category": "Strain", "stock": "1.8 kg", "reorder": "0.8 kg", "status": "Healthy", "statusColor": "green" },
+    { "name": "Nutrient broth media", "code": "RM-MD-001", "category": "Media", "stock": "45 kg", "reorder": "20 kg", "status": "Healthy", "statusColor": "green" },
+    { "name": "Sucrose (carbon source)", "code": "RM-MD-002", "category": "Media", "stock": "12 kg", "reorder": "15 kg", "status": "Low", "statusColor": "orange" },
+    { "name": "LDPE bottles (500ml)", "code": "RM-PK-001", "category": "Packaging", "stock": "2,400 pcs", "reorder": "1,000 pcs", "status": "Healthy", "statusColor": "green" },
+    { "name": "Labels (Nitrofix Bio)", "code": "RM-PK-002", "category": "Packaging", "stock": "800 pcs", "reorder": "500 pcs", "status": "Healthy", "statusColor": "green" },
+    { "name": "Beauveria bassiana culture", "code": "RM-ST-003", "category": "Strain", "stock": "0.4 kg", "reorder": "0.5 kg", "status": "Critical", "statusColor": "red" }
+  ],
+  "recentMovements": [
+    { "date": "Jan 17", "type": "RECEIPT", "item": "Nutrient broth media", "qty": "+25 kg", "from": "Vendor", "ref": "PO-2024-0089", "color": "green" },
+    { "date": "Jan 17", "type": "PRODUCTION_OUTPUT", "item": "Nitrofix Bio (Batch 0847)", "qty": "+2,500 L", "from": "FR-03", "ref": "BT-0847", "color": "blue" },
+    { "date": "Jan 16", "type": "DISPATCH", "item": "Trichoguard WP", "qty": "-500 kg", "to": "Distributor", "ref": "SO-2024-0234", "color": "orange" },
+    { "date": "Jan 16", "type": "RECEIPT", "item": "LDPE bottles (500ml)", "qty": "+1,200 pcs", "from": "Vendor", "ref": "PO-2024-0088", "color": "green" },
+    { "date": "Jan 15", "type": "EXPIRY_WRITE_OFF", "item": "Old batch Phosphovita", "qty": "-200 L", "from": "Cold Storage", "ref": "WO-0042", "color": "red" }
+  ],
+  "expiryAlerts": [
+    { "batch": "BT-2024-0821", "product": "Phosphovita", "expiry": "Jan 25", "daysLeft": 8, "qty": "300 L", "value": "₹3.6L", "action": "Dispatch", "color": "danger" },
+    { "batch": "BT-2024-0815", "product": "Nitrofix Bio", "expiry": "Feb 1", "daysLeft": 15, "qty": "450 L", "value": "₹2.8L", "action": "Markdown", "color": "warning" },
+    { "batch": "BT-2024-0808", "product": "Beaukill SC", "expiry": "Feb 10", "daysLeft": 24, "qty": "200 L", "value": "₹1.9L", "action": "Monitor", "color": "blue" }
+  ],
+  "stockByCategory": [
+    { "category": "Raw Materials", "value": "₹42L", "share": 23 },
+    { "category": "Work in Progress", "value": "₹28L", "share": 16 },
+    { "category": "Finished Goods", "value": "₹98L", "share": 54 },
+    { "category": "Packaging", "value": "₹12L", "share": 7 }
+  ]
+}

@@ -1,0 +1,189 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import batches from '@data/manufacturing-batches.json';
+---
+
+<DefaultLayout
+	title="Production Batches"
+	pageHeader="Production Batches"
+	description="Track fermentation, processing, and packaging of microbial products"
+	pageMenu="manufacturing.batches"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(batches as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Batch pipeline</div>
+							<div class="card-subtitle">Production stages overview</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-batches-pipeline" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Yield trend</div>
+							<div class="card-subtitle">Target vs actual, 6 months</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-batches-yield" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Active batches</div>
+							<div class="card-subtitle">Currently in production</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Batch</th>
+										<th>Product</th>
+										<th>Status</th>
+										<th>Started</th>
+										<th class="text-end">Temp</th>
+										<th class="text-end">pH</th>
+										<th class="text-end">Days Left</th>
+										<th>Yield</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(batches as { activeBatches: { batch: string; product: string; status: string; statusColor: string; started: string; temp: string; ph: string; daysLeft: number; yield: string }[] }).activeBatches.map(
+											(b) => (
+												<tr>
+													<td class="fw-medium">{b.batch}</td>
+													<td>{b.product}</td>
+													<td><Badge color={b.statusColor} light>{b.status}</Badge></td>
+													<td class="text-secondary">{b.started}</td>
+													<td class="text-end">{b.temp}</td>
+													<td class="text-end">{b.ph}</td>
+													<td class="text-end">{b.daysLeft > 0 ? `${b.daysLeft}d` : '—'}</td>
+													<td>{b.yield}</td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Fermentation monitoring</div>
+							<div class="card-subtitle">Live fermenter status</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Batch</th>
+										<th>Fermenter</th>
+										<th class="text-end">Hours</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(batches as { fermentationTimeline: { batch: string; product: string; fermenter: string; startTemp: string; currentTemp: string; ph: string; hours: number; targetHours: number; status: string; statusColor: string }[] }).fermentationTimeline.map(
+											(f) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{f.batch}</div>
+														<div class="text-secondary">{f.product}</div>
+													</td>
+													<td>{f.fermenter}</td>
+													<td class="text-end">
+														<div class="d-flex align-items-center gap-2 justify-content-end">
+															<Progress value={(f.hours / f.targetHours) * 100} color={f.statusColor === 'green' ? 'green' : 'orange'} style="width: 60px" />
+															<span>{f.hours}/{f.targetHours}h</span>
+														</div>
+													</td>
+													<td><Badge color={f.statusColor} light>{f.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Alerts</div>
+							<div class="card-subtitle">Requires attention</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Type</th>
+										<th>Message</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(batches as { alerts: { type: string; batch: string; message: string; severity: string; action: string }[] }).alerts.map(
+											(a) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{a.type}</div>
+														<div class="text-secondary">{a.batch}</div>
+													</td>
+													<td>{a.message}</td>
+													<td class="text-end"><Badge color={a.severity === 'danger' ? 'danger' : 'warning'} light>{a.action}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

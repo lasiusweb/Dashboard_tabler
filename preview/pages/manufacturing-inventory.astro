@@ -1,0 +1,209 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import Button from '@ui/Button.astro';
+import inventory from '@data/manufacturing-inventory.json';
+---
+
+<DefaultLayout
+	title="Inventory Management"
+	pageHeader="Inventory Management"
+	description="Track raw materials, work in progress, and finished goods"
+	pageMenu="manufacturing.inventory"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(inventory as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Stock by category</div>
+							<div class="card-subtitle">Value distribution</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-inventory-category" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Warehouse capacity</div>
+							<div class="card-subtitle">Current utilization by location</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Location</th>
+										<th>Type</th>
+										<th class="text-end">Items</th>
+										<th>Capacity</th>
+										<th>Temp</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(inventory as { locations: { name: string; type: string; items: number; capacity: number; tempControlled: boolean; temp: string }[] }).locations.map(
+											(l) => (
+												<tr>
+													<td class="fw-medium">{l.name}</td>
+													<td><Badge color="blue" light>{l.type}</Badge></td>
+													<td class="text-end">{l.items}</td>
+													<td>
+														<div class="d-flex align-items-center gap-2">
+															<Progress value={l.capacity} color={l.capacity > 80 ? 'red' : l.capacity > 60 ? 'yellow' : 'green'} style="width: 80px" />
+															<span>{l.capacity}%</span>
+														</div>
+													</td>
+													<td class="text-secondary">{l.temp}</td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Raw materials</div>
+							<div class="card-subtitle">Stock levels & reorder status</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Material</th>
+										<th>Category</th>
+										<th class="text-end">Stock</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(inventory as { rawMaterials: { name: string; code: string; category: string; stock: string; reorder: string; status: string; statusColor: string }[] }).rawMaterials.map(
+											(r) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{r.name}</div>
+														<div class="text-secondary">{r.code}</div>
+													</td>
+													<td><Badge color="blue" light>{r.category}</Badge></td>
+													<td class="text-end">{r.stock}</td>
+													<td><Badge color={r.statusColor} light>{r.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Expiry alerts</div>
+							<div class="card-subtitle">Batches approaching expiry</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Batch</th>
+										<th class="text-end">Days</th>
+										<th class="text-end">Value</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(inventory as { expiryAlerts: { batch: string; product: string; expiry: string; daysLeft: number; qty: string; value: string; action: string; color: string }[] }).expiryAlerts.map(
+											(e) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{e.batch}</div>
+														<div class="text-secondary">{e.product} · {e.qty}</div>
+													</td>
+													<td class="text-end text-secondary">{e.daysLeft} d</td>
+													<td class="text-end fw-medium">{e.value}</td>
+													<td class="text-end"><Button text={e.action} size="sm" color={e.color} /></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="col-12">
+				<Card>
+					<CardHeader>
+						<div class="card-title">Recent movements</div>
+						<div class="card-subtitle">Stock transactions</div>
+					</CardHeader>
+					<div class="table-responsive">
+						<table class="table card-table table-vcenter">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Type</th>
+									<th>Item</th>
+									<th class="text-end">Quantity</th>
+									<th>Reference</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									(inventory as { recentMovements: { date: string; type: string; item: string; qty: string; from: string; ref: string; color: string }[] }).recentMovements.map(
+										(m) => (
+											<tr>
+												<td class="text-secondary">{m.date}</td>
+												<td><Badge color={m.color} light>{m.type}</Badge></td>
+												<td class="fw-medium">{m.item}</td>
+												<td class="text-end">{m.qty}</td>
+												<td class="text-secondary">{m.ref}</td>
+											</tr>
+										)
+									)
+								}
+							</tbody>
+						</table>
+					</div>
+				</Card>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

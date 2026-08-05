@@ -1,0 +1,49 @@
+{
+  "kpis": [
+    { "title": "Total Products", "value": "124", "change": "+8", "up": true, "color": "primary", "icon": "package" },
+    { "title": "Active Strains", "value": "47", "change": "+3", "up": true, "color": "green", "icon": "bio" },
+    { "title": "Avg CFU/g", "value": "2.8×10⁸", "change": "+12%", "up": true, "color": "cyan", "icon": "chart-bar" },
+    { "title": "Products in Production", "value": "18", "change": "-2", "up": true, "color": "orange", "icon": "building-factory" }
+  ],
+  "categories": [
+    { "name": "Bio-Fertilizer", "count": 38, "share": 31, "avgCfu": "3.2×10⁸", "margin": "34%", "growth": "+18%" },
+    { "name": "Bio-Pesticide", "count": 28, "share": 23, "avgCfu": "1.8×10⁸", "margin": "42%", "growth": "+24%" },
+    { "name": "Bio-Fungicide", "count": 22, "share": 18, "avgCfu": "2.1×10⁸", "margin": "38%", "growth": "+15%" },
+    { "name": "Organic Fertilizer", "count": 18, "share": 15, "avgCfu": "N/A", "margin": "22%", "growth": "+9%" },
+    { "name": "Plant Growth Regulator", "count": 10, "share": 8, "avgCfu": "N/A", "margin": "45%", "growth": "+31%" },
+    { "name": "Soil Conditioner", "count": 8, "share": 5, "avgCfu": "N/A", "margin": "28%", "growth": "+12%" }
+  ],
+  "strainPerformance": [
+    { "strain": "Bacillus subtilis", "products": 12, "avgCfu": "4.5×10⁸", "yield": "94%", "status": "Optimal", "statusColor": "green" },
+    { "strain": "Trichoderma viride", "products": 9, "avgCfu": "2.8×10⁸", "yield": "91%", "status": "Optimal", "statusColor": "green" },
+    { "strain": "Pseudomonas fluorescens", "products": 8, "avgCfu": "3.1×10⁸", "yield": "88%", "status": "Good", "statusColor": "green" },
+    { "strain": "Beauveria bassiana", "products": 6, "avgCfu": "1.5×10⁸", "yield": "82%", "status": "Monitor", "statusColor": "orange" },
+    { "strain": "Azotobacter chroococcum", "products": 5, "avgCfu": "2.2×10⁸", "yield": "89%", "status": "Good", "statusColor": "green" }
+  ],
+  "formulationMix": [
+    { "type": "Liquid", "count": 45, "share": 36 },
+    { "type": "Powder", "count": 38, "share": 31 },
+    { "type": "Granule", "count": 24, "share": 19 },
+    { "type": "Tablet", "count": 12, "share": 10 },
+    { "type": "Suspension", "count": 5, "share": 4 }
+  ],
+  "topProducts": [
+    { "sku": "FP-101", "name": "Nitrofix Bio (500ml)", "category": "Bio-Fertilizer", "strain": "Azotobacter", "cfu": "3.5×10⁸", "batches": 24, "yield": "96%", "stock": "In stock", "stockColor": "green" },
+    { "sku": "FP-205", "name": "Trichoguard WP (1kg)", "category": "Bio-Fungicide", "strain": "Trichoderma", "cfu": "2.8×10⁸", "batches": 18, "yield": "92%", "stock": "In stock", "stockColor": "green" },
+    { "sku": "FP-118", "name": "Phosphovita (1L)", "category": "Bio-Fertilizer", "strain": "Pseudomonas", "cfu": "4.1×10⁸", "batches": 21, "yield": "94%", "stock": "Low stock", "stockColor": "orange" },
+    { "sku": "FP-302", "name": "Beaukill SC (500ml)", "category": "Bio-Pesticide", "strain": "Beauveria", "cfu": "1.8×10⁸", "batches": 15, "yield": "85%", "stock": "In stock", "stockColor": "green" },
+    { "sku": "FP-410", "name": "GrowBoost PGR (250ml)", "category": "Plant Growth Regulator", "strain": "N/A", "cfu": "N/A", "batches": 12, "yield": "98%", "stock": "In stock", "stockColor": "green" }
+  ],
+  "recentBatches": [
+    { "batch": "BT-2024-0847", "product": "Nitrofix Bio", "status": "QC Passed", "statusColor": "green", "quantity": "2,500 L", "cfu": "3.8×10⁸", "expiry": "Mar 2025" },
+    { "batch": "BT-2024-0846", "product": "Trichoguard WP", "status": "In Production", "statusColor": "blue", "quantity": "1,200 kg", "cfu": "—", "expiry": "Apr 2025" },
+    { "batch": "BT-2024-0845", "product": "Phosphovita", "status": "Fermentation", "statusColor": "cyan", "quantity": "800 L", "cfu": "—", "expiry": "May 2025" },
+    { "batch": "BT-2024-0844", "product": "Beaukill SC", "status": "QC Failed", "statusColor": "red", "quantity": "600 L", "cfu": "0.9×10⁸", "expiry": "Feb 2025" },
+    { "batch": "BT-2024-0843", "product": "GrowBoost PGR", "status": "Packaging", "statusColor": "yellow", "quantity": "3,000 L", "cfu": "N/A", "expiry": "Jun 2025" }
+  ],
+  "complianceAlerts": [
+    { "product": "Nitrofix Bio", "cert": "FSSAI", "expires": "Jan 2025", "daysLeft": 45, "action": "Renew", "color": "warning" },
+    { "product": "Trichoguard WP", "cert": "Organic India", "expires": "Feb 2025", "daysLeft": 75, "action": "Review", "color": "blue" },
+    { "product": "Phosphovita", "cert": "BIS", "expires": "Mar 2025", "daysLeft": 105, "action": "Schedule", "color": "green" }
+  ]
+}

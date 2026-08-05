@@ -1,0 +1,44 @@
+{
+  "kpis": [
+    { "title": "Orders Today", "value": "8", "change": "+3", "up": true, "color": "primary", "icon": "shopping-cart" },
+    { "title": "Pending Production", "value": "12", "change": "+2", "up": false, "color": "orange", "icon": "clock" },
+    { "title": "Revenue (MTD)", "value": "₹28.4L", "change": "+14.2%", "up": true, "color": "green", "icon": "currency-rupee" },
+    { "title": "Avg Lead Time", "value": "8.2 days", "change": "-0.5d", "up": true, "color": "cyan", "icon": "timer" }
+  ],
+  "orderPipeline": [
+    { "status": "Placed", "count": 5, "value": "₹8.2L", "color": "gray" },
+    { "status": "Confirmed", "count": 8, "value": "₹14.6L", "color": "blue" },
+    { "status": "In Production", "count": 12, "value": "₹32.1L", "color": "cyan" },
+    { "status": "Ready for Dispatch", "count": 4, "value": "₹11.8L", "color": "yellow" },
+    { "status": "Shipped", "count": 6, "value": "₹18.9L", "color": "green" },
+    { "status": "Delivered", "count": 15, "value": "₹42.3L", "color": "green" }
+  ],
+  "recentOrders": [
+    { "order": "SO-2024-0241", "customer": "Krishi Sahakari Samiti, Indore", "type": "DISTRIBUTOR", "items": 4, "total": "₹4.2L", "status": "Confirmed", "statusColor": "blue", "date": "Jan 17" },
+    { "order": "SO-2024-0240", "customer": "AgriTech Solutions Pvt Ltd", "type": "DIRECT", "items": 2, "total": "₹1.8L", "status": "In Production", "statusColor": "cyan", "date": "Jan 17" },
+    { "order": "SO-2024-0239", "customer": "Bihar State Agriculture Dept", "type": "GOVERNMENT", "items": 8, "total": "₹12.5L", "status": "Placed", "statusColor": "gray", "date": "Jan 16" },
+    { "order": "SO-2024-0238", "customer": "FarmFirst Cooperatives", "type": "DISTRIBUTOR", "items": 3, "total": "₹2.9L", "status": "Ready for Dispatch", "statusColor": "yellow", "date": "Jan 16" },
+    { "order": "SO-2024-0237", "customer": "GreenGrow Exports Ltd", "type": "EXPORT", "items": 5, "total": "₹8.7L", "status": "Shipped", "statusColor": "green", "date": "Jan 15" }
+  ],
+  "byType": [
+    { "type": "Distributor", "count": 45, "share": 52, "revenue": "₹1.2Cr" },
+    { "type": "Direct", "count": 22, "share": 26, "revenue": "₹48L" },
+    { "type": "Government", "count": 12, "share": 14, "revenue": "₹38L" },
+    { "type": "Export", "count": 7, "share": 8, "revenue": "₹24L" }
+  ],
+  "topCustomers": [
+    { "name": "Krishi Sahakari Samiti", "orders": 18, "revenue": "₹32L", "avgLead": "7d", "segment": "Cooperative", "segmentColor": "blue" },
+    { "name": "Bihar Agriculture Dept", "orders": 8, "revenue": "₹28L", "avgLead": "12d", "segment": "Government", "segmentColor": "green" },
+    { "name": "FarmFirst Cooperatives", "orders": 14, "revenue": "₹22L", "avgLead": "6d", "segment": "Cooperative", "segmentColor": "blue" },
+    { "name": "AgriTech Solutions", "orders": 11, "revenue": "₹18L", "avgLead": "5d", "segment": "Direct", "segmentColor": "purple" },
+    { "name": "GreenGrow Exports", "orders": 6, "revenue": "₹16L", "avgLead": "9d", "segment": "Export", "segmentColor": "orange" }
+  ],
+  "monthlyTrend": [
+    { "month": "Aug", "orders": 62, "revenue": 82 },
+    { "month": "Sep", "orders": 71, "revenue": 94 },
+    { "month": "Oct", "orders": 85, "revenue": 112 },
+    { "month": "Nov", "orders": 78, "revenue": 102 },
+    { "month": "Dec", "orders": 68, "revenue": 88 },
+    { "month": "Jan", "orders": 42, "revenue": 56 }
+  ]
+}

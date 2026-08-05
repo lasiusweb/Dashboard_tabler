@@ -1,0 +1,234 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import Button from '@ui/Button.astro';
+import products from '@data/manufacturing-products.json';
+---
+
+<DefaultLayout
+	title="Product Catalog"
+	pageHeader="Product Catalog"
+	description="Manage microbial products - bio-fertilizers, bio-pesticides, bio-fungicides"
+	pageMenu="manufacturing.products"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(products as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Category performance</div>
+							<div class="card-subtitle">Products by category, growth trend</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-products-category" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Formulation mix</div>
+							<div class="card-subtitle">By type</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-products-formulation" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Strain health</div>
+							<div class="card-subtitle">Avg CFU yield %</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-products-strain-health" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Strain performance</div>
+							<div class="card-subtitle">Top microbial strains by yield</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Strain</th>
+										<th class="text-end">Products</th>
+										<th class="text-end">Avg CFU/g</th>
+										<th class="text-end">Yield %</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { strainPerformance: { strain: string; products: number; avgCfu: string; yield: string; status: string; statusColor: string }[] }).strainPerformance.map(
+											(s) => (
+												<tr>
+													<td class="fw-medium">{s.strain}</td>
+													<td class="text-end">{s.products}</td>
+													<td class="text-end">{s.avgCfu}</td>
+													<td class="text-end">
+														<div class="d-flex align-items-center gap-2 justify-content-end">
+															<Progress value={parseInt(s.yield)} color={parseInt(s.yield) > 90 ? 'green' : parseInt(s.yield) > 80 ? 'yellow' : 'red'} style="width: 80px" />
+															<span>{s.yield}</span>
+														</div>
+													</td>
+													<td><Badge color={s.statusColor} light>{s.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Compliance alerts</div>
+							<div class="card-subtitle">Certifications expiring soon</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th class="text-end">Days</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { complianceAlerts: { product: string; cert: string; expires: string; daysLeft: number; action: string; color: string }[] }).complianceAlerts.map((a) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{a.product}</div>
+													<div class="text-secondary">{a.cert} · {a.expires}</div>
+												</td>
+												<td class="text-end text-secondary">{a.daysLeft} d</td>
+												<td class="text-end"><Button text={a.action} size="sm" color={a.color} /></td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Top products</div>
+							<div class="card-subtitle">By batch yield performance</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th>Category</th>
+										<th class="text-end">CFU/g</th>
+										<th class="text-end">Batches</th>
+										<th>Stock</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { topProducts: { sku: string; name: string; category: string; strain: string; cfu: string; batches: number; yield: string; stock: string; stockColor: string }[] }).topProducts.map(
+											(p) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{p.name}</div>
+														<div class="text-secondary">{p.sku} · {p.strain}</div>
+													</td>
+													<td>{p.category}</td>
+													<td class="text-end">{p.cfu}</td>
+													<td class="text-end">{p.batches}</td>
+													<td><Badge color={p.stockColor} light>{p.stock}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Recent batches</div>
+							<div class="card-subtitle">Latest production activity</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Batch</th>
+										<th>Product</th>
+										<th>Status</th>
+										<th class="text-end">Qty</th>
+										<th>Expiry</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(products as { recentBatches: { batch: string; product: string; status: string; statusColor: string; quantity: string; cfu: string; expiry: string }[] }).recentBatches.map(
+											(b) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{b.batch}</div>
+														<div class="text-secondary">CFU: {b.cfu}</div>
+													</td>
+													<td>{b.product}</td>
+													<td><Badge color={b.statusColor} light>{b.status}</Badge></td>
+													<td class="text-end">{b.quantity}</td>
+													<td class="text-secondary">{b.expiry}</td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

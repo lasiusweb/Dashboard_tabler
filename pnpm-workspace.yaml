@@ -3,12 +3,17 @@ packages:
   - preview
   - docs
   - shared
+  - packages/*
 
 allowBuilds:
   '@parcel/watcher': false
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@scarf/scarf': true
   core-js: false
   core-js-pure: false
   esbuild: false
+  prisma: true
   sharp: false
 
 minimumReleaseAge: 1440

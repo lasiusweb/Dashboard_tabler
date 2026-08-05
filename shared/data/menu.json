@@ -16,6 +16,11 @@
         "url": "dashboard-crm.html",
         "title": "CRM",
         "badge": "New"
+      },
+      "manufacturing": {
+        "url": "dashboard-manufacturing.html",
+        "title": "Manufacturing",
+        "badge": "New"
       }
     }
   },
@@ -64,6 +69,102 @@
       "forecasting": {
         "url": "ecommerce-forecasting.html",
         "title": "Forecasting"
+      }
+    }
+  },
+  "manufacturing": {
+    "title": "Manufacturing ERP",
+    "icon": "building-factory",
+    "columns": 2,
+    "children": {
+      "products": {
+        "url": "manufacturing-products.html",
+        "title": "Products",
+        "badge": "New"
+      },
+      "batches": {
+        "url": "manufacturing-batches.html",
+        "title": "Batches"
+      },
+      "qc": {
+        "url": "manufacturing-qc.html",
+        "title": "Quality Control"
+      },
+      "inventory": {
+        "url": "manufacturing-inventory.html",
+        "title": "Inventory"
+      },
+      "orders": {
+        "url": "manufacturing-orders.html",
+        "title": "Sales Orders"
+      },
+      "procurement": {
+        "url": "manufacturing-procurement.html",
+        "title": "Procurement"
+      },
+      "logistics": {
+        "url": "manufacturing-logistics.html",
+        "title": "Logistics"
+      },
+      "finance": {
+        "url": "manufacturing-finance.html",
+        "title": "Finance"
+      }
+    }
+  },
+  "storefront": {
+    "title": "Storefront",
+    "icon": "building-store",
+    "columns": 2,
+    "children": {
+      "home": {
+        "url": "store-home.html",
+        "title": "Home",
+        "badge": "New"
+      },
+      "shop": {
+        "url": "store-shop.html",
+        "title": "Shop"
+      },
+      "category": {
+        "url": "store-category.html",
+        "title": "Category"
+      },
+      "product": {
+        "url": "store-product.html",
+        "title": "Product"
+      },
+      "cart": {
+        "url": "store-cart.html",
+        "title": "Cart"
+      },
+      "checkout": {
+        "url": "store-checkout.html",
+        "title": "Checkout"
+      },
+      "confirmation": {
+        "url": "store-confirmation.html",
+        "title": "Order confirmation"
+      },
+      "orders": {
+        "url": "store-orders.html",
+        "title": "My orders"
+      },
+      "wishlist": {
+        "url": "store-wishlist.html",
+        "title": "Wishlist"
+      },
+      "season": {
+        "url": "store-season.html",
+        "title": "Season"
+      },
+      "support": {
+        "url": "store-support.html",
+        "title": "Support"
+      },
+      "offers": {
+        "url": "store-offers.html",
+        "title": "Offers"
       }
     }
   },
@@ -150,63 +251,7 @@
       "cards": {
         "title": "Cards",
         "children": {
-  "storefront": {
-    "title": "Storefront",
-    "icon": "building-store",
-    "columns": 2,
-    "children": {
-      "home": {
-        "url": "store-home.html",
-        "title": "Home",
-        "badge": "New"
-      },
-      "shop": {
-        "url": "store-shop.html",
-        "title": "Shop"
-      },
-      "category": {
-        "url": "store-category.html",
-        "title": "Category"
-      },
-      "product": {
-        "url": "store-product.html",
-        "title": "Product"
-      },
-      "cart": {
-        "url": "store-cart.html",
-        "title": "Cart"
-      },
-      "checkout": {
-        "url": "store-checkout.html",
-        "title": "Checkout"
-      },
-      "confirmation": {
-        "url": "store-confirmation.html",
-        "title": "Order confirmation"
-      },
-      "orders": {
-        "url": "store-orders.html",
-        "title": "My orders"
-      },
-      "wishlist": {
-        "url": "store-wishlist.html",
-        "title": "Wishlist"
-      },
-      "season": {
-        "url": "store-season.html",
-        "title": "Season"
-      },
-      "support": {
-        "url": "store-support.html",
-        "title": "Support"
-      },
-      "offers": {
-        "url": "store-offers.html",
-        "title": "Offers"
-      }
-    }
-  },
-  "base": {
+          "cards": {
             "url": "cards.html",
             "title": "Sample cards"
           },

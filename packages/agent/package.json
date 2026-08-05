@@ -1,0 +1,25 @@
+{
+  "name": "@firstcrop/agent",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Research agent for FirstCrop ERP (LangGraph)",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.0",
+    "@langchain/langgraph": "^0.2.0",
+    "@langchain/openai": "^0.3.0",
+    "@firstcrop/db": "workspace:*",
+    "zod": "^3.23.0",
+    "pino": "^9.0.0",
+    "pino-pretty": "^11.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "tsx": "^4.23.1",
+    "@types/node": "^22.0.0"
+  }
+}

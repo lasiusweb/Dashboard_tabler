@@ -1,0 +1,184 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import procurement from '@data/manufacturing-procurement.json';
+---
+
+<DefaultLayout
+	title="Procurement"
+	pageHeader="Procurement"
+	description="Manage vendors, purchase orders, and raw material sourcing"
+	pageMenu="manufacturing.procurement"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(procurement as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Spend by category</div>
+							<div class="card-subtitle">MTD breakdown</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-procurement-spend" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Monthly spend trend</div>
+							<div class="card-subtitle">₹L, 6 months</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-procurement-trend" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Purchase orders</div>
+							<div class="card-subtitle">Active POs</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>PO</th>
+										<th>Vendor</th>
+										<th class="text-end">Items</th>
+										<th class="text-end">Total</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(procurement as { purchaseOrders: { po: string; vendor: string; items: number; total: string; status: string; statusColor: string; expected: string }[] }).purchaseOrders.map(
+											(p) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{p.po}</div>
+														<div class="text-secondary">ETA: {p.expected}</div>
+													</td>
+													<td>{p.vendor}</td>
+													<td class="text-end">{p.items}</td>
+													<td class="text-end fw-medium">{p.total}</td>
+													<td><Badge color={p.statusColor} light>{p.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Pending receipts</div>
+							<div class="card-subtitle">Expected deliveries</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>PO</th>
+										<th>Item</th>
+										<th class="text-end">Qty</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(procurement as { pendingReceipts: { po: string; vendor: string; item: string; ordered: string; received: string; pending: string; expected: string; status: string; statusColor: string }[] }).pendingReceipts.map(
+											(r) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{r.po}</div>
+														<div class="text-secondary">{r.vendor}</div>
+													</td>
+													<td>{r.item}</td>
+													<td class="text-end">{r.pending}</td>
+													<td><Badge color={r.statusColor} light>{r.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="col-12">
+				<Card>
+					<CardHeader>
+						<div class="card-title">Vendor performance</div>
+						<div class="card-subtitle">Quality, lead time, and ratings</div>
+					</CardHeader>
+					<div class="table-responsive">
+						<table class="table card-table table-vcenter">
+							<thead>
+								<tr>
+									<th>Vendor</th>
+									<th>Category</th>
+									<th class="text-end">Orders</th>
+									<th class="text-end">Avg Lead</th>
+									<th class="text-end">Quality</th>
+									<th class="text-end">Rating</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									(procurement as { vendors: { name: string; category: string; orders: number; avgLead: string; quality: string; rating: number; status: string; statusColor: string }[] }).vendors.map(
+										(v) => (
+											<tr>
+												<td class="fw-medium">{v.name}</td>
+												<td><Badge color="blue" light>{v.category}</Badge></td>
+												<td class="text-end">{v.orders}</td>
+												<td class="text-end">{v.avgLead}</td>
+												<td class="text-end">{v.quality}</td>
+												<td class="text-end">{v.rating}</td>
+												<td><Badge color={v.statusColor} light>{v.status}</Badge></td>
+											</tr>
+										)
+									)
+								}
+							</tbody>
+						</table>
+					</div>
+				</Card>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

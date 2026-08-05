@@ -1,0 +1,41 @@
+{
+  "kpis": [
+    { "title": "Open POs", "value": "14", "change": "+3", "up": false, "color": "primary", "icon": "file-text" },
+    { "title": "Pending Receipts", "value": "8", "change": "+2", "up": false, "color": "orange", "icon": "package" },
+    { "title": "Spend (MTD)", "value": "₹18.6L", "change": "+8.4%", "up": true, "color": "green", "icon": "currency-rupee" },
+    { "title": "Avg Lead Time", "value": "5.2 days", "change": "-0.8d", "up": true, "color": "cyan", "icon": "timer" }
+  ],
+  "purchaseOrders": [
+    { "po": "PO-2024-0092", "vendor": "BioCulture India Pvt Ltd", "items": 3, "total": "₹4.2L", "status": "Confirmed", "statusColor": "blue", "expected": "Jan 22" },
+    { "po": "PO-2024-0091", "vendor": "ChemPack Industries", "items": 5, "total": "₹6.8L", "status": "Submitted", "statusColor": "yellow", "expected": "Jan 25" },
+    { "po": "PO-2024-0090", "vendor": "AgriMedia Solutions", "items": 2, "total": "₹1.9L", "status": "Partially Received", "statusColor": "orange", "expected": "Jan 18" },
+    { "po": "PO-2024-0089", "vendor": "PackRight Containers", "items": 4, "total": "₹3.1L", "status": "Fully Received", "statusColor": "green", "expected": "Jan 16" },
+    { "po": "PO-2024-0088", "vendor": "BioCulture India Pvt Ltd", "items": 2, "total": "₹2.4L", "status": "Draft", "statusColor": "gray", "expected": "Jan 28" }
+  ],
+  "vendors": [
+    { "name": "BioCulture India Pvt Ltd", "category": "Strain", "orders": 18, "avgLead": "4d", "quality": "98%", "rating": 4.8, "status": "Preferred", "statusColor": "green" },
+    { "name": "ChemPack Industries", "category": "Media", "orders": 12, "avgLead": "5d", "quality": "95%", "rating": 4.5, "status": "Active", "statusColor": "blue" },
+    { "name": "AgriMedia Solutions", "category": "Media", "orders": 8, "avgLead": "6d", "quality": "92%", "rating": 4.2, "status": "Active", "statusColor": "blue" },
+    { "name": "PackRight Containers", "category": "Packaging", "orders": 15, "avgLead": "3d", "quality": "99%", "rating": 4.9, "status": "Preferred", "statusColor": "green" },
+    { "name": "LabelMaster Prints", "category": "Label", "orders": 10, "avgLead": "4d", "quality": "97%", "rating": 4.6, "status": "Active", "statusColor": "blue" }
+  ],
+  "pendingReceipts": [
+    { "po": "PO-2024-0090", "vendor": "AgriMedia Solutions", "item": "Nutrient broth media", "ordered": "25 kg", "received": "15 kg", "pending": "10 kg", "expected": "Jan 18", "status": "Partial", "statusColor": "orange" },
+    { "po": "PO-2024-0092", "vendor": "BioCulture India Pvt Ltd", "item": "Bacillus subtilis culture", "ordered": "5 kg", "received": "0 kg", "pending": "5 kg", "expected": "Jan 22", "status": "In Transit", "statusColor": "blue" },
+    { "po": "PO-2024-0091", "vendor": "ChemPack Industries", "item": "Sucrose (carbon source)", "ordered": "50 kg", "received": "0 kg", "pending": "50 kg", "expected": "Jan 25", "status": "Confirmed", "statusColor": "blue" }
+  ],
+  "spendByCategory": [
+    { "category": "Strains & Cultures", "spend": "₹8.2L", "share": 44 },
+    { "category": "Media & Chemicals", "spend": "₹5.4L", "share": 29 },
+    { "category": "Packaging", "spend": "₹3.2L", "share": 17 },
+    { "category": "Labels & Print", "spend": "₹1.8L", "share": 10 }
+  ],
+  "monthlySpend": [
+    { "month": "Aug", "spend": 14.2 },
+    { "month": "Sep", "spend": 16.8 },
+    { "month": "Oct", "spend": 19.4 },
+    { "month": "Nov", "spend": 17.6 },
+    { "month": "Dec", "spend": 15.8 },
+    { "month": "Jan", "spend": 18.6 }
+  ]
+}

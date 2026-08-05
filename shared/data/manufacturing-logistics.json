@@ -1,0 +1,40 @@
+{
+  "kpis": [
+    { "title": "Shipments Today", "value": "6", "change": "+2", "up": true, "color": "primary", "icon": "truck" },
+    { "title": "In Transit", "value": "14", "change": "+3", "up": false, "color": "blue", "icon": "route" },
+    { "title": "On-Time Delivery", "value": "92.4%", "change": "+1.2%", "up": true, "color": "green", "icon": "check" },
+    { "title": "RTO Rate", "value": "3.8%", "change": "-0.5%", "up": true, "color": "cyan", "icon": "rotate-2" }
+  ],
+  "shipments": [
+    { "shipment": "SH-2024-0187", "order": "SO-2024-0237", "customer": "GreenGrow Exports", "destination": "Mumbai, MH", "carrier": "BlueDart", "status": "In Transit", "statusColor": "blue", "dispatched": "Jan 15", "eta": "Jan 18" },
+    { "shipment": "SH-2024-0186", "order": "SO-2024-0235", "customer": "Krishi Sahakari Samiti", "destination": "Indore, MP", "carrier": "VRL Logistics", "status": "Delivered", "statusColor": "green", "dispatched": "Jan 14", "eta": "Jan 16" },
+    { "shipment": "SH-2024-0185", "order": "SO-2024-0233", "customer": "FarmFirst Cooperatives", "destination": "Patna, BR", "carrier": "DTDC", "status": "Out for Delivery", "statusColor": "cyan", "dispatched": "Jan 15", "eta": "Jan 17" },
+    { "shipment": "SH-2024-0184", "order": "SO-2024-0231", "customer": "AgriTech Solutions", "destination": "Bangalore, KA", "carrier": "BlueDart", "status": "In Transit", "statusColor": "blue", "dispatched": "Jan 14", "eta": "Jan 18" },
+    { "shipment": "SH-2024-0183", "order": "SO-2024-0229", "customer": "Bihar Agriculture Dept", "destination": "Patna, BR", "carrier": "Safexpress", "status": "Preparing", "statusColor": "gray", "dispatched": "—", "eta": "Jan 20" }
+  ],
+  "carrierPerformance": [
+    { "carrier": "BlueDart", "shipments": 45, "onTime": 94, "avgDays": 2.8, "damage": 0.5, "status": "Preferred", "statusColor": "green" },
+    { "carrier": "VRL Logistics", "shipments": 32, "onTime": 91, "avgDays": 3.2, "damage": 0.8, "status": "Active", "statusColor": "blue" },
+    { "carrier": "DTDC", "shipments": 28, "onTime": 88, "avgDays": 3.5, "damage": 1.2, "status": "Active", "statusColor": "blue" },
+    { "carrier": "Safexpress", "shipments": 18, "onTime": 92, "avgDays": 2.5, "damage": 0.3, "status": "Preferred", "statusColor": "green" }
+  ],
+  "deliveryByZone": [
+    { "zone": "Metro", "avgDays": 2.1, "onTime": 96, "shipments": 38 },
+    { "zone": "Urban", "avgDays": 3.2, "onTime": 92, "shipments": 42 },
+    { "zone": "Semi-Urban", "avgDays": 4.5, "onTime": 88, "shipments": 28 },
+    { "zone": "Rural", "avgDays": 6.8, "onTime": 82, "shipments": 15 }
+  ],
+  "coldChain": [
+    { "shipment": "SH-0184", "product": "Beaukill SC", "vehicle": "CCV-01", "targetTemp": "4-8°C", "currentTemp": "6.2°C", "status": "Normal", "statusColor": "green", "logs": 24 },
+    { "shipment": "SH-0182", "product": "Trichoguard WP", "vehicle": "CCV-02", "targetTemp": "15-25°C", "currentTemp": "22.1°C", "status": "Normal", "statusColor": "green", "logs": 18 },
+    { "shipment": "SH-0180", "product": "Phosphovita", "vehicle": "TRK-03", "targetTemp": "4-8°C", "currentTemp": "9.4°C", "status": "Warning", "statusColor": "orange", "logs": 12 }
+  ],
+  "monthlyDelivery": [
+    { "month": "Aug", "onTime": 89, "delayed": 8, "rto": 3 },
+    { "month": "Sep", "onTime": 91, "delayed": 6, "rto": 3 },
+    { "month": "Oct", "onTime": 88, "delayed": 9, "rto": 3 },
+    { "month": "Nov", "onTime": 93, "delayed": 5, "rto": 2 },
+    { "month": "Dec", "onTime": 91, "delayed": 7, "rto": 2 },
+    { "month": "Jan", "onTime": 92, "delayed": 5, "rto": 3 }
+  ]
+}

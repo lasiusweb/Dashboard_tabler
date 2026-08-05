@@ -1,0 +1,213 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import finance from '@data/manufacturing-finance.json';
+---
+
+<DefaultLayout
+	title="Finance & Invoicing"
+	pageHeader="Finance & Invoicing"
+	description="Revenue, GST, TDS, and payment tracking"
+	pageMenu="manufacturing.finance"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(finance as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Payment methods</div>
+							<div class="card-subtitle">Collection breakdown</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-finance-payment-methods" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Revenue vs expenses</div>
+							<div class="card-subtitle">₹L, 6 months</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-finance-revenue-trend" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Invoices</div>
+							<div class="card-subtitle">Recent invoices</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Invoice</th>
+										<th>Customer</th>
+										<th class="text-end">Amount</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(finance as { invoices: { invoice: string; customer: string; amount: string; cgst: string; sgst: string; total: string; status: string; statusColor: string; date: string }[] }).invoices.map(
+											(inv) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{inv.invoice}</div>
+														<div class="text-secondary">{inv.date}</div>
+													</td>
+													<td>{inv.customer}</td>
+													<td class="text-end fw-medium">{inv.total}</td>
+													<td><Badge color={inv.statusColor} light>{inv.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Receivables</div>
+							<div class="card-subtitle">Outstanding payments</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Customer</th>
+										<th class="text-end">Amount</th>
+										<th class="text-end">Days</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(finance as { receivables: { customer: string; amount: string; days: number; status: string; statusColor: string; action: string }[] }).receivables.map(
+											(r) => (
+												<tr>
+													<td class="fw-medium">{r.customer}</td>
+													<td class="text-end">{r.amount}</td>
+													<td class="text-end">{r.days}d</td>
+													<td><Badge color={r.statusColor} light>{r.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">GST summary</div>
+							<div class="card-subtitle">Monthly filing status</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Month</th>
+										<th class="text-end">Sales</th>
+										<th class="text-end">CGST</th>
+										<th class="text-end">SGST</th>
+										<th class="text-end">IGST</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(finance as { gstSummary: { month: string; sales: string; cgst: string; sgst: string; igst: string; netPayable: string; filed: boolean }[] }).gstSummary.map(
+											(g) => (
+												<tr>
+													<td class="fw-medium">{g.month}</td>
+													<td class="text-end">{g.sales}</td>
+													<td class="text-end">{g.cgst}</td>
+													<td class="text-end">{g.sgst}</td>
+													<td class="text-end">{g.igst}</td>
+													<td><Badge color={g.filed ? 'green' : 'orange'} light>{g.filed ? 'Filed' : 'Pending'}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">TDS summary</div>
+							<div class="card-subtitle">Tax deducted at source</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Section</th>
+										<th class="text-end">Amount</th>
+										<th class="text-end">Deducted</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(finance as { tdsSummary: { section: string; amount: string; deducted: string; status: string; statusColor: string }[] }).tdsSummary.map(
+											(t) => (
+												<tr>
+													<td class="fw-medium">{t.section}</td>
+													<td class="text-end">{t.amount}</td>
+													<td class="text-end">{t.deducted}</td>
+													<td><Badge color={t.statusColor} light>{t.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

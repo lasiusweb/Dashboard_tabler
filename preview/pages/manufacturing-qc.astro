@@ -1,0 +1,156 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import qc from '@data/manufacturing-qc.json';
+---
+
+<DefaultLayout
+	title="Quality Control"
+	pageHeader="Quality Control"
+	description="Monitor test results, batch quality, and compliance"
+	pageMenu="manufacturing.qc"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(qc as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Pass/fail trend</div>
+							<div class="card-subtitle">Monthly QC results, 6 months</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-qc-trend" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Fail reasons</div>
+							<div class="card-subtitle">Root cause breakdown</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-qc-fail-reasons" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-3">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Test types</div>
+							<div class="card-subtitle">Pass rate by type</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-qc-test-types" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Pending tests</div>
+							<div class="card-subtitle">Awaiting lab execution</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Batch</th>
+										<th>Tests</th>
+										<th>Scheduled</th>
+										<th>Priority</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(qc as { pendingTests: { batch: string; product: string; tests: string[]; scheduled: string; priority: string; priorityColor: string }[] }).pendingTests.map(
+											(t) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{t.batch}</div>
+														<div class="text-secondary">{t.product}</div>
+													</td>
+													<td>
+														<div class="d-flex flex-wrap gap-1">
+															{t.tests.map((test: string) => <Badge color="blue" light>{test}</Badge>)}
+														</div>
+													</td>
+													<td class="text-secondary">{t.scheduled}</td>
+													<td><Badge color={t.priorityColor} light>{t.priority}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Recent results</div>
+							<div class="card-subtitle">Latest test outcomes</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Batch</th>
+										<th>Test</th>
+										<th>Expected</th>
+										<th>Actual</th>
+										<th>Result</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(qc as { recentResults: { batch: string; product: string; testType: string; expected: string; actual: string; result: string; resultColor: string; tester: string; date: string }[] }).recentResults.map(
+											(r) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{r.batch}</div>
+														<div class="text-secondary">{r.product}</div>
+													</td>
+													<td>{r.testType}</td>
+													<td class="text-secondary">{r.expected}</td>
+													<td class="fw-medium">{r.actual}</td>
+													<td><Badge color={r.resultColor} light>{r.result}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

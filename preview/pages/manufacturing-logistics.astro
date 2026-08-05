@@ -1,0 +1,184 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import logistics from '@data/manufacturing-logistics.json';
+---
+
+<DefaultLayout
+	title="Logistics & Fulfillment"
+	pageHeader="Logistics & Fulfillment"
+	description="Track shipments, delivery SLA, and cold chain compliance"
+	pageMenu="manufacturing.logistics"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(logistics as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Delivery by zone</div>
+							<div class="card-subtitle">SLA performance</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-logistics-zone" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Monthly delivery</div>
+							<div class="card-subtitle">On-time vs delayed</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-logistics-trend" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Cold chain status</div>
+							<div class="card-subtitle">Active temperature-controlled shipments</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Shipment</th>
+										<th class="text-end">Temp</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(logistics as { coldChain: { shipment: string; product: string; vehicle: string; targetTemp: string; currentTemp: string; status: string; statusColor: string; logs: number }[] }).coldChain.map(
+											(c) => (
+												<tr>
+													<td>
+														<div class="fw-medium">{c.shipment}</div>
+														<div class="text-secondary">{c.product}</div>
+													</td>
+													<td class="text-end">{c.currentTemp}</td>
+													<td><Badge color={c.statusColor} light>{c.status}</Badge></td>
+												</tr>
+											)
+										)
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="col-12">
+				<Card>
+					<CardHeader>
+						<div class="card-title">Active shipments</div>
+						<div class="card-subtitle">In transit & preparing</div>
+					</CardHeader>
+					<div class="table-responsive">
+						<table class="table card-table table-vcenter">
+							<thead>
+								<tr>
+									<th>Shipment</th>
+									<th>Order</th>
+									<th>Customer</th>
+									<th>Destination</th>
+									<th>Carrier</th>
+									<th>Status</th>
+									<th>ETA</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									(logistics as { shipments: { shipment: string; order: string; customer: string; destination: string; carrier: string; status: string; statusColor: string; dispatched: string; eta: string }[] }).shipments.map(
+										(s) => (
+											<tr>
+												<td class="fw-medium">{s.shipment}</td>
+												<td class="text-secondary">{s.order}</td>
+												<td>{s.customer}</td>
+												<td>{s.destination}</td>
+												<td>{s.carrier}</td>
+												<td><Badge color={s.statusColor} light>{s.status}</Badge></td>
+												<td class="text-secondary">{s.eta}</td>
+											</tr>
+										)
+									)
+								}
+							</tbody>
+						</table>
+					</div>
+				</Card>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="col-12">
+				<Card>
+					<CardHeader>
+						<div class="card-title">Carrier scorecard</div>
+						<div class="card-subtitle">Performance by carrier</div>
+					</CardHeader>
+					<div class="table-responsive">
+						<table class="table card-table table-vcenter">
+							<thead>
+								<tr>
+									<th>Carrier</th>
+									<th class="text-end">Shipments</th>
+									<th class="text-end">On-Time %</th>
+									<th class="text-end">Avg Days</th>
+									<th class="text-end">Damage %</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								{
+									(logistics as { carrierPerformance: { carrier: string; shipments: number; onTime: number; avgDays: number; damage: number; status: string; statusColor: string }[] }).carrierPerformance.map(
+										(c) => (
+											<tr>
+												<td class="fw-medium">{c.carrier}</td>
+												<td class="text-end">{c.shipments}</td>
+												<td class="text-end">
+													<div class="d-flex align-items-center gap-2 justify-content-end">
+														<Progress value={c.onTime} color={c.onTime > 92 ? 'green' : c.onTime > 88 ? 'yellow' : 'red'} style="width: 60px" />
+														<span>{c.onTime}%</span>
+													</div>
+												</td>
+												<td class="text-end">{c.avgDays}d</td>
+												<td class="text-end">{c.damage}%</td>
+												<td><Badge color={c.statusColor} light>{c.status}</Badge></td>
+											</tr>
+										)
+									)
+								}
+							</tbody>
+						</table>
+					</div>
+				</Card>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

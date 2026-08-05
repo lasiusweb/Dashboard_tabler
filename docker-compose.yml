@@ -1,6 +1,63 @@
 ---
 services:
 
+  # ─── Database ─────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: firstcrop-postgres
+    environment:
+      POSTGRES_DB: firstcrop
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Redis (optional, for caching) ────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: firstcrop-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── API Server ───────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: firstcrop-api
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/firstcrop
+      - REDIS_URL=redis://redis:6379
+      - API_PORT=3002
+      - NODE_ENV=development
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./packages/api:/app/packages/api
+      - /app/packages/api/node_modules
+
+  # ─── Tabler Dashboard ─────────────────────────────────────────────────────
   tabler:
     image: tabler
     container_name: tabler
@@ -18,3 +75,7 @@ services:
       - /app/preview/node_modules
       - /app/docs/node_modules
     tty: true
+
+volumes:
+  postgres_data:
+  redis_data:

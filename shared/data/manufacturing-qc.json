@@ -1,0 +1,42 @@
+{
+  "kpis": [
+    { "title": "Tests Today", "value": "14", "change": "+3", "up": true, "color": "primary", "icon": "test-pipe" },
+    { "title": "Pass Rate", "value": "94.2%", "change": "+1.1%", "up": true, "color": "green", "icon": "check" },
+    { "title": "Pending Results", "value": "6", "change": "-2", "up": true, "color": "orange", "icon": "clock" },
+    { "title": "Failed Batches", "value": "2", "change": "+1", "up": false, "color": "red", "icon": "x" }
+  ],
+  "testTypes": [
+    { "type": "CFU Count", "tests": 42, "pass": 40, "fail": 2, "passRate": "95.2%" },
+    { "type": "pH Level", "tests": 38, "pass": 36, "fail": 2, "passRate": "94.7%" },
+    { "type": "Moisture", "tests": 35, "pass": 34, "fail": 1, "passRate": "97.1%" },
+    { "type": "Contamination", "tests": 30, "pass": 28, "fail": 2, "passRate": "93.3%" },
+    { "type": "Viscosity", "tests": 22, "pass": 21, "fail": 1, "passRate": "95.5%" },
+    { "type": "Heavy Metals", "tests": 18, "pass": 18, "fail": 0, "passRate": "100%" }
+  ],
+  "pendingTests": [
+    { "batch": "BT-2024-0848", "product": "Beaukill SC", "tests": ["CFU Count", "pH Level", "Contamination"], "scheduled": "Jan 17", "priority": "High", "priorityColor": "red" },
+    { "batch": "BT-2024-0847", "product": "GrowBoost PGR", "tests": ["pH Level", "Viscosity"], "scheduled": "Jan 17", "priority": "Normal", "priorityColor": "blue" },
+    { "batch": "BT-2024-0843", "product": "Phosphovita", "tests": ["CFU Count"], "scheduled": "Jan 18", "priority": "Normal", "priorityColor": "blue" }
+  ],
+  "recentResults": [
+    { "batch": "BT-2024-0850", "product": "Trichoguard WP", "testType": "CFU Count", "expected": "≥2.0×10⁸", "actual": "2.4×10⁸", "result": "PASS", "resultColor": "green", "tester": "Dr. Priya", "date": "Jan 16" },
+    { "batch": "BT-2024-0850", "product": "Trichoguard WP", "testType": "pH Level", "expected": "6.0-7.5", "actual": "6.8", "result": "PASS", "resultColor": "green", "tester": "Dr. Priya", "date": "Jan 16" },
+    { "batch": "BT-2024-0849", "product": "Phosphovita", "testType": "Moisture", "expected": "≤15%", "actual": "12.3%", "result": "PASS", "resultColor": "green", "tester": "Rajesh K.", "date": "Jan 16" },
+    { "batch": "BT-2024-0844", "product": "Beaukill SC", "testType": "CFU Count", "expected": "≥1.5×10⁸", "actual": "0.9×10⁸", "result": "FAIL", "resultColor": "red", "tester": "Dr. Priya", "date": "Jan 15" },
+    { "batch": "BT-2024-0844", "product": "Beaukill SC", "testType": "Contamination", "expected": "Absent", "actual": "Present", "result": "FAIL", "resultColor": "red", "tester": "Rajesh K.", "date": "Jan 15" }
+  ],
+  "failReasons": [
+    { "reason": "CFU below threshold", "count": 4, "share": 40 },
+    { "reason": "Contamination detected", "count": 3, "share": 30 },
+    { "reason": "pH out of range", "count": 2, "share": 20 },
+    { "reason": "Viscosity deviation", "count": 1, "share": 10 }
+  ],
+  "trend": [
+    { "month": "Aug", "pass": 92, "fail": 8 },
+    { "month": "Sep", "pass": 94, "fail": 6 },
+    { "month": "Oct", "pass": 91, "fail": 9 },
+    { "month": "Nov", "pass": 95, "fail": 5 },
+    { "month": "Dec", "pass": 93, "fail": 7 },
+    { "month": "Jan", "pass": 94, "fail": 6 }
+  ]
+}
