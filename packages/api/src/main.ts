@@ -2,17 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { SessionGuard } from './modules/auth/session.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS
   app.enableCors({
     origin: ['http://localhost:4321', 'http://localhost:3000'],
     credentials: true,
   });
 
-  // Enable validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -21,7 +20,8 @@ async function bootstrap() {
     }),
   );
 
-  // Global prefix
+  app.useGlobalGuards(app.get(SessionGuard));
+
   app.setGlobalPrefix('api');
 
   // Swagger documentation

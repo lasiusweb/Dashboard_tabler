@@ -1,12 +1,14 @@
 import { Controller, Post, Body, Get, Param, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { Public } from './public.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('sign-in')
   @ApiOperation({ summary: 'Sign in with email and password' })
   @ApiResponse({ status: 200, description: 'Successfully signed in' })
@@ -14,6 +16,7 @@ export class AuthController {
     return this.authService.signIn(body.email, body.password);
   }
 
+  @Public()
   @Post('sign-up')
   @ApiOperation({ summary: 'Sign up with email and password' })
   @ApiResponse({ status: 201, description: 'Successfully signed up' })
@@ -23,6 +26,7 @@ export class AuthController {
     return this.authService.signUp(body.email, body.password, body.name);
   }
 
+  @Public()
   @Post('sign-out')
   @ApiOperation({ summary: 'Sign out' })
   @ApiResponse({ status: 200, description: 'Successfully signed out' })
@@ -30,6 +34,7 @@ export class AuthController {
     return this.authService.signOut(body.sessionToken);
   }
 
+  @Public()
   @Get('session')
   @ApiOperation({ summary: 'Get current session' })
   @ApiResponse({ status: 200, description: 'Session retrieved' })
@@ -37,6 +42,7 @@ export class AuthController {
     return this.authService.getSession(token);
   }
 
+  @Public()
   @Post('forget-password')
   @ApiOperation({ summary: 'Send password reset email' })
   @ApiResponse({ status: 200, description: 'Reset email sent' })
@@ -44,6 +50,7 @@ export class AuthController {
     return this.authService.sendPasswordResetEmail(body.email);
   }
 
+  @Public()
   @Post('reset-password')
   @ApiOperation({ summary: 'Reset password with token' })
   @ApiResponse({ status: 200, description: 'Password reset' })
@@ -51,6 +58,7 @@ export class AuthController {
     return this.authService.resetPassword(body.password, body.token);
   }
 
+  @Public()
   @Get('verify-email')
   @ApiOperation({ summary: 'Verify email with token' })
   @ApiResponse({ status: 200, description: 'Email verified' })
@@ -58,6 +66,7 @@ export class AuthController {
     return this.authService.verifyEmail(token);
   }
 
+  @Public()
   @Post('send-otp')
   @ApiOperation({ summary: 'Send OTP to phone' })
   @ApiResponse({ status: 200, description: 'OTP sent' })
@@ -65,6 +74,7 @@ export class AuthController {
     return this.authService.sendPhoneOTP(body.phone);
   }
 
+  @Public()
   @Post('verify-otp')
   @ApiOperation({ summary: 'Verify phone OTP' })
   @ApiResponse({ status: 200, description: 'Phone verified' })
