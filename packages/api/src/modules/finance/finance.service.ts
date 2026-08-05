@@ -52,7 +52,7 @@ export class FinanceService {
     });
   }
 
-  async findOneInvoice(id: string): Promise<Invoice> {
+  async findOneInvoice(id: string) {
     const invoice = await this.prisma.invoice.findUnique({
       where: { id },
       include: {
@@ -91,7 +91,7 @@ export class FinanceService {
     customerId?: string;
     vendorId?: string;
     type: string;
-    items: Array<{
+    items?: Array<{
       description: string;
       quantity: number;
       unitPrice: number;
@@ -105,7 +105,7 @@ export class FinanceService {
     let totalCGST = new Prisma.Decimal(0);
     let totalSGST = new Prisma.Decimal(0);
 
-    for (const item of data.items) {
+    for (const item of data.items || []) {
       const itemTotal = new Prisma.Decimal(item.unitPrice).mul(item.quantity);
       subtotal = subtotal.add(itemTotal);
 
@@ -247,7 +247,7 @@ export class FinanceService {
 
     // Update invoice paid amount
     const totalPaid = invoice.payments.reduce(
-      (sum, p) => sum.add(p.amount),
+      (sum: any, p: any) => sum.add(p.amount),
       new Prisma.Decimal(data.amount),
     );
 

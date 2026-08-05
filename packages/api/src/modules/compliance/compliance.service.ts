@@ -2,6 +2,8 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { PrismaService } from '../../prisma/prisma.service';
 import { ComplianceRecord, Prisma } from '@prisma/client';
 
+type ToolResult = { success: boolean; message?: string; data?: any };
+
 @Injectable()
 export class ComplianceService {
   constructor(private prisma: PrismaService) {}

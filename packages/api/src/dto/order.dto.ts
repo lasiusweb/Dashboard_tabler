@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber, IsArray, ValidateNested, Min, IsIn } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsArray, ValidateNested, Min, Max, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -90,6 +90,48 @@ export class CreateOrderDto {
   @IsString()
   @IsOptional()
   createdById?: string;
+
+  @ApiPropertyOptional({ description: 'Required by date' })
+  @IsOptional()
+  requiredByDate?: Date;
+}
+
+export class UpdateOrderDto {
+  @ApiPropertyOptional({ description: 'Customer (Party) ID' })
+  @IsString()
+  @IsOptional()
+  customerId?: string;
+
+  @ApiPropertyOptional({ description: 'Order type', enum: ['DISTRIBUTOR', 'DIRECT', 'GOVERNMENT', 'EXPORT'] })
+  @IsString()
+  @IsIn(['DISTRIBUTOR', 'DIRECT', 'GOVERNMENT', 'EXPORT'])
+  @IsOptional()
+  orderType?: string;
+
+  @ApiPropertyOptional({ description: 'Shipping address' })
+  @IsString()
+  @IsOptional()
+  shippingAddress?: string;
+
+  @ApiPropertyOptional({ description: 'Shipping city' })
+  @IsString()
+  @IsOptional()
+  shippingCity?: string;
+
+  @ApiPropertyOptional({ description: 'Shipping state' })
+  @IsString()
+  @IsOptional()
+  shippingState?: string;
+
+  @ApiPropertyOptional({ description: 'Shipping pincode' })
+  @IsString()
+  @IsOptional()
+  shippingPincode?: string;
+
+  @ApiPropertyOptional({ description: 'Notes' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
 
   @ApiPropertyOptional({ description: 'Required by date' })
   @IsOptional()

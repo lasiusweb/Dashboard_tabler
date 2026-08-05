@@ -107,7 +107,7 @@ export class BatchesController {
     @Param('id') id: string,
     @Body() body: UpdateQCStatusDto,
   ) {
-    return this.batchesService.updateQCStatus(id, body.qcStatus, body.certificateNumber);
+    return this.batchesService.updateQCStatus(id, body.qcStatus as 'PASS' | 'FAIL' | 'CONDITIONAL_PASS', body.certificateNumber);
   }
 
   @Post(':id/package')

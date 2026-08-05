@@ -14,7 +14,7 @@ import { CreateProductDto, UpdateProductDto } from '../../dto';
 
 @ApiTags('products')
 @Controller('products')
-export class UsersController {
+export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()

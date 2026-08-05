@@ -33,14 +33,15 @@ model User {
   sessions      Session[]
   activities    Activity[]
   agentConversations AgentConversation[]
-  agentTasks    AgentTask[]
   assignedTasks AgentTask[]          @relation("AssignedTasks")
   createdTasks  AgentTask[]          @relation("CreatedTasks")
   ownerships    PartyOwnership[]
-  contacts      Contact[]
   salesOrders   SalesOrder[]         @relation("SalesOrderCreator")
   fieldVisits   FieldVisit[]
   qcTests       QCTest[]             @relation("QCTester")
+  members       Member[]
+  invitations   Invitation[]         @relation("InvitedByUser")
+  distributors  Distributor[]
 
   @@index([email])
   @@index([phone])
@@ -115,6 +116,7 @@ model Organization {
   shipments   Shipment[]
   complianceRecords ComplianceRecord[]
   invoices    Invoice[]
+  agentTasks   AgentTask[]
 
   @@index([slug])
 }
@@ -146,7 +148,7 @@ model Invitation {
   updatedAt       DateTime @updatedAt
 
   organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  invitedBy       User         @relation(fields: [invitedById], references: [id])
+  invitedBy       User         @relation("InvitedByUser", fields: [invitedById], references: [id])
 
   @@unique([organizationId, email])
   @@index([token])
@@ -187,6 +189,8 @@ model Party {
   vendorAccounts  VendorAccount[]
   invoicesAsVendor Invoice[]     @relation("InvoiceVendor")
   invoicesAsCustomer Invoice[]   @relation("InvoiceCustomer")
+  complianceRecords ComplianceRecord[]
+  distributor     Distributor?
 
   @@index([organizationId, type])
   @@index([gstin])
@@ -279,6 +283,7 @@ model Product {
   batches         Batch[]
   orderItems      SalesOrderItem[]
   inventory       Inventory[]
+  inventoryMovements InventoryMovement[]
 
   @@index([organizationId, category])
   @@index([sku])
@@ -387,7 +392,6 @@ model Batch {
   organization    Organization @relation(fields: [organizationId], references: [id])
   ingredients     BatchIngredient[]
   qcTests         QCTest[]
-  inventoryMovements InventoryMovement[]
   orderItems      SalesOrderItem[]
   discussions     BatchDiscussion[]
 
@@ -408,6 +412,18 @@ model BatchIngredient {
 
   batch           Batch      @relation(fields: [batchId], references: [id], onDelete: Cascade)
   rawMaterial     RawMaterial @relation(fields: [rawMaterialId], references: [id])
+
+  @@index([batchId])
+}
+
+model BatchDiscussion {
+  id              String   @id @default(cuid())
+  batchId         String
+  userId          String?
+  message         String
+  createdAt       DateTime @default(now())
+
+  batch           Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
 
   @@index([batchId])
 }
@@ -454,7 +470,8 @@ model InventoryLocation {
   updatedAt       DateTime @updatedAt
 
   inventory       Inventory[]
-  inventoryMovements InventoryMovement[]
+  fromMovements   InventoryMovement[] @relation("FromLocation")
+  toMovements     InventoryMovement[] @relation("ToLocation")
 
   @@index([organizationId, type])
 }
@@ -555,6 +572,7 @@ model SalesOrder {
   items           SalesOrderItem[]
   shipments       Shipment[]
   invoice         Invoice?
+  delivery        Delivery?
 
   @@index([organizationId, status])
   @@index([orderNumber])
@@ -680,7 +698,7 @@ model Distributor {
 model Delivery {
   id              String   @id @default(cuid())
   deliveryNumber  String   @unique
-  salesOrderId    String?
+  salesOrderId    String?  @unique
   distributorId   String?
   customerId      String?
   status          String   @default("PENDING") // PENDING, IN_TRANSIT, DELIVERED, FAILED, RETURNED
@@ -733,7 +751,7 @@ model Shipment {
   shipmentNumber  String   @unique
   organizationId  String
   salesOrderId    String?
-  deliveryId      String?
+  deliveryId      String?   @unique
   vehicleId       String?
   status          String   @default("PREPARING") // PREPARING, LOADED, IN_TRANSIT, OUT_FOR_DELIVERY, DELIVERED, RETURNED
 
@@ -789,7 +807,7 @@ model Invoice {
   id              String   @id @default(cuid())
   invoiceNumber   String   @unique
   organizationId  String
-  salesOrderId    String?
+  salesOrderId    String?   @unique
   purchaseOrderId String?
   vendorId        String?
   customerId      String?
@@ -891,6 +909,9 @@ model Activity {
   contact         Contact?      @relation(fields: [contactId], references: [id])
   contactId       String?
 
+  party           Party?        @relation(fields: [partyId], references: [id])
+  partyId         String?
+
   @@index([entityType, entityId])
   @@index([organizationId])
   @@index([performedAt])
@@ -950,7 +971,7 @@ model AgentTask {
 
   organization    Organization @relation(fields: [organizationId], references: [id])
   creator         User?        @relation("CreatedTasks", fields: [createdById], references: [id])
-  assignedTo      User?        @relation("AssignedTasks", fields: [assignedToId], references: [id])
+  assignee        User?        @relation("AssignedTasks", fields: [assignedToId], references: [id])
 
   @@index([organizationId, status])
   @@index([kind])

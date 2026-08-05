@@ -81,7 +81,7 @@ export class QcController {
     @Param('id') id: string,
     @Body() body: CompleteQCTestDto,
   ) {
-    return this.qcService.completeTest(id, body.actualValue, body.result, body.notes);
+    return this.qcService.completeTest(id, body.actualValue, body.result as 'PASS' | 'FAIL' | 'CONDITIONAL_PASS' | 'INCONCLUSIVE', body.notes);
   }
 
   @Post(':id/certificate')

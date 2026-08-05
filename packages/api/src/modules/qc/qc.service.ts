@@ -23,7 +23,7 @@ export class QcService {
       ...(filters?.result && { result: filters.result }),
     };
 
-    return this.prisma.qcTest.findMany({
+    return this.prisma.qCTest.findMany({
       where,
       include: {
         batch: {
@@ -50,8 +50,8 @@ export class QcService {
     });
   }
 
-  async findOne(id: string): Promise<QCTest> {
-    const qcTest = await this.prisma.qcTest.findUnique({
+  async findOne(id: string) {
+    const qcTest = await this.prisma.qCTest.findUnique({
       where: { id },
       include: {
         batch: {
@@ -76,7 +76,7 @@ export class QcService {
   }
 
   async findByBatchId(batchId: string): Promise<QCTest[]> {
-    return this.prisma.qcTest.findMany({
+    return this.prisma.qCTest.findMany({
       where: { batchId },
       include: {
         tester: {
@@ -113,7 +113,7 @@ export class QcService {
       throw new BadRequestException(`Batch with ID ${data.batchId} not found`);
     }
 
-    return this.prisma.qcTest.create({
+    return this.prisma.qCTest.create({
       data: {
         batchId: data.batchId,
         testType: data.testType,
@@ -147,7 +147,7 @@ export class QcService {
     id: string,
     data: Prisma.QCTestUpdateInput,
   ): Promise<QCTest> {
-    return this.prisma.qcTest.update({
+    return this.prisma.qCTest.update({
       where: { id },
       data,
       include: {
@@ -168,7 +168,7 @@ export class QcService {
   ): Promise<QCTest> {
     const qcTest = await this.findOne(id);
 
-    return this.prisma.qcTest.update({
+    return this.prisma.qCTest.update({
       where: { id },
       data: {
         actualValue,
@@ -187,7 +187,7 @@ export class QcService {
   }
 
   async getPendingTests(organizationId: string): Promise<QCTest[]> {
-    return this.prisma.qcTest.findMany({
+    return this.prisma.qCTest.findMany({
       where: {
         batch: {
           organizationId,
@@ -212,7 +212,7 @@ export class QcService {
   }
 
   async getTestStats(organizationId: string) {
-    const totalTests = await this.prisma.qcTest.count({
+    const totalTests = await this.prisma.qCTest.count({
       where: {
         batch: {
           organizationId,
@@ -220,7 +220,7 @@ export class QcService {
       },
     });
 
-    const byResult = await this.prisma.qcTest.groupBy({
+    const byResult = await this.prisma.qCTest.groupBy({
       by: ['result'],
       where: {
         batch: {
@@ -230,7 +230,7 @@ export class QcService {
       _count: true,
     });
 
-    const byTestType = await this.prisma.qcTest.groupBy({
+    const byTestType = await this.prisma.qCTest.groupBy({
       by: ['testType'],
       where: {
         batch: {
@@ -240,7 +240,7 @@ export class QcService {
       _count: true,
     });
 
-    const passRate = await this.prisma.qcTest.aggregate({
+    const passRate = await this.prisma.qCTest.aggregate({
       where: {
         batch: {
           organizationId,
@@ -250,7 +250,7 @@ export class QcService {
       _count: true,
     });
 
-    const passedTests = await this.prisma.qcTest.count({
+    const passedTests = await this.prisma.qCTest.count({
       where: {
         batch: {
           organizationId,
@@ -276,7 +276,7 @@ export class QcService {
 
     const certificateNumber = `QC-${test.batch.batchNumber}-${Date.now()}`;
 
-    await this.prisma.qcTest.update({
+    await this.prisma.qCTest.update({
       where: { id: testId },
       data: {
         certificateNumber,

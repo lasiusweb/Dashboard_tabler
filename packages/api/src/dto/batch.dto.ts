@@ -11,6 +11,11 @@ export class CreateBatchDto {
   @IsString()
   productId: string;
 
+  @ApiPropertyOptional({ description: 'Batch number' })
+  @IsString()
+  @IsOptional()
+  batchNumber?: string;
+
   @ApiProperty({ description: 'Planned quantity' })
   @IsNumber()
   @Min(0.01)

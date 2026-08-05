@@ -45,7 +45,7 @@ export class ProcurementService {
     });
   }
 
-  async findOne(id: string): Promise<PurchaseOrder> {
+  async findOne(id: string) {
     const po = await this.prisma.purchaseOrder.findUnique({
       where: { id },
       include: {

@@ -56,7 +56,7 @@ export class BatchesService {
     });
   }
 
-  async findOne(id: string): Promise<Batch> {
+  async findOne(id: string) {
     const batch = await this.prisma.batch.findUnique({
       where: { id },
       include: {
@@ -68,14 +68,6 @@ export class BatchesService {
         },
         qcTests: {
           orderBy: { testedAt: 'desc' },
-        },
-        inventoryMovements: {
-          orderBy: { performedAt: 'desc' },
-          take: 10,
-        },
-        discussions: {
-          orderBy: { createdAt: 'desc' },
-          take: 5,
         },
       },
     });
@@ -101,7 +93,7 @@ export class BatchesService {
   async create(data: {
     organizationId: string;
     productId: string;
-    batchNumber: string;
+    batchNumber?: string;
     plannedQuantity: number;
     unit: string;
     expiryDate: Date;
@@ -109,19 +101,21 @@ export class BatchesService {
     notes?: string;
   }): Promise<Batch> {
     // Check if batch number already exists
-    const existing = await this.prisma.batch.findUnique({
-      where: { batchNumber: data.batchNumber },
-    });
+    if (data.batchNumber) {
+      const existing = await this.prisma.batch.findUnique({
+        where: { batchNumber: data.batchNumber },
+      });
 
-    if (existing) {
-      throw new BadRequestException(`Batch number ${data.batchNumber} already exists`);
+      if (existing) {
+        throw new BadRequestException(`Batch number ${data.batchNumber} already exists`);
+      }
     }
 
     return this.prisma.batch.create({
       data: {
         organizationId: data.organizationId,
         productId: data.productId,
-        batchNumber: data.batchNumber,
+        batchNumber: data.batchNumber || `BATCH-${Date.now()}`,
         plannedQuantity: data.plannedQuantity,
         unit: data.unit,
         expiryDate: data.expiryDate,

@@ -69,6 +69,16 @@ export class CreateInvoiceDto {
   @IsString()
   @IsOptional()
   notes?: string;
+
+  @ApiPropertyOptional({ description: 'Invoice line items' })
+  @IsArray()
+  @IsOptional()
+  items?: Array<{
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    gstRate: number;
+  }>;
 }
 
 export class UpdateInvoiceDto {

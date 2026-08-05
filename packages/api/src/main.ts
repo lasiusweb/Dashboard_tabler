@@ -27,7 +27,7 @@ async function bootstrap() {
   // Swagger documentation
   const config = new DocumentBuilder()
     .setTitle('FirstCrop ERP API')
-    .description('Manufacturing ERP API for microbial products')
+    .setDescription('Manufacturing ERP API for microbial products')
     .setVersion('1.0')
     .addTag('auth', 'Authentication endpoints')
     .addTag('users', 'User management')

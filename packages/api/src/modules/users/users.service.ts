@@ -10,7 +10,7 @@ export class UsersService {
     return this.prisma.user.findMany({
       where: organizationId
         ? {
-            memberships: {
+            members: {
               some: { organizationId },
             },
           }
@@ -23,7 +23,7 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({
       where: { id },
       include: {
-        memberships: true,
+        members: true,
       },
     });
 
@@ -59,7 +59,7 @@ export class UsersService {
   async getStats(organizationId: string) {
     const totalUsers = await this.prisma.user.count({
       where: {
-        memberships: {
+        members: {
           some: { organizationId },
         },
       },
@@ -68,7 +68,7 @@ export class UsersService {
     const byDepartment = await this.prisma.user.groupBy({
       by: ['department'],
       where: {
-        memberships: {
+        members: {
           some: { organizationId },
         },
       },
