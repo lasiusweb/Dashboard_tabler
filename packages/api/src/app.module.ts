@@ -12,6 +12,13 @@ import { ProcurementModule } from './modules/procurement/procurement.module';
 import { LogisticsModule } from './modules/logistics/logistics.module';
 import { FinanceModule } from './modules/finance/finance.module';
 import { ComplianceModule } from './modules/compliance/compliance.module';
+import { ActivitiesModule } from './modules/activities/activities.module';
+import { FieldVisitsModule } from './modules/field-visits/field-visits.module';
+import { AppSettingsModule } from './modules/app-settings/app-settings.module';
+import { PartiesModule } from './modules/parties/parties.module';
+import { OrganizationsModule } from './modules/organizations/organizations.module';
+import { RawMaterialsModule } from './modules/raw-materials/raw-materials.module';
+import { DistributorsModule } from './modules/distributors/distributors.module';
 
 @Module({
   imports: [
@@ -28,6 +35,13 @@ import { ComplianceModule } from './modules/compliance/compliance.module';
     LogisticsModule,
     FinanceModule,
     ComplianceModule,
+    PartiesModule,
+    OrganizationsModule,
+    RawMaterialsModule,
+    DistributorsModule,
+    ActivitiesModule,
+    FieldVisitsModule,
+    AppSettingsModule,
   ],
 })
 export class AppModule {}

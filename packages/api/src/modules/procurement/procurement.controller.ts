@@ -13,6 +13,7 @@ import {
   CreatePurchaseOrderDto,
   ReceivePurchaseOrderDto,
   CancelPurchaseOrderDto,
+  UpdatePurchaseOrderDto,
 } from '../../dto';
 
 @ApiTags('procurement')
@@ -72,7 +73,7 @@ export class ProcurementController {
   @Put(':id')
   @ApiOperation({ summary: 'Update purchase order' })
   @ApiResponse({ status: 200, description: 'Purchase order updated' })
-  async update(@Param('id') id: string, @Body() body: any) {
+  async update(@Param('id') id: string, @Body() body: UpdatePurchaseOrderDto) {
     return this.procurementService.update(id, body);
   }
 

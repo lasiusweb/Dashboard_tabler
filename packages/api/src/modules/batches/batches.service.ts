@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Batch, Prisma } from '@prisma/client';
+import { Batch, Prisma } from '@firstcrop/db';
 
 @Injectable()
 export class BatchesService {
@@ -289,11 +289,27 @@ export class BatchesService {
       throw new BadRequestException('Batch must be in PACKAGING status to mark ready for dispatch');
     }
 
-    // Create finished goods inventory
+    let location = await this.prisma.inventoryLocation.findFirst({
+      where: {
+        organizationId: batch.organizationId,
+        type: 'FINISHED_GOODS',
+      },
+    });
+
+    if (!location) {
+      location = await this.prisma.inventoryLocation.create({
+        data: {
+          organizationId: batch.organizationId,
+          name: 'Finished Goods Warehouse',
+          type: 'FINISHED_GOODS',
+        },
+      });
+    }
+
     await this.prisma.inventory.create({
       data: {
         organizationId: batch.organizationId,
-        locationId: 'default-finished-goods', // This should be configured
+        locationId: location.id,
         productId: batch.productId,
         batchNumber: batch.batchNumber,
         quantity: batch.actualQuantity || batch.plannedQuantity,

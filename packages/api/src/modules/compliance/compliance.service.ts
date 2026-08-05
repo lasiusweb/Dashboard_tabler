@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { ComplianceRecord, Prisma } from '@prisma/client';
+import { ComplianceRecord, Prisma } from '@firstcrop/db';
 
 type ToolResult = { success: boolean; message?: string; data?: any };
 

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { QCTest, Prisma } from '@prisma/client';
+import { QCTest, Prisma } from '@firstcrop/db';
 
 @Injectable()
 export class QcService {

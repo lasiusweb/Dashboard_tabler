@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { PurchaseOrder, Prisma } from '@prisma/client';
+import { PurchaseOrder, Prisma } from '@firstcrop/db';
 
 @Injectable()
 export class ProcurementService {
@@ -99,13 +99,15 @@ export class ProcurementService {
 
     // Calculate totals
     let subtotal = new Prisma.Decimal(0);
+    let totalGst = new Prisma.Decimal(0);
     for (const item of data.items) {
       const itemTotal = new Prisma.Decimal(item.unitPrice).mul(item.quantity);
       subtotal = subtotal.add(itemTotal);
+      const itemGst = itemTotal.mul(item.gstRate).div(100);
+      totalGst = totalGst.add(itemGst);
     }
 
-    const gstAmount = subtotal.mul(0.18); // Assuming 18% GST
-    const totalAmount = subtotal.add(gstAmount);
+    const totalAmount = subtotal.add(totalGst);
 
     // Generate PO number
     const poCount = await this.prisma.purchaseOrder.count({
@@ -120,7 +122,7 @@ export class ProcurementService {
         vendorId: data.vendorId,
         status: 'DRAFT',
         subtotal,
-        gstAmount,
+        gstAmount: totalGst,
         totalAmount,
         notes: data.notes,
         expectedDate: data.expectedDate,

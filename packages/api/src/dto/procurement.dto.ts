@@ -71,3 +71,14 @@ export class CancelPurchaseOrderDto {
   @IsOptional()
   reason?: string;
 }
+
+export class UpdatePurchaseOrderDto {
+  @ApiPropertyOptional({ description: 'Expected delivery date' })
+  @IsOptional()
+  expectedDate?: Date;
+
+  @ApiPropertyOptional({ description: 'Notes' })
+  @IsString()
+  @IsOptional()
+  notes?: string;
+}

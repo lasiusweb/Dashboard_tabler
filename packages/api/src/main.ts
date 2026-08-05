@@ -39,6 +39,14 @@ async function bootstrap() {
     .addTag('procurement', 'Vendor and purchase order management')
     .addTag('logistics', 'Delivery and shipment tracking')
     .addTag('finance', 'Invoicing and payments')
+    .addTag('compliance', 'Certification and compliance management')
+    .addTag('parties', 'Customers, vendors, distributors, retailers')
+    .addTag('organizations', 'Multi-tenant organization management')
+    .addTag('raw-materials', 'Raw material catalog management')
+    .addTag('distributors', 'Distributor network and territory management')
+    .addTag('activities', 'Activity timeline and audit log')
+    .addTag('field-visits', 'Field service and crop advisory visits')
+    .addTag('app-settings', 'Organization key-value settings')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

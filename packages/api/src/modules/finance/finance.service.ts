@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Invoice, Payment, Prisma } from '@prisma/client';
+import { Invoice, Payment, Prisma } from '@firstcrop/db';
 
 @Injectable()
 export class FinanceService {
@@ -247,7 +247,7 @@ export class FinanceService {
 
     // Update invoice paid amount
     const totalPaid = invoice.payments.reduce(
-      (sum: any, p: any) => sum.add(p.amount),
+      (sum, p) => sum.add(p.amount),
       new Prisma.Decimal(data.amount),
     );
 
