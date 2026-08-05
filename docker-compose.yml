@@ -53,6 +53,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      db-setup:
+        condition: service_completed_successfully
     volumes:
       - ./packages/api:/app/packages/api
       - /app/packages/api/node_modules
@@ -62,6 +64,23 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+
+  # ─── DB Migration + Seed ─────────────────────────────────────────────────
+  db-setup:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: firstcrop-db-setup
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/firstcrop
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./packages/db:/app/packages/db
+      - /app/packages/db/node_modules
+    command: >
+      sh -c "npx prisma migrate deploy && npx prisma db seed"
 
   # ─── AI Agent ─────────────────────────────────────────────────────────────
   agent:
