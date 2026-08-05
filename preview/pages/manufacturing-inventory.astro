@@ -8,7 +8,17 @@ import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
 import Button from '@ui/Button.astro';
-import inventory from '@data/manufacturing-inventory.json';
+import { fetchInventory, fetchInventoryStats, fetchLowStock } from '@shared/lib/fetchers';
+import inventoryFallback from '@data/manufacturing-inventory.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiInventory, inventoryStats, lowStockItems] = await Promise.all([
+  fetchInventory(),
+  fetchInventoryStats(),
+  fetchLowStock(),
+]);
+
+const inventoryData = inventoryFallback as any;
 ---
 
 <DefaultLayout
@@ -22,7 +32,7 @@ import inventory from '@data/manufacturing-inventory.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(inventory as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					(inventoryData as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -63,7 +73,7 @@ import inventory from '@data/manufacturing-inventory.json';
 								</thead>
 								<tbody>
 									{
-										(inventory as { locations: { name: string; type: string; items: number; capacity: number; tempControlled: boolean; temp: string }[] }).locations.map(
+										(inventoryData as { locations: { name: string; type: string; items: number; capacity: number; tempControlled: boolean; temp: string }[] }).locations.map(
 											(l) => (
 												<tr>
 													<td class="fw-medium">{l.name}</td>
@@ -108,7 +118,7 @@ import inventory from '@data/manufacturing-inventory.json';
 								</thead>
 								<tbody>
 									{
-										(inventory as { rawMaterials: { name: string; code: string; category: string; stock: string; reorder: string; status: string; statusColor: string }[] }).rawMaterials.map(
+										(inventoryData as { rawMaterials: { name: string; code: string; category: string; stock: string; reorder: string; status: string; statusColor: string }[] }).rawMaterials.map(
 											(r) => (
 												<tr>
 													<td>
@@ -145,7 +155,7 @@ import inventory from '@data/manufacturing-inventory.json';
 								</thead>
 								<tbody>
 									{
-										(inventory as { expiryAlerts: { batch: string; product: string; expiry: string; daysLeft: number; qty: string; value: string; action: string; color: string }[] }).expiryAlerts.map(
+										(inventoryData as { expiryAlerts: { batch: string; product: string; expiry: string; daysLeft: number; qty: string; value: string; action: string; color: string }[] }).expiryAlerts.map(
 											(e) => (
 												<tr>
 													<td>
@@ -187,7 +197,7 @@ import inventory from '@data/manufacturing-inventory.json';
 							</thead>
 							<tbody>
 								{
-									(inventory as { recentMovements: { date: string; type: string; item: string; qty: string; from: string; ref: string; color: string }[] }).recentMovements.map(
+									(inventoryData as { recentMovements: { date: string; type: string; item: string; qty: string; from: string; ref: string; color: string }[] }).recentMovements.map(
 										(m) => (
 											<tr>
 												<td class="text-secondary">{m.date}</td>

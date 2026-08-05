@@ -7,7 +7,16 @@ import CardBody from '@ui/CardBody.astro';
 import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
-import qc from '@data/manufacturing-qc.json';
+import { fetchQCTests, fetchQCStats } from '@shared/lib/fetchers';
+import qcFallback from '@data/manufacturing-qc.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiQc, qcStats] = await Promise.all([
+  fetchQCTests(),
+  fetchQCStats(),
+]);
+
+const qcData = qcFallback as any;
 ---
 
 <DefaultLayout
@@ -21,7 +30,7 @@ import qc from '@data/manufacturing-qc.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(qc as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					(qcData as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -88,7 +97,7 @@ import qc from '@data/manufacturing-qc.json';
 								</thead>
 								<tbody>
 									{
-										(qc as { pendingTests: { batch: string; product: string; tests: string[]; scheduled: string; priority: string; priorityColor: string }[] }).pendingTests.map(
+										(qcData as { pendingTests: { batch: string; product: string; tests: string[]; scheduled: string; priority: string; priorityColor: string }[] }).pendingTests.map(
 											(t) => (
 												<tr>
 													<td>
@@ -130,7 +139,7 @@ import qc from '@data/manufacturing-qc.json';
 								</thead>
 								<tbody>
 									{
-										(qc as { recentResults: { batch: string; product: string; testType: string; expected: string; actual: string; result: string; resultColor: string; tester: string; date: string }[] }).recentResults.map(
+										(qcData as { recentResults: { batch: string; product: string; testType: string; expected: string; actual: string; result: string; resultColor: string; tester: string; date: string }[] }).recentResults.map(
 											(r) => (
 												<tr>
 													<td>

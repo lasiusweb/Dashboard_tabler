@@ -7,7 +7,17 @@ import CardBody from '@ui/CardBody.astro';
 import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
-import orders from '@data/manufacturing-orders.json';
+import { fetchOrders, fetchOrderStats, fetchCustomers } from '@shared/lib/fetchers';
+import ordersFallback from '@data/manufacturing-orders.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiOrders, orderStats, customers] = await Promise.all([
+  fetchOrders(),
+  fetchOrderStats(),
+  fetchCustomers(),
+]);
+
+const ordersData = ordersFallback as any;
 ---
 
 <DefaultLayout
@@ -21,7 +31,7 @@ import orders from '@data/manufacturing-orders.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(orders as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					(ordersData as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -79,7 +89,7 @@ import orders from '@data/manufacturing-orders.json';
 								</thead>
 								<tbody>
 									{
-										(orders as { recentOrders: { order: string; customer: string; type: string; items: number; total: string; status: string; statusColor: string; date: string }[] }).recentOrders.map(
+										(ordersData as { recentOrders: { order: string; customer: string; type: string; items: number; total: string; status: string; statusColor: string; date: string }[] }).recentOrders.map(
 											(o) => (
 												<tr>
 													<td>
@@ -123,7 +133,7 @@ import orders from '@data/manufacturing-orders.json';
 								</thead>
 								<tbody>
 									{
-										(orders as { topCustomers: { name: string; orders: number; revenue: string; avgLead: string; segment: string; segmentColor: string }[] }).topCustomers.map(
+										(ordersData as { topCustomers: { name: string; orders: number; revenue: string; avgLead: string; segment: string; segmentColor: string }[] }).topCustomers.map(
 											(c) => (
 												<tr>
 													<td class="fw-medium">{c.name}</td>

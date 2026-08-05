@@ -7,7 +7,17 @@ import CardBody from '@ui/CardBody.astro';
 import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
-import finance from '@data/manufacturing-finance.json';
+import { fetchFinance, fetchFinanceStats, fetchReceivables } from '@shared/lib/fetchers';
+import financeFallback from '@data/manufacturing-finance.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiFinance, financeStats, receivablesData] = await Promise.all([
+  fetchFinance(),
+  fetchFinanceStats(),
+  fetchReceivables(),
+]);
+
+const financeData = financeFallback as any;
 ---
 
 <DefaultLayout
@@ -21,7 +31,7 @@ import finance from '@data/manufacturing-finance.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(finance as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					(financeData as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -77,7 +87,7 @@ import finance from '@data/manufacturing-finance.json';
 								</thead>
 								<tbody>
 									{
-										(finance as { invoices: { invoice: string; customer: string; amount: string; cgst: string; sgst: string; total: string; status: string; statusColor: string; date: string }[] }).invoices.map(
+										(financeData as { invoices: { invoice: string; customer: string; amount: string; cgst: string; sgst: string; total: string; status: string; statusColor: string; date: string }[] }).invoices.map(
 											(inv) => (
 												<tr>
 													<td>
@@ -114,7 +124,7 @@ import finance from '@data/manufacturing-finance.json';
 								</thead>
 								<tbody>
 									{
-										(finance as { receivables: { customer: string; amount: string; days: number; status: string; statusColor: string; action: string }[] }).receivables.map(
+										(financeData as { receivables: { customer: string; amount: string; days: number; status: string; statusColor: string; action: string }[] }).receivables.map(
 											(r) => (
 												<tr>
 													<td class="fw-medium">{r.customer}</td>
@@ -155,7 +165,7 @@ import finance from '@data/manufacturing-finance.json';
 								</thead>
 								<tbody>
 									{
-										(finance as { gstSummary: { month: string; sales: string; cgst: string; sgst: string; igst: string; netPayable: string; filed: boolean }[] }).gstSummary.map(
+										(financeData as { gstSummary: { month: string; sales: string; cgst: string; sgst: string; igst: string; netPayable: string; filed: boolean }[] }).gstSummary.map(
 											(g) => (
 												<tr>
 													<td class="fw-medium">{g.month}</td>
@@ -191,7 +201,7 @@ import finance from '@data/manufacturing-finance.json';
 								</thead>
 								<tbody>
 									{
-										(finance as { tdsSummary: { section: string; amount: string; deducted: string; status: string; statusColor: string }[] }).tdsSummary.map(
+										(financeData as { tdsSummary: { section: string; amount: string; deducted: string; status: string; statusColor: string }[] }).tdsSummary.map(
 											(t) => (
 												<tr>
 													<td class="fw-medium">{t.section}</td>

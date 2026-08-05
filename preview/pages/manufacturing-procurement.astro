@@ -7,7 +7,17 @@ import CardBody from '@ui/CardBody.astro';
 import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
-import procurement from '@data/manufacturing-procurement.json';
+import { fetchPurchaseOrders, fetchProcurementStats, fetchVendors } from '@shared/lib/fetchers';
+import procurementFallback from '@data/manufacturing-procurement.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiPo, procurementStats, apiVendors] = await Promise.all([
+  fetchPurchaseOrders(),
+  fetchProcurementStats(),
+  fetchVendors(),
+]);
+
+const procurementData = procurementFallback as any;
 ---
 
 <DefaultLayout
@@ -21,7 +31,7 @@ import procurement from '@data/manufacturing-procurement.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(procurement as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					(procurementData as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -78,7 +88,7 @@ import procurement from '@data/manufacturing-procurement.json';
 								</thead>
 								<tbody>
 									{
-										(procurement as { purchaseOrders: { po: string; vendor: string; items: number; total: string; status: string; statusColor: string; expected: string }[] }).purchaseOrders.map(
+										(procurementData as { purchaseOrders: { po: string; vendor: string; items: number; total: string; status: string; statusColor: string; expected: string }[] }).purchaseOrders.map(
 											(p) => (
 												<tr>
 													<td>
@@ -116,7 +126,7 @@ import procurement from '@data/manufacturing-procurement.json';
 								</thead>
 								<tbody>
 									{
-										(procurement as { pendingReceipts: { po: string; vendor: string; item: string; ordered: string; received: string; pending: string; expected: string; status: string; statusColor: string }[] }).pendingReceipts.map(
+										(procurementData as { pendingReceipts: { po: string; vendor: string; item: string; ordered: string; received: string; pending: string; expected: string; status: string; statusColor: string }[] }).pendingReceipts.map(
 											(r) => (
 												<tr>
 													<td>
@@ -160,7 +170,7 @@ import procurement from '@data/manufacturing-procurement.json';
 							</thead>
 							<tbody>
 								{
-									(procurement as { vendors: { name: string; category: string; orders: number; avgLead: string; quality: string; rating: number; status: string; statusColor: string }[] }).vendors.map(
+									(procurementData as { vendors: { name: string; category: string; orders: number; avgLead: string; quality: string; rating: number; status: string; statusColor: string }[] }).vendors.map(
 										(v) => (
 											<tr>
 												<td class="fw-medium">{v.name}</td>

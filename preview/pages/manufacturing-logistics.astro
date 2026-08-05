@@ -7,7 +7,16 @@ import CardBody from '@ui/CardBody.astro';
 import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
-import logistics from '@data/manufacturing-logistics.json';
+import { fetchShipments, fetchLogisticsStats } from '@shared/lib/fetchers';
+import logisticsFallback from '@data/manufacturing-logistics.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiShipments, logisticsStats] = await Promise.all([
+  fetchShipments(),
+  fetchLogisticsStats(),
+]);
+
+const logisticsData = logisticsFallback as any;
 ---
 
 <DefaultLayout
@@ -21,7 +30,7 @@ import logistics from '@data/manufacturing-logistics.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(logistics as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					(logisticsData as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -71,7 +80,7 @@ import logistics from '@data/manufacturing-logistics.json';
 								</thead>
 								<tbody>
 									{
-										(logistics as { coldChain: { shipment: string; product: string; vehicle: string; targetTemp: string; currentTemp: string; status: string; statusColor: string; logs: number }[] }).coldChain.map(
+										(logisticsData as { coldChain: { shipment: string; product: string; vehicle: string; targetTemp: string; currentTemp: string; status: string; statusColor: string; logs: number }[] }).coldChain.map(
 											(c) => (
 												<tr>
 													<td>
@@ -114,7 +123,7 @@ import logistics from '@data/manufacturing-logistics.json';
 							</thead>
 							<tbody>
 								{
-									(logistics as { shipments: { shipment: string; order: string; customer: string; destination: string; carrier: string; status: string; statusColor: string; dispatched: string; eta: string }[] }).shipments.map(
+									(logisticsData as { shipments: { shipment: string; order: string; customer: string; destination: string; carrier: string; status: string; statusColor: string; dispatched: string; eta: string }[] }).shipments.map(
 										(s) => (
 											<tr>
 												<td class="fw-medium">{s.shipment}</td>
@@ -156,7 +165,7 @@ import logistics from '@data/manufacturing-logistics.json';
 							</thead>
 							<tbody>
 								{
-									(logistics as { carrierPerformance: { carrier: string; shipments: number; onTime: number; avgDays: number; damage: number; status: string; statusColor: string }[] }).carrierPerformance.map(
+									(logisticsData as { carrierPerformance: { carrier: string; shipments: number; onTime: number; avgDays: number; damage: number; status: string; statusColor: string }[] }).carrierPerformance.map(
 										(c) => (
 											<tr>
 												<td class="fw-medium">{c.carrier}</td>

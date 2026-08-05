@@ -8,7 +8,16 @@ import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
 import Button from '@ui/Button.astro';
-import products from '@data/manufacturing-products.json';
+import { fetchProducts, fetchProductStats } from '@shared/lib/fetchers';
+import productsFallback from '@data/manufacturing-products.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiProducts, productStats] = await Promise.all([
+  fetchProducts(),
+  fetchProductStats(),
+]);
+
+const productsData = productsFallback as any;
 ---
 
 <DefaultLayout
@@ -22,7 +31,7 @@ import products from '@data/manufacturing-products.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(products as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					(productsData as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -90,7 +99,7 @@ import products from '@data/manufacturing-products.json';
 								</thead>
 								<tbody>
 									{
-										(products as { strainPerformance: { strain: string; products: number; avgCfu: string; yield: string; status: string; statusColor: string }[] }).strainPerformance.map(
+										(productsData as { strainPerformance: { strain: string; products: number; avgCfu: string; yield: string; status: string; statusColor: string }[] }).strainPerformance.map(
 											(s) => (
 												<tr>
 													<td class="fw-medium">{s.strain}</td>
@@ -129,7 +138,7 @@ import products from '@data/manufacturing-products.json';
 								</thead>
 								<tbody>
 									{
-										(products as { complianceAlerts: { product: string; cert: string; expires: string; daysLeft: number; action: string; color: string }[] }).complianceAlerts.map((a) => (
+										(productsData as { complianceAlerts: { product: string; cert: string; expires: string; daysLeft: number; action: string; color: string }[] }).complianceAlerts.map((a) => (
 											<tr>
 												<td>
 													<div class="fw-medium">{a.product}</div>
@@ -169,7 +178,7 @@ import products from '@data/manufacturing-products.json';
 								</thead>
 								<tbody>
 									{
-										(products as { topProducts: { sku: string; name: string; category: string; strain: string; cfu: string; batches: number; yield: string; stock: string; stockColor: string }[] }).topProducts.map(
+										(productsData as { topProducts: { sku: string; name: string; category: string; strain: string; cfu: string; batches: number; yield: string; stock: string; stockColor: string }[] }).topProducts.map(
 											(p) => (
 												<tr>
 													<td>
@@ -208,7 +217,7 @@ import products from '@data/manufacturing-products.json';
 								</thead>
 								<tbody>
 									{
-										(products as { recentBatches: { batch: string; product: string; status: string; statusColor: string; quantity: string; cfu: string; expiry: string }[] }).recentBatches.map(
+										(productsData as { recentBatches: { batch: string; product: string; status: string; statusColor: string; quantity: string; cfu: string; expiry: string }[] }).recentBatches.map(
 											(b) => (
 												<tr>
 													<td>

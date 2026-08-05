@@ -7,7 +7,34 @@ import CardBody from '@ui/CardBody.astro';
 import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
-import batches from '@data/manufacturing-batches.json';
+import { fetchBatches, fetchBatchStats } from '@shared/lib/fetchers';
+import batchesFallback from '@data/manufacturing-batches.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiBatches, batchStats] = await Promise.all([
+  fetchBatches(),
+  fetchBatchStats(),
+]);
+
+const batchesData = batchesFallback as any;
+
+// Transform API batches to table format if available
+const activeBatches = apiBatches.length > 0
+  ? apiBatches
+      .filter((b: any) => !['DISPATCHED', 'EXPIRED', 'CANCELLED', 'READY_FOR_DISPATCH'].includes(b.status))
+      .slice(0, 10)
+      .map((b: any) => ({
+        batch: b.batchNumber,
+        product: b.product?.name || '—',
+        status: b.status.replace(/_/g, ' '),
+        statusColor: b.status === 'FERMENTATION' ? 'cyan' : b.status === 'QC_PENDING' ? 'orange' : b.status === 'PACKAGING' ? 'yellow' : 'blue',
+        started: b.actualStartDate ? new Date(b.actualStartDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : '—',
+        temp: b.incubationTemp ? `${b.incubationTemp}°C` : '—',
+        ph: b.incubationPH ? String(b.incubationPH) : '—',
+        daysLeft: b.expiryDate ? Math.max(0, Math.ceil((new Date(b.expiryDate).getTime() - Date.now()) / 86400000)) : 0,
+        yield: b.yieldPercentage ? `${b.yieldPercentage}%` : '—',
+      }))
+  : batchesData.activeBatches;
 ---
 
 <DefaultLayout
@@ -21,7 +48,7 @@ import batches from '@data/manufacturing-batches.json';
 		<div class="col-12">
 			<div class="row row-cards">
 				{
-					(batches as { kpis: { title: string; value: string; change: string; up: boolean; color: string; icon: string }[] }).kpis.map((kpi) => (
+					batchesData.kpis.map((kpi: any) => (
 						<div class="col-sm-6 col-lg-3">
 							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
 						</div>
@@ -81,20 +108,18 @@ import batches from '@data/manufacturing-batches.json';
 								</thead>
 								<tbody>
 									{
-										(batches as { activeBatches: { batch: string; product: string; status: string; statusColor: string; started: string; temp: string; ph: string; daysLeft: number; yield: string }[] }).activeBatches.map(
-											(b) => (
-												<tr>
-													<td class="fw-medium">{b.batch}</td>
-													<td>{b.product}</td>
-													<td><Badge color={b.statusColor} light>{b.status}</Badge></td>
-													<td class="text-secondary">{b.started}</td>
-													<td class="text-end">{b.temp}</td>
-													<td class="text-end">{b.ph}</td>
-													<td class="text-end">{b.daysLeft > 0 ? `${b.daysLeft}d` : '—'}</td>
-													<td>{b.yield}</td>
-												</tr>
-											)
-										)
+										activeBatches.map((b: any) => (
+											<tr>
+												<td class="fw-medium">{b.batch}</td>
+												<td>{b.product}</td>
+												<td><Badge color={b.statusColor} light>{b.status}</Badge></td>
+												<td class="text-secondary">{b.started}</td>
+												<td class="text-end">{b.temp}</td>
+												<td class="text-end">{b.ph}</td>
+												<td class="text-end">{b.daysLeft > 0 ? `${b.daysLeft}d` : '—'}</td>
+												<td>{b.yield}</td>
+											</tr>
+										))
 									}
 								</tbody>
 							</table>
@@ -124,24 +149,22 @@ import batches from '@data/manufacturing-batches.json';
 								</thead>
 								<tbody>
 									{
-										(batches as { fermentationTimeline: { batch: string; product: string; fermenter: string; startTemp: string; currentTemp: string; ph: string; hours: number; targetHours: number; status: string; statusColor: string }[] }).fermentationTimeline.map(
-											(f) => (
-												<tr>
-													<td>
-														<div class="fw-medium">{f.batch}</div>
-														<div class="text-secondary">{f.product}</div>
-													</td>
-													<td>{f.fermenter}</td>
-													<td class="text-end">
-														<div class="d-flex align-items-center gap-2 justify-content-end">
-															<Progress value={(f.hours / f.targetHours) * 100} color={f.statusColor === 'green' ? 'green' : 'orange'} style="width: 60px" />
-															<span>{f.hours}/{f.targetHours}h</span>
-														</div>
-													</td>
-													<td><Badge color={f.statusColor} light>{f.status}</Badge></td>
-												</tr>
-											)
-										)
+										batchesData.fermentationTimeline.map((f: any) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{f.batch}</div>
+													<div class="text-secondary">{f.product}</div>
+												</td>
+												<td>{f.fermenter}</td>
+												<td class="text-end">
+													<div class="d-flex align-items-center gap-2 justify-content-end">
+														<Progress value={(f.hours / f.targetHours) * 100} color={f.statusColor === 'green' ? 'green' : 'orange'} style="width: 60px" />
+														<span>{f.hours}/{f.targetHours}h</span>
+													</div>
+												</td>
+												<td><Badge color={f.statusColor} light>{f.status}</Badge></td>
+											</tr>
+										))
 									}
 								</tbody>
 							</table>
@@ -165,18 +188,16 @@ import batches from '@data/manufacturing-batches.json';
 								</thead>
 								<tbody>
 									{
-										(batches as { alerts: { type: string; batch: string; message: string; severity: string; action: string }[] }).alerts.map(
-											(a) => (
-												<tr>
-													<td>
-														<div class="fw-medium">{a.type}</div>
-														<div class="text-secondary">{a.batch}</div>
-													</td>
-													<td>{a.message}</td>
-													<td class="text-end"><Badge color={a.severity === 'danger' ? 'danger' : 'warning'} light>{a.action}</Badge></td>
-												</tr>
-											)
-										)
+										batchesData.alerts.map((a: any) => (
+											<tr>
+												<td>
+													<div class="fw-medium">{a.type}</div>
+													<div class="text-secondary">{a.batch}</div>
+												</td>
+												<td>{a.message}</td>
+												<td class="text-end"><Badge color={a.severity === 'danger' ? 'danger' : 'warning'} light>{a.action}</Badge></td>
+											</tr>
+										))
 									}
 								</tbody>
 							</table>
