@@ -126,7 +126,7 @@ export class OrdersService {
       unit: string;
       unitPrice: number;
       discount?: number;
-      gstRate: number;
+      gstRate?: number;
     }>;
     shippingAddress?: string;
     shippingCity?: string;
@@ -145,17 +145,32 @@ export class OrdersService {
       throw new BadRequestException(`Customer with ID ${data.customerId} not found`);
     }
 
-    // Calculate totals
+    // Fetch products to get GST rates
+    const productIds = data.items.map((item) => item.productId);
+    const products = await this.prisma.product.findMany({
+      where: { id: { in: productIds } },
+      select: { id: true, gstRate: true },
+    });
+
+    const productGstRates = new Map(products.map((p) => [p.id, p.gstRate]));
+
+    // Calculate totals using per-product GST rates
     let subtotal = new Prisma.Decimal(0);
+    let totalGst = new Prisma.Decimal(0);
+
     for (const item of data.items) {
       const itemTotal = new Prisma.Decimal(item.unitPrice)
         .mul(item.quantity)
         .sub(item.discount || 0);
       subtotal = subtotal.add(itemTotal);
+
+      // Use provided gstRate, or fall back to product's gstRate, or default 18%
+      const gstRate = item.gstRate ?? productGstRates.get(item.productId)?.toNumber() ?? 18;
+      const itemGst = itemTotal.mul(gstRate).div(100);
+      totalGst = totalGst.add(itemGst);
     }
 
-    const gstAmount = subtotal.mul(0.18); // Assuming 18% GST for now
-    const totalAmount = subtotal.add(gstAmount);
+    const totalAmount = subtotal.add(totalGst);
 
     // Generate order number
     const orderCount = await this.prisma.salesOrder.count({
@@ -171,7 +186,7 @@ export class OrdersService {
         orderType: data.orderType || 'DISTRIBUTOR',
         status: 'PLACED',
         subtotal,
-        gstAmount,
+        gstAmount: totalGst,
         totalAmount,
         shippingAddress: data.shippingAddress,
         shippingCity: data.shippingCity,
@@ -181,18 +196,23 @@ export class OrdersService {
         createdById: data.createdById,
         requiredByDate: data.requiredByDate,
         items: {
-          create: data.items.map((item) => ({
-            productId: item.productId,
-            batchId: item.batchId,
-            quantity: item.quantity,
-            unit: item.unit,
-            unitPrice: item.unitPrice,
-            discount: item.discount || 0,
-            gstRate: item.gstRate,
-            totalAmount: new Prisma.Decimal(item.unitPrice)
+          create: data.items.map((item) => {
+            const itemTotal = new Prisma.Decimal(item.unitPrice)
               .mul(item.quantity)
-              .sub(item.discount || 0),
-          })),
+              .sub(item.discount || 0);
+            const gstRate = item.gstRate ?? productGstRates.get(item.productId)?.toNumber() ?? 18;
+
+            return {
+              productId: item.productId,
+              batchId: item.batchId,
+              quantity: item.quantity,
+              unit: item.unit,
+              unitPrice: item.unitPrice,
+              discount: item.discount || 0,
+              gstRate,
+              totalAmount: itemTotal,
+            };
+          }),
         },
       },
       include: {

@@ -9,6 +9,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { BatchesService } from './batches.service';
+import {
+  CreateBatchDto,
+  UpdateBatchDto,
+  CompleteProductionDto,
+  UpdateQCStatusDto,
+  PackageBatchDto,
+} from '../../dto';
 
 @ApiTags('batches')
 @Controller('batches')
@@ -65,14 +72,14 @@ export class BatchesController {
   @Post()
   @ApiOperation({ summary: 'Create batch' })
   @ApiResponse({ status: 201, description: 'Batch created' })
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateBatchDto) {
     return this.batchesService.create(body);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update batch' })
   @ApiResponse({ status: 200, description: 'Batch updated' })
-  async update(@Param('id') id: string, @Body() body: any) {
+  async update(@Param('id') id: string, @Body() body: UpdateBatchDto) {
     return this.batchesService.update(id, body);
   }
 
@@ -88,7 +95,7 @@ export class BatchesController {
   @ApiResponse({ status: 200, description: 'Production completed' })
   async completeProduction(
     @Param('id') id: string,
-    @Body() body: { actualQuantity: number },
+    @Body() body: CompleteProductionDto,
   ) {
     return this.batchesService.completeProduction(id, body.actualQuantity);
   }
@@ -98,7 +105,7 @@ export class BatchesController {
   @ApiResponse({ status: 200, description: 'QC status updated' })
   async updateQCStatus(
     @Param('id') id: string,
-    @Body() body: { qcStatus: 'PASS' | 'FAIL' | 'CONDITIONAL_PASS'; certificateNumber?: string },
+    @Body() body: UpdateQCStatusDto,
   ) {
     return this.batchesService.updateQCStatus(id, body.qcStatus, body.certificateNumber);
   }
@@ -108,7 +115,7 @@ export class BatchesController {
   @ApiResponse({ status: 200, description: 'Batch packaged' })
   async packageBatch(
     @Param('id') id: string,
-    @Body() body: { packagingType: string; unitsProduced: number; packagingDate?: Date },
+    @Body() body: PackageBatchDto,
   ) {
     return this.batchesService.packageBatch(id, body);
   }

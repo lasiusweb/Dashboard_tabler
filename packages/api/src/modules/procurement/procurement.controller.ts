@@ -9,6 +9,11 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProcurementService } from './procurement.service';
+import {
+  CreatePurchaseOrderDto,
+  ReceivePurchaseOrderDto,
+  CancelPurchaseOrderDto,
+} from '../../dto';
 
 @ApiTags('procurement')
 @Controller('procurement')
@@ -60,7 +65,7 @@ export class ProcurementController {
   @Post()
   @ApiOperation({ summary: 'Create purchase order' })
   @ApiResponse({ status: 201, description: 'Purchase order created' })
-  async create(@Body() body: any) {
+  async create(@Body() body: CreatePurchaseOrderDto) {
     return this.procurementService.create(body);
   }
 
@@ -90,7 +95,7 @@ export class ProcurementController {
   @ApiResponse({ status: 200, description: 'Purchase order items received' })
   async receive(
     @Param('id') id: string,
-    @Body() body: { receivedItems: Array<{ itemId: string; receivedQuantity: number }> },
+    @Body() body: ReceivePurchaseOrderDto,
   ) {
     return this.procurementService.receive(id, body.receivedItems);
   }
@@ -98,7 +103,7 @@ export class ProcurementController {
   @Post(':id/cancel')
   @ApiOperation({ summary: 'Cancel purchase order' })
   @ApiResponse({ status: 200, description: 'Purchase order cancelled' })
-  async cancel(@Param('id') id: string, @Body() body: { reason?: string }) {
+  async cancel(@Param('id') id: string, @Body() body: CancelPurchaseOrderDto) {
     return this.procurementService.cancel(id, body.reason);
   }
 }

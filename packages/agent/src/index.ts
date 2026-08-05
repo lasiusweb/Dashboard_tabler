@@ -5,7 +5,7 @@
 
 import { StateGraph, Annotation, START, END } from '@langchain/langgraph';
 import { ChatOpenAI } from '@langchain/openai';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@firstcrop/db';
 import { TaskQueue } from './lib/tasks';
 import { evidenceScorer } from './lib/evidence';
 import { ManufacturingTools } from './tools/manufacturing';
@@ -303,8 +303,9 @@ async function main() {
   await agent.startWorker();
 }
 
-// Run if executed directly
-if (require.main === module) {
+// Run if executed directly (ESM-compatible)
+const isMainModule = import.meta.url === `file://${process.argv[1]}`;
+if (isMainModule) {
   main().catch(console.error);
 }
 

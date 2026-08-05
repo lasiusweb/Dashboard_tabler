@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { QcService } from './qc.service';
+import { CreateQCTestDto, UpdateQCTestDto, CompleteQCTestDto } from '../../dto';
 
 @ApiTags('qc')
 @Controller('qc')
@@ -62,14 +63,14 @@ export class QcController {
   @Post()
   @ApiOperation({ summary: 'Create QC test' })
   @ApiResponse({ status: 201, description: 'QC test created' })
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateQCTestDto) {
     return this.qcService.create(body);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update QC test' })
   @ApiResponse({ status: 200, description: 'QC test updated' })
-  async update(@Param('id') id: string, @Body() body: any) {
+  async update(@Param('id') id: string, @Body() body: UpdateQCTestDto) {
     return this.qcService.update(id, body);
   }
 
@@ -78,11 +79,7 @@ export class QcController {
   @ApiResponse({ status: 200, description: 'QC test completed' })
   async completeTest(
     @Param('id') id: string,
-    @Body() body: {
-      actualValue: string;
-      result: 'PASS' | 'FAIL' | 'CONDITIONAL_PASS' | 'INCONCLUSIVE';
-      notes?: string;
-    },
+    @Body() body: CompleteQCTestDto,
   ) {
     return this.qcService.completeTest(id, body.actualValue, body.result, body.notes);
   }

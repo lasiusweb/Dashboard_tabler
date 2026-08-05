@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { FinanceService } from './finance.service';
+import { CreateInvoiceDto, UpdateInvoiceDto, CreatePaymentDto, CancelInvoiceDto } from '../../dto';
 
 @ApiTags('finance')
 @Controller('finance')
@@ -57,14 +58,14 @@ export class FinanceController {
   @Post('invoices')
   @ApiOperation({ summary: 'Create invoice' })
   @ApiResponse({ status: 201, description: 'Invoice created' })
-  async createInvoice(@Body() body: any) {
+  async createInvoice(@Body() body: CreateInvoiceDto) {
     return this.financeService.createInvoice(body);
   }
 
   @Put('invoices/:id')
   @ApiOperation({ summary: 'Update invoice' })
   @ApiResponse({ status: 200, description: 'Invoice updated' })
-  async updateInvoice(@Param('id') id: string, @Body() body: any) {
+  async updateInvoice(@Param('id') id: string, @Body() body: UpdateInvoiceDto) {
     return this.financeService.updateInvoice(id, body);
   }
 
@@ -78,7 +79,7 @@ export class FinanceController {
   @Post('invoices/:id/cancel')
   @ApiOperation({ summary: 'Cancel invoice' })
   @ApiResponse({ status: 200, description: 'Invoice cancelled' })
-  async cancelInvoice(@Param('id') id: string, @Body() body: { reason?: string }) {
+  async cancelInvoice(@Param('id') id: string, @Body() body: CancelInvoiceDto) {
     return this.financeService.cancelInvoice(id, body.reason);
   }
 
@@ -87,13 +88,7 @@ export class FinanceController {
   @ApiResponse({ status: 201, description: 'Payment created' })
   async createPayment(
     @Param('id') id: string,
-    @Body() body: {
-      amount: number;
-      method: string;
-      referenceNumber?: string;
-      notes?: string;
-      vendorAccountId?: string;
-    },
+    @Body() body: CreatePaymentDto,
   ) {
     return this.financeService.createPayment(id, body);
   }

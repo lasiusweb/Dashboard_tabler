@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { InventoryService } from './inventory.service';
+import { CreateInventoryMovementDto, CreateInventoryLocationDto } from '../../dto';
 
 @ApiTags('inventory')
 @Controller('inventory')
@@ -80,14 +81,14 @@ export class InventoryController {
   @Post('movements')
   @ApiOperation({ summary: 'Create inventory movement' })
   @ApiResponse({ status: 201, description: 'Inventory movement created' })
-  async createMovement(@Body() body: any) {
+  async createMovement(@Body() body: CreateInventoryMovementDto) {
     return this.inventoryService.createMovement(body);
   }
 
   @Post('locations')
   @ApiOperation({ summary: 'Create inventory location' })
   @ApiResponse({ status: 201, description: 'Inventory location created' })
-  async createLocation(@Body() body: any) {
+  async createLocation(@Body() body: CreateInventoryLocationDto) {
     return this.inventoryService.createLocation(body);
   }
 }

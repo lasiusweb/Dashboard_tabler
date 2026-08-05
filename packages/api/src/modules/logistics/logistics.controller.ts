@@ -9,6 +9,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LogisticsService } from './logistics.service';
+import {
+  CreateShipmentDto,
+  UpdateShipmentDto,
+  TemperatureLogEntryDto,
+  GPSLogEntryDto,
+  CreateVehicleDto,
+} from '../../dto';
 
 @ApiTags('logistics')
 @Controller('logistics')
@@ -60,14 +67,14 @@ export class LogisticsController {
   @Post()
   @ApiOperation({ summary: 'Create shipment' })
   @ApiResponse({ status: 201, description: 'Shipment created' })
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateShipmentDto) {
     return this.logisticsService.create(body);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update shipment' })
   @ApiResponse({ status: 200, description: 'Shipment updated' })
-  async update(@Param('id') id: string, @Body() body: any) {
+  async update(@Param('id') id: string, @Body() body: UpdateShipmentDto) {
     return this.logisticsService.update(id, body);
   }
 
@@ -97,7 +104,7 @@ export class LogisticsController {
   @ApiResponse({ status: 200, description: 'Temperature log updated' })
   async updateTemperatureLog(
     @Param('id') id: string,
-    @Body() body: { temperatureLog: Array<{ timestamp: Date; temperature: number }> },
+    @Body() body: { temperatureLog: TemperatureLogEntryDto[] },
   ) {
     return this.logisticsService.updateTemperatureLog(id, body.temperatureLog);
   }
@@ -107,7 +114,7 @@ export class LogisticsController {
   @ApiResponse({ status: 200, description: 'GPS log updated' })
   async updateGPSLog(
     @Param('id') id: string,
-    @Body() body: { gpsLog: Array<{ timestamp: Date; lat: number; lng: number }> },
+    @Body() body: { gpsLog: GPSLogEntryDto[] },
   ) {
     return this.logisticsService.updateGPSLog(id, body.gpsLog);
   }
@@ -115,7 +122,7 @@ export class LogisticsController {
   @Post('vehicles')
   @ApiOperation({ summary: 'Create vehicle' })
   @ApiResponse({ status: 201, description: 'Vehicle created' })
-  async createVehicle(@Body() body: any) {
+  async createVehicle(@Body() body: CreateVehicleDto) {
     return this.logisticsService.createVehicle(body);
   }
 }

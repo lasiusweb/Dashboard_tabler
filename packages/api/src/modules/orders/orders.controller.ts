@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
+import { CreateOrderDto, UpdateOrderDto, CancelOrderDto } from '../../dto';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -55,14 +56,14 @@ export class OrdersController {
   @Post()
   @ApiOperation({ summary: 'Create sales order' })
   @ApiResponse({ status: 201, description: 'Sales order created' })
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateOrderDto) {
     return this.ordersService.create(body);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update sales order' })
   @ApiResponse({ status: 200, description: 'Sales order updated' })
-  async update(@Param('id') id: string, @Body() body: any) {
+  async update(@Param('id') id: string, @Body() body: UpdateOrderDto) {
     return this.ordersService.update(id, body);
   }
 
@@ -104,7 +105,7 @@ export class OrdersController {
   @Post(':id/cancel')
   @ApiOperation({ summary: 'Cancel sales order' })
   @ApiResponse({ status: 200, description: 'Sales order cancelled' })
-  async cancel(@Param('id') id: string, @Body() body: { reason?: string }) {
+  async cancel(@Param('id') id: string, @Body() body: CancelOrderDto) {
     return this.ordersService.cancel(id, body.reason);
   }
 }

@@ -56,6 +56,31 @@ services:
     volumes:
       - ./packages/api:/app/packages/api
       - /app/packages/api/node_modules
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3002/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ─── AI Agent ─────────────────────────────────────────────────────────────
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: firstcrop-agent
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/firstcrop
+      - AGENT_MODEL=${AGENT_MODEL:-gpt-4o-mini}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEFAULT_ORGANIZATION_ID=${DEFAULT_ORGANIZATION_ID:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./packages/agent:/app/packages/agent
+      - /app/packages/agent/node_modules
+    command: ["tsx", "src/index.ts"]
 
   # ─── Tabler Dashboard ─────────────────────────────────────────────────────
   tabler:

@@ -9,6 +9,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ComplianceService } from './compliance.service';
+import {
+  CreateComplianceRecordDto,
+  UpdateComplianceRecordDto,
+  RenewComplianceRecordDto,
+  SuspendRevokeComplianceRecordDto,
+} from '../../dto';
 
 @ApiTags('compliance')
 @Controller('compliance')
@@ -58,14 +64,14 @@ export class ComplianceController {
   @Post()
   @ApiOperation({ summary: 'Create compliance record' })
   @ApiResponse({ status: 201, description: 'Compliance record created' })
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateComplianceRecordDto) {
     return this.complianceService.create(body);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update compliance record' })
   @ApiResponse({ status: 200, description: 'Compliance record updated' })
-  async update(@Param('id') id: string, @Body() body: any) {
+  async update(@Param('id') id: string, @Body() body: UpdateComplianceRecordDto) {
     return this.complianceService.update(id, body);
   }
 
@@ -74,12 +80,7 @@ export class ComplianceController {
   @ApiResponse({ status: 200, description: 'Compliance record renewed' })
   async renew(
     @Param('id') id: string,
-    @Body() body: {
-      newCertificateNumber: string;
-      newExpiryDate: Date;
-      issuedBy?: string;
-      documentUrl?: string;
-    },
+    @Body() body: RenewComplianceRecordDto,
   ) {
     return this.complianceService.renew(id, body);
   }
@@ -87,14 +88,14 @@ export class ComplianceController {
   @Post(':id/suspend')
   @ApiOperation({ summary: 'Suspend compliance record' })
   @ApiResponse({ status: 200, description: 'Compliance record suspended' })
-  async suspend(@Param('id') id: string, @Body() body: { reason?: string }) {
+  async suspend(@Param('id') id: string, @Body() body: SuspendRevokeComplianceRecordDto) {
     return this.complianceService.suspend(id, body.reason);
   }
 
   @Post(':id/revoke')
   @ApiOperation({ summary: 'Revoke compliance record' })
   @ApiResponse({ status: 200, description: 'Compliance record revoked' })
-  async revoke(@Param('id') id: string, @Body() body: { reason?: string }) {
+  async revoke(@Param('id') id: string, @Body() body: SuspendRevokeComplianceRecordDto) {
     return this.complianceService.revoke(id, body.reason);
   }
 

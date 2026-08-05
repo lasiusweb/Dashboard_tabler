@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
+import { CreateProductDto, UpdateProductDto } from '../../dto';
 
 @ApiTags('products')
 @Controller('products')
@@ -63,14 +64,14 @@ export class UsersController {
   @Post()
   @ApiOperation({ summary: 'Create product' })
   @ApiResponse({ status: 201, description: 'Product created' })
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateProductDto) {
     return this.productsService.create(body);
   }
 
   @Put(':id')
   @ApiOperation({ summary: 'Update product' })
   @ApiResponse({ status: 200, description: 'Product updated' })
-  async update(@Param('id') id: string, @Body() body: any) {
+  async update(@Param('id') id: string, @Body() body: UpdateProductDto) {
     return this.productsService.update(id, body);
   }
 
