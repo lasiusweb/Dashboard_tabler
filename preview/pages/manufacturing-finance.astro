@@ -18,6 +18,24 @@ const [apiFinance, financeStats, receivablesData] = await Promise.all([
 ]);
 
 const financeData = financeFallback as any;
+
+// Use live finance data when available, fall back to JSON
+const liveInvoices = apiFinance.length > 0
+  ? apiFinance
+      .sort((a: any, b: any) => new Date(b.invoiceDate).getTime() - new Date(a.invoiceDate).getTime())
+      .slice(0, 5)
+      .map((inv: any) => ({
+        invoice: inv.invoiceNumber,
+        customer: inv.customerId ?? '—',
+        amount: `₹${(Number(inv.totalAmount) / 100000).toFixed(1)}L`,
+        cgst: `₹${(Number(inv.cgstAmount) / 100000).toFixed(1)}L`,
+        sgst: `₹${(Number(inv.sgstAmount) / 100000).toFixed(1)}L`,
+        total: `₹${(Number(inv.totalAmount) / 100000).toFixed(1)}L`,
+        status: inv.status,
+        statusColor: inv.status === 'PAID' ? 'green' : inv.status === 'OVERDUE' ? 'red' : 'orange',
+        date: inv.invoiceDate ? new Date(inv.invoiceDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : '—',
+      }))
+  : financeData.invoices;
 ---
 
 <DefaultLayout
@@ -87,7 +105,7 @@ const financeData = financeFallback as any;
 								</thead>
 								<tbody>
 									{
-										(financeData as { invoices: { invoice: string; customer: string; amount: string; cgst: string; sgst: string; total: string; status: string; statusColor: string; date: string }[] }).invoices.map(
+										(liveInvoices as { invoice: string; customer: string; amount: string; cgst: string; sgst: string; total: string; status: string; statusColor: string; date: string }[]).map(
 											(inv) => (
 												<tr>
 													<td>
