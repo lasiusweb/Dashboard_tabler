@@ -61,7 +61,8 @@ export async function fetchProductStats(orgId?: string): Promise<ProductStats | 
 export async function fetchBatches(orgId?: string, status?: string): Promise<Batch[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (status) params.status = status;
-  return apiFetch<Batch[]>('/batches', params) || Promise.resolve([]);
+  const data = await apiFetch<Batch[]>('/batches', params);
+  return data || [];
 }
 
 export async function fetchBatchStats(orgId?: string): Promise<BatchStats | null> {
@@ -71,7 +72,8 @@ export async function fetchBatchStats(orgId?: string): Promise<BatchStats | null
 export async function fetchExpiringBatches(orgId?: string, days?: number): Promise<Batch[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (days) params.daysWarning = String(days);
-  return apiFetch<Batch[]>('/batches/expiring', params) || Promise.resolve([]);
+  const data = await apiFetch<Batch[]>('/batches/expiring', params);
+  return data || [];
 }
 
 // ─── QC Tests ─────────────────────────────────────────────────────────────
@@ -79,7 +81,8 @@ export async function fetchExpiringBatches(orgId?: string, days?: number): Promi
 export async function fetchQCTests(orgId?: string, batchId?: string): Promise<QCTest[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (batchId) params.batchId = batchId;
-  return apiFetch<QCTest[]>('/qc', params) || Promise.resolve([]);
+  const data = await apiFetch<QCTest[]>('/qc', params);
+  return data || [];
 }
 
 export async function fetchQCStats(orgId?: string): Promise<QCStats | null> {
@@ -87,13 +90,15 @@ export async function fetchQCStats(orgId?: string): Promise<QCStats | null> {
 }
 
 export async function fetchPendingQCTests(orgId?: string): Promise<QCTest[]> {
-  return apiFetch<QCTest[]>('/qc/pending', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<QCTest[]>('/qc/pending', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 // ─── Inventory ────────────────────────────────────────────────────────────
 
 export async function fetchInventory(orgId?: string): Promise<InventoryItem[]> {
-  return apiFetch<InventoryItem[]>('/inventory', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<InventoryItem[]>('/inventory', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 export async function fetchInventoryStats(orgId?: string): Promise<InventoryStats | null> {
@@ -101,7 +106,8 @@ export async function fetchInventoryStats(orgId?: string): Promise<InventoryStat
 }
 
 export async function fetchLowStock(orgId?: string): Promise<InventoryItem[]> {
-  return apiFetch<InventoryItem[]>('/inventory/low-stock', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<InventoryItem[]>('/inventory/low-stock', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 // ─── Orders ───────────────────────────────────────────────────────────────
@@ -109,7 +115,8 @@ export async function fetchLowStock(orgId?: string): Promise<InventoryItem[]> {
 export async function fetchOrders(orgId?: string, status?: string): Promise<SalesOrder[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (status) params.status = status;
-  return apiFetch<SalesOrder[]>('/orders', params) || Promise.resolve([]);
+  const data = await apiFetch<SalesOrder[]>('/orders', params);
+  return data || [];
 }
 
 export async function fetchOrderStats(orgId?: string): Promise<OrderStats | null> {
@@ -117,7 +124,8 @@ export async function fetchOrderStats(orgId?: string): Promise<OrderStats | null
 }
 
 export async function fetchCustomers(orgId?: string): Promise<any[]> {
-  return apiFetch<any[]>('/orders/customers', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<any[]>('/orders/customers', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 // ─── Procurement ──────────────────────────────────────────────────────────
@@ -125,7 +133,8 @@ export async function fetchCustomers(orgId?: string): Promise<any[]> {
 export async function fetchPurchaseOrders(orgId?: string, status?: string): Promise<PurchaseOrder[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (status) params.status = status;
-  return apiFetch<PurchaseOrder[]>('/procurement', params) || Promise.resolve([]);
+  const data = await apiFetch<PurchaseOrder[]>('/procurement', params);
+  return data || [];
 }
 
 export async function fetchProcurementStats(orgId?: string): Promise<any | null> {
@@ -133,7 +142,8 @@ export async function fetchProcurementStats(orgId?: string): Promise<any | null>
 }
 
 export async function fetchVendors(orgId?: string): Promise<any[]> {
-  return apiFetch<any[]>('/procurement/vendors', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<any[]>('/procurement/vendors', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 // ─── Logistics ────────────────────────────────────────────────────────────
@@ -141,7 +151,8 @@ export async function fetchVendors(orgId?: string): Promise<any[]> {
 export async function fetchShipments(orgId?: string, status?: string): Promise<Shipment[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (status) params.status = status;
-  return apiFetch<Shipment[]>('/logistics', params) || Promise.resolve([]);
+  const data = await apiFetch<Shipment[]>('/logistics', params);
+  return data || [];
 }
 
 export async function fetchLogisticsStats(orgId?: string): Promise<LogisticsStats | null> {
@@ -151,13 +162,15 @@ export async function fetchLogisticsStats(orgId?: string): Promise<LogisticsStat
 // ─── Finance ──────────────────────────────────────────────────────────────
 
 export async function fetchFinance(orgId?: string): Promise<Invoice[]> {
-  return apiFetch<Invoice[]>('/finance', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<Invoice[]>('/finance', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 export async function fetchInvoices(orgId?: string, status?: string): Promise<Invoice[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (status) params.status = status;
-  return apiFetch<Invoice[]>('/finance/invoices', params) || Promise.resolve([]);
+  const data = await apiFetch<Invoice[]>('/finance/invoices', params);
+  return data || [];
 }
 
 export async function fetchFinanceStats(orgId?: string): Promise<FinanceStats | null> {
@@ -165,13 +178,15 @@ export async function fetchFinanceStats(orgId?: string): Promise<FinanceStats | 
 }
 
 export async function fetchReceivables(orgId?: string): Promise<any[]> {
-  return apiFetch<any[]>('/finance/receivables', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<any[]>('/finance/receivables', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 // ─── Compliance ───────────────────────────────────────────────────────────
 
 export async function fetchComplianceRecords(orgId?: string): Promise<ComplianceRecord[]> {
-  return apiFetch<ComplianceRecord[]>('/compliance', { organizationId: orgId || DEFAULT_ORG_ID }) || Promise.resolve([]);
+  const data = await apiFetch<ComplianceRecord[]>('/compliance', { organizationId: orgId || DEFAULT_ORG_ID });
+  return data || [];
 }
 
 export async function fetchComplianceStats(orgId?: string): Promise<ComplianceStats | null> {
@@ -181,5 +196,6 @@ export async function fetchComplianceStats(orgId?: string): Promise<ComplianceSt
 export async function fetchExpiringCompliance(orgId?: string, days?: number): Promise<ComplianceRecord[]> {
   const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID };
   if (days) params.daysWarning = String(days);
-  return apiFetch<ComplianceRecord[]>('/compliance/expiring', params) || Promise.resolve([]);
+  const data = await apiFetch<ComplianceRecord[]>('/compliance/expiring', params);
+  return data || [];
 }
