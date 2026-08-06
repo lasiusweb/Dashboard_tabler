@@ -1,27 +1,76 @@
 ---
 import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
 import CrmStats from '@shared/components/cards/CrmStats.astro';
-import { fetchBatchStats, fetchQCStats, fetchOrderStats, fetchInventoryStats, fetchFinanceStats } from '@shared/lib/fetchers';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import {
+	fetchBatchStats,
+	fetchQCStats,
+	fetchOrderStats,
+	fetchInventoryStats,
+	fetchFinanceStats,
+	fetchComplianceStats,
+	fetchExpiringBatches,
+	fetchExpiringCompliance,
+} from '@shared/lib/fetchers';
 import batchData from '@data/manufacturing-batches.json';
 import qcData from '@data/manufacturing-qc.json';
+import complianceData from '@data/manufacturing-compliance.json';
 
 // Attempt to fetch live stats from API; fall back to JSON
-const [batchStats, qcStats, orderStats, inventoryStats, financeStats] = await Promise.all([
-  fetchBatchStats(),
-  fetchQCStats(),
-  fetchOrderStats(),
-  fetchInventoryStats(),
-  fetchFinanceStats(),
+const [batchStats, qcStats, orderStats, inventoryStats, financeStats, complianceStats, expiringBatches, expiringCompliance] = await Promise.all([
+	fetchBatchStats(),
+	fetchQCStats(),
+	fetchOrderStats(),
+	fetchInventoryStats(),
+	fetchFinanceStats(),
+	fetchComplianceStats(),
+	fetchExpiringBatches(),
+	fetchExpiringCompliance(),
 ]);
 
+const batchesFallback = batchData as any;
+const qcFallback = qcData as any;
+const complianceFallback = complianceData as any;
+
 // Derive KPIs from live data or fall back to static
-const activeBatches = batchStats?.byStatus?.find((s: any) => !['DISPATCHED', 'EXPIRED', 'CANCELLED'].includes(s.status))?.count ?? (batchData as any).kpis[0].value;
-const qcPending = qcStats?.pending ?? (qcData as any).kpis[2].value;
-const qcPassed = qcStats?.passed ?? (qcData as any).kpis[3].value;
+const activeBatches = batchStats?.byStatus?.find((s: any) => !['DISPATCHED', 'EXPIRED', 'CANCELLED'].includes(s.status))?.count ?? batchesFallback.kpis[0].value;
+const qcPending = qcStats?.pending ?? qcFallback.kpis[2].value;
+const qcPassed = qcStats?.passed ?? qcFallback.kpis[3].value;
 const dispatched = orderStats?.byStatus?.find((s: any) => s.status === 'FULLY_SHIPPED')?.count ?? 89;
 const lowStock = inventoryStats?.lowStockCount ?? 3;
 const pendingPayments = financeStats?.pendingAmount ?? 0;
 const revenue = orderStats?.totalRevenue ?? 0;
+const complianceExpiring = complianceStats?.expiringSoon ?? complianceFallback.kpis[2].value;
+
+// Alerts: expiring batches + expiring certificates, fall back to JSON
+const liveAlerts: any[] = [];
+if (expiringBatches.length > 0 || expiringCompliance.length > 0) {
+	expiringBatches.slice(0, 3).forEach((b: any) => {
+		const daysLeft = Math.max(0, Math.ceil((new Date(b.expiryDate).getTime() - Date.now()) / 86400000));
+		liveAlerts.push({
+			type: 'Batch expiry',
+			entity: b.batchNumber,
+			message: `Expires in ${daysLeft} days - needs dispatch`,
+			severity: 'danger',
+			action: 'Dispatch',
+		});
+	});
+	expiringCompliance.slice(0, 3).forEach((r: any) => {
+		const daysLeft = Math.max(0, Math.ceil((new Date(r.expiryDate).getTime() - Date.now()) / 86400000));
+		liveAlerts.push({
+			type: 'Compliance',
+			entity: r.certType,
+			message: `${r.certificateNumber} expires in ${daysLeft} days`,
+			severity: 'warning',
+			action: 'Renew',
+		});
+	});
+}
+const alertsList = liveAlerts.length > 0 ? liveAlerts : batchesFallback.alerts;
 ---
 
 <DefaultLayout
@@ -56,7 +105,97 @@ const revenue = orderStats?.totalRevenue ?? 0;
 				<div class="col-sm-6 col-lg-3">
 					<CrmStats color="green" icon="trending-up" lt title="Revenue (MTD)" description={`₹${(revenue / 100000).toFixed(1)}L`} changeValue="+8.5" />
 				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="orange" icon="shield-check" lt title="Compliance Expiring" description={String(complianceExpiring)} changeValue="90 days" />
+				</div>
 			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Batch pipeline</div>
+							<div class="card-subtitle">Batches by production stage</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-batches-pipeline" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Order pipeline</div>
+							<div class="card-subtitle">Sales orders by fulfilment stage</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-orders-pipeline" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Inventory by category</div>
+							<div class="card-subtitle">Stock value distribution</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-inventory-category" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Revenue trend</div>
+							<div class="card-subtitle">Monthly revenue, 6 months</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-finance-revenue-trend" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Alerts</div>
+					<div class="card-subtitle">Expiring batches and certificates</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Type</th>
+								<th>Entity</th>
+								<th>Message</th>
+								<th class="w-1">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(alertsList as any[]).map((a) => (
+									<tr>
+										<td><Badge color={a.severity === 'danger' ? 'danger' : 'warning'} light>{a.type}</Badge></td>
+										<td class="fw-medium">{a.entity ?? a.batch}</td>
+										<td class="text-secondary">{a.message}</td>
+										<td class="text-end"><Badge color={a.severity === 'danger' ? 'danger' : 'warning'} light>{a.action}</Badge></td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
 		</div>
 	</div>
 </DefaultLayout>
