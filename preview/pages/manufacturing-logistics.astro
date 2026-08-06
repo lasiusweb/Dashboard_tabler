@@ -191,7 +191,7 @@ const activeShipments = apiShipments.length > 0
 												<td class="text-end">{c.shipments}</td>
 												<td class="text-end">
 													<div class="d-flex align-items-center gap-2 justify-content-end">
-														<Progress value={c.onTime} color={c.onTime > 92 ? 'green' : c.onTime > 88 ? 'yellow' : 'red'} style="width: 60px" />
+														<Progress value={c.onTime} color={c.onTime > 92 ? 'green' : c.onTime > 88 ? 'yellow' : 'red'} width="60px" />
 														<span>{c.onTime}%</span>
 													</div>
 												</td>

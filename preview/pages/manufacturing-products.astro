@@ -124,7 +124,7 @@ const topProducts = apiProducts.length > 0
 													<td class="text-end">{s.avgCfu}</td>
 													<td class="text-end">
 														<div class="d-flex align-items-center gap-2 justify-content-end">
-															<Progress value={parseInt(s.yield)} color={parseInt(s.yield) > 90 ? 'green' : parseInt(s.yield) > 80 ? 'yellow' : 'red'} style="width: 80px" />
+															<Progress value={parseInt(s.yield)} color={parseInt(s.yield) > 90 ? 'green' : parseInt(s.yield) > 80 ? 'yellow' : 'red'} width="80px" />
 															<span>{s.yield}</span>
 														</div>
 													</td>
