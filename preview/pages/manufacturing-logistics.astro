@@ -17,6 +17,24 @@ const [apiShipments, logisticsStats] = await Promise.all([
 ]);
 
 const logisticsData = logisticsFallback as any;
+
+// Use live shipment data when available, fall back to JSON
+const activeShipments = apiShipments.length > 0
+  ? apiShipments
+      .filter((s: any) => !['DELIVERED', 'CANCELLED'].includes(s.status))
+      .slice(0, 5)
+      .map((s: any) => ({
+        shipment: s.shipmentNumber,
+        order: s.salesOrderId || '—',
+        customer: '—',
+        destination: s.shippingAddress || '—',
+        carrier: s.vehicle?.registrationNumber || '—',
+        status: s.status,
+        statusColor: s.status === 'IN_TRANSIT' ? 'blue' : s.status === 'PREPARING' ? 'yellow' : 'green',
+        dispatched: s.dispatchedAt ? new Date(s.dispatchedAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : '—',
+        eta: s.estimatedArrival ? new Date(s.estimatedArrival).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : '—',
+      }))
+  : logisticsData.shipments;
 ---
 
 <DefaultLayout
@@ -122,8 +140,8 @@ const logisticsData = logisticsFallback as any;
 								</tr>
 							</thead>
 							<tbody>
-								{
-									(logisticsData as { shipments: { shipment: string; order: string; customer: string; destination: string; carrier: string; status: string; statusColor: string; dispatched: string; eta: string }[] }).shipments.map(
+{
+									(activeShipments as { shipment: string; order: string; customer: string; destination: string; carrier: string; status: string; statusColor: string; dispatched: string; eta: string }[]).map(
 										(s) => (
 											<tr>
 												<td class="fw-medium">{s.shipment}</td>
@@ -132,7 +150,8 @@ const logisticsData = logisticsFallback as any;
 												<td>{s.destination}</td>
 												<td>{s.carrier}</td>
 												<td><Badge color={s.statusColor} light>{s.status}</Badge></td>
-												<td class="text-secondary">{s.eta}</td>
+												<td class="text-secondary">{s.dispatched}</td>
+												<td>{s.eta}</td>
 											</tr>
 										)
 									)
