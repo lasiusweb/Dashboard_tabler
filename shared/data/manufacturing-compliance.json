@@ -1,0 +1,108 @@
+{
+  "kpis": [
+    { "title": "Total Certificates", "value": "12", "change": "+1", "up": true, "color": "primary", "icon": "certificate" },
+    { "title": "Active", "value": "9", "change": "+1", "up": true, "color": "green", "icon": "shield-check" },
+    { "title": "Expiring Soon", "value": "2", "change": "next 90 days", "up": false, "color": "orange", "icon": "clock" },
+    { "title": "Expired", "value": "1", "change": "needs renewal", "up": false, "color": "red", "icon": "alert-triangle" }
+  ],
+  "byType": [
+    { "certType": "FSSAI", "count": 3, "share": 25 },
+    { "certType": "ORGANIC", "count": 3, "share": 25 },
+    { "certType": "GST_REGISTRATION", "count": 2, "share": 17 },
+    { "certType": "ISO", "count": 2, "share": 17 },
+    { "certType": "HACCP", "count": 2, "share": 16 }
+  ],
+  "byStatus": [
+    { "status": "ACTIVE", "count": 9, "share": 75 },
+    { "status": "EXPIRING", "count": 2, "share": 17 },
+    { "status": "EXPIRED", "count": 1, "share": 8 }
+  ],
+  "expiring": [
+    {
+      "certType": "ORGANIC",
+      "certificateNumber": "NPOP-ORG-2024-001",
+      "issuedBy": "APEDA",
+      "issuedDate": "2024-03-01",
+      "expiryDate": "2027-02-28",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd.",
+      "daysLeft": 45
+    },
+    {
+      "certType": "FSSAI",
+      "certificateNumber": "FSSAI-10019062000001",
+      "issuedBy": "FSSAI",
+      "issuedDate": "2024-01-15",
+      "expiryDate": "2026-09-14",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd.",
+      "daysLeft": 72
+    },
+    {
+      "certType": "HACCP",
+      "certificateNumber": "HACCP-FC-2023-014",
+      "issuedBy": "Bureau Veritas",
+      "issuedDate": "2023-11-20",
+      "expiryDate": "2026-10-19",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd.",
+      "daysLeft": 88
+    }
+  ],
+  "records": [
+    {
+      "certType": "GST_REGISTRATION",
+      "certificateNumber": "27AABCF1234A1Z5",
+      "issuedBy": "GSTN",
+      "issuedDate": "2022-04-01",
+      "expiryDate": "2099-12-31",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd."
+    },
+    {
+      "certType": "FSSAI",
+      "certificateNumber": "FSSAI-10019062000001",
+      "issuedBy": "FSSAI",
+      "issuedDate": "2024-01-15",
+      "expiryDate": "2026-09-14",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd."
+    },
+    {
+      "certType": "ORGANIC",
+      "certificateNumber": "NPOP-ORG-2024-001",
+      "issuedBy": "APEDA",
+      "issuedDate": "2024-03-01",
+      "expiryDate": "2027-02-28",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd."
+    },
+    {
+      "certType": "ISO",
+      "certificateNumber": "ISO-9001-2024-FC",
+      "issuedBy": "TUV India",
+      "issuedDate": "2024-06-10",
+      "expiryDate": "2027-06-09",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd."
+    },
+    {
+      "certType": "ISO",
+      "certificateNumber": "ISO-22000-2023-FC",
+      "issuedBy": "TUV India",
+      "issuedDate": "2023-08-15",
+      "expiryDate": "2026-08-14",
+      "status": "EXPIRED",
+      "entity": "FirstCrop Biotech Ltd."
+    },
+    {
+      "certType": "HACCP",
+      "certificateNumber": "HACCP-FC-2023-014",
+      "issuedBy": "Bureau Veritas",
+      "issuedDate": "2023-11-20",
+      "expiryDate": "2026-10-19",
+      "status": "ACTIVE",
+      "entity": "FirstCrop Biotech Ltd."
+    }
+  ]
+}

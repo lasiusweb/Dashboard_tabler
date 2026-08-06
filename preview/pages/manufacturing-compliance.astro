@@ -1,0 +1,198 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import { fetchComplianceRecords, fetchComplianceStats, fetchExpiringCompliance } from '@shared/lib/fetchers';
+import complianceFallback from '@data/manufacturing-compliance.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiRecords, apiStats, apiExpiring] = await Promise.all([
+  fetchComplianceRecords(),
+  fetchComplianceStats(),
+  fetchExpiringCompliance(),
+]);
+
+const complianceData = complianceFallback as any;
+
+// KPIs: prefer live stats, fall back to JSON
+const kpis = (apiStats
+  ? [
+      { title: 'Total Certificates', value: String(apiStats.total), change: 'all time', up: true, color: 'primary', icon: 'certificate' },
+      { title: 'Active', value: String(apiStats.active), change: 'in good standing', up: true, color: 'green', icon: 'shield-check' },
+      { title: 'Expiring Soon', value: String(apiStats.expiringSoon), change: 'next 90 days', up: true, color: 'orange', icon: 'clock' },
+      { title: 'Expired', value: String(apiStats.expired), change: 'needs renewal', up: false, color: 'red', icon: 'alert-triangle' },
+    ]
+  : complianceData.kpis) as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[];
+
+// Expiring certificates, closest expiry first
+const expiringList = apiExpiring.length > 0
+  ? apiExpiring.map((r) => {
+      const daysLeft = Math.max(0, Math.ceil((new Date(r.expiryDate).getTime() - Date.now()) / 86400000));
+      return {
+        certificateNumber: r.certificateNumber,
+        certType: r.certType,
+        issuedBy: r.issuedBy ?? '—',
+        expiryDate: new Date(r.expiryDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+        daysLeft,
+        entity: (r as { party?: { name?: string } }).party?.name ?? '—',
+      };
+    })
+  : complianceData.expiring;
+
+// Full certificate register
+const recordsList = apiRecords.length > 0
+  ? apiRecords.map((r) => ({
+      certType: r.certType,
+      certificateNumber: r.certificateNumber,
+      issuedBy: r.issuedBy ?? '—',
+      issuedDate: r.issuedDate ? new Date(r.issuedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—',
+      expiryDate: r.expiryDate ? new Date(r.expiryDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—',
+      status: r.status,
+    }))
+  : complianceData.records;
+
+const daysBadge = (days: number) => (days <= 30 ? { label: `${days}d`, color: 'red' } : days <= 60 ? { label: `${days}d`, color: 'orange' } : { label: `${days}d`, color: 'yellow' });
+
+const statusBadge = (status: string) =>
+  status === 'ACTIVE' ? { label: 'Active', color: 'green' } :
+  status === 'EXPIRING' ? { label: 'Expiring', color: 'orange' } :
+  status === 'EXPIRED' ? { label: 'Expired', color: 'red' } :
+  status === 'SUSPENDED' ? { label: 'Suspended', color: 'yellow' } :
+  { label: status, color: 'gray' };
+---
+
+<DefaultLayout
+	title="Compliance"
+	pageHeader="Compliance"
+	description="Regulatory certificates, expirations, and renewals"
+	pageMenu="manufacturing.compliance"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					kpis.map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Certificates by type</div>
+							<div class="card-subtitle">Active certificate portfolio</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-compliance-by-type" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Status overview</div>
+							<div class="card-subtitle">Active, expiring, and expired</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-compliance-status" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Expiring soon</div>
+							<div class="card-subtitle">Certificates due for renewal in the next 90 days</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Certificate</th>
+										<th>Type</th>
+										<th>Expires</th>
+										<th>Days left</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(expiringList as { certificateNumber: string; certType: string; issuedBy: string; expiryDate: string; daysLeft: number; entity: string }[]).map((r) => {
+											const badge = daysBadge(r.daysLeft);
+											return (
+												<tr>
+													<td>
+														<div class="fw-medium">{r.certificateNumber}</div>
+														<div class="text-secondary">{r.entity}</div>
+													</td>
+													<td><Badge color="blue" light>{r.certType}</Badge></td>
+													<td class="text-secondary">{r.expiryDate}</td>
+													<td><Badge color={badge.color} light>{badge.label}</Badge></td>
+												</tr>
+											);
+										})
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-6">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Certificate register</div>
+							<div class="card-subtitle">All regulatory certificates on file</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Certificate</th>
+										<th>Issued by</th>
+										<th>Issued</th>
+										<th>Expires</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										(recordsList as { certType: string; certificateNumber: string; issuedBy: string; issuedDate: string; expiryDate: string; status: string }[]).map((r) => {
+											const badge = statusBadge(r.status);
+											return (
+												<tr>
+													<td>
+														<div class="fw-medium">{r.certificateNumber}</div>
+														<div class="text-secondary">{r.certType}</div>
+													</td>
+													<td>{r.issuedBy}</td>
+													<td class="text-secondary">{r.issuedDate}</td>
+													<td class="text-secondary">{r.expiryDate}</td>
+													<td><Badge color={badge.color} light>{badge.label}</Badge></td>
+												</tr>
+											);
+										})
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

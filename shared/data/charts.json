@@ -1537,6 +1537,27 @@
     ]
   },
 
+  "mfg-compliance-by-type": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "FSSAI", "color": "blue", "data": 3 },
+      { "name": "ORGANIC", "color": "green", "data": 3 },
+      { "name": "GST", "color": "yellow", "data": 2 },
+      { "name": "ISO", "color": "purple", "data": 2 },
+      { "name": "HACCP", "color": "orange", "data": 2 }
+    ]
+  },
+  "mfg-compliance-status": {
+    "type": "bar",
+    "legend": false,
+    "categories": ["Active", "Expiring Soon", "Expired"],
+    "series": [
+      { "name": "Certificates", "color": "green", "data": [9, 2, 1] }
+    ]
+  },
+
   "mfg-inventory-category": {
     "type": "donut",
     "legend": true,

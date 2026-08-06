@@ -393,7 +393,9 @@ export interface ComplianceStats {
   total: number;
   active: number;
   expiringSoon: number;
-  byType: Array<{ certType: string; count: number }>;
+  expired: number;
+  byStatus: Array<{ status: string; _count: number }>;
+  byCertType: Array<{ certType: string; _count: number }>;
 }
 
 // ─── Party (Customer/Vendor) ─────────────────────────────────────────────

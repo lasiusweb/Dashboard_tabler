@@ -90,6 +90,10 @@
         "url": "manufacturing-qc.html",
         "title": "Quality Control"
       },
+      "compliance": {
+        "url": "manufacturing-compliance.html",
+        "title": "Compliance"
+      },
       "inventory": {
         "url": "manufacturing-inventory.html",
         "title": "Inventory"
