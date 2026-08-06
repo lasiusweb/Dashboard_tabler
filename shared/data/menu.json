@@ -110,6 +110,10 @@
         "url": "manufacturing-logistics.html",
         "title": "Logistics"
       },
+      "distributors": {
+        "url": "manufacturing-distributors.html",
+        "title": "Distributors"
+      },
       "finance": {
         "url": "manufacturing-finance.html",
         "title": "Finance"

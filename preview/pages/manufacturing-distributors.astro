@@ -1,0 +1,156 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import { fetchDistributors, fetchDistributorStats } from '@shared/lib/fetchers';
+import distributorsFallback from '@data/manufacturing-distributors.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiDistributors, distributorStats] = await Promise.all([
+	fetchDistributors(),
+	fetchDistributorStats(),
+]);
+
+const fallback = distributorsFallback as any;
+
+// KPIs: prefer live stats, fall back to JSON
+const belowTarget = apiDistributors.filter((d) => Number(d.currentQuantity ?? 0) < Number(d.targetQuantity ?? 0)).length;
+const kpis = distributorStats
+	? [
+			{ title: 'Total Distributors', value: String(distributorStats.total), change: 'active network', up: true, color: 'primary', icon: 'building-store' },
+			{ title: 'Avg Rating', value: distributorStats.avgRating ? distributorStats.avgRating.toFixed(1) : '—', change: 'field feedback', up: true, color: 'green', icon: 'star' },
+			{ title: 'Territories', value: String(distributorStats.byTerritory.length), change: 'covered', up: true, color: 'azure', icon: 'map' },
+			{ title: 'Below Target', value: String(belowTarget), change: 'needs attention', up: false, color: 'red', icon: 'alert-triangle' },
+		]
+	: fallback.kpis;
+
+// Distributor rows (live API shape and JSON fallback share the same fields)
+const toRow = (d: any) => {
+	const target = Number(d.targetQuantity ?? 0);
+	const current = Number(d.currentQuantity ?? 0);
+	return {
+		name: d.party?.displayName ?? d.displayName ?? d.party?.name ?? d.name ?? '—',
+		legalName: d.party?.name ?? d.name ?? '',
+		territory: d.territory,
+		state: d.state ?? d.party?.state ?? '—',
+		target,
+		current,
+		progress: target > 0 ? Math.min(100, Math.round((current / target) * 100)) : 0,
+		commission: Number(d.commissionRate ?? 0),
+		coldStorage: !!d.coldStorageAvail,
+		rating: d.rating ? Number(d.rating).toFixed(1) : '—',
+		isActive: d.isActive !== false,
+	};
+};
+const distributorsList = (apiDistributors.length > 0 ? apiDistributors : fallback.distributors).map(toRow);
+
+const progressColor = (p: number) => (p < 40 ? 'red' : p < 70 ? 'yellow' : 'green');
+---
+
+<DefaultLayout
+	title="Distributors"
+	pageHeader="Distributors"
+	description="Distributor network, territory targets, and performance"
+	pageMenu="manufacturing.distributors"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By territory</div>
+							<div class="card-subtitle">Distributors per territory</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-distributors-territory" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Target achievement</div>
+							<div class="card-subtitle">Target vs. current quantity (kg)</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-distributors-target" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Distributor network</div>
+					<div class="card-subtitle">Performance against territory targets</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Distributor</th>
+								<th>Territory</th>
+								<th>Target (kg)</th>
+								<th>Current (kg)</th>
+								<th>Achievement</th>
+								<th>Commission</th>
+								<th>Cold storage</th>
+								<th>Rating</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(distributorsList as { name: string; legalName: string; territory: string; state: string; target: number; current: number; progress: number; commission: number; coldStorage: boolean; rating: string; isActive: boolean }[]).map((d) => (
+									<tr>
+										<td>
+											<div class="fw-medium">{d.name}</div>
+											<div class="text-secondary">{d.legalName}</div>
+										</td>
+										<td>
+											<div class="fw-medium">{d.territory}</div>
+											<div class="text-secondary">{d.state}</div>
+										</td>
+										<td class="text-secondary">{d.target.toLocaleString('en-IN')}</td>
+										<td class="fw-medium">{d.current.toLocaleString('en-IN')}</td>
+										<td>
+											<div class="d-flex align-items-center gap-2">
+												<Progress value={d.progress} color={progressColor(d.progress)} width={`${d.progress}%`} size="sm" class="flex-grow-1" />
+												<span class="text-secondary">{d.progress}%</span>
+											</div>
+										</td>
+										<td class="text-secondary">{d.commission ? `${d.commission}%` : '—'}</td>
+										<td><Badge color={d.coldStorage ? 'green' : 'gray'} light>{d.coldStorage ? 'Yes' : 'No'}</Badge></td>
+										<td class="fw-medium">{d.rating}</td>
+										<td><Badge color={d.isActive ? 'green' : 'red'} light>{d.isActive ? 'Active' : 'Inactive'}</Badge></td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

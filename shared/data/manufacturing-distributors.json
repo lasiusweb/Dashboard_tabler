@@ -1,0 +1,81 @@
+{
+  "kpis": [
+    { "title": "Total Distributors", "value": "6", "change": "+1", "up": true, "color": "primary", "icon": "building-store" },
+    { "title": "Avg Rating", "value": "4.1", "change": "+0.2", "up": true, "color": "green", "icon": "star" },
+    { "title": "Territories", "value": "4", "change": "active", "up": true, "color": "azure", "icon": "map" },
+    { "title": "Below Target", "value": "2", "change": "needs attention", "up": false, "color": "red", "icon": "alert-triangle" }
+  ],
+  "byTerritory": [
+    { "territory": "Western Maharashtra", "count": 2 },
+    { "territory": "South Karnataka", "count": 2 },
+    { "territory": "North Gujarat", "count": 1 },
+    { "territory": "Central MP", "count": 1 }
+  ],
+  "distributors": [
+    {
+      "name": "Maharashtra Agri Inputs Pvt Ltd",
+      "displayName": "MAIPL",
+      "territory": "Western Maharashtra",
+      "state": "Maharashtra",
+      "gstin": "27AABCM1234A1Z5",
+      "targetQuantity": 5000,
+      "currentQuantity": 2300,
+      "commissionRate": 8,
+      "coldStorageAvail": true,
+      "rating": 4.5,
+      "isActive": true
+    },
+    {
+      "name": "Karnataka Farm Solutions",
+      "displayName": "KFS",
+      "territory": "South Karnataka",
+      "state": "Karnataka",
+      "gstin": "29AABCK5678B1Z3",
+      "targetQuantity": 3000,
+      "currentQuantity": 800,
+      "commissionRate": 7,
+      "coldStorageAvail": false,
+      "rating": 3.8,
+      "isActive": true
+    },
+    {
+      "name": "Gujarat Krishi Distributors",
+      "displayName": "GKD",
+      "territory": "North Gujarat",
+      "state": "Gujarat",
+      "gstin": "24AAHCG7890D1Z8",
+      "targetQuantity": 2500,
+      "currentQuantity": 2100,
+      "commissionRate": 7.5,
+      "coldStorageAvail": true,
+      "rating": 4.2,
+      "isActive": true
+    },
+    {
+      "name": "Madhya Pradesh Agro Center",
+      "displayName": "MPAC",
+      "territory": "Central MP",
+      "state": "Madhya Pradesh",
+      "gstin": "23AACPM4567E1Z2",
+      "targetQuantity": 2000,
+      "currentQuantity": 950,
+      "commissionRate": 8,
+      "coldStorageAvail": false,
+      "rating": 3.6,
+      "isActive": true
+    },
+    {
+      "name": "Rajasthan Crop Care",
+      "displayName": "RCC",
+      "territory": "Rajasthan",
+      "state": "Rajasthan",
+      "gstin": "08AACRR3456F1Z7",
+      "targetQuantity": 1500,
+      "currentQuantity": 400,
+      "commissionRate": 9,
+      "coldStorageAvail": true,
+      "rating": 3.2,
+      "isActive": false
+    }
+  ]
+}

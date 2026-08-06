@@ -423,6 +423,41 @@ export interface Party {
   updatedAt: string
 }
 
+// ─── Distributor ──────────────────────────────────────────────────────────
+
+export interface Distributor {
+  id: string
+  partyId: string
+  territory: string
+  region?: string
+  state?: string
+  district?: string
+  targetQuantity?: number
+  currentQuantity?: number
+  commissionRate?: number
+  coldStorageAvail: boolean
+  fieldAgentId?: string
+  rating?: number
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+  party?: {
+    id: string
+    name: string
+    displayName?: string
+    gstin?: string
+    city?: string
+    state?: string
+    pincode?: string
+  }
+}
+
+export interface DistributorStats {
+  total: number
+  avgRating: number
+  byTerritory: Array<{ territory: string; _count: number }>
+}
+
 // ─── Raw Material ─────────────────────────────────────────────────────────
 
 export interface RawMaterial {

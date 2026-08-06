@@ -1557,6 +1557,27 @@
       { "name": "Certificates", "color": "green", "data": [9, 2, 1] }
     ]
   },
+  "mfg-distributors-territory": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Western Maharashtra", "color": "blue", "data": 2 },
+      { "name": "South Karnataka", "color": "green", "data": 2 },
+      { "name": "North Gujarat", "color": "yellow", "data": 1 },
+      { "name": "Central MP", "color": "purple", "data": 1 }
+    ]
+  },
+  "mfg-distributors-target": {
+    "type": "bar",
+    "legend": true,
+    "horizontal": true,
+    "categories": ["MAIPL", "KFS", "GKD", "MPAC", "RCC"],
+    "series": [
+      { "name": "Target", "color": "gray-300", "data": [5000, 3000, 2500, 2000, 1500] },
+      { "name": "Current", "color": "blue", "data": [2300, 800, 2100, 950, 400] }
+    ]
+  },
 
   "mfg-inventory-category": {
     "type": "donut",

@@ -1,4 +1,4 @@
-import type { Product, ProductStats, Batch, BatchStats, QCTest, QCStats, InventoryItem, InventoryStats, SalesOrder, OrderStats, PurchaseOrder, Shipment, LogisticsStats, Invoice, FinanceStats, ComplianceRecord, ComplianceStats } from './types'
+import type { Product, ProductStats, Batch, BatchStats, QCTest, QCStats, InventoryItem, InventoryStats, SalesOrder, OrderStats, PurchaseOrder, Shipment, LogisticsStats, Invoice, FinanceStats, ComplianceRecord, ComplianceStats, Distributor, DistributorStats } from './types'
 
 const API_BASE_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3002/api'
 const DEFAULT_ORG_ID = import.meta.env.PUBLIC_ORGANIZATION_ID || ''
@@ -180,4 +180,18 @@ export async function fetchExpiringCompliance(orgId?: string, days?: number): Pr
   if (days) params.daysWarning = String(days)
   const data = await apiFetch<ComplianceRecord[]>('/compliance/expiring', params)
   return data || []
+}
+
+// ─── Distributors ──────────────────────────────────────────────────────────
+
+export async function fetchDistributors(orgId?: string, filters?: { territory?: string; state?: string }): Promise<Distributor[]> {
+  const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID }
+  if (filters?.territory) params.territory = filters.territory
+  if (filters?.state) params.state = filters.state
+  const data = await apiFetch<Distributor[]>('/distributors', params)
+  return data || []
+}
+
+export async function fetchDistributorStats(orgId?: string): Promise<DistributorStats | null> {
+  return apiFetch<DistributorStats>('/distributors/stats', { organizationId: orgId || DEFAULT_ORG_ID })
 }
