@@ -19,6 +19,20 @@ const [apiInventory, inventoryStats, lowStockItems] = await Promise.all([
 ]);
 
 const inventoryData = inventoryFallback as any;
+
+// Use live inventory data when available, fall back to JSON
+const rawMaterials = apiInventory.length > 0
+  ? apiInventory
+      .map((item: any) => ({
+        name: item.product?.name ?? item.rawMaterialId ?? 'Unknown',
+        code: item.batchNumber ?? item.product?.sku ?? '—',
+        category: item.product?.category ?? 'Raw Material',
+        stock: `${item.quantity} ${item.unit}`,
+        reorder: item.product ? 'OK' : '—',
+        status: item.quantity > 0 ? 'In Stock' : 'Out of Stock',
+        statusColor: item.quantity > 0 ? 'green' : 'red',
+      }))
+  : inventoryData.rawMaterials;
 ---
 
 <DefaultLayout
@@ -118,7 +132,7 @@ const inventoryData = inventoryFallback as any;
 								</thead>
 								<tbody>
 									{
-										(inventoryData as { rawMaterials: { name: string; code: string; category: string; stock: string; reorder: string; status: string; statusColor: string }[] }).rawMaterials.map(
+										(rawMaterials as { name: string; code: string; category: string; stock: string; reorder: string; status: string; statusColor: string }[]).map(
 											(r) => (
 												<tr>
 													<td>
