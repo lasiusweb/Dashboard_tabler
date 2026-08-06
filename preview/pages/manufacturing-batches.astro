@@ -19,8 +19,9 @@ const [apiBatches, batchStats] = await Promise.all([
 const batchesData = batchesFallback as any;
 
 // Transform API batches to table format if available
-const activeBatches = apiBatches.length > 0
-  ? apiBatches
+const apiBatchesList = Array.isArray(apiBatches) ? apiBatches : [];
+const activeBatches = apiBatchesList.length > 0
+  ? apiBatchesList
       .filter((b: any) => !['DISPATCHED', 'EXPIRED', 'CANCELLED', 'READY_FOR_DISPATCH'].includes(b.status))
       .slice(0, 10)
       .map((b: any) => ({

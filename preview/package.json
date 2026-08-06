@@ -22,6 +22,7 @@
     "type-check": "astro check"
   },
   "dependencies": {
+    "@astrojs/netlify": "^8.1.3",
     "@firstcrop/core": "workspace:*",
     "astro": "^7.1.3"
   },

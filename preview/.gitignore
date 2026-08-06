@@ -11,3 +11,6 @@ public/
 
 # temporary demo build assets
 tmp-assets/
+
+# Local Netlify folder
+.netlify

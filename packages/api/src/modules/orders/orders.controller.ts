@@ -39,6 +39,13 @@ export class OrdersController {
     return this.ordersService.getOrderStats(organizationId);
   }
 
+  @Get('customers')
+  @ApiOperation({ summary: 'Get customers with order counts' })
+  @ApiResponse({ status: 200, description: 'Return customers with order summary' })
+  async getCustomers(@Query('organizationId') organizationId: string) {
+    return this.ordersService.getCustomers(organizationId);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get sales order by ID' })
   @ApiResponse({ status: 200, description: 'Return sales order by ID' })

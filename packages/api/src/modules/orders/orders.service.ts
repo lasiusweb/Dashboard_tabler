@@ -406,4 +406,37 @@ export class OrdersService {
       pendingPayment: pendingPayment._sum.totalAmount,
     };
   }
+
+  async getCustomers(organizationId: string) {
+    const customers = await this.prisma.party.findMany({
+      where: {
+        organizationId,
+        type: 'CUSTOMER',
+      },
+      select: {
+        id: true,
+        name: true,
+        displayName: true,
+        gstin: true,
+        city: true,
+        state: true,
+        _count: {
+          select: {
+            salesOrders: true,
+          },
+        },
+      },
+      orderBy: { name: 'asc' },
+    });
+
+    return customers.map((c) => ({
+      id: c.id,
+      name: c.name,
+      displayName: c.displayName,
+      gstin: c.gstin,
+      city: c.city,
+      state: c.state,
+      orderCount: c._count.salesOrders,
+    }));
+  }
 }
