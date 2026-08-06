@@ -18,6 +18,23 @@ const [apiProducts, productStats] = await Promise.all([
 ]);
 
 const productsData = productsFallback as any;
+
+// Use live product data when available, fall back to JSON
+const topProducts = apiProducts.length > 0
+  ? apiProducts
+      .slice(0, 5)
+      .map((p: any) => ({
+        sku: p.sku ?? '—',
+        name: p.name,
+        category: p.category ?? '—',
+        strain: p.strainName ?? '—',
+        cfu: p.cfuPerGram ? `${p.cfuPerGram} CFU/g` : '—',
+        batches: 0,
+        yield: '—',
+        stock: '—',
+        stockColor: 'blue',
+      }))
+  : productsData.topProducts;
 ---
 
 <DefaultLayout
@@ -178,7 +195,7 @@ const productsData = productsFallback as any;
 								</thead>
 								<tbody>
 									{
-										(productsData as { topProducts: { sku: string; name: string; category: string; strain: string; cfu: string; batches: number; yield: string; stock: string; stockColor: string }[] }).topProducts.map(
+										(topProducts as { sku: string; name: string; category: string; strain: string; cfu: string; batches: number; yield: string; stock: string; stockColor: string }[]).map(
 											(p) => (
 												<tr>
 													<td>
