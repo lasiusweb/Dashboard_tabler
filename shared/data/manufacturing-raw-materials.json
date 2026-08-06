@@ -1,0 +1,115 @@
+{
+  "kpis": [
+    { "title": "Total Materials", "value": "8", "change": "SKUs", "up": true, "color": "primary", "icon": "package" },
+    { "title": "Total Stock", "value": "13,557", "change": "units on hand", "up": true, "color": "blue", "icon": "box" },
+    { "title": "Low Stock", "value": "2", "change": "below reorder level", "up": false, "color": "red", "icon": "alert-triangle" },
+    { "title": "Categories", "value": "4", "change": "active", "up": true, "color": "green", "icon": "category" }
+  ],
+  "byCategory": [
+    { "category": "STRAIN", "count": 3 },
+    { "category": "MEDIA", "count": 2 },
+    { "category": "PACKAGING", "count": 2 },
+    { "category": "CHEMICAL", "count": 1 }
+  ],
+  "materials": [
+    {
+      "name": "Azospirillum brasilense Culture",
+      "code": "RM-ST-AZO",
+      "category": "STRAIN",
+      "strainType": "BACTERIA",
+      "currentStock": 15,
+      "unit": "ML",
+      "reorderLevel": 20,
+      "maxStock": 500,
+      "costPerUnit": 500,
+      "storageCondition": "COLD_STORAGE",
+      "isActive": true
+    },
+    {
+      "name": "Rhizobium leguminosarum Culture",
+      "code": "RM-ST-RHI",
+      "category": "STRAIN",
+      "strainType": "BACTERIA",
+      "currentStock": 12,
+      "unit": "ML",
+      "reorderLevel": 15,
+      "maxStock": 300,
+      "costPerUnit": 450,
+      "storageCondition": "COLD_STORAGE",
+      "isActive": true
+    },
+    {
+      "name": "Trichoderma viride Spores",
+      "code": "RM-ST-TRI",
+      "category": "STRAIN",
+      "strainType": "FUNGUS",
+      "currentStock": 100,
+      "unit": "GRAM",
+      "reorderLevel": 30,
+      "maxStock": 1000,
+      "costPerUnit": 800,
+      "storageCondition": "ROOM_TEMP",
+      "isActive": true
+    },
+    {
+      "name": "Nutrient Broth Media",
+      "code": "RM-MD-NB",
+      "category": "MEDIA",
+      "currentStock": 200,
+      "unit": "KG",
+      "reorderLevel": 50,
+      "maxStock": 500,
+      "costPerUnit": 120,
+      "storageCondition": "ROOM_TEMP",
+      "isActive": true
+    },
+    {
+      "name": "Sabouraud Dextrose Agar",
+      "code": "RM-MD-SDA",
+      "category": "MEDIA",
+      "currentStock": 150,
+      "unit": "KG",
+      "reorderLevel": 40,
+      "maxStock": 400,
+      "costPerUnit": 180,
+      "storageCondition": "ROOM_TEMP",
+      "isActive": true
+    },
+    {
+      "name": "HDPE Bottles 500ml",
+      "code": "RM-PK-BTL500",
+      "category": "PACKAGING",
+      "currentStock": 5000,
+      "unit": "PIECE",
+      "reorderLevel": 1000,
+      "maxStock": 20000,
+      "costPerUnit": 8,
+      "storageCondition": "ROOM_TEMP",
+      "isActive": true
+    },
+    {
+      "name": "Laminated Pouches 250g",
+      "code": "RM-PK-POU250",
+      "category": "PACKAGING",
+      "currentStock": 8000,
+      "unit": "PIECE",
+      "reorderLevel": 2000,
+      "maxStock": 30000,
+      "costPerUnit": 5,
+      "storageCondition": "ROOM_TEMP",
+      "isActive": true
+    },
+    {
+      "name": "Glycerol (Humectant)",
+      "code": "RM-CH-GLY",
+      "category": "CHEMICAL",
+      "currentStock": 80,
+      "unit": "LITER",
+      "reorderLevel": 20,
+      "maxStock": 200,
+      "costPerUnit": 150,
+      "storageCondition": "ROOM_TEMP",
+      "isActive": true
+    }
+  ]
+}

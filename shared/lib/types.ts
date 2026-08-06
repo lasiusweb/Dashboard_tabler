@@ -483,3 +483,9 @@ export interface RawMaterial {
   createdAt: string
   updatedAt: string
 }
+
+export interface RawMaterialStats {
+  total: number
+  totalStockValue: number
+  byCategory: Array<{ category: string; _count: number }>
+}

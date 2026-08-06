@@ -1,0 +1,159 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import Progress from '@ui/Progress.astro';
+import { fetchRawMaterials, fetchRawMaterialStats, fetchLowStockRawMaterials } from '@shared/lib/fetchers';
+import rawMaterialsFallback from '@data/manufacturing-raw-materials.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiMaterials, materialStats, lowStock] = await Promise.all([
+	fetchRawMaterials(),
+	fetchRawMaterialStats(),
+	fetchLowStockRawMaterials(),
+]);
+
+const fallback = rawMaterialsFallback as any;
+
+// KPIs: prefer live stats, fall back to JSON
+const totalStock = materialStats ? materialStats.totalStockValue : (fallback.materials as any[]).reduce((sum: number, m: any) => sum + Number(m.currentStock ?? 0), 0);
+const kpis = materialStats
+	? [
+			{ title: 'Total Materials', value: String(materialStats.total), change: 'SKUs', up: true, color: 'primary', icon: 'package' },
+			{ title: 'Total Stock', value: totalStock.toLocaleString('en-IN'), change: 'units on hand', up: true, color: 'blue', icon: 'box' },
+			{ title: 'Low Stock', value: String(lowStock.length), change: 'below reorder level', up: false, color: 'red', icon: 'alert-triangle' },
+			{ title: 'Categories', value: String(materialStats.byCategory.length), change: 'active', up: true, color: 'green', icon: 'category' },
+		]
+	: fallback.kpis;
+
+// Material rows
+const toRow = (m: any) => {
+	const current = Number(m.currentStock ?? 0);
+	const reorder = Number(m.reorderLevel ?? 0);
+	const max = Number(m.maxStock ?? (reorder * 2 || 100));
+	const isLow = current <= reorder;
+	return {
+		name: m.name,
+		code: m.code,
+		category: m.category,
+		strainType: m.strainType,
+		current,
+		unit: m.unit,
+		reorder,
+		progress: Math.min(100, Math.round((current / max) * 100)),
+		cost: m.costPerUnit ? `₹${Number(m.costPerUnit).toLocaleString('en-IN')}` : '—',
+		storage: m.storageCondition ? m.storageCondition.replace(/_/g, ' ').toLowerCase() : '—',
+		isActive: m.isActive !== false,
+		isLow,
+	};
+};
+const materialRows = (apiMaterials.length > 0 ? apiMaterials : fallback.materials).map(toRow);
+
+const storageColor = (s: string) => (s.startsWith('cold') ? 'azure' : s.startsWith('freezer') ? 'purple' : 'gray');
+const categoryColor = (c: string) =>
+	({ STRAIN: 'blue', MEDIA: 'green', PACKAGING: 'yellow', CHEMICAL: 'purple' } as Record<string, string>)[c] ?? 'gray';
+---
+
+<DefaultLayout
+	title="Raw Materials"
+	pageHeader="Raw Materials"
+	description="Input materials, stock levels, and reorder status"
+	pageMenu="manufacturing.raw-materials"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By category</div>
+							<div class="card-subtitle">Materials per input category</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-rawmaterials-category" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Stock levels</div>
+							<div class="card-subtitle">Current stock per material (units)</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-rawmaterials-stock" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Material register</div>
+					<div class="card-subtitle">Stock against reorder levels</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Material</th>
+								<th>Category</th>
+								<th>Stock level</th>
+								<th>On hand</th>
+								<th>Reorder</th>
+								<th>Cost</th>
+								<th>Storage</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(materialRows as { name: string; code: string; category: string; strainType?: string; current: number; unit: string; reorder: number; progress: number; cost: string; storage: string; isActive: boolean; isLow: boolean }[]).map((m) => (
+									<tr>
+										<td>
+											<div class="fw-medium">{m.name}</div>
+											<div class="text-secondary">{m.code}{m.strainType ? ` · ${m.strainType}` : ''}</div>
+										</td>
+										<td><Badge color={categoryColor(m.category)} light>{m.category}</Badge></td>
+										<td>
+											<div class="d-flex align-items-center gap-2">
+												<Progress value={m.progress} color={m.isLow ? 'red' : 'green'} width={`${m.progress}%`} size="sm" class="flex-grow-1" />
+												<span class="text-secondary">{m.progress}%</span>
+											</div>
+										</td>
+										<td class="fw-medium">{m.current.toLocaleString('en-IN')} <span class="text-secondary">{m.unit}</span></td>
+										<td class="text-secondary">{m.reorder.toLocaleString('en-IN')}</td>
+										<td class="text-secondary">{m.cost}</td>
+										<td><Badge color={storageColor(m.storage)} light>{m.storage}</Badge></td>
+										<td>
+											{m.isLow ? <Badge color="red" light>Low stock</Badge> : <Badge color={m.isActive ? 'green' : 'gray'} light>{m.isActive ? 'Active' : 'Inactive'}</Badge>}
+										</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

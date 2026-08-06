@@ -82,6 +82,10 @@
         "title": "Products",
         "badge": "New"
       },
+      "raw-materials": {
+        "url": "manufacturing-raw-materials.html",
+        "title": "Raw Materials"
+      },
       "batches": {
         "url": "manufacturing-batches.html",
         "title": "Batches"

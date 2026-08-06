@@ -1578,6 +1578,26 @@
       { "name": "Current", "color": "blue", "data": [2300, 800, 2100, 950, 400] }
     ]
   },
+  "mfg-rawmaterials-category": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "STRAIN", "color": "blue", "data": 3 },
+      { "name": "MEDIA", "color": "green", "data": 2 },
+      { "name": "PACKAGING", "color": "yellow", "data": 2 },
+      { "name": "CHEMICAL", "color": "purple", "data": 1 }
+    ]
+  },
+  "mfg-rawmaterials-stock": {
+    "type": "bar",
+    "legend": false,
+    "horizontal": true,
+    "categories": ["Glycerol", "HDPE Bottles", "Pouches 250g", "Sabouraud Agar", "Nutrient Broth", "Trichoderma", "Azospirillum", "Rhizobium"],
+    "series": [
+      { "name": "Current stock", "color": "azure", "data": [80, 5000, 8000, 150, 200, 100, 15, 12] }
+    ]
+  },
 
   "mfg-inventory-category": {
     "type": "donut",

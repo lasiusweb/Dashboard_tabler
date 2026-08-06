@@ -1,4 +1,4 @@
-import type { Product, ProductStats, Batch, BatchStats, QCTest, QCStats, InventoryItem, InventoryStats, SalesOrder, OrderStats, PurchaseOrder, Shipment, LogisticsStats, Invoice, FinanceStats, ComplianceRecord, ComplianceStats, Distributor, DistributorStats } from './types'
+import type { Product, ProductStats, Batch, BatchStats, QCTest, QCStats, InventoryItem, InventoryStats, SalesOrder, OrderStats, PurchaseOrder, Shipment, LogisticsStats, Invoice, FinanceStats, ComplianceRecord, ComplianceStats, Distributor, DistributorStats, RawMaterial, RawMaterialStats } from './types'
 
 const API_BASE_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3002/api'
 const DEFAULT_ORG_ID = import.meta.env.PUBLIC_ORGANIZATION_ID || ''
@@ -194,4 +194,23 @@ export async function fetchDistributors(orgId?: string, filters?: { territory?: 
 
 export async function fetchDistributorStats(orgId?: string): Promise<DistributorStats | null> {
   return apiFetch<DistributorStats>('/distributors/stats', { organizationId: orgId || DEFAULT_ORG_ID })
+}
+
+// ─── Raw Materials ─────────────────────────────────────────────────────────
+
+export async function fetchRawMaterials(orgId?: string, filters?: { category?: string; search?: string }): Promise<RawMaterial[]> {
+  const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID }
+  if (filters?.category) params.category = filters.category
+  if (filters?.search) params.search = filters.search
+  const data = await apiFetch<RawMaterial[]>('/raw-materials', params)
+  return data || []
+}
+
+export async function fetchRawMaterialStats(orgId?: string): Promise<RawMaterialStats | null> {
+  return apiFetch<RawMaterialStats>('/raw-materials/stats', { organizationId: orgId || DEFAULT_ORG_ID })
+}
+
+export async function fetchLowStockRawMaterials(orgId?: string): Promise<RawMaterial[]> {
+  const data = await apiFetch<RawMaterial[]>('/raw-materials/low-stock', { organizationId: orgId || DEFAULT_ORG_ID })
+  return data || []
 }
