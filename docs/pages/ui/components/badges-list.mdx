@@ -1,0 +1,32 @@
+---
+title: Badges List
+summary: Container for inline badges used in tables and lists.
+description: BadgesList is a simple wrapper that groups multiple badges. Use it to display tags or small status chips.
+layout: '@shared/layouts/DocsMdxLayout.astro'
+---
+
+import Example from '@components/Example.astro';
+
+## Overview
+
+BadgesList wraps badge elements and provides consistent spacing.
+
+## Props
+
+- class: string — additional classes for the container.
+
+## Examples
+
+Inline badges inside a table cell:
+
+<Example>
+<BadgesList>
+  <Badge text="QTA" color="primary" />
+  <Badge text="Event" />
+  <Badge text="Tickets" color="warning" />
+</BadgesList>
+</Example>
+
+## Accessibility
+
+Badges are presentational. Provide textual context for screen readers when badges carry important meaning.

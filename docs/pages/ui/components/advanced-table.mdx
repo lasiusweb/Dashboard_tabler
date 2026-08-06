@@ -1,0 +1,35 @@
+---
+title: Advanced Table
+summary: A feature-rich table with search, sorting, pagination and actions.
+description: AdvancedTable demonstrates search input, column sorting, selectable rows, badges and client-side pagination. It wires a small List.js instance for interactivity.
+layout: '@shared/layouts/DocsMdxLayout.astro'
+---
+
+import Example from '@components/Example.astro';
+
+## Overview
+
+Advanced Table is a full-featured table component used for lists with controls. It supports:
+
+- search input (id-based)
+- sortable columns
+- selectable rows and bulk actions
+- pagination and per-page selector
+
+## Props
+
+- id: string — unique id for the table instance. Use a unique id when adding multiple tables.
+
+## Examples
+
+Basic advanced table (default dataset):
+
+<Example>
+<AdvancedTable id="employees" />
+</Example>
+
+Notes: the component initializes a small client-side list for search and paging. Keep `id` unique on pages with multiple tables.
+
+## Accessibility
+
+Table uses standard table markup. Ensure action buttons include aria-label where needed.

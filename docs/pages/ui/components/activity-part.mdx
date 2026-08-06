@@ -1,0 +1,32 @@
+---
+title: Activity Part
+summary: Small activity feed block showing recent actions and avatars.
+description: Displays recent activity items with avatar, timeago and optional badge. Good for sidebars and small activity lists.
+layout: '@shared/layouts/DocsMdxLayout.astro'
+---
+
+import Example from '@components/Example.astro';
+
+## Overview
+
+ActivityPart renders a vertical list of recent actions. It uses site data to populate person names and times.
+
+## Usage
+
+Props:
+
+- limit: number — how many items to show (default 40).
+
+## Examples
+
+Show 5 recent items:
+
+<Example>
+<ActivityPart limit={5} />
+</Example>
+
+Stacked in a card or sidebar for small summaries.
+
+## Accessibility
+
+The component outputs plain semantic markup. Ensure avatars have alt text if customized.

@@ -1,0 +1,38 @@
+---
+title: Avatar List
+summary: Inline list of avatars for people, with stacking and size options.
+description: AvatarList renders a list of Avatar components from site people data. Supports stacking and an optional placeholder avatar.
+layout: '@shared/layouts/DocsMdxLayout.astro'
+---
+
+import Example from '@components/Example.astro';
+
+## Overview
+
+AvatarList is a simple wrapper that renders a sequence of avatars. It forwards size classes to each Avatar.
+
+## Props
+
+- limit: number — how many avatars to show (default 5).
+- offset: number — start index into people data.
+- stacked: boolean — show avatars stacked.
+- size: string — forwarded to each Avatar (e.g. "sm", "lg").
+- text: string — append a placeholder avatar with the given text.
+
+## Examples
+
+Default list:
+
+<Example>
+<AvatarList />
+</Example>
+
+Stacked, small avatars with a placeholder:
+
+<Example>
+<AvatarList limit={4} size="sm" stacked text="+3" />
+</Example>
+
+## Accessibility
+
+Avatars are decorative by default. Provide contextual text near the list for screen-reader users if the avatars convey important meaning.

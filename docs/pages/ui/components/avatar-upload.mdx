@@ -1,0 +1,29 @@
+---
+title: Avatar Upload
+summary: Clickable avatar placeholder used to trigger uploads or profile picture changes.
+description: Renders a clickable avatar with a plus icon. Use it as a trigger for file pickers or upload flows.
+layout: '@shared/layouts/DocsMdxLayout.astro'
+---
+
+import Example from '@components/Example.astro';
+
+## Overview
+
+AvatarUpload is a tiny helper that shows a plus icon inside an avatar. It accepts size and class props.
+
+## Props
+
+- size: string — avatar size (e.g. "sm", "md", "lg").
+- class: string — additional classes.
+
+## Examples
+
+Large upload trigger:
+
+<Example>
+<AvatarUpload size="lg" />
+</Example>
+
+## Accessibility
+
+Ensure the upload trigger has an accessible label when wired to a file input. Wrap with a button or add aria-label as needed.
