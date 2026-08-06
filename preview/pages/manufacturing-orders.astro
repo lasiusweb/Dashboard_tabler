@@ -18,6 +18,21 @@ const [apiOrders, orderStats, customers] = await Promise.all([
 ]);
 
 const ordersData = ordersFallback as any;
+
+// Use live customers data when available, fall back to JSON
+const topCustomers = customers.length > 0
+  ? customers
+      .sort((a: any, b: any) => (b.revenue ?? 0) - (a.revenue ?? 0))
+      .slice(0, 5)
+      .map((c: any) => ({
+        name: c.displayName || c.name,
+        orders: c.orderCount,
+        revenue: c.revenue ? `₹${(Number(c.revenue) / 100000).toFixed(0)}L` : '—',
+        avgLead: '—',
+        segment: 'Customer',
+        segmentColor: 'blue',
+      }))
+  : ordersData.topCustomers;
 ---
 
 <DefaultLayout
@@ -133,7 +148,7 @@ const ordersData = ordersFallback as any;
 								</thead>
 								<tbody>
 									{
-										(ordersData as { topCustomers: { name: string; orders: number; revenue: string; avgLead: string; segment: string; segmentColor: string }[] }).topCustomers.map(
+										(topCustomers as { name: string; orders: number; revenue: string; avgLead: string; segment: string; segmentColor: string }[]).map(
 											(c) => (
 												<tr>
 													<td class="fw-medium">{c.name}</td>

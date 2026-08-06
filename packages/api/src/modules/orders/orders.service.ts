@@ -425,6 +425,13 @@ export class OrdersService {
             salesOrders: true,
           },
         },
+        _sum: {
+          salesOrders: {
+            select: {
+              totalAmount: true,
+            },
+          },
+        },
       },
       orderBy: { name: 'asc' },
     });
@@ -437,6 +444,7 @@ export class OrdersService {
       city: c.city,
       state: c.state,
       orderCount: c._count.salesOrders,
+      revenue: c._sum.salesOrders?._sum?.totalAmount ?? null,
     }));
   }
 }
