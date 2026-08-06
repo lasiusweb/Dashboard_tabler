@@ -420,31 +420,40 @@ export class OrdersService {
         gstin: true,
         city: true,
         state: true,
-        _count: {
-          select: {
-            salesOrders: true,
-          },
-        },
-        _sum: {
-          salesOrders: {
-            select: {
-              totalAmount: true,
-            },
-          },
-        },
       },
       orderBy: { name: 'asc' },
     });
 
-    return customers.map((c) => ({
-      id: c.id,
-      name: c.name,
-      displayName: c.displayName,
-      gstin: c.gstin,
-      city: c.city,
-      state: c.state,
-      orderCount: c._count.salesOrders,
-      revenue: c._sum.salesOrders?._sum?.totalAmount ?? null,
-    }));
+    const customerIds = customers.map((c) => c.id);
+
+    const orderCounts = await this.prisma.salesOrder.groupBy({
+      by: ['customerId'],
+      where: {
+        organizationId,
+        customerId: { in: customerIds },
+      },
+      _count: true,
+      _sum: {
+        totalAmount: true,
+      },
+    });
+
+    const statsMap = new Map(
+      orderCounts.map((o) => [o.customerId, { orderCount: o._count, revenue: o._sum.totalAmount }])
+    );
+
+    return customers.map((c) => {
+      const stats = statsMap.get(c.id);
+      return {
+        id: c.id,
+        name: c.name,
+        displayName: c.displayName,
+        gstin: c.gstin,
+        city: c.city,
+        state: c.state,
+        orderCount: stats?.orderCount ?? 0,
+        revenue: stats?.revenue ?? null,
+      };
+    });
   }
 }
