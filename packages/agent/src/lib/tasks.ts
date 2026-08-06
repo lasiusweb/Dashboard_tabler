@@ -3,7 +3,7 @@
  * Uses FOR UPDATE SKIP LOCKED pattern for concurrent processing
  */
 
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma } from '@firstcrop/db';
 
 export interface Task {
   id: string;

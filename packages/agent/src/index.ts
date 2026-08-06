@@ -3,7 +3,7 @@
  * LangGraph-based research agent for manufacturing ERP
  */
 
-import { StateGraph, Annotation, START, END } from '@langchain/langgraph';
+import { StateGraph, START, END } from '@langchain/langgraph';
 import { ChatOpenAI } from '@langchain/openai';
 import { PrismaClient } from '@firstcrop/db';
 import { TaskQueue } from './lib/tasks';
@@ -29,7 +29,7 @@ export class ManufacturingAgent {
   private taskQueue: TaskQueue;
   private tools: ManufacturingTools;
   private llm: ChatOpenAI;
-  private graph: StateGraph<AgentState>;
+  private graph: StateGraph<AgentState, AgentState, Partial<AgentState>, string>;
 
   constructor() {
     this.prisma = new PrismaClient();
@@ -46,20 +46,19 @@ export class ManufacturingAgent {
     this.graph = this.buildGraph();
   }
 
-  private buildGraph(): StateGraph<AgentState> {
-    // Define state annotation
-    const StateAnnotation = Annotation.Root({
-      messages: Annotation<Array<{ role: string; content: string }>>,
-      currentTask: Annotation<any | null>,
-      tools: Annotation<ManufacturingTools>,
-      taskQueue: Annotation<TaskQueue>,
-      prisma: Annotation<PrismaClient>,
-      results: Annotation<any[]>,
-      errors: Annotation<string[]>,
-    });
-
+  private buildGraph(): StateGraph<AgentState, AgentState, Partial<AgentState>, string> {
     // Build workflow graph
-    const workflow = new StateGraph(StateAnnotation)
+    const workflow = new StateGraph<AgentState>({
+      channels: {
+        messages: { reducer: (left, right) => left.concat(right) },
+        currentTask: { reducer: (left, right) => right },
+        tools: { reducer: (left, right) => right },
+        taskQueue: { reducer: (left, right) => right },
+        prisma: { reducer: (left, right) => right },
+        results: { reducer: (left, right) => left.concat(right) },
+        errors: { reducer: (left, right) => left.concat(right) },
+      },
+    })
       .addNode('fetchTask', this.fetchTask.bind(this))
       .addNode('analyzeTask', this.analyzeTask.bind(this))
       .addNode('executeTool', this.executeTool.bind(this))

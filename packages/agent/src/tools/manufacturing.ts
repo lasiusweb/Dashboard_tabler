@@ -3,7 +3,7 @@
  * Adapted from trycompai/crm agent tools
  */
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@firstcrop/db';
 import { evidenceScorer } from '../lib/evidence';
 
 export interface ToolResult {
@@ -136,7 +136,7 @@ export class ManufacturingTools {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - days);
 
-      const tests = await this.prisma.qcTest.findMany({
+      const tests = await this.prisma.qCTest.findMany({
         where: {
           batch: {
             organizationId,
@@ -696,7 +696,7 @@ export class ManufacturingTools {
    */
   async generateQCCertificate(testId: string): Promise<ToolResult> {
     try {
-      const test = await this.prisma.qcTest.findUnique({
+      const test = await this.prisma.qCTest.findUnique({
         where: { id: testId },
         include: {
           batch: {
