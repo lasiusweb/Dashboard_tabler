@@ -17,6 +17,21 @@ const [apiQc, qcStats] = await Promise.all([
 ]);
 
 const qcData = qcFallback as any;
+
+// Use live QC data when available, fall back to JSON
+const pendingTests = apiQc.length > 0
+  ? apiQc
+      .filter((t: any) => t.result === 'PENDING' || !t.result)
+      .slice(0, 5)
+      .map((t: any) => ({
+        batch: t.batch?.batchNumber ?? t.batchId ?? '—',
+        product: t.batch?.product?.name ?? '—',
+        tests: t.testType ? [t.testType] : [],
+        scheduled: t.testedAt ? new Date(t.testedAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : '—',
+        priority: t.result === 'PENDING' ? 'high' : 'normal',
+        priorityColor: t.result === 'PENDING' ? 'orange' : 'blue',
+      }))
+  : qcData.pendingTests;
 ---
 
 <DefaultLayout
@@ -97,7 +112,7 @@ const qcData = qcFallback as any;
 								</thead>
 								<tbody>
 									{
-										(qcData as { pendingTests: { batch: string; product: string; tests: string[]; scheduled: string; priority: string; priorityColor: string }[] }).pendingTests.map(
+										(pendingTests as { batch: string; product: string; tests: string[]; scheduled: string; priority: string; priorityColor: string }[]).map(
 											(t) => (
 												<tr>
 													<td>
