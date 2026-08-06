@@ -7,13 +7,14 @@ import CardBody from '@ui/CardBody.astro';
 import Chart from '@ui/Chart.astro';
 import Badge from '@ui/Badge.astro';
 import Progress from '@ui/Progress.astro';
-import { fetchBatches, fetchBatchStats } from '@shared/lib/fetchers';
+import { fetchBatches, fetchBatchStats, fetchExpiringBatches } from '@shared/lib/fetchers';
 import batchesFallback from '@data/manufacturing-batches.json';
 
 // Fetch live data from API; fall back to JSON
-const [apiBatches, batchStats] = await Promise.all([
+const [apiBatches, batchStats, expiringBatches] = await Promise.all([
   fetchBatches(),
   fetchBatchStats(),
+  fetchExpiringBatches(),
 ]);
 
 const batchesData = batchesFallback as any;
@@ -36,6 +37,47 @@ const activeBatches = apiBatchesList.length > 0
         yield: b.yieldPercentage ? `${b.yieldPercentage}%` : '—',
       }))
   : batchesData.activeBatches;
+
+// Use live fermentation batches when available, fall back to JSON
+const fermentationList = apiBatchesList.length > 0
+  ? apiBatchesList
+      .filter((b: any) => b.status === 'FERMENTATION')
+      .slice(0, 5)
+      .map((b: any) => ({
+        batch: b.batchNumber,
+        product: b.product?.name || '—',
+        fermenter: b.fermenterId ? b.fermenterId.replace(/^ferm-?/i, '').replace(/^(.+)$/, 'FR-$1') : '—',
+        hours: b.actualStartDate ? Math.max(0, Math.round((Date.now() - new Date(b.actualStartDate).getTime()) / 3600000)) : 0,
+        targetHours: b.incubationTimeHours ?? 72,
+        status: 'On track',
+        statusColor: 'green',
+      }))
+  : batchesData.fermentationTimeline;
+
+// Use live expiring + QC pending data when available, fall back to JSON
+const liveAlerts: any[] = [];
+if (apiBatchesList.length > 0 || expiringBatches.length > 0) {
+  expiringBatches.slice(0, 4).forEach((b: any) => {
+    const daysLeft = Math.max(0, Math.ceil((new Date(b.expiryDate).getTime() - Date.now()) / 86400000));
+    liveAlerts.push({
+      type: 'Expiry',
+      batch: b.batchNumber,
+      message: `Batch expires in ${daysLeft} days - needs dispatch`,
+      severity: 'danger',
+      action: 'Dispatch',
+    });
+  });
+  apiBatchesList.filter((b: any) => b.status === 'QC_PENDING').slice(0, 3).forEach((b: any) => {
+    liveAlerts.push({
+      type: 'QC',
+      batch: b.batchNumber,
+      message: 'QC tests pending',
+      severity: 'warning',
+      action: 'Follow up',
+    });
+  });
+}
+const alertsList = liveAlerts.length > 0 ? liveAlerts : batchesData.alerts;
 ---
 
 <DefaultLayout
@@ -150,7 +192,7 @@ const activeBatches = apiBatchesList.length > 0
 								</thead>
 								<tbody>
 									{
-										batchesData.fermentationTimeline.map((f: any) => (
+										fermentationList.map((f: any) => (
 											<tr>
 												<td>
 													<div class="fw-medium">{f.batch}</div>
@@ -159,7 +201,7 @@ const activeBatches = apiBatchesList.length > 0
 												<td>{f.fermenter}</td>
 												<td class="text-end">
 													<div class="d-flex align-items-center gap-2 justify-content-end">
-														<Progress value={(f.hours / f.targetHours) * 100} color={f.statusColor === 'green' ? 'green' : 'orange'} style="width: 60px" />
+														<Progress value={(f.hours / f.targetHours) * 100} color={f.statusColor === 'green' ? 'green' : 'orange'} width="60px" />
 														<span>{f.hours}/{f.targetHours}h</span>
 													</div>
 												</td>
@@ -189,7 +231,7 @@ const activeBatches = apiBatchesList.length > 0
 								</thead>
 								<tbody>
 									{
-										batchesData.alerts.map((a: any) => (
+										alertsList.map((a: any) => (
 											<tr>
 												<td>
 													<div class="fw-medium">{a.type}</div>
