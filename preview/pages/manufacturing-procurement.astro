@@ -18,6 +18,23 @@ const [apiPo, procurementStats, apiVendors] = await Promise.all([
 ]);
 
 const procurementData = procurementFallback as any;
+
+// Use live vendor data when available, fall back to JSON
+const vendorPerformance = apiVendors.length > 0
+  ? apiVendors
+      .sort((a: any, b: any) => b.totalOrders - a.totalOrders)
+      .slice(0, 5)
+      .map((v: any) => ({
+        name: v.displayName || v.name,
+        category: 'Vendor',
+        orders: v.totalOrders,
+        avgLead: '—',
+        quality: '—',
+        rating: 0,
+        status: v.pendingOrders > 0 ? 'Active' : 'Preferred',
+        statusColor: v.pendingOrders > 0 ? 'blue' : 'green',
+      }))
+  : procurementData.vendors;
 ---
 
 <DefaultLayout
@@ -170,7 +187,7 @@ const procurementData = procurementFallback as any;
 							</thead>
 							<tbody>
 								{
-									(procurementData as { vendors: { name: string; category: string; orders: number; avgLead: string; quality: string; rating: number; status: string; statusColor: string }[] }).vendors.map(
+									(vendorPerformance as { name: string; category: string; orders: number; avgLead: string; quality: string; rating: number; status: string; statusColor: string }[]).map(
 										(v) => (
 											<tr>
 												<td class="fw-medium">{v.name}</td>
