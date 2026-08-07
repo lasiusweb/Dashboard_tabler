@@ -80,6 +80,7 @@ import { PrismaClient } from '@firstcrop/db';
 - Run: `pnpm test` from root
 - Core SCSS tests: `cd core && pnpm run test:scss`
 - Core JS tests: `cd core && pnpm run test:js`
+- API service tests: `cd packages/api && pnpm test` (unit specs colocated as `*.spec.ts` in `src/modules/`, mock PrismaService)
 
 ## Forbidden Paths
 
