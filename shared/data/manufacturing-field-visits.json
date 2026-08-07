@@ -1,0 +1,87 @@
+{
+  "kpis": [
+    { "title": "Total Visits", "value": "24", "change": "+6", "up": true, "color": "primary", "icon": "map-pin" },
+    { "title": "Completed", "value": "18", "change": "75% on time", "up": true, "color": "green", "icon": "check-circle" },
+    { "title": "Scheduled", "value": "4", "change": "this week", "up": true, "color": "azure", "icon": "calendar" },
+    { "title": "Overdue", "value": "2", "change": "needs follow-up", "up": false, "color": "red", "icon": "alert-triangle" }
+  ],
+  "byVisitType": [
+    { "name": "Crop Advisory", "color": "blue", "data": 9 },
+    { "name": "Pest Diagnosis", "color": "green", "data": 6 },
+    { "name": "Soil Test", "color": "yellow", "data": 4 },
+    { "name": "Product Demo", "color": "purple", "data": 3 },
+    { "name": "Complaint", "color": "red", "data": 1 },
+    { "name": "Follow Up", "color": "azure", "data": 1 }
+  ],
+  "byStatus": [
+    { "name": "Completed", "color": "green", "data": 18 },
+    { "name": "Scheduled", "color": "azure", "data": 4 },
+    { "name": "In Progress", "color": "yellow", "data": 0 },
+    { "name": "Cancelled", "color": "gray", "data": 0 }
+  ],
+  "visits": [
+    {
+      "party": { "name": "Krishi Seva Kendra, Nashik" },
+      "visitor": { "name": "Rahul Patil" },
+      "visitType": "CROP_ADVISORY",
+      "status": "COMPLETED",
+      "scheduledDate": "2026-08-05T09:30:00.000Z",
+      "completedDate": "2026-08-05T11:00:00.000Z",
+      "location": "Nashik, Maharashtra",
+      "notes": "Advised on Rhizobium application for soybean crop",
+      "findings": "Crop showing nitrogen deficiency in patches",
+      "recommendations": "Apply 250g/acre, recheck in 2 weeks"
+    },
+    {
+      "party": { "name": "Green Valley Farms, Pune" },
+      "visitor": { "name": "Sneha Kulkarni" },
+      "visitType": "PEST_DIAGNOSIS",
+      "status": "COMPLETED",
+      "scheduledDate": "2026-08-04T10:00:00.000Z",
+      "completedDate": "2026-08-04T12:15:00.000Z",
+      "location": "Pune, Maharashtra",
+      "notes": "Whitefly infestation on okra",
+      "findings": "Moderate infestation, early stage",
+      "recommendations": "Trichoderma spray, repeat after 7 days"
+    },
+    {
+      "party": { "name": "Shree Agro, Satara" },
+      "visitor": { "name": "Rahul Patil" },
+      "visitType": "SOIL_TEST",
+      "status": "SCHEDULED",
+      "scheduledDate": "2026-08-10T09:00:00.000Z",
+      "location": "Satara, Maharashtra",
+      "notes": "Soil sampling for pH and NPK"
+    },
+    {
+      "party": { "name": "Ujjwal Krishi, Solapur" },
+      "visitor": { "name": "Sneha Kulkarni" },
+      "visitType": "PRODUCT_DEMO",
+      "status": "SCHEDULED",
+      "scheduledDate": "2026-08-12T10:30:00.000Z",
+      "location": "Solapur, Maharashtra",
+      "notes": "Bio-pesticide demo for grape growers"
+    },
+    {
+      "party": { "name": "Maa Laxmi Agro, Ahmednagar" },
+      "visitor": { "name": "Rahul Patil" },
+      "visitType": "COMPLAINT",
+      "status": "COMPLETED",
+      "scheduledDate": "2026-08-02T11:00:00.000Z",
+      "completedDate": "2026-08-02T13:00:00.000Z",
+      "location": "Ahmednagar, Maharashtra",
+      "notes": "Reported poor germination with seed treatment",
+      "findings": "Storage temperature exceeded during transit",
+      "recommendations": "Cold chain compliance check at distributor"
+    },
+    {
+      "party": { "name": "Krishna Agro, Kolhapur" },
+      "visitor": { "name": "Sneha Kulkarni" },
+      "visitType": "FOLLOW_UP",
+      "status": "SCHEDULED",
+      "scheduledDate": "2026-08-14T09:30:00.000Z",
+      "location": "Kolhapur, Maharashtra",
+      "notes": "Follow up on bio-fertilizer repeat order"
+    }
+  ]
+}

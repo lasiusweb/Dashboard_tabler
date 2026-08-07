@@ -1,0 +1,150 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import { fetchFieldVisits, fetchFieldVisitStats } from '@shared/lib/fetchers';
+import fieldVisitsFallback from '@data/manufacturing-field-visits.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiVisits, visitStats] = await Promise.all([
+	fetchFieldVisits(),
+	fetchFieldVisitStats(),
+]);
+
+const fallback = fieldVisitsFallback as any;
+
+// KPIs: prefer live stats, fall back to JSON
+const byStatus = visitStats?.byStatus;
+const overdue = apiVisits.filter((v) => v.status === 'SCHEDULED' && new Date(v.scheduledDate) < new Date()).length;
+const scheduled = byStatus?.SCHEDULED ?? 0;
+const kpis = visitStats
+	? [
+			{ title: 'Total Visits', value: String(visitStats.total), change: 'all time', up: true, color: 'primary', icon: 'map-pin' },
+			{ title: 'Completed', value: String(byStatus?.COMPLETED ?? 0), change: 'closed out', up: true, color: 'green', icon: 'check-circle' },
+			{ title: 'Scheduled', value: String(scheduled), change: 'upcoming', up: true, color: 'azure', icon: 'calendar' },
+			{ title: 'Overdue', value: String(overdue), change: 'needs follow-up', up: false, color: 'red', icon: 'alert-triangle' },
+		]
+	: fallback.kpis;
+
+// Field visit rows
+const toRow = (v: any) => {
+	const scheduledDate = new Date(v.scheduledDate);
+	const isOverdue = v.status === 'SCHEDULED' && scheduledDate < new Date();
+	return {
+		party: v.party?.name ?? '—',
+		visitor: v.visitor?.name ?? '—',
+		visitType: v.visitType,
+		status: v.status,
+		scheduled: scheduledDate.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }),
+		location: v.location ?? '—',
+		notes: v.notes ?? '—',
+		findings: v.findings,
+		recommendations: v.recommendations,
+		isOverdue,
+	};
+};
+const visitsList = (apiVisits.length > 0 ? apiVisits : fallback.visits).map(toRow);
+
+const visitTypeLabel = (t: string) => (t || '').replace(/_/g, ' ').toLowerCase();
+const visitTypeColor = (t: string) =>
+	({ CROP_ADVISORY: 'blue', PEST_DIAGNOSIS: 'green', SOIL_TEST: 'yellow', PRODUCT_DEMO: 'purple', COMPLAINT: 'red', FOLLOW_UP: 'azure' } as Record<string, string>)[t] ?? 'gray';
+const statusColor = (s: string) =>
+	({ COMPLETED: 'green', SCHEDULED: 'azure', IN_PROGRESS: 'yellow', CANCELLED: 'gray' } as Record<string, string>)[s] ?? 'gray';
+---
+
+<DefaultLayout
+	title="Field Visits"
+	pageHeader="Field Visits"
+	description="Field agent visits, crop advisory, and pest diagnostics"
+	pageMenu="manufacturing.field-visits"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By visit type</div>
+							<div class="card-subtitle">Visit purpose distribution</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-fieldvisits-type" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By status</div>
+							<div class="card-subtitle">Visits per completion state</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-fieldvisits-status" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Visit log</div>
+					<div class="card-subtitle">Field activity across parties</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Party</th>
+								<th>Visit type</th>
+								<th>Status</th>
+								<th>Scheduled</th>
+								<th>Location</th>
+								<th>Notes</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(visitsList as { party: string; visitor: string; visitType: string; status: string; scheduled: string; location: string; notes: string; isOverdue: boolean }[]).map((v) => (
+									<tr>
+										<td>
+											<div class="fw-medium">{v.party}</div>
+											<div class="text-secondary">{v.visitor}</div>
+										</td>
+										<td><Badge color={visitTypeColor(v.visitType)} light>{visitTypeLabel(v.visitType)}</Badge></td>
+										<td>
+											{v.isOverdue
+												? <Badge color="red" light>Overdue</Badge>
+												: <Badge color={statusColor(v.status)} light>{v.status.replace(/_/g, ' ').toLowerCase()}</Badge>}
+										</td>
+										<td class="text-secondary">{v.scheduled}</td>
+										<td class="text-secondary">{v.location}</td>
+										<td class="text-secondary text-truncate" style="max-width: 320px">{v.notes}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

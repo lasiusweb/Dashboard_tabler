@@ -1,4 +1,34 @@
-import type { Product, ProductStats, Batch, BatchStats, QCTest, QCStats, InventoryItem, InventoryStats, SalesOrder, OrderStats, PurchaseOrder, Shipment, LogisticsStats, Invoice, FinanceStats, ComplianceRecord, ComplianceStats, Distributor, DistributorStats, RawMaterial, RawMaterialStats } from './types'
+import type {
+  Product,
+  ProductStats,
+  Batch,
+  BatchStats,
+  QCTest,
+  QCStats,
+  InventoryItem,
+  InventoryStats,
+  SalesOrder,
+  OrderStats,
+  PurchaseOrder,
+  Shipment,
+  LogisticsStats,
+  Invoice,
+  FinanceStats,
+  ComplianceRecord,
+  ComplianceStats,
+  Distributor,
+  DistributorStats,
+  RawMaterial,
+  RawMaterialStats,
+  FieldVisit,
+  FieldVisitStats,
+  Activity,
+  Party,
+  User,
+  UserStats,
+  Organization,
+  AppSetting,
+} from './types'
 
 const API_BASE_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3002/api'
 const DEFAULT_ORG_ID = import.meta.env.PUBLIC_ORGANIZATION_ID || ''
@@ -212,5 +242,68 @@ export async function fetchRawMaterialStats(orgId?: string): Promise<RawMaterial
 
 export async function fetchLowStockRawMaterials(orgId?: string): Promise<RawMaterial[]> {
   const data = await apiFetch<RawMaterial[]>('/raw-materials/low-stock', { organizationId: orgId || DEFAULT_ORG_ID })
+  return data || []
+}
+
+// ─── Field Visits ────────────────────────────────────────────────────────
+
+export async function fetchFieldVisits(orgId?: string, filters?: { status?: string; visitType?: string }): Promise<FieldVisit[]> {
+  const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID }
+  if (filters?.status) params.status = filters.status
+  if (filters?.visitType) params.visitType = filters.visitType
+  const data = await apiFetch<FieldVisit[]>('/field-visits', params)
+  return data || []
+}
+
+export async function fetchFieldVisitStats(orgId?: string): Promise<FieldVisitStats | null> {
+  return apiFetch<FieldVisitStats>('/field-visits/stats', { organizationId: orgId || DEFAULT_ORG_ID })
+}
+
+// ─── Activities ─────────────────────────────────────────────────────────
+
+export async function fetchActivities(orgId?: string, filters?: { entityType?: string; type?: string; limit?: number }): Promise<Activity[]> {
+  const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID }
+  if (filters?.entityType) params.entityType = filters.entityType
+  if (filters?.type) params.type = filters.type
+  if (filters?.limit) params.limit = String(filters.limit)
+  const data = await apiFetch<Activity[]>('/activities', params)
+  return data || []
+}
+
+// ─── Parties ────────────────────────────────────────────────────────────
+
+export async function fetchParties(orgId?: string, type?: string): Promise<Party[]> {
+  const params: Record<string, string> = { organizationId: orgId || DEFAULT_ORG_ID }
+  if (type) params.type = type
+  const data = await apiFetch<Party[]>('/parties', params)
+  return data || []
+}
+
+export async function fetchPartyStats(orgId?: string): Promise<{ total: number; totalContacts: number; byType: Array<{ type: string; _count: number }> } | null> {
+  return apiFetch<{ total: number; totalContacts: number; byType: Array<{ type: string; _count: number }> }>('/parties/stats', { organizationId: orgId || DEFAULT_ORG_ID })
+}
+
+// ─── Users ───────────────────────────────────────────────────────────────
+
+export async function fetchUsers(orgId?: string): Promise<User[]> {
+  const data = await apiFetch<User[]>('/users', { organizationId: orgId || DEFAULT_ORG_ID })
+  return data || []
+}
+
+export async function fetchUserStats(orgId?: string): Promise<UserStats | null> {
+  return apiFetch<UserStats>('/users/stats/overview', { organizationId: orgId || DEFAULT_ORG_ID })
+}
+
+// ─── Organizations ───────────────────────────────────────────────────────
+
+export async function fetchOrganizations(): Promise<Organization[]> {
+  const data = await apiFetch<Organization[]>('/organizations')
+  return data || []
+}
+
+// ─── App Settings ────────────────────────────────────────────────────────
+
+export async function fetchAppSettings(orgId?: string): Promise<AppSetting[]> {
+  const data = await apiFetch<AppSetting[]>('/app-settings', { organizationId: orgId || DEFAULT_ORG_ID })
   return data || []
 }

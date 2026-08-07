@@ -489,3 +489,124 @@ export interface RawMaterialStats {
   totalStockValue: number
   byCategory: Array<{ category: string; _count: number }>
 }
+
+// ─── Field Visits ───────────────────────────────────────────────────────
+
+export interface FieldVisit {
+  id: string
+  partyId: string
+  visitedById: string
+  visitType: string
+  status: string
+  scheduledDate: string
+  completedDate?: string
+  location?: string
+  notes?: string
+  findings?: string
+  recommendations?: string
+  photos?: string[]
+  createdAt: string
+  updatedAt: string
+  party?: {
+    id: string
+    name: string
+    type?: string
+  }
+  visitor?: {
+    id: string
+    name: string
+    email?: string
+  }
+}
+
+export interface FieldVisitStats {
+  total: number
+  byStatus: Record<string, number>
+  byVisitType: Record<string, number>
+}
+
+// ─── Activities ─────────────────────────────────────────────────────────
+
+export interface Activity {
+  id: string
+  organizationId?: string
+  entityType: string
+  entityId: string
+  type: string
+  title: string
+  description?: string
+  metadata?: Record<string, unknown>
+  performedAt: string
+  createdAt: string
+  userId?: string
+  contactId?: string
+  partyId?: string
+  user?: {
+    id: string
+    name: string
+    email?: string
+  }
+  contact?: {
+    id: string
+    firstName?: string
+    lastName?: string
+  }
+  party?: {
+    id: string
+    name: string
+  }
+}
+
+// ─── Users ──────────────────────────────────────────────────────────────
+
+export interface User {
+  id: string
+  name?: string
+  email?: string
+  emailVerified: boolean
+  image?: string
+  phone?: string
+  phoneVerified: boolean
+  employeeId?: string
+  department?: string
+  plant?: string
+  shift?: string
+  designation?: string
+  joiningDate?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface UserStats {
+  total: number
+  byDepartment: Array<{
+    department: string
+    _count: number
+  }>
+}
+
+// ─── Organizations ──────────────────────────────────────────────────────
+
+export interface Organization {
+  id: string
+  name: string
+  slug: string
+  logoUrl?: string
+  createdAt: string
+  updatedAt: string
+  _count?: {
+    members: number
+  }
+}
+
+// ─── App Settings ───────────────────────────────────────────────────────
+
+export interface AppSetting {
+  id: string
+  organizationId: string
+  key: string
+  value: unknown
+  description?: string
+  createdAt: string
+  updatedAt: string
+}

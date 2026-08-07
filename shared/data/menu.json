@@ -118,6 +118,30 @@
         "url": "manufacturing-distributors.html",
         "title": "Distributors"
       },
+      "field-visits": {
+        "url": "manufacturing-field-visits.html",
+        "title": "Field Visits"
+      },
+      "activities": {
+        "url": "manufacturing-activities.html",
+        "title": "Activity Log"
+      },
+      "parties": {
+        "url": "manufacturing-parties.html",
+        "title": "Parties"
+      },
+      "users": {
+        "url": "manufacturing-users.html",
+        "title": "Users"
+      },
+      "organizations": {
+        "url": "manufacturing-organizations.html",
+        "title": "Organizations"
+      },
+      "settings": {
+        "url": "manufacturing-settings.html",
+        "title": "Settings"
+      },
       "finance": {
         "url": "manufacturing-finance.html",
         "title": "Finance"

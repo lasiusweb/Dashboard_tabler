@@ -1,0 +1,80 @@
+{
+  "kpis": [
+    { "title": "Total Parties", "value": "18", "change": "+3", "up": true, "color": "primary", "icon": "building-community" },
+    { "title": "Customers", "value": "7", "change": "active accounts", "up": true, "color": "blue", "icon": "users" },
+    { "title": "Vendors", "value": "5", "change": "suppliers", "up": true, "color": "green", "icon": "truck-delivery" },
+    { "title": "Contacts", "value": "31", "change": "across parties", "up": true, "color": "azure", "icon": "address-book" }
+  ],
+  "byType": [
+    { "name": "CUSTOMER", "color": "blue", "data": 7 },
+    { "name": "DISTRIBUTOR", "color": "green", "data": 4 },
+    { "name": "VENDOR", "color": "yellow", "data": 5 },
+    { "name": "RETAILER", "color": "purple", "data": 1 },
+    { "name": "COOPERATIVE", "color": "red", "data": 1 }
+  ],
+  "parties": [
+    {
+      "name": "Maharashtra Agri Inputs Pvt Ltd",
+      "displayName": "MAIPL",
+      "type": "DISTRIBUTOR",
+      "gstin": "27AABCM1234A1Z5",
+      "state": "Maharashtra",
+      "city": "Nashik",
+      "pincode": "422001",
+      "tags": ["distributor", "cold-storage"],
+      "contacts": [{ "firstName": "Sandeep", "lastName": "Wagh", "phone": "+91 98220 11223", "isPrimary": true }],
+      "_count": { "contacts": 1, "salesOrders": 12, "purchaseOrders": 0 }
+    },
+    {
+      "name": "Karnataka Farm Solutions",
+      "displayName": "KFS",
+      "type": "CUSTOMER",
+      "gstin": "29AABCK5678B1Z3",
+      "state": "Karnataka",
+      "city": "Hubli",
+      "pincode": "580030",
+      "tags": ["customer", "bio-fertilizer"],
+      "contacts": [{ "firstName": "Ravi", "lastName": "Kulkarni", "phone": "+91 98450 22334", "isPrimary": true }],
+      "_count": { "contacts": 1, "salesOrders": 8, "purchaseOrders": 0 }
+    },
+    {
+      "name": "BioTech Media Labs",
+      "displayName": "BML",
+      "type": "VENDOR",
+      "gstin": "27AAFCB7890C1Z2",
+      "state": "Maharashtra",
+      "city": "Pune",
+      "pincode": "411005",
+      "tags": ["vendor", "media"],
+      "contacts": [
+        { "firstName": "Nitin", "lastName": "Joshi", "phone": "+91 98670 44556", "isPrimary": true },
+        { "firstName": "Priya", "lastName": "Joshi", "phone": "+91 98670 44557", "isPrimary": false }
+      ],
+      "_count": { "contacts": 2, "salesOrders": 0, "purchaseOrders": 14 }
+    },
+    {
+      "name": "Green Valley Cooperative",
+      "displayName": "GVC",
+      "type": "COOPERATIVE",
+      "gstin": "27AABCG1122D1Z9",
+      "state": "Maharashtra",
+      "city": "Kolhapur",
+      "pincode": "416001",
+      "tags": ["cooperative", "bulk-buyer"],
+      "contacts": [{ "firstName": "Mahesh", "lastName": "Sawant", "phone": "+91 94220 66778", "isPrimary": true }],
+      "_count": { "contacts": 1, "salesOrders": 5, "purchaseOrders": 0 }
+    },
+    {
+      "name": "PackRight Industries",
+      "displayName": "PRI",
+      "type": "VENDOR",
+      "gstin": "24AAHCP3344E1Z6",
+      "state": "Gujarat",
+      "city": "Ahmedabad",
+      "pincode": "380015",
+      "tags": ["vendor", "packaging"],
+      "contacts": [{ "firstName": "Amit", "lastName": "Shah", "phone": "+91 98250 88990", "isPrimary": true }],
+      "_count": { "contacts": 1, "salesOrders": 0, "purchaseOrders": 9 }
+    }
+  ]
+}

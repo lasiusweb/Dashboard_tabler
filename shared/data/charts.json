@@ -843,8 +843,8 @@
           },
           {
             "x": 1792706400000,
-              "y": [86028.52, 91660.63, 77064.28, 83253.51]
-            }
+            "y": [86028.52, 91660.63, 77064.28, 83253.51]
+          }
         ]
       }
     ]
@@ -1491,9 +1491,7 @@
     "legend": true,
     "stacked": true,
     "categories": ["Planned", "In Progress", "Fermentation", "Processing", "QC Pending", "Packaging", "Ready"],
-    "series": [
-      { "name": "Count", "color": "green", "data": [6, 8, 12, 4, 8, 3, 5] }
-    ]
+    "series": [{ "name": "Count", "color": "green", "data": [6, 8, 12, 4, 8, 3, 5] }]
   },
   "mfg-batches-yield": {
     "type": "line",
@@ -1532,9 +1530,7 @@
     "legend": false,
     "horizontal": true,
     "categories": ["CFU Count", "pH Level", "Moisture", "Contamination", "Viscosity", "Heavy Metals"],
-    "series": [
-      { "name": "Pass Rate", "color": "green", "data": [95.2, 94.7, 97.1, 93.3, 95.5, 100] }
-    ]
+    "series": [{ "name": "Pass Rate", "color": "green", "data": [95.2, 94.7, 97.1, 93.3, 95.5, 100] }]
   },
 
   "mfg-compliance-by-type": {
@@ -1553,9 +1549,7 @@
     "type": "bar",
     "legend": false,
     "categories": ["Active", "Expiring Soon", "Expired"],
-    "series": [
-      { "name": "Certificates", "color": "green", "data": [9, 2, 1] }
-    ]
+    "series": [{ "name": "Certificates", "color": "green", "data": [9, 2, 1] }]
   },
   "mfg-distributors-territory": {
     "type": "donut",
@@ -1594,9 +1588,7 @@
     "legend": false,
     "horizontal": true,
     "categories": ["Glycerol", "HDPE Bottles", "Pouches 250g", "Sabouraud Agar", "Nutrient Broth", "Trichoderma", "Azospirillum", "Rhizobium"],
-    "series": [
-      { "name": "Current stock", "color": "azure", "data": [80, 5000, 8000, 150, 200, 100, 15, 12] }
-    ]
+    "series": [{ "name": "Current stock", "color": "azure", "data": [80, 5000, 8000, 150, 200, 100, 15, 12] }]
   },
 
   "mfg-inventory-category": {
@@ -1616,9 +1608,7 @@
     "legend": true,
     "stacked": true,
     "categories": ["Placed", "Confirmed", "In Production", "Ready", "Shipped", "Delivered"],
-    "series": [
-      { "name": "Count", "color": "green", "data": [5, 8, 12, 4, 6, 15] }
-    ]
+    "series": [{ "name": "Count", "color": "green", "data": [5, 8, 12, 4, 6, 15] }]
   },
   "mfg-orders-type": {
     "type": "donut",
@@ -1658,9 +1648,7 @@
     "legend": false,
     "stroke-width": [2],
     "categories": ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
-    "series": [
-      { "name": "Spend (₹L)", "color": "green", "data": [14.2, 16.8, 19.4, 17.6, 15.8, 18.6] }
-    ]
+    "series": [{ "name": "Spend (₹L)", "color": "green", "data": [14.2, 16.8, 19.4, 17.6, 15.8, 18.6] }]
   },
 
   "mfg-logistics-zone": {
@@ -1705,6 +1693,97 @@
       { "name": "Revenue (₹L)", "color": "green", "data": [82, 94, 112, 102, 88, 42] },
       { "name": "Expenses (₹L)", "color": "red", "data": [58, 62, 74, 68, 61, 28] },
       { "name": "Profit (₹L)", "color": "blue", "data": [24, 32, 38, 34, 27, 14] }
+    ]
+  },
+
+  "mfg-fieldvisits-type": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Crop Advisory", "color": "blue", "data": 9 },
+      { "name": "Pest Diagnosis", "color": "green", "data": 6 },
+      { "name": "Soil Test", "color": "yellow", "data": 4 },
+      { "name": "Product Demo", "color": "purple", "data": 3 },
+      { "name": "Complaint", "color": "red", "data": 1 },
+      { "name": "Follow Up", "color": "azure", "data": 1 }
+    ]
+  },
+  "mfg-fieldvisits-status": {
+    "type": "bar",
+    "legend": true,
+    "horizontal": true,
+    "categories": ["Completed", "Scheduled", "In Progress", "Cancelled"],
+    "series": [{ "name": "Visits", "color": "blue", "data": [18, 4, 0, 0] }]
+  },
+
+  "mfg-activities-entity": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "Batch", "color": "blue", "data": 14 },
+      { "name": "Order", "color": "green", "data": 9 },
+      { "name": "QC Test", "color": "purple", "data": 8 },
+      { "name": "Invoice", "color": "yellow", "data": 6 },
+      { "name": "Compliance", "color": "red", "data": 3 },
+      { "name": "Party", "color": "azure", "data": 2 }
+    ]
+  },
+  "mfg-activities-type": {
+    "type": "bar",
+    "legend": false,
+    "horizontal": true,
+    "categories": ["QC_TEST", "STAGE_CHANGE", "BATCH_CREATED", "PAYMENT_RECEIVED", "BATCH_COMPLETED", "DELIVERY_CONFIRMED", "COMPLIANCE_CHECK", "NOTE"],
+    "series": [{ "name": "Events", "color": "blue", "data": [8, 7, 6, 5, 4, 3, 3, 6] }]
+  },
+
+  "mfg-parties-type": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "CUSTOMER", "color": "blue", "data": 7 },
+      { "name": "DISTRIBUTOR", "color": "green", "data": 4 },
+      { "name": "VENDOR", "color": "yellow", "data": 5 },
+      { "name": "RETAILER", "color": "purple", "data": 1 },
+      { "name": "COOPERATIVE", "color": "red", "data": 1 }
+    ]
+  },
+  "mfg-parties-state": {
+    "type": "bar",
+    "legend": false,
+    "horizontal": true,
+    "categories": ["Maharashtra", "Karnataka", "Gujarat", "Rajasthan", "MP"],
+    "series": [{ "name": "Parties", "color": "azure", "data": [9, 4, 3, 1, 1] }]
+  },
+
+  "mfg-users-department": {
+    "type": "bar",
+    "legend": false,
+    "horizontal": true,
+    "categories": ["PRODUCTION", "SALES", "QC", "LOGISTICS", "ADMIN", "FINANCE"],
+    "series": [{ "name": "Users", "color": "blue", "data": [9, 5, 3, 3, 2, 2] }]
+  },
+
+  "mfg-orgs-members": {
+    "type": "bar",
+    "legend": false,
+    "horizontal": true,
+    "categories": ["FirstCrop Agro", "GreenBio Microbes", "AgriNova Biotech"],
+    "series": [{ "name": "Members", "color": "azure", "data": [24, 9, 5] }]
+  },
+
+  "mfg-settings-type": {
+    "type": "donut",
+    "legend": true,
+    "sparkline": true,
+    "series": [
+      { "name": "STRING", "color": "blue", "data": 4 },
+      { "name": "NUMBER", "color": "green", "data": 4 },
+      { "name": "BOOLEAN", "color": "yellow", "data": 1 },
+      { "name": "ARRAY", "color": "purple", "data": 1 },
+      { "name": "OBJECT", "color": "azure", "data": 2 }
     ]
   }
 }

@@ -1,0 +1,140 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import { fetchParties, fetchPartyStats } from '@shared/lib/fetchers';
+import partiesFallback from '@data/manufacturing-parties.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiParties, partyStats] = await Promise.all([
+	fetchParties(),
+	fetchPartyStats(),
+]);
+
+const fallback = partiesFallback as any;
+
+// KPIs: prefer live stats, fall back to JSON
+const byTypeCount = (type: string) => (partyStats?.byType.find((t: any) => t.type === type)?._count ?? 0) || (fallback.byType.find((t: any) => t.name === type)?.data ?? 0);
+const kpis = partyStats
+	? [
+			{ title: 'Total Parties', value: String(partyStats.total), change: 'active accounts', up: true, color: 'primary', icon: 'building-community' },
+			{ title: 'Customers', value: String(byTypeCount('CUSTOMER')), change: 'customers + retailers', up: true, color: 'blue', icon: 'users' },
+			{ title: 'Vendors', value: String(byTypeCount('VENDOR')), change: 'suppliers', up: true, color: 'green', icon: 'truck-delivery' },
+			{ title: 'Contacts', value: String(partyStats.totalContacts), change: 'across parties', up: true, color: 'azure', icon: 'address-book' },
+		]
+	: fallback.kpis;
+
+// Party rows (live API shape and JSON fallback share the same fields)
+const toRow = (p: any) => ({
+	name: p.displayName ?? p.name,
+	legalName: p.name,
+	type: p.type,
+	gstin: p.gstin ?? '—',
+	city: p.city ?? '—',
+	state: p.state ?? '—',
+	contacts: p.contacts?.length ?? p._count?.contacts ?? 0,
+	orders: p._count?.salesOrders ?? 0,
+	purchases: p._count?.purchaseOrders ?? 0,
+});
+const partiesList = (apiParties.length > 0 ? apiParties : fallback.parties).map(toRow);
+
+const typeColor = (t: string) =>
+	({ CUSTOMER: 'blue', DISTRIBUTOR: 'green', RETAILER: 'purple', VENDOR: 'yellow', FARM: 'green', COOPERATIVE: 'red', GOVT_AGENCY: 'gray' } as Record<string, string>)[t] ?? 'gray';
+---
+
+<DefaultLayout
+	title="Parties"
+	pageHeader="Parties"
+	description="Customers, distributors, vendors, and cooperative partners"
+	pageMenu="manufacturing.parties"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By type</div>
+							<div class="card-subtitle">Parties per business relationship</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-parties-type" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By state</div>
+							<div class="card-subtitle">Parties per operating state</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-parties-state" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Party register</div>
+					<div class="card-subtitle">Customers, vendors, and channel partners</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Party</th>
+								<th>Type</th>
+								<th>GSTIN</th>
+								<th>City</th>
+								<th>State</th>
+								<th>Contacts</th>
+								<th>Orders</th>
+								<th>Purchases</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(partiesList as { name: string; legalName: string; type: string; gstin: string; city: string; state: string; contacts: number; orders: number; purchases: number }[]).map((p) => (
+									<tr>
+										<td>
+											<div class="fw-medium">{p.name}</div>
+											<div class="text-secondary">{p.legalName}</div>
+										</td>
+										<td><Badge color={typeColor(p.type)} light>{p.type}</Badge></td>
+										<td class="text-secondary">{p.gstin}</td>
+										<td class="text-secondary">{p.city}</td>
+										<td class="text-secondary">{p.state}</td>
+										<td class="fw-medium">{p.contacts}</td>
+										<td class="text-secondary">{p.orders}</td>
+										<td class="text-secondary">{p.purchases}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

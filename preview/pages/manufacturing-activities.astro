@@ -1,0 +1,134 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import { fetchActivities } from '@shared/lib/fetchers';
+import activitiesFallback from '@data/manufacturing-activities.json';
+
+// Fetch live data from API; fall back to JSON
+const apiActivities = await fetchActivities();
+
+const fallback = activitiesFallback as any;
+
+// KPIs from the live feed; fall back to JSON
+const live = apiActivities.length > 0 ? apiActivities : fallback.activities;
+const kpis = apiActivities.length > 0
+	? [
+			{ title: 'Total Activities', value: String(live.length), change: 'recent feed', up: true, color: 'primary', icon: 'activity' },
+			{ title: 'QC Events', value: String(live.filter((a: any) => (a.type || '').startsWith('QC_')).length), change: 'approvals + tests', up: true, color: 'green', icon: 'test-pipe' },
+			{ title: 'Order Updates', value: String(live.filter((a: any) => a.entityType === 'ORDER' || a.entityType === 'Order').length), change: 'stage changes', up: true, color: 'azure', icon: 'shopping-cart' },
+			{ title: 'Compliance Checks', value: String(live.filter((a: any) => (a.type || '').startsWith('COMPLIANCE')).length), change: 'certifications', up: true, color: 'yellow', icon: 'shield-check' },
+		]
+	: fallback.kpis;
+
+const toRow = (a: any) => {
+	const performed = new Date(a.performedAt ?? a.createdAt);
+	return {
+		title: a.title,
+		description: a.description ?? '—',
+		type: a.type,
+		entityType: a.entityType,
+		user: a.user?.name ?? 'System',
+		performed: performed.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }),
+		performedAt: performed.toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }),
+	};
+};
+const activitiesList = live.map(toRow);
+
+const typeLabel = (t: string) => (t || '').replace(/_/g, ' ').toLowerCase();
+const typeColor = (t: string) =>
+	({ QC_TEST: 'purple', QC_APPROVAL: 'purple', QC_REJECTION: 'red', STAGE_CHANGE: 'blue', BATCH_CREATED: 'green', BATCH_COMPLETED: 'green', PAYMENT_RECEIVED: 'yellow', DELIVERY_CONFIRMED: 'azure', COMPLIANCE_CHECK: 'red', NOTE: 'gray' } as Record<string, string>)[t] ?? 'gray';
+const entityColor = (e: string) =>
+	({ BATCH: 'blue', ORDER: 'green', 'QC TEST': 'purple', QC_TEST: 'purple', INVOICE: 'yellow', COMPLIANCE: 'red', PARTY: 'azure' } as Record<string, string>)[e] ?? 'gray';
+---
+
+<DefaultLayout
+	title="Activity Log"
+	pageHeader="Activity Log"
+	description="Cross-entity activity timeline for the ERP"
+	pageMenu="manufacturing.activities"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-4">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By entity</div>
+							<div class="card-subtitle">Activities per entity type</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-activities-entity" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-8">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By activity type</div>
+							<div class="card-subtitle">Event type distribution</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-activities-type" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">Timeline</div>
+					<div class="card-subtitle">Recent activity across batches, orders, QC, and finance</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>Activity</th>
+								<th>Type</th>
+								<th>Entity</th>
+								<th>User</th>
+								<th>When</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								(activitiesList as { title: string; description: string; type: string; entityType: string; user: string; performed: string; performedAt: string }[]).map((a) => (
+									<tr>
+										<td>
+											<div class="fw-medium">{a.title}</div>
+											<div class="text-secondary text-truncate" style="max-width: 420px">{a.description}</div>
+										</td>
+										<td><Badge color={typeColor(a.type)} light>{typeLabel(a.type)}</Badge></td>
+										<td><Badge color={entityColor(a.entityType)} light>{a.entityType}</Badge></td>
+										<td class="text-secondary">{a.user}</td>
+										<td class="text-secondary">{a.performedAt}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>

@@ -1,0 +1,108 @@
+{
+  "kpis": [
+    { "title": "Total Activities", "value": "42", "change": "+8", "up": true, "color": "primary", "icon": "activity" },
+    { "title": "QC Events", "value": "12", "change": "approvals + tests", "up": true, "color": "green", "icon": "test-pipe" },
+    { "title": "Order Updates", "value": "9", "change": "stage changes", "up": true, "color": "azure", "icon": "shopping-cart" },
+    { "title": "Compliance Checks", "value": "3", "change": "this month", "up": true, "color": "yellow", "icon": "shield-check" }
+  ],
+  "byEntityType": [
+    { "name": "Batch", "color": "blue", "data": 14 },
+    { "name": "Order", "color": "green", "data": 9 },
+    { "name": "QC Test", "color": "purple", "data": 8 },
+    { "name": "Invoice", "color": "yellow", "data": 6 },
+    { "name": "Compliance", "color": "red", "data": 3 },
+    { "name": "Party", "color": "azure", "data": 2 }
+  ],
+  "byType": [
+    { "name": "QC_TEST", "color": "purple", "data": 8 },
+    { "name": "STAGE_CHANGE", "color": "blue", "data": 7 },
+    { "name": "BATCH_CREATED", "color": "green", "data": 6 },
+    { "name": "PAYMENT_RECEIVED", "color": "yellow", "data": 5 },
+    { "name": "BATCH_COMPLETED", "color": "green", "data": 4 },
+    { "name": "DELIVERY_CONFIRMED", "color": "azure", "data": 3 },
+    { "name": "COMPLIANCE_CHECK", "color": "red", "data": 3 },
+    { "name": "NOTE", "color": "gray", "data": 6 }
+  ],
+  "activities": [
+    {
+      "title": "QC approval for batch BN-2026-014",
+      "type": "QC_APPROVAL",
+      "entityType": "QC Test",
+      "description": "CFU count 8.2 × 10⁹ cfu/g within tolerance, batch released",
+      "performedAt": "2026-08-06T14:30:00.000Z",
+      "user": { "name": "Dr. Meera Iyer" }
+    },
+    {
+      "title": "Batch BN-2026-014 moved to QC_PENDING",
+      "type": "STAGE_CHANGE",
+      "entityType": "Batch",
+      "description": "Fermentation completed, awaiting QC panel",
+      "performedAt": "2026-08-06T11:15:00.000Z",
+      "user": { "name": "Suresh More" }
+    },
+    {
+      "title": "Order SO-2026-189 confirmed",
+      "type": "STAGE_CHANGE",
+      "entityType": "Order",
+      "description": "Distributor order confirmed, 500 kg bio-fertilizer",
+      "performedAt": "2026-08-06T09:45:00.000Z",
+      "user": { "name": "Anita Deshmukh" }
+    },
+    {
+      "title": "Payment ₹84,500 received on invoice INV-2026-042",
+      "type": "PAYMENT_RECEIVED",
+      "entityType": "Invoice",
+      "description": "NEFT payment against overdue invoice",
+      "performedAt": "2026-08-05T17:20:00.000Z",
+      "user": { "name": "Finance Desk" }
+    },
+    {
+      "title": "QC test PH_LEVEL for batch BN-2026-013",
+      "type": "QC_TEST",
+      "entityType": "QC Test",
+      "description": "pH 6.8, within 6.5–7.5 spec",
+      "performedAt": "2026-08-05T15:10:00.000Z",
+      "user": { "name": "Dr. Meera Iyer" }
+    },
+    {
+      "title": "Batch BN-2026-013 completed",
+      "type": "BATCH_COMPLETED",
+      "entityType": "Batch",
+      "description": "Packaged 1,200 units, moved to finished goods",
+      "performedAt": "2026-08-05T12:00:00.000Z",
+      "user": { "name": "Suresh More" }
+    },
+    {
+      "title": "Batch BN-2026-012 created",
+      "type": "BATCH_CREATED",
+      "entityType": "Batch",
+      "description": "Trichoderma viride, planned 5,000 kg",
+      "performedAt": "2026-08-04T10:30:00.000Z",
+      "user": { "name": "Suresh More" }
+    },
+    {
+      "title": "Delivery confirmed for shipment SH-2026-071",
+      "type": "DELIVERY_CONFIRMED",
+      "entityType": "Order",
+      "description": "Delivered to Krishi Seva Kendra, Nashik",
+      "performedAt": "2026-08-04T09:00:00.000Z",
+      "user": { "name": "Rahul Patil" }
+    },
+    {
+      "title": "FSSAI certificate renewal check",
+      "type": "COMPLIANCE_CHECK",
+      "entityType": "Compliance",
+      "description": "License 11419005000264 expires in 45 days",
+      "performedAt": "2026-08-03T16:40:00.000Z",
+      "user": { "name": "Admin" }
+    },
+    {
+      "title": "New distributor verified: Karnataka Farm Solutions",
+      "type": "NOTE",
+      "entityType": "Party",
+      "description": "GST 29AABCK5678B1Z3 verified, cold storage confirmed",
+      "performedAt": "2026-08-02T13:25:00.000Z",
+      "user": { "name": "Anita Deshmukh" }
+    }
+  ]
+}
