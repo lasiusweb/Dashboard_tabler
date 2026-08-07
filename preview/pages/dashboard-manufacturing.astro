@@ -15,13 +15,18 @@ import {
 	fetchComplianceStats,
 	fetchExpiringBatches,
 	fetchExpiringCompliance,
+	fetchFieldVisitStats,
+	fetchPartyStats,
+	fetchUserStats,
+	fetchActivities,
 } from '@shared/lib/fetchers';
 import batchData from '@data/manufacturing-batches.json';
 import qcData from '@data/manufacturing-qc.json';
 import complianceData from '@data/manufacturing-compliance.json';
+import activitiesData from '@data/manufacturing-activities.json';
 
 // Attempt to fetch live stats from API; fall back to JSON
-const [batchStats, qcStats, orderStats, inventoryStats, financeStats, complianceStats, expiringBatches, expiringCompliance] = await Promise.all([
+const [batchStats, qcStats, orderStats, inventoryStats, financeStats, complianceStats, expiringBatches, expiringCompliance, fieldVisitStats, partyStats, userStats, activities] = await Promise.all([
 	fetchBatchStats(),
 	fetchQCStats(),
 	fetchOrderStats(),
@@ -30,11 +35,16 @@ const [batchStats, qcStats, orderStats, inventoryStats, financeStats, compliance
 	fetchComplianceStats(),
 	fetchExpiringBatches(),
 	fetchExpiringCompliance(),
+	fetchFieldVisitStats(),
+	fetchPartyStats(),
+	fetchUserStats(),
+	fetchActivities(),
 ]);
 
 const batchesFallback = batchData as any;
 const qcFallback = qcData as any;
 const complianceFallback = complianceData as any;
+const activitiesFallback = activitiesData as any;
 
 // Derive KPIs from live data or fall back to static
 const activeBatches = batchStats?.byStatus?.find((s: any) => !['DISPATCHED', 'EXPIRED', 'CANCELLED'].includes(s.status))?.count ?? batchesFallback.kpis[0].value;
@@ -107,6 +117,19 @@ const alertsList = liveAlerts.length > 0 ? liveAlerts : batchesFallback.alerts;
 				</div>
 				<div class="col-sm-6 col-lg-3">
 					<CrmStats color="orange" icon="shield-check" lt title="Compliance Expiring" description={String(complianceExpiring)} changeValue="90 days" />
+				</div>
+
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="teal" icon="map-pin" lt title="Field Visits" description={String(fieldVisitStats?.total ?? 42)} changeValue="+6" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="blue" icon="building-community" lt title="Parties" description={String(partyStats?.total ?? 18)} changeValue="+3" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="indigo" icon="users" lt title="Users" description={String(userStats?.total ?? 24)} changeValue="+2" />
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<CrmStats color="pink" icon="activity" lt title="Activities" description={String(activities?.length ?? activitiesFallback.activities?.length ?? 0)} changeValue="24h" />
 				</div>
 			</div>
 		</div>
