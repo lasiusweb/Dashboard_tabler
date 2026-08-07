@@ -1,0 +1,123 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import { fetchAppSettings } from '@shared/lib/fetchers';
+import settingsFallback from '@data/manufacturing-settings.json';
+
+// Fetch live data from API; fall back to JSON
+const apiSettings = await fetchAppSettings();
+
+const fallback = settingsFallback as any;
+const settings = (apiSettings.length > 0 ? apiSettings : fallback.settings) as {
+	id: string;
+	key: string;
+	value: unknown;
+	description?: string;
+	updatedAt?: string;
+}[];
+
+const valueType = (v: unknown) => {
+	if (Array.isArray(v)) return 'ARRAY';
+	if (v !== null && typeof v === 'object') return 'OBJECT';
+	return typeof v === 'number' ? 'NUMBER' : typeof v === 'boolean' ? 'BOOLEAN' : 'STRING';
+};
+const typeCount = (t: string) => settings.filter((s) => valueType(s.value) === t).length;
+
+// KPIs derived from live list; fall back to JSON
+const kpis = apiSettings.length > 0
+	? [
+			{ title: 'Settings', value: String(settings.length), change: 'configured keys', up: true, color: 'primary', icon: 'settings' },
+			{ title: 'String Values', value: String(typeCount('STRING')), change: 'of total', up: true, color: 'blue', icon: 'text-size' },
+			{ title: 'Number Values', value: String(typeCount('NUMBER')), change: 'of total', up: true, color: 'green', icon: 'hash' },
+			{ title: 'Config Objects', value: String(typeCount('OBJECT')), change: 'of total', up: true, color: 'azure', icon: 'box' },
+		]
+	: fallback.kpis;
+
+const typeColor = (t: string) =>
+	({ STRING: 'blue', NUMBER: 'green', BOOLEAN: 'yellow', ARRAY: 'purple', OBJECT: 'azure' } as Record<string, string>)[t] ?? 'gray';
+
+const displayValue = (v: unknown): string => {
+	if (v === null) return 'null';
+	if (Array.isArray(v)) return v.join(', ');
+	if (typeof v === 'object') return JSON.stringify(v);
+	return String(v);
+};
+---
+
+<DefaultLayout
+	title="Settings"
+	pageHeader="Settings"
+	description="Application configuration and defaults"
+	pageMenu="manufacturing.settings"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Value types</div>
+							<div class="card-subtitle">Settings by value type</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-settings-type" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Configuration</div>
+							<div class="card-subtitle">All app settings</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Key</th>
+										<th>Value</th>
+										<th>Type</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										settings.map((s) => {
+											const type = valueType(s.value);
+											return (
+												<tr>
+													<td class="fw-medium font-monospace">{s.key}</td>
+													<td class="text-secondary">{displayValue(s.value)}</td>
+													<td><Badge color={typeColor(type)} light>{type}</Badge></td>
+													<td class="text-secondary">{s.description ?? '—'}</td>
+												</tr>
+											);
+										})
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

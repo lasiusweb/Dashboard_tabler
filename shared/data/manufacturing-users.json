@@ -1,0 +1,108 @@
+{
+  "kpis": [
+    { "title": "Total Users", "value": "24", "change": "+2", "up": true, "color": "primary", "icon": "users" },
+    { "title": "Production", "value": "9", "change": "37.5%", "up": true, "color": "blue", "icon": "settings" },
+    { "title": "Sales & Marketing", "value": "6", "change": "25%", "up": true, "color": "green", "icon": "trending-up" },
+    { "title": "Admin & QC", "value": "5", "change": "20.8%", "up": true, "color": "azure", "icon": "shield-check" }
+  ],
+  "byDepartment": [
+    { "name": "PRODUCTION", "color": "blue", "data": 9 },
+    { "name": "SALES", "color": "green", "data": 5 },
+    { "name": "QC", "color": "azure", "data": 3 },
+    { "name": "ADMIN", "color": "purple", "data": 2 },
+    { "name": "LOGISTICS", "color": "yellow", "data": 3 },
+    { "name": "FINANCE", "color": "red", "data": 2 }
+  ],
+  "users": [
+    {
+      "name": "Anil Deshmukh",
+      "email": "anil.deshmukh@firstcrop.com",
+      "phone": "+91 98220 00001",
+      "image": "",
+      "emailVerified": true,
+      "employeeId": "FC-E001",
+      "department": "PRODUCTION",
+      "plant": "Plant 1",
+      "shift": "MORNING",
+      "designation": "Production Manager",
+      "joiningDate": "2022-03-14T00:00:00.000Z",
+      "createdAt": "2022-03-14T00:00:00.000Z",
+      "updatedAt": "2026-07-01T00:00:00.000Z"
+    },
+    {
+      "name": "Meera Patil",
+      "email": "meera.patil@firstcrop.com",
+      "phone": "+91 98220 00002",
+      "image": "",
+      "emailVerified": true,
+      "employeeId": "FC-E002",
+      "department": "QC",
+      "plant": "Plant 1",
+      "shift": "MORNING",
+      "designation": "QC Supervisor",
+      "joiningDate": "2022-05-02T00:00:00.000Z",
+      "createdAt": "2022-05-02T00:00:00.000Z",
+      "updatedAt": "2026-07-01T00:00:00.000Z"
+    },
+    {
+      "name": "Rahul Khanna",
+      "email": "rahul.khanna@firstcrop.com",
+      "phone": "+91 98220 00003",
+      "image": "",
+      "emailVerified": true,
+      "employeeId": "FC-E003",
+      "department": "SALES",
+      "plant": "",
+      "shift": "MORNING",
+      "designation": "Sales Manager",
+      "joiningDate": "2022-06-20T00:00:00.000Z",
+      "createdAt": "2022-06-20T00:00:00.000Z",
+      "updatedAt": "2026-07-01T00:00:00.000Z"
+    },
+    {
+      "name": "Sunita Rao",
+      "email": "sunita.rao@firstcrop.com",
+      "phone": "+91 98220 00004",
+      "image": "",
+      "emailVerified": true,
+      "employeeId": "FC-E004",
+      "department": "FINANCE",
+      "plant": "",
+      "shift": "MORNING",
+      "designation": "Accountant",
+      "joiningDate": "2022-08-11T00:00:00.000Z",
+      "createdAt": "2022-08-11T00:00:00.000Z",
+      "updatedAt": "2026-07-01T00:00:00.000Z"
+    },
+    {
+      "name": "Vijay Naik",
+      "email": "vijay.naik@firstcrop.com",
+      "phone": "+91 98220 00005",
+      "image": "",
+      "emailVerified": true,
+      "employeeId": "FC-E005",
+      "department": "LOGISTICS",
+      "plant": "Plant 2",
+      "shift": "AFTERNOON",
+      "designation": "Logistics Coordinator",
+      "joiningDate": "2022-10-04T00:00:00.000Z",
+      "createdAt": "2022-10-04T00:00:00.000Z",
+      "updatedAt": "2026-07-01T00:00:00.000Z"
+    },
+    {
+      "name": "Kavita Joshi",
+      "email": "kavita.joshi@firstcrop.com",
+      "phone": "+91 98220 00006",
+      "image": "",
+      "emailVerified": true,
+      "employeeId": "FC-E006",
+      "department": "ADMIN",
+      "plant": "",
+      "shift": "MORNING",
+      "designation": "HR Administrator",
+      "joiningDate": "2023-01-16T00:00:00.000Z",
+      "createdAt": "2023-01-16T00:00:00.000Z",
+      "updatedAt": "2026-07-01T00:00:00.000Z"
+    }
+  ]
+}

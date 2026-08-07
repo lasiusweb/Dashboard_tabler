@@ -1,0 +1,22 @@
+{
+  "kpis": [
+    { "title": "Settings", "value": "12", "change": "configured keys", "up": true, "color": "primary", "icon": "settings" },
+    { "title": "String Values", "value": "4", "change": "of total", "up": true, "color": "blue", "icon": "text-size" },
+    { "title": "Number Values", "value": "4", "change": "of total", "up": true, "color": "green", "icon": "hash" },
+    { "title": "Config Objects", "value": "2", "change": "of total", "up": true, "color": "azure", "icon": "box" }
+  ],
+  "settings": [
+    { "id": "s1", "organizationId": "org1", "key": "gst_rate", "value": 18, "description": "Default GST rate applied to sales orders", "createdAt": "2025-01-10T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s2", "organizationId": "org1", "key": "company_name", "value": "FirstCrop Agro Pvt Ltd", "description": "Legal company name on invoices", "createdAt": "2025-01-10T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s3", "organizationId": "org1", "key": "low_stock_threshold", "value": 15, "description": "Inventory low-stock alert threshold", "createdAt": "2025-02-03T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s4", "organizationId": "org1", "key": "batch_expiry_warning_days", "value": 60, "description": "Days before expiry to trigger compliance warning", "createdAt": "2025-02-03T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s5", "organizationId": "org1", "key": "warehouse_address", "value": "Plot 14, MIDC Industrial Area, Nashik, Maharashtra", "description": "Registered warehouse address", "createdAt": "2025-03-11T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s6", "organizationId": "org1", "key": "currency_code", "value": "INR", "description": "Currency used across the ERP", "createdAt": "2025-03-11T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s7", "organizationId": "org1", "key": "auto_qc_approval", "value": true, "description": "Auto-approve QC tests that pass all parameters", "createdAt": "2025-05-20T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s8", "organizationId": "org1", "key": "field_visit_window_days", "value": 30, "description": "Target days between follow-up field visits", "createdAt": "2025-06-15T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s9", "organizationId": "org1", "key": "notification_channels", "value": ["email", "sms"], "description": "Channels used for system notifications", "createdAt": "2025-08-02T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s10", "organizationId": "org1", "key": "invoice_prefix", "value": "FC-INV", "description": "Prefix for generated invoice numbers", "createdAt": "2025-09-12T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s11", "organizationId": "org1", "key": "storage_temperature", "value": { "min": 4, "max": 25, "unit": "celsius" }, "description": "Recommended storage temperature range for finished goods", "createdAt": "2025-10-01T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" },
+    { "id": "s12", "organizationId": "org1", "key": "reorder_policy", "value": { "enabled": true, "buffer_days": 7 }, "description": "Automatic reorder policy for raw materials", "createdAt": "2025-11-05T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z" }
+  ]
+}

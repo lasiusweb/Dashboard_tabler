@@ -1,0 +1,13 @@
+{
+  "kpis": [
+    { "title": "Organizations", "value": "3", "change": "active tenants", "up": true, "color": "primary", "icon": "building-community" },
+    { "title": "Members", "value": "38", "change": "across orgs", "up": true, "color": "blue", "icon": "users-group" },
+    { "title": "Avg Team", "value": "13", "change": "members per org", "up": true, "color": "green", "icon": "users" },
+    { "title": "Roles", "value": "8", "change": "distinct roles", "up": true, "color": "azure", "icon": "shield-check" }
+  ],
+  "organizations": [
+    { "name": "FirstCrop Agro Pvt Ltd", "slug": "firstcrop-agro", "logoUrl": "", "createdAt": "2025-01-10T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z", "_count": { "members": 24 } },
+    { "name": "GreenBio Microbes", "slug": "greenbio-microbes", "logoUrl": "", "createdAt": "2025-06-02T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z", "_count": { "members": 9 } },
+    { "name": "AgriNova Biotech", "slug": "agrinova-biotech", "logoUrl": "", "createdAt": "2025-11-18T00:00:00.000Z", "updatedAt": "2026-07-01T00:00:00.000Z", "_count": { "members": 5 } }
+  ]
+}

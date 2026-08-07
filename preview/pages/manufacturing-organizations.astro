@@ -1,0 +1,106 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import { fetchOrganizations } from '@shared/lib/fetchers';
+import orgsFallback from '@data/manufacturing-organizations.json';
+
+// Fetch live data from API; fall back to JSON
+const apiOrgs = await fetchOrganizations();
+
+const fallback = orgsFallback as any;
+const orgs = (apiOrgs.length > 0 ? apiOrgs : fallback.organizations) as {
+	name: string;
+	slug: string;
+	logoUrl?: string;
+	createdAt: string;
+	_count?: { members: number };
+}[];
+
+const members = (o: { _count?: { members: number } }) => o._count?.members ?? 0;
+const totalMembers = orgs.reduce((acc, o) => acc + members(o), 0);
+
+// KPIs derived from live list; fall back to JSON
+const kpis = apiOrgs.length > 0
+	? [
+			{ title: 'Organizations', value: String(orgs.length), change: 'active tenants', up: true, color: 'primary', icon: 'building-community' },
+			{ title: 'Members', value: String(totalMembers), change: 'across orgs', up: true, color: 'blue', icon: 'users-group' },
+			{ title: 'Avg Team', value: String(Math.round(totalMembers / (orgs.length || 1))), change: 'members per org', up: true, color: 'green', icon: 'users' },
+			{ title: 'Largest Org', value: String(Math.max(...orgs.map(members), 0)), change: 'largest team', up: true, color: 'azure', icon: 'building-factory' },
+		]
+	: fallback.kpis;
+---
+
+<DefaultLayout
+	title="Organizations"
+	pageHeader="Organizations"
+	description="Tenant organizations and their teams"
+	pageMenu="manufacturing.organizations"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Team size</div>
+							<div class="card-subtitle">Members per organization</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-orgs-members" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">Organizations</div>
+							<div class="card-subtitle">All tenant organizations</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Organization</th>
+										<th>Slug</th>
+										<th>Members</th>
+										<th>Created</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										orgs.map((o) => (
+											<tr>
+												<td class="fw-medium">{o.name}</td>
+												<td class="text-secondary">@{o.slug}</td>
+												<td><Badge color="blue" light>{members(o)}</Badge></td>
+												<td class="text-secondary">{o.createdAt ? new Date(o.createdAt).toLocaleDateString() : '—'}</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+	</div>
+</DefaultLayout>

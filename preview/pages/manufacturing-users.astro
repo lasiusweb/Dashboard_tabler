@@ -1,0 +1,176 @@
+---
+import DefaultLayout from '@shared/layouts/DefaultLayout.astro';
+import EcommerceStats from '@shared/components/cards/EcommerceStats.astro';
+import Card from '@ui/Card.astro';
+import CardHeader from '@ui/CardHeader.astro';
+import CardBody from '@ui/CardBody.astro';
+import Chart from '@ui/Chart.astro';
+import Badge from '@ui/Badge.astro';
+import { fetchUsers, fetchUserStats } from '@shared/lib/fetchers';
+import usersFallback from '@data/manufacturing-users.json';
+
+// Fetch live data from API; fall back to JSON
+const [apiUsers, userStats] = await Promise.all([
+	fetchUsers(),
+	fetchUserStats(),
+]);
+
+const fallback = usersFallback as any;
+
+// KPIs: prefer live stats, fall back to JSON
+const deptCount = (dept: string) => (userStats?.byDepartment.find((d: any) => d.department === dept)?._count ?? 0) || (fallback.byDepartment.find((d: any) => d.name === dept)?.data ?? 0);
+const kpis = userStats
+	? [
+			{ title: 'Total Users', value: String(userStats.total), change: 'active accounts', up: true, color: 'primary', icon: 'users' },
+			{ title: 'Production', value: String(deptCount('PRODUCTION')), change: 'plant staff', up: true, color: 'blue', icon: 'settings' },
+			{ title: 'Sales & Marketing', value: String(deptCount('SALES')), change: 'field team', up: true, color: 'green', icon: 'trending-up' },
+			{ title: 'Admin & QC', value: String(deptCount('ADMIN') + deptCount('QC')), change: 'support staff', up: true, color: 'azure', icon: 'shield-check' },
+		]
+	: fallback.kpis;
+
+// User rows (live API shape and JSON fallback share the same fields)
+const toRow = (u: any) => ({
+	name: u.name ?? '—',
+	email: u.email ?? '—',
+	phone: u.phone ?? '—',
+	employeeId: u.employeeId ?? '—',
+	department: u.department ?? '—',
+	plant: u.plant ?? '—',
+	shift: u.shift ?? '—',
+	designation: u.designation ?? '—',
+	verified: u.emailVerified ?? false,
+});
+const usersList = (apiUsers.length > 0 ? apiUsers : fallback.users).map(toRow);
+
+const deptColor = (d: string) =>
+	({ PRODUCTION: 'blue', SALES: 'green', QC: 'azure', LOGISTICS: 'yellow', FINANCE: 'red', ADMIN: 'purple' } as Record<string, string>)[d] ?? 'gray';
+
+// Shift breakdown aggregated from user rows
+type UserRow = { name: string; email: string; phone: string; employeeId: string; department: string; plant: string; shift: string; designation: string; verified: boolean };
+const usersArr = usersList as UserRow[];
+const shiftTotals: Record<string, number> = {};
+for (const u of usersArr) {
+	const key = u.shift === '—' ? 'FIELD' : u.shift;
+	shiftTotals[key] = (shiftTotals[key] ?? 0) + 1;
+}
+const shiftRows = Object.entries(shiftTotals).sort((a, b) => b[1] - a[1]);
+---
+
+<DefaultLayout
+	title="Users"
+	pageHeader="Users"
+	description="Team members and plant staff across departments"
+	pageMenu="manufacturing.users"
+	pageLibs={['apexcharts']}
+>
+	<div class="row row-cards">
+		<div class="col-12">
+			<div class="row row-cards">
+				{
+					(kpis as { title: string; value: string; change: string; up: boolean; color: string; icon: string }[]).map((kpi) => (
+						<div class="col-sm-6 col-lg-3">
+							<EcommerceStats color={kpi.color} icon={kpi.icon} title={kpi.title} description={kpi.value} change={kpi.change} up={kpi.up} />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="col-12">
+			<div class="row row-cards">
+				<div class="col-12 col-lg-5">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By department</div>
+							<div class="card-subtitle">Users per department</div>
+						</CardHeader>
+						<CardBody>
+							<Chart chartId="mfg-users-department" height={16} />
+						</CardBody>
+					</Card>
+				</div>
+				<div class="col-12 col-lg-7">
+					<Card>
+						<CardHeader>
+							<div class="card-title">By shift</div>
+							<div class="card-subtitle">Users per shift schedule</div>
+						</CardHeader>
+						<div class="table-responsive">
+							<table class="table card-table table-vcenter">
+								<thead>
+									<tr>
+										<th>Shift</th>
+										<th>Users</th>
+										<th>Share</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										shiftRows.map(([shift, count]) => {
+											const total = usersList.length || 1;
+											const pct = Math.round((count / total) * 100);
+											return (
+												<tr>
+													<td class="fw-medium">{shift}</td>
+													<td>{count}</td>
+													<td>
+														<div class="progress progress-sm">
+															<div class="progress-bar" style={`width: ${pct}%`} role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}></div>
+														</div>
+														<span class="text-secondary ms-2">{pct}%</span>
+													</td>
+												</tr>
+											);
+										})
+									}
+								</tbody>
+							</table>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<Card>
+				<CardHeader>
+					<div class="card-title">User directory</div>
+					<div class="card-subtitle">All team members</div>
+				</CardHeader>
+				<div class="table-responsive">
+					<table class="table card-table table-vcenter">
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Employee ID</th>
+								<th>Department</th>
+								<th>Designation</th>
+								<th>Contact</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								usersArr.map((u) => (
+									<tr>
+										<td>
+											<div class="fw-medium">{u.name}</div>
+											<div class="text-secondary">{u.email}</div>
+										</td>
+										<td class="text-secondary">{u.employeeId}</td>
+										<td><Badge color={deptColor(u.department)} light>{u.department}</Badge></td>
+										<td class="text-secondary">{u.designation}</td>
+										<td class="text-secondary">{u.phone}</td>
+										<td>
+											<Badge color={u.verified ? 'green' : 'yellow'} light>{u.verified ? 'Verified' : 'Pending'}</Badge>
+										</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</Card>
+		</div>
+	</div>
+</DefaultLayout>
