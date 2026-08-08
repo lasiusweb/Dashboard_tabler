@@ -1,0 +1,74 @@
+---
+title: Manufacturing ERP
+summary: Overview of the FirstCrop manufacturing dashboard — the KPI overview, live API data fetching with JSON fallbacks, and the shared fetchers library used across all manufacturing pages.
+description: How the FirstCrop manufacturing dashboard works, including the KPI overview, live API data flow, JSON fallbacks, and the shared fetchers library.
+layout: '@shared/layouts/DocsMdxLayout.astro'
+---
+
+import DocsCard from '@components/DocsCard.astro'
+
+## Overview
+
+The manufacturing dashboard is the home screen of the FirstCrop ERP. It gives a
+30-second health check of the whole manufacturing operation: production batches,
+quality control, sales, inventory, finance, compliance, and field work.
+
+The page lives at `preview/pages/dashboard-manufacturing.astro` and is available
+under **Dashboards → Manufacturing** in the preview menu.
+
+## Data flow
+
+All manufacturing pages follow the same pattern. They fetch live data from the
+FirstCrop API and fall back to static JSON when the API is not available.
+
+1. The page imports typed fetchers from `@shared/lib/fetchers`.
+2. The fetchers call the API at `PUBLIC_API_URL` (default `http://localhost:3002/api`).
+3. If the API responds, the page renders live values.
+4. If the API is down (static build, no API running), the page uses the matching
+   JSON file in `shared/data/` — for example `manufacturing-batches.json`.
+
+This keeps every page renderable as static HTML while still showing live data
+when the API is running.
+
+## Dashboard cards
+
+The dashboard shows twelve KPI cards. Each card answers one operational question.
+
+| Card                 | Source                | Purpose                                            |
+| -------------------- | --------------------- | -------------------------------------------------- |
+| Active Batches       | `fetchBatchStats`     | Batches in production, not yet shipped or expired  |
+| QC Pending           | `fetchQCStats`        | Quality tests waiting for a result                 |
+| QC Passed            | `fetchQCStats`        | Quality tests that passed                          |
+| Dispatched           | `fetchOrderStats`     | Orders fully shipped                               |
+| Low Stock            | `fetchInventoryStats` | Inventory items below reorder level                |
+| Pending Payments     | `fetchFinanceStats`   | Outstanding invoice amount                         |
+| Revenue (MTD)        | `fetchOrderStats`     | Month-to-date sales revenue                        |
+| Compliance Expiring  | `fetchComplianceStats`| Certificates expiring within 90 days               |
+| Field Visits         | `fetchFieldVisitStats`| Field agent visits logged                          |
+| Parties              | `fetchPartyStats`     | Customers, vendors, and cooperative partners       |
+| Users                | `fetchUserStats`      | Team members and plant staff                       |
+| Activities           | `fetchActivities`     | Cross-entity activity entries                      |
+
+The dashboard also renders four charts:
+
+- **Batch pipeline** — batches by production stage
+- **Order pipeline** — sales orders by fulfilment stage
+- **Inventory by category** — stock value distribution
+- **Revenue trend** — monthly revenue for the last six months
+
+## Alerts
+
+The dashboard collects expiring batches and expiring compliance certificates into
+a single alerts table. Alerts are built from `fetchExpiringBatches` and
+`fetchExpiringCompliance`. When the API returns no data, the alerts come from the
+`manufacturing-batches.json` fallback file.
+
+## Related pages
+
+The dashboard links to the full set of manufacturing module pages.
+
+<div class="row row-cards mt-2">
+  <div class="col-lg-6">
+    <DocsCard title="Module pages" href="/firstcrop/manufacturing/modules/" icon="building-factory" description="All 17 manufacturing module pages: products, batches, quality control, compliance, inventory, sales, and more." />
+  </div>
+</div>

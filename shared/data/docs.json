@@ -548,8 +548,19 @@
 			]
 		},
 		{
-			"title": "",
-			"children": []
+			"title": "FirstCrop ERP",
+			"children": [
+				{
+					"title": "Manufacturing",
+					"url": "/firstcrop/manufacturing/",
+					"children": [
+						{
+							"title": "Module pages",
+							"url": "/firstcrop/manufacturing/modules/"
+						}
+					]
+				}
+			]
 		}
 	]
 }

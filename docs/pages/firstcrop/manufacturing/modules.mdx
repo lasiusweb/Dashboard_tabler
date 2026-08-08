@@ -1,0 +1,158 @@
+---
+title: Module pages
+summary: Reference for all 17 manufacturing module pages in the FirstCrop ERP, including the API endpoint and fallback data file behind each page.
+description: A reference to all manufacturing module pages — what each page shows, the API fetchers it uses, and the fallback JSON it reads.
+layout: '@shared/layouts/DocsMdxLayout.astro'
+---
+
+import DocsCard from '@components/DocsCard.astro'
+
+## Overview
+
+The manufacturing suite ships 17 module pages under `preview/pages/`, plus the
+overview dashboard. Every module page follows the same pattern: fetch live data
+with typed fetchers from `@shared/lib/fetchers`, and fall back to a matching JSON
+file in `shared/data/` when the API is unavailable.
+
+Pages are grouped under **Manufacturing ERP** in the preview menu and all use the
+`DefaultLayout` from `@shared/layouts/DefaultLayout.astro`.
+
+## Production
+
+### Products
+
+- Page: `manufacturing-products.astro`
+- Shows: microbial product catalog — bio-fertilizers, bio-pesticides, bio-fungicides
+- Fetchers: `fetchProducts`, `fetchProductStats`
+- Fallback: `shared/data/manufacturing-products.json`
+
+### Raw Materials
+
+- Page: `manufacturing-raw-materials.astro`
+- Shows: input materials, stock levels, reorder status
+- Fetchers: `fetchRawMaterials`, `fetchRawMaterialStats`, `fetchLowStockRawMaterials`
+- Fallback: `shared/data/manufacturing-raw-materials.json`
+
+### Batches
+
+- Page: `manufacturing-batches.astro`
+- Shows: fermentation, processing, and packaging of microbial products
+- Fetchers: `fetchBatches`, `fetchBatchStats`, `fetchExpiringBatches`
+- Fallback: `shared/data/manufacturing-batches.json`
+
+### Quality Control
+
+- Page: `manufacturing-qc.astro`
+- Shows: test results, batch quality, and pass/fail status
+- Fetchers: `fetchQCTests`, `fetchQCStats`
+- Fallback: `shared/data/manufacturing-qc.json`
+
+## Compliance
+
+### Compliance
+
+- Page: `manufacturing-compliance.astro`
+- Shows: regulatory certificates, expirations, and renewals
+- Fetchers: `fetchComplianceRecords`, `fetchComplianceStats`, `fetchExpiringCompliance`
+- Fallback: `shared/data/manufacturing-compliance.json`
+
+## Inventory and Procurement
+
+### Inventory
+
+- Page: `manufacturing-inventory.astro`
+- Shows: raw materials, work in progress, and finished goods stock
+- Fetchers: `fetchInventory`, `fetchInventoryStats`, `fetchLowStock`
+- Fallback: `shared/data/manufacturing-inventory.json`
+
+### Procurement
+
+- Page: `manufacturing-procurement.astro`
+- Shows: vendors, purchase orders, and raw material sourcing
+- Fetchers: `fetchPurchaseOrders`, `fetchProcurementStats`, `fetchVendors`
+- Fallback: `shared/data/manufacturing-procurement.json`
+
+## Sales and Distribution
+
+### Sales Orders
+
+- Page: `manufacturing-orders.astro`
+- Shows: distributor, direct, government, and export orders
+- Fetchers: `fetchOrders`, `fetchOrderStats`, `fetchCustomers`
+- Fallback: `shared/data/manufacturing-orders.json`
+
+### Distributors
+
+- Page: `manufacturing-distributors.astro`
+- Shows: distributor network, territory targets, and performance
+- Fetchers: `fetchDistributors`, `fetchDistributorStats`
+- Fallback: `shared/data/manufacturing-distributors.json`
+
+### Parties
+
+- Page: `manufacturing-parties.astro`
+- Shows: customers, distributors, vendors, and cooperative partners
+- Fetchers: `fetchParties`, `fetchPartyStats`
+- Fallback: `shared/data/manufacturing-parties.json`
+
+### Field Visits
+
+- Page: `manufacturing-field-visits.astro`
+- Shows: field agent visits, crop advisory, and pest diagnostics
+- Fetchers: `fetchFieldVisits`, `fetchFieldVisitStats`
+- Fallback: `shared/data/manufacturing-field-visits.json`
+
+### Logistics
+
+- Page: `manufacturing-logistics.astro`
+- Shows: shipments, delivery SLA, and cold chain compliance
+- Fetchers: `fetchShipments`, `fetchLogisticsStats`
+- Fallback: `shared/data/manufacturing-logistics.json`
+
+## Finance
+
+### Finance and Invoicing
+
+- Page: `manufacturing-finance.astro`
+- Shows: revenue, GST, TDS, and payment tracking
+- Fetchers: `fetchFinance`, `fetchFinanceStats`, `fetchReceivables`
+- Fallback: `shared/data/manufacturing-finance.json`
+
+## Administration
+
+### Users
+
+- Page: `manufacturing-users.astro`
+- Shows: team members and plant staff across departments
+- Fetchers: `fetchUsers`, `fetchUserStats`
+- Fallback: `shared/data/manufacturing-users.json`
+
+### Organizations
+
+- Page: `manufacturing-organizations.astro`
+- Shows: tenant organizations and their teams
+- Fetchers: `fetchOrganizations`
+- Fallback: `shared/data/manufacturing-organizations.json`
+
+### Activity Log
+
+- Page: `manufacturing-activities.astro`
+- Shows: cross-entity activity timeline for the ERP
+- Fetchers: `fetchActivities`
+- Fallback: `shared/data/manufacturing-activities.json`
+
+### Settings
+
+- Page: `manufacturing-settings.astro`
+- Shows: application configuration and defaults
+- Fetchers: `fetchAppSettings`
+- Fallback: `shared/data/manufacturing-settings.json`
+
+## Shared data layer
+
+All fetchers live in `shared/lib/fetchers.ts` and the TypeScript types live in
+`shared/lib/types.ts`. Every fetcher accepts an optional `orgId` and builds the
+request against `PUBLIC_API_URL` (default `http://localhost:3002/api`). List
+fetchers return an empty array when the API is unreachable; stats fetchers
+return `null`. Pages use these return values to decide between live data and the
+static fallback.
