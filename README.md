@@ -1,14 +1,4 @@
-<p align="center">
-<img src="https://raw.githubusercontent.com/tabler/tabler/refs/heads/dev/shared/static/logo.svg" alt="FirstCrop — Premium and open source dashboard template with a responsive and high-quality UI." width="300"><br><br>
-A premium and open source dashboard template with a responsive and high-quality UI.
-</p>
 
-<p align="center">
-<a href="https://www.npmjs.com/package/@firstcrop/core" target="__blank"><img src="https://img.shields.io/npm/v/@firstcrop/core?color=2fb344&label=Latest+version" alt="NPM version"></a>
-<a href="https://www.npmjs.com/package/@firstcrop/core" target="__blank"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/@firstcrop/core?color=2fb344&label=Downloads"></a>
-<a href="https://preview.firstcrop.in" target="__blank"><img src="https://img.shields.io/static/v1?label=Demo&message=preview&color=2fb344" alt="FirstCrop preview"></a>
-<a href="https://github.com/firstcrop/firstcrop/blob/dev/LICENSE"><img src="https://img.shields.io/npm/l/tabler.svg?label=License&message=MIT&color=1c7ed6" alt="License"></a>
-</p>
 
 ## Overview
 
